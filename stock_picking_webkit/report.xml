@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <report id="webkit_aggregated_picking"
+            name="webkit.aggregated_picking"
+            auto="False"
+            model="stock.picking"
+            file="stock_picking_webkit/report/picking.html.mako"
+            string="Aggregated pickings"
+            report_type="webkit"
+            header="False"
+            webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
+    <report id="webkit_aggregated_delivery"
+            name="webkit.aggregated_delivery"
+            auto="False"
+            model="stock.picking"
+            file="stock_picking_webkit/report/delivery.html.mako"
+            string="Aggregated deliveries"
+            report_type="webkit"
+            header="False"
+            webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
+
+  </data>
+</openerp>
