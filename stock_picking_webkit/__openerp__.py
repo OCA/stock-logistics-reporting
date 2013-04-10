@@ -41,6 +41,6 @@ Replaces the legacy rml picking Order report by a brand new webkit report.
     'update_xml': ['report.xml'],
     'demo_xml': [],
     'test': [],
-    'installable': True,
+    'installable': False,
     'active': False,
 }
