@@ -48,6 +48,31 @@
             </tr>
         </table>
     
+        <table class="list_sale_table" width="100%" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; ">${_("Description")}</th>
+                    <th style="text-align:left; ">${_("Serial Number")}</th>
+                    <th class="amount">${_("Quantity")}</th>
+                </tr>
+            </thead>
+            <tbody>
+            %for line in picking.move_lines:
+                <tr class="line">
+                    <td style="text-align:left; " >${ line.name }</td>
+                    <td style="text-align:left; " >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
+                    <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
+                </tr>
+            %endfor
+        </table>
+        
+        <br/>
+        %if picking.note :
+            <p class="std_text">${picking.note | carriage_returns}</p>
+        %endif
+
+        <p style="page-break-after: always"/>
+        <br/>
     %endfor
 </body>
 </html>
