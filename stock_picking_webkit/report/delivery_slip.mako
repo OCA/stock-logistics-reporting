@@ -35,13 +35,13 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Stock Journal")}</td>
+                <td style="font-weight:bold;">${_("Contact")}</td>
                 <td style="font-weight:bold;">${_("Origin")}</td>
                 <td style="font-weight:bold;">${_("Scheduled Date")}</td>
                 <td style="font-weight:bold;">${_('Weight')}</td>
             </tr>
             <tr>
-                <td>${picking.stock_journal_id and picking.stock_journal_id.name or ''}</td>
+                <td>${user.name}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
                 <td>${picking.weight}</td>
