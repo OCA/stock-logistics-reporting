@@ -21,6 +21,7 @@
 import operator
 from report import report_sxw
 import pooler
+import time
 
 class NullMove(object):
     """helper class to generate empty lines in the delivery report"""
@@ -114,6 +115,13 @@ class PrintPick(report_sxw.rml_parse):
             objects.append(PickingAgregation(agr[0], agr[1], agreg[agr]))
         return super(PrintPick, self).set_context(objects, data, ids, report_type=report_type)
 
+class DeliverySlip(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(DeliverySlip, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'time': time,
+            })
+
 report_sxw.report_sxw('report.webkit.aggregated_picking',
                       'stock.picking',
                       'addons/stock_picking_webkit/report/picking.html.mako',
@@ -123,3 +131,8 @@ report_sxw.report_sxw('report.webkit.aggregated_delivery',
                       'stock.picking',
                       'addons/stock_picking_webkit/report/delivery.html.mako',
                       parser=PrintPick)
+
+report_sxw.report_sxw('report.webkit.delivery_slip',
+                      'stock.picking',
+                      'addons/stock_picking_webkit/report/delivery_slip.mako',
+                      parser=DeliverySlip)
