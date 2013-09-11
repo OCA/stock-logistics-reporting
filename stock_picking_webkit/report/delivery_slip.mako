@@ -29,6 +29,21 @@
                     %endif
                 %endfor
             </table>
+            <%
+            invoice_addr = invoice_address(picking.partner_id.id)
+            %>
+            <table class="invoice">
+                <tr><td class="address_title">${_("Invoice address:")}</td></tr>
+                <tr><td>${invoice_addr.title and invoice_addr.title.name or ''} ${invoice_addr.name }</td></tr>
+                %if invoice_addr.contact_address:
+                    <% address_lines = invoice_addr.contact_address.split("\n") %>
+                    %for part in address_lines:
+                        %if part:
+                        <tr><td>${part}</td></tr>
+                        %endif
+                    %endfor
+                %endif
+            </table>
         </div>
         
         <h1 style="clear:both;">${_(u'Delivery Order') } ${picking.name}</h1>
