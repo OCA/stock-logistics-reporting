@@ -117,16 +117,19 @@ class PrintPick(report_sxw.rml_parse):
             objects.append(PickingAgregation(agr[0], agr[1], agreg[agr]))
         return super(PrintPick, self).set_context(objects, data, ids, report_type=report_type)
 
+
 class DeliverySlip(report_sxw.rml_parse):
-    
+
     def _get_invoice_address(self, picking):
         if picking.sale_id:
             return picking.sale_id.partner_invoice_id
         partner_obj = self.pool.get('res.partner')
-        invoice_address_id = picking.partner_id.address_get(adr_pref=['invoice'])['invoice']
+        invoice_address_id = picking.partner_id.address_get(
+            adr_pref=['invoice']
+        )['invoice']
         return partner_obj.browse(
             self.cr, self.uid, invoice_address_id)
-    
+
     def __init__(self, cr, uid, name, context):
         super(DeliverySlip, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
