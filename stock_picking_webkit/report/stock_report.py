@@ -3,6 +3,8 @@
 #
 #   Copyright (c) 2011-2013 Camptocamp SA (http://www.camptocamp.com)
 #   @author Nicolas Bessi
+#   Copyright (c) 2013 Agile Business Group (http://www.agilebg.com)
+#   @author Lorenzo Battistini
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -117,10 +119,11 @@ class PrintPick(report_sxw.rml_parse):
 
 class DeliverySlip(report_sxw.rml_parse):
     
-    def _get_invoice_address(self, partner_id):
+    def _get_invoice_address(self, picking):
+        if picking.sale_id:
+            return picking.sale_id.partner_invoice_id
         partner_obj = self.pool.get('res.partner')
-        partner = partner_obj.browse(self.cr, self.uid, partner_id)
-        invoice_address_id = partner.address_get(adr_pref=['invoice'])['invoice']
+        invoice_address_id = picking.partner_id.address_get(adr_pref=['invoice'])['invoice']
         return partner_obj.browse(
             self.cr, self.uid, invoice_address_id)
     

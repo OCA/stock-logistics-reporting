@@ -30,7 +30,7 @@
                 %endfor
             </table>
             <%
-            invoice_addr = invoice_address(picking.partner_id.id)
+            invoice_addr = invoice_address(picking)
             %>
             <table class="invoice">
                 <tr><td class="address_title">${_("Invoice address:")}</td></tr>
