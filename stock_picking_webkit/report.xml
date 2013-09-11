@@ -20,12 +20,12 @@
             report_type="webkit"
             header="False"
             webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
-    <report id="webkit_delivery_slip"
+    <report id="stock.report_picking_list_out"
             name="webkit.delivery_slip"
             auto="False"
             model="stock.picking.out"
             file="stock_picking_webkit/report/delivery_slip.mako"
-            string="Delivery Slip webkit"
+            string="Delivery Slip"
             report_type="webkit"
             header="True"
             webkit_header="base_headers_webkit.base_reports_portrait_header" />
