@@ -54,12 +54,16 @@
                 <td style="font-weight:bold;">${_("Origin")}</td>
                 <td style="font-weight:bold;">${_("Scheduled Date")}</td>
                 <td style="font-weight:bold;">${_('Weight')}</td>
+                <td style="font-weight:bold;">${_('Delivery Method')}</td>
+                <td style="font-weight:bold;">${_('Incoterm')}</td>
             </tr>
             <tr>
                 <td>${user.name}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
                 <td>${picking.weight}</td>
+                <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${picking.sale_id and picking.sale_id.incoterm and picking.sale_id.incoterm.name or ''}</td>
             </tr>
         </table>
     
