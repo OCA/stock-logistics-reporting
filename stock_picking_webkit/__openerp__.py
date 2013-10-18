@@ -22,7 +22,7 @@
 ##############################################################################
 
 {
-    'name': 'Picking report using Webkit Library',
+    'name': 'Picking reports using Webkit Library',
     'version': '1.0',
     'category': 'Reports/Webkit',
     'description': """
