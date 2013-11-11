@@ -3,6 +3,8 @@
 #
 #   Copyright (c) 2011-2013 Camptocamp SA (http://www.camptocamp.com)
 #   @author Nicolas Bessi
+#   Copyright (c) 2013 Agile Business Group (http://www.agilebg.com)
+#   @author Lorenzo Battistini
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,11 +22,15 @@
 ##############################################################################
 
 {
-    'name': 'Picking report using Webkit Library',
+    'name': 'Picking reports using Webkit Library',
     'version': '1.0',
     'category': 'Reports/Webkit',
     'description': """
-Replaces the legacy rml picking Order report by a brand new webkit report.
+Replaces the legacy rml picking Order report by brand new webkit reports.
+Three reports are provided:
+ - Aggregated pickings
+ - Aggregated deliveries
+ - Delivery Slip
     """,
     'author': 'Camptocamp',
     'website': 'http://www.openerp.com',
