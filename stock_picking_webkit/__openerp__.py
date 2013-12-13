@@ -37,5 +37,5 @@ Three reports are provided:
     'depends': ['base', 'report_webkit', 'base_headers_webkit', 'stock', 'delivery'],
     'data': ['report.xml'],
     'installable': True,
-    'active': False,
+    'auto_install': False,
 }
