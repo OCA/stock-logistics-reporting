@@ -25,7 +25,7 @@
             auto="False"
             model="stock.picking.out"
             file="stock_picking_webkit/report/delivery_slip.mako"
-            string="Delivery Slip"
+            string="Delivery Order"
             report_type="webkit"
             header="True"
             webkit_header="base_headers_webkit.base_reports_portrait_header" />

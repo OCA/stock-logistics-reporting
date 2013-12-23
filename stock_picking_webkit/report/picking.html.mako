@@ -19,10 +19,10 @@ ${_('Date')}: ${formatLang(str(date.today()), date=True)}  &nbsp;
   <caption><b><u>${aggr.src_stock.name} => ${aggr.dest_stock.name}</u></b></caption>
   <tr align="left">
     <th>${_('Product Code')}</th>
-    <th>${_('Picking')}</th>
+    <th>${_('Delivery Order')}</th>
     <th>${_('Product')}</th>
-    <th>${_('QTY')}</th>
-    <th>${_('origin')}</th>
+    <th>${_('Qty')}</th>
+    <th>${_('Origin')}</th>
     <th>${_('Carrier')}</th>
   </tr>
   %for move in aggr.moves_by_product():
