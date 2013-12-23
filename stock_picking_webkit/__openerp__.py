@@ -35,7 +35,9 @@ Three reports are provided:
     'author': 'Camptocamp',
     'website': 'http://www.openerp.com',
     'depends': ['base', 'report_webkit', 'base_headers_webkit', 'stock', 'delivery'],
-    'data': ['report.xml'],
+    'data': ['report.xml',
+             'stock_view.xml',
+             ],
     'installable': True,
     'auto_install': False,
 }
