@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="view_picking_out_form" model="ir.ui.view">
+            <field name="name">stock.picking.out.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="delivery.view_delivery_order_inherit_stock"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header//button[@string='Print Delivery Order']" position="attributes">
+                    <attribute name="name">%(stock.report_picking_list_out)d</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
