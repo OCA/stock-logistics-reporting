@@ -20,8 +20,8 @@ ${_('Date')}: ${formatLang(str(date.today()), date=True)}  &nbsp;
   <tr align="left">
     <th>${_('Product Code')}</th>
     <th>${_('Product')}</th>
-    <th>${_('QTY')}</th>
-    <th>${_('origin')}</th>
+    <th>${_('Qty')}</th>
+    <th>${_('Origin')}</th>
     <th>${_('Carrier')}</th>
   </tr>
   %for move in aggr.moves_by_sale_order():
@@ -36,7 +36,7 @@ ${_('Date')}: ${formatLang(str(date.today()), date=True)}  &nbsp;
 </table>
 <br/>
 <table style="border:solid 1px" width="100%">
-  <caption><b><u>${_('Products summary')}</u></b></caption>
+  <caption><b><u>${_('Products Summary')}</u></b></caption>
   <tr align="left">
     <th>${_('Product Code')}</th>
     <th>${_('Product')}</th>
