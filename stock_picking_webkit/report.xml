@@ -27,8 +27,13 @@
             file="stock_picking_webkit/report/delivery_slip.mako"
             string="Delivery Order"
             report_type="webkit"
-            header="True"
-            webkit_header="base_headers_webkit.base_reports_portrait_header" />
+            header="True"/>
+
+    <data noupdate="1">
+        <record id="stock.report_picking_list_out" model="ir.actions.report.xml">
+           <field name="webkit_header" ref="base_headers_webkit.base_reports_portrait_header"></field>
+        </record>
+   </data>
 
   </data>
 </openerp>
