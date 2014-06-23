@@ -9,8 +9,7 @@
             file="stock_picking_webkit/report/picking.html.mako"
             string="Aggregated pickings"
             report_type="webkit"
-            header="False"
-            webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
+            header="False"/>
     <report id="webkit_aggregated_delivery"
             name="webkit.aggregated_delivery"
             auto="False"
@@ -18,8 +17,7 @@
             file="stock_picking_webkit/report/delivery.html.mako"
             string="Aggregated deliveries"
             report_type="webkit"
-            header="False"
-            webkit_header="base_headers_webkit.base_minimum_reports_portrait_header" />
+            header="False"/>
     <report id="stock.report_picking_list_out"
             name="webkit.delivery_slip"
             auto="False"
@@ -27,8 +25,26 @@
             file="stock_picking_webkit/report/delivery_slip.mako"
             string="Delivery Order"
             report_type="webkit"
-            header="True"
-            webkit_header="base_headers_webkit.base_reports_portrait_header" />
+            header="True"/>
 
   </data>
+
+    <data noupdate="1">
+        <record id="webkit_aggregated_picking" model="ir.actions.report.xml">
+           <field name="webkit_header" ref="base_headers_webkit.base_minimum_reports_portrait_header"></field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="webkit_aggregated_delivery" model="ir.actions.report.xml">
+           <field name="webkit_header" ref="base_headers_webkit.base_minimum_reports_portrait_header"></field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="stock.report_picking_list_out" model="ir.actions.report.xml">
+           <field name="webkit_header" ref="base_headers_webkit.base_reports_portrait_header"></field>
+        </record>
+   </data>
+
 </openerp>
