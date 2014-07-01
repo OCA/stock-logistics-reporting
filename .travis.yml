@@ -23,6 +23,7 @@ install:
     - pip install coveralls flake8
     - pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
     - pip install ${ODOO}
+    - bzr checkout --lightweight lp:webkit-utils/7.0 ~/webkit-utils
 
 # Create databae
 # Pre-install modules and dependencies
@@ -37,8 +38,8 @@ before_script:
 script:
     - flake8 . --max-line-length=120 --filename=__init__.py --ignore=F401
     - flake8 . --max-line-length=120 --exclude=__init__.py
-    - odoo.py -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and not x.endswith(".unported")))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons
-    - coverage run $(which odoo.py) -d test --test-enable --log-level=test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and not x.endswith("_unported")))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons
+    - odoo.py -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and not x.endswith(".unported")))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons,~/webkit-utils
+    - coverage run $(which odoo.py) -d test --test-enable --log-level=test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and not x.endswith("_unported")))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons,~/webkit-utils
 
 after_success:
   coveralls
