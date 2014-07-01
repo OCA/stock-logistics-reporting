@@ -38,6 +38,6 @@ Three reports are provided:
     'data': ['report.xml',
              'stock_view.xml',
              ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
