@@ -2,7 +2,6 @@
 <openerp>
   <data>
 
-
     <report id="stock.bill_of_lading_out"
             name="webkit.bill_of_lading_out"
             auto="False"
