@@ -1,0 +1,103 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* bill_of_lading_webkit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-09 15:06+0000\n"
+"PO-Revision-Date: 2014-05-09 11:14-0500\n"
+"Last-Translator: Marc Cassuto <marc.cassuto@savoirfairelinux.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:58
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:56
+msgid "Origin"
+msgstr "Origine"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:59
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:57
+msgid "Scheduled Date"
+msgstr "Date prévue"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:76
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:74
+msgid "Description"
+msgstr "Description"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:20
+msgid "Ship to:"
+msgstr "Livré à:"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:61
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:59
+msgid "Delivery Method"
+msgstr "Méthode de livraison"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:53
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:51
+msgid "Delivery Order"
+msgstr "Ordre de livraison"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:75
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:73
+msgid "Item"
+msgstr "Item"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:77
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:75
+msgid "Serial Number"
+msgstr "N° lot / N° série"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:57
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:55
+msgid "Contact"
+msgstr "Contact"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:78
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:76
+msgid "Weight (kg)"
+msgstr "Poids (kg)"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:40
+msgid "Ship to :"
+msgstr "Livré à:"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:79
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:77
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:21
+msgid "From :"
+msgstr "De :"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_in.mako:60
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:58
+msgid "Total Weight"
+msgstr "Poid total"
+
+#. module: bill_of_lading_webkit
+#: report:addons/bill_of_lading_webkit/report/bol_out.mako:38
+msgid "Customer name & address:"
+msgstr "Nom et adresse du client:"
+

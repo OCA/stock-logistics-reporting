@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="view_picking_warehouse_form" model="ir.ui.view">
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/group/group[1]/field[last()]" position="after">
+          <field name="manual_warehouse_id" widget="selection" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_picking_warehouse_out_form" model="ir.ui.view">
+      <field name="model">stock.picking.out</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/group/group[1]/field[last()]" position="after">
+          <field name="manual_warehouse_id" widget="selection" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="view_picking_warehouse_in_form" model="ir.ui.view">
+      <field name="model">stock.picking.in</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/group/group[1]/field[last()]" position="after">
+          <field name="manual_warehouse_id" widget="selection" />
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>
