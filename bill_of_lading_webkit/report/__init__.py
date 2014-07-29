@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+###############################################################################
 #
 #   Copyright (c) 2011-2013 Camptocamp SA (http://www.camptocamp.com)
 #   @author Nicolas Bessi
@@ -17,5 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+###############################################################################
+
 from . import stock_report

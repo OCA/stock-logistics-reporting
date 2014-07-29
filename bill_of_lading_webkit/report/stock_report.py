@@ -22,7 +22,6 @@
 ###############################################################################
 
 from report import report_sxw
-import pooler
 import time
 
 
