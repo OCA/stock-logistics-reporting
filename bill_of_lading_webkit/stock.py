@@ -22,7 +22,7 @@
 from openerp.osv import fields, orm
 
 
-class stock_picking_out_warehouse(orm.Model):
+class StockPickingOutWarehouse(orm.Model):
     _inherit = "stock.picking.out"
     _columns = {
         'manual_warehouse_id': fields.many2one(
@@ -38,7 +38,7 @@ class stock_picking_out_warehouse(orm.Model):
     }
 
 
-class stock_picking_in_warehouse(orm.Model):
+class StockPickingInWarehouse(orm.Model):
     _inherit = "stock.picking.in"
     _columns = {
         'manual_warehouse_id': fields.many2one(
@@ -54,7 +54,7 @@ class stock_picking_in_warehouse(orm.Model):
     }
 
 
-class stock_picking_warehouse(orm.Model):
+class StockPickingWarehouse(orm.Model):
     _inherit = "stock.picking"
     _columns = {
         'manual_warehouse_id': fields.many2one(

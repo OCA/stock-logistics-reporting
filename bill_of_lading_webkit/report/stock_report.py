@@ -41,7 +41,8 @@ class BillOfLadingOut(report_sxw.rml_parse):
         # By default, print the warehouse selected manually
         if picking.manual_warehouse_id:
             return picking.manual_warehouse_id.partner_id
-        # if not set, print the shipping address of the default company's warehouse
+        # if not set, print the shipping address of the default company's
+        # warehouse
         partner_obj = self.pool.get('res.partner')
         warehouse_address_id = picking.company_id.partner_id.address_get(
             adr_pref=['shipping']
@@ -65,13 +66,15 @@ report_sxw.report_sxw('report.webkit.bill_of_lading_out',
 
 class BillOfLadingIn(report_sxw.rml_parse):
     def _get_warehouse_address(self, picking):
-        # By default, print the warehouse selected from the related purchase order
+        # By default, print the warehouse selected from the related
+        # purchase order
         if picking.purchase_id:
             return picking.purchase_id.warehouse_id.partner_id
         # else, print the warehouse selected manually
         if picking.manual_warehouse_id:
             return picking.manual_warehouse_id.partner_id
-        # if none of the above, print the shipping address of the default company's warehouse
+        # if none of the above, print the shipping address of the default
+        # company's warehouse
         partner_obj = self.pool.get('res.partner')
         warehouse_address_id = picking.company_id.partner_id.address_get(
             adr_pref=['shipping']
