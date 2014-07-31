@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <report id="stock.bill_of_lading_out_agg"
+            name="webkit.aggregate_shipping"
+            auto="False"
+            model="stock.picking.out"
+            file="aggregated_shipment_documents/report/bol_out_agg.mako"
+            string="Aggregate Shipment Documents"
+            report_type="webkit"
+            header="True"
+            webkit_header="base_headers_webkit.base_reports_portrait_header"/>
+  </data>
+</openerp>
