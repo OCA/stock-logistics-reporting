@@ -113,7 +113,7 @@ class PrintPick(report_sxw.rml_parse):
 
     def set_context(self, objects, data, ids, report_type=None):
         """Return res.partner.category"""
-        #!! data form is manually set in wizard
+        # data form is manually set in wizard
         agreg = {}
         for pick in objects:
             for move in pick.move_lines:
