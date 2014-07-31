@@ -61,7 +61,7 @@ Contributors
         'base_headers_webkit',
         'stock',
         'delivery',
-        'bill_of_lading_webkit',
+        'stock_bill_of_lading_webkit',
     ],
     'data': [
         'report.xml'
