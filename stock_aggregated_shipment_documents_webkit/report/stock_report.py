@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# ##############################################################################
+###############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    This module copyright (C) 2014 Savoir-faire Linux
@@ -56,7 +56,8 @@ class AggregatedShipping(BillOfLadingOut):
         return partner
 
 
-report_sxw.report_sxw('report.webkit.aggregate_shipping',
-                      'stock.picking',
-                      'aggregated_shipment_documents/report/aggregate_shipping.mako',
-                      parser=AggregatedShipping)
+report_sxw.report_sxw(
+    'report.webkit.aggregate_shipping',
+    'stock.picking',
+    'stock_aggregated_shipment_documents/report/aggregate_shipping.mako',
+    parser=AggregatedShipping)

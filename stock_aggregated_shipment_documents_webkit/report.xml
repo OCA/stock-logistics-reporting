@@ -5,7 +5,7 @@
             name="webkit.aggregate_shipping"
             auto="False"
             model="stock.picking.out"
-            file="aggregated_shipment_documents/report/bol_out_agg.mako"
+            file="stock_aggregated_shipment_documents/report/bol_out_agg.mako"
             string="Aggregate Shipment Documents"
             report_type="webkit"
             header="True"
