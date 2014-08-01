@@ -21,7 +21,7 @@
 ###############################################################################
 
 from openerp.report import report_sxw
-from bill_of_lading_webkit.report.stock_report import BillOfLadingOut
+from stock_bill_of_lading_webkit.report.stock_report import BillOfLadingOut
 
 
 class AggregatedShipping(BillOfLadingOut):
