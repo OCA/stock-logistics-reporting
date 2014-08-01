@@ -59,7 +59,7 @@ class BillOfLadingOut(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.webkit.bill_of_lading_out',
                       'stock.picking',
-                      'addons/bill_of_lading_webkit/report/bol_out.mako',
+                      'addons/stock_bill_of_lading_webkit/report/bol_out.mako',
                       parser=BillOfLadingOut)
 
 
@@ -91,5 +91,5 @@ class BillOfLadingIn(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.webkit.bill_of_lading_in',
                       'stock.picking',
-                      'addons/bill_of_lading_webkit/report/bol_in.mako',
+                      'addons/stock_bill_of_lading_webkit/report/bol_in.mako',
                       parser=BillOfLadingIn)
