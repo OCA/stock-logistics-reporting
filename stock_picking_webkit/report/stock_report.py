@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+###############################################################################
 #
 #   Copyright (c) 2011-2013 Camptocamp SA (http://www.camptocamp.com)
 #   @author Nicolas Bessi
@@ -19,11 +19,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+###############################################################################
 
 import operator
 from report import report_sxw
 import pooler
 import time
+
 
 class NullMove(object):
     """helper class to generate empty lines in the delivery report"""
@@ -32,8 +34,10 @@ class NullMove(object):
         self.picking_id = NullObj()
         self.product_qty = ''
 
+
 class NullObj(object):
-    """the null obj has any attribute you want with an empty string as the value"""
+    """the null obj has any attribute you want with an empty string
+    as the value"""
     def __getattr__(self, attr):
         return ''
 
@@ -52,11 +56,14 @@ class PickingAgregation(object):
         return hash((self.src_stock.id, self.dest_stock.id))
 
     def __eq__(self, other):
-        return (self.src_stock.id, self.dest_stock.id) == (other.src_stock.id, other.dest_stock.id)
+        return (self.src_stock.id,
+                self.dest_stock.id) == (other.src_stock.id,
+                                        other.dest_stock.id)
 
     def moves_by_product(self):
         """iterate over moves sorted by product default_code"""
-        return sorted(self.stock_moves, key=operator.attrgetter('product_id.default_code'))
+        return sorted(self.stock_moves,
+                      key=operator.attrgetter('product_id.default_code'))
 
     def moves_by_sale_order(self):
         """iterate over moves sorted by sale order name
@@ -65,7 +72,8 @@ class PickingAgregation(object):
         the report displays an empty line
         """
         origin = None
-        for move in sorted(self.stock_moves, key=operator.attrgetter('picking_id.origin')):
+        for move in sorted(self.stock_moves,
+                           key=operator.attrgetter('picking_id.origin')):
             if origin is None:
                 origin = move.picking_id.origin
             else:
@@ -89,6 +97,7 @@ class PickingAgregation(object):
         for p_code in sorted(products):
             yield products[p_code], product_qty[p_code]
 
+
 class PrintPick(report_sxw.rml_parse):
 
     def __init__(self, cursor, uid, name, context):
@@ -104,7 +113,7 @@ class PrintPick(report_sxw.rml_parse):
 
     def set_context(self, objects, data, ids, report_type=None):
         """Return res.partner.category"""
-        #!! data form is manually set in wizard
+        # data form is manually set in wizard
         agreg = {}
         for pick in objects:
             for move in pick.move_lines:
@@ -115,7 +124,8 @@ class PrintPick(report_sxw.rml_parse):
         for agr in agreg:
             print agr
             objects.append(PickingAgregation(agr[0], agr[1], agreg[agr]))
-        return super(PrintPick, self).set_context(objects, data, ids, report_type=report_type)
+        return super(PrintPick, self).set_context(objects, data, ids,
+                                                  report_type=report_type)
 
 
 class DeliverySlip(report_sxw.rml_parse):
@@ -135,7 +145,7 @@ class DeliverySlip(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
             'invoice_address': self._get_invoice_address,
-            })
+        })
 
 report_sxw.report_sxw('report.webkit.aggregated_picking',
                       'stock.picking',
