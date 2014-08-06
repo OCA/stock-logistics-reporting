@@ -58,6 +58,6 @@ class AggregatedShipping(BillOfLadingOut):
 
 report_sxw.report_sxw(
     'report.webkit.aggregate_shipping',
-    'stock.picking',
-    'stock_aggregated_shipment_documents/report/aggregate_shipping.mako',
+    'stock.picking.out',
+    'stock_aggregated_shipment_documents_webkit/report/bol_out_agg.mako',
     parser=AggregatedShipping)
