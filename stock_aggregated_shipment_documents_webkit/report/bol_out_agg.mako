@@ -169,56 +169,11 @@
             setLang(picking.partner_id.lang)
             invoice_addr = invoice_address(picking)
             %>
-            <table class="recipient">
-                <tr><td class="address_title">${_("Contact info:")}</td></tr>
-                %if invoice_addr.phone:
-                    <tr><td><b>${_("Phone:")}</b> ${invoice_addr.phone }</td></tr>
-                %endif
-                %if invoice_addr.mobile:
-                    <tr><td><b>${_("Cell:")}</b> ${invoice_addr.mobile }</td></tr>
-                %endif
-                %if invoice_addr.email:
-                    <tr><td><b>${_("Email:")}</b> ${invoice_addr.email }</td></tr>
-                %endif
-            </table>
             <table class="invoice">
                 <tr><td class="address_title">${_("Customer name & address:")}</td></tr>
                 <tr><td>${invoice_addr.title and invoice_addr.title.name or ''} ${invoice_addr.name }</td></tr>
                 %if invoice_addr.contact_address:
                     <% address_lines = invoice_addr.contact_address.split("\n") %>
-                    %for part in address_lines:
-                        %if part:
-                        <tr><td>${part}</td></tr>
-                        %endif
-                    %endfor
-                %endif
-            </table>
-        </div>
-        <div class="address">
-            <%
-            picking_addr = picking_address(picking)
-            %>
-            <table class="recipient">
-                <tr><td class="address_title">${_("Ship to:")}</td></tr>
-                %if picking.partner_id.parent_id:
-                <tr><td>${picking.partner_id.parent_id.name or ''}</td></tr>
-                <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
-                <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
-                %else:
-                <tr><td >${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
-                <% address_lines = picking.partner_id.contact_address.split("\n") %>
-                %endif
-                %for part in address_lines:
-                    %if part:
-                    <tr><td>${part}</td></tr>
-                    %endif
-                %endfor
-            </table>
-            <table class="invoice">
-                <tr><td class="address_title">${_("Pick from:")}</td></tr>
-                <tr><td>${picking_addr.title and picking_addr.title.name or ''} ${picking_addr.name }</td></tr>
-                %if picking_addr.contact_address:
-                    <% address_lines = picking_addr.contact_address.split("\n") %>
                     %for part in address_lines:
                         %if part:
                         <tr><td>${part}</td></tr>
