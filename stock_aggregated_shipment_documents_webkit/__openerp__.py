@@ -64,7 +64,9 @@ Contributors
         'stock_bill_of_lading_webkit',
     ],
     'data': [
-        'report.xml'
+        'report.xml',
+        'stock_view.xml',
+        'mail_template.xml',
     ],
     'installable': True,
     'auto_install': False,
