@@ -34,11 +34,17 @@
     def carriage_returns(text):
         return text.replace('\n', '<br />')
 
-    def get_line_price(line):
+    def get_price_total(line):
         if line.sale_line_id:
             return line.sale_line_id.price_subtotal
         else:
             return line.product_qty * line.product_id.list_price
+
+    def get_price_unit(line):
+        if line.sale_line_id:
+            return line.sale_line_id.price_unit
+        else:
+            return line.product_id.list_price
 
     picking = merge_picking(objects)
     inv = picking
@@ -229,9 +235,9 @@
                     <td style="text-align:left; " >${ line.product_id.name }</td>
                     <td style="text-align:left; " >${ line.product_id.description or ''}</td>
                     <td style="text-align:left; " >${formatLang(line.product_qty or 0.0)} ${line.product_uom.name}</td>
-                    <td style="text-align:right; " >${formatLang(line.product_id.list_price)}</td>
+                    <td style="text-align:right; " >${formatLang(get_price_unit(line))}</td>
                     <td style="text-align:right; " >${line.product_uos.name}</td>
-                    <td class="amount" >${formatLang(get_line_price(line))}</td>
+                    <td class="amount" >${formatLang(get_price_total(line))}</td>
                 </tr>
             %endfor
         </table>
@@ -244,7 +250,7 @@
             ${_("Net :")}
           </th>
           <td class="amount total_sum_cell">
-            ${formatLang(sum([get_line_price(line) for line in picking.move_lines]))}
+            ${formatLang(sum([get_price_total(line) for line in picking.move_lines]))}
           </td>
         </tr>
         <tr>
@@ -264,7 +270,7 @@
             ${_("Total:")}
           </th>
           <td class="amount total_sum_cell">
-            <b>${formatLang(sum([line.product_qty * line.product_id.list_price for line in picking.move_lines]))}</b>
+            <b>${formatLang(sum([get_price_total(line) for line in picking.move_lines]))}</b>
           </td>
         </tr>
         </table>
