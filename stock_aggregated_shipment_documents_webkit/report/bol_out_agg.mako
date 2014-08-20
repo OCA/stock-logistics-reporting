@@ -4,6 +4,19 @@
     <style type="text/css">
         ${css}
 
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.left {
+    text-align: right;
+}
+
+
 .list_main_footers td,
 .list_main_footers th {
     border-style: none;
@@ -20,6 +33,12 @@
     from datetime import date
     def carriage_returns(text):
         return text.replace('\n', '<br />')
+
+    def get_line_price(line):
+        if line.sale_line_id:
+            return line.sale_line_id.price_subtotal
+        else:
+            return line.product_qty * line.product_id.list_price
 
     picking = merge_picking(objects)
     inv = picking
@@ -95,28 +114,36 @@
 
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Customer Ref")}</td>
-                <td style="font-weight:bold;">${_("Origin")}</td>
-                <td style="font-weight:bold;">${_("Scheduled Date")}</td>
-                <td style="font-weight:bold;">${_('Total Weight')}</td>
-                <td style="font-weight:bold;">${_('Delivery Method')}</td>
+                <th>${_("Customer Ref")}</th>
+                <th>${_("Origin")}</th>
+                <th>${_("Delivery Date")}</th>
+                <th>${_('Total Weight')}</th>
             </tr>
             <tr>
                 <td>${picking.sale_id.client_order_ref if picking.sale_id else ''}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
                 <td>${sum([line.weight for line in objects])}</td>
-                <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
+            </tr>
+            <tr>
+                <th colspan="2">${_('Delivery Method')}</th>
+                <th>${_('Pickup Date')}</td>
+                <th>${_('Number of Packages')}</th>
+            </tr>
+            <tr>
+                <td colspan="2">${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${formatLang(picking.pickup_date, date=True) or ''}</td>
+                <td>${picking.number_of_packages}</td>
             </tr>
         </table>
 
         <table class="list_sale_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th style="text-align:left; ">${_("Item")}</th>
-                    <th style="text-align:left; ">${_("Description")}</th>
-                    <th style="text-align:left; ">${_("Serial Number")}</th>
-                    <th style="text-align:right; ">${_("Weight (kg)")}</th>
+                    <th class="left">${_("Item")}</th>
+                    <th class="left">${_("Description")}</th>
+                    <th class="left">${_("Serial Number")}</th>
+                    <th class="right">${_("Weight (kg)")}</th>
                     <th class="amount">${_("Quantity")}</th>
                 </tr>
             </thead>
@@ -126,10 +153,10 @@
                 weight = line.product_id.weight * line.product_qty
                 %>
                 <tr class="line">
-                    <td style="text-align:left; " >${ line.product_id.name }</td>
-                    <td style="text-align:left; " >${ line.product_id.description or ''}</td>
-                    <td style="text-align:left; " >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
-                    <td style="text-align:right; " >${ formatLang(weight) }</td>
+                    <td class="left" >${ line.product_id.name }</td>
+                    <td class="left" >${ line.product_id.description or ''}</td>
+                    <td class="left" >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
+                    <td class="right" >${ formatLang(weight) }</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
                 </tr>
             %endfor
@@ -137,34 +164,24 @@
 
         <p style="page-break-after: always"/>
         <!-- account_commercial_invoice -->
-    <div class="address">
-      <table class="recipient">
-        <% address_lines = inv.partner_id.contact_address.split("\n") %>
-        %for part in address_lines:
-            %if part:
-            <tr><td>${part}</td></tr>
-            %endif
-        %endfor
-      </table>
-    </div>
     <h1 style="clear: both; padding-top: 20px;">
         ${_("Commercial Invoice")}
     </h1>
 
     <table class="basic_table" width="100%">
         <tr>
-            <th class="date">${_("Invoice Date")}</td>
-            <th class="date">${_("Due Date")}</td>
-            <th style="text-align:center;width:120px;">${_("Responsible")}</td>
-            <th style="text-align:center">${_("Payment Term")}</td>
-            <th style="text-align:center">${_("Your reference")}</td>
+            <th class="date">${_("Invoice Date")}</th>
+            <th class="date">${_("Due Date")}</th>
+            <th class="center">${_("Payment Term")}</th>
+            <th class="center">${_("Our reference")}</th>
+            <th class="center">${_('Customer Ref')}</th>
         </tr>
         <tr>
             <td class="date">${formatLang(str(date.today()), date=True)}</td>
             <td class="date">${formatLang(str(date.today()), date=True)}</td>
-            <td style="text-align:center;width:120px;">${current_user().name}</td>
-            <td style="text-align:center">${inv.sale_id.payment_term and inv.sale_id.payment_term.note or ''}</td>
-            <td style="text-align:center">${inv.name or ''}</td>
+            <td class="center">${inv.sale_id and inv.sale_id.payment_term and inv.sale_id.payment_term.note or ''}</td>
+            <td class="center">${inv.name or ''}</td>
+            <td class="center">${inv.sale_id and inv.sale_id.client_order_ref or ''}</td>
         </tr>
     </table>
 
@@ -177,11 +194,11 @@
         <table class="list_sale_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th style="text-align:left; ">${_("Item")}</th>
-                    <th style="text-align:left; ">${_("Description")}</th>
-                    <th style="text-align:left; ">${_("Qty")}</th>
-                    <th style="text-align:right; ">${_("Unit Price")}</th>
-                    <th style="text-align:right; ">${_("UoM")}</th>
+                    <th class="left">${_("Item")}</th>
+                    <th class="left">${_("Description")}</th>
+                    <th class="left">${_("Qty")}</th>
+                    <th class="right">${_("Unit Price")}</th>
+                    <th class="right">${_("UoM")}</th>
                     <th class="amount">${_("Net Sub Total")}</th>
                 </tr>
             </thead>
@@ -196,7 +213,7 @@
                     <td style="text-align:left; " >${formatLang(line.product_qty or 0.0)} ${line.product_uom.name}</td>
                     <td style="text-align:right; " >${formatLang(line.product_id.list_price)}</td>
                     <td style="text-align:right; " >${line.product_uos.name}</td>
-                    <td class="amount" >${formatLang(line.product_qty * line.product_id.list_price)}</td>
+                    <td class="amount" >${formatLang(get_line_price(line))}</td>
                 </tr>
             %endfor
         </table>
@@ -209,7 +226,7 @@
             ${_("Net :")}
           </th>
           <td class="amount total_sum_cell">
-            ${formatLang(sum([line.product_qty * line.product_id.list_price for line in picking.move_lines]))}
+            ${formatLang(sum([get_line_price(line) for line in picking.move_lines]))}
           </td>
         </tr>
         <tr>
