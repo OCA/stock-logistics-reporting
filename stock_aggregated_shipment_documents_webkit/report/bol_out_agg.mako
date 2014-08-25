@@ -138,7 +138,7 @@
             </tr>
             <tr>
                 <td colspan="2">${picking.carrier_id and picking.carrier_id.name or ''}</td>
-                <td>${formatLang(picking.pickup_date, date=True) or ''}</td>
+                <td>${formatLang(picking.pickup_date, date_time=True) or ''}</td>
                 <td>${picking.number_of_packages}</td>
             </tr>
         </table>
