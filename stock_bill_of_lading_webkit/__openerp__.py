@@ -57,7 +57,7 @@ Contributors
     'depends': [
         'base',
         'base_headers_webkit',
-        'delivery'
+        'delivery',
         'pickup_date_on_delivery_order',
         'report_webkit',
         'stock',
