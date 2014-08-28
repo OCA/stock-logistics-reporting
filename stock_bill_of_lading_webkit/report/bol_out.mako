@@ -26,6 +26,9 @@
     %>
     %for picking in objects:
         <% setLang(picking.partner_id.lang) %>
+        <%
+        shipping_addr = shipping_address(picking)
+        %>
         <div class="address">
             <table class="recipient">
                 <tr><td class="address_title">${_("Contact info for shipping:")}</td></tr>
@@ -58,19 +61,15 @@
         <div class="address">
             <table class="recipient">
                 <tr><td class="address_title">${_("Ship to:")}</td></tr>
-                %if picking.partner_id.parent_id:
-                <tr><td>${picking.partner_id.parent_id.name or ''}</td></tr>
-                <tr><td>${picking.partner_id.parent_id.title and picking.partner_id.parent_id.title.name or ''} ${picking.partner_id.parent_id.name }</td></tr>
-                <% address_lines = picking.partner_id.parent_id.contact_address.split("\n")[1:] %>
-                %else:
-                <tr><td >${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
-                <% address_lines = picking.partner_id.contact_address.split("\n") %>
+                <tr><td>${shipping_addr.title and shipping_addr.title.name or ''} ${shipping_addr.name }</td></tr>
+                %if shipping_addr.contact_address:
+                    <% address_lines = shipping_addr.contact_address.split("\n") %>
+                    %for part in address_lines:
+                        %if part:
+                        <tr><td>${part}</td></tr>
+                        %endif
+                    %endfor
                 %endif
-                %for part in address_lines:
-                    %if part:
-                    <tr><td>${part}</td></tr>
-                    %endif
-                %endfor
             </table>
             <%
             picking_addr = picking_address(picking)
