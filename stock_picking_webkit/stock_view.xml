@@ -4,6 +4,17 @@
         <record id="view_picking_out_form" model="ir.ui.view">
             <field name="name">stock.picking.out.form</field>
             <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header//button[@string='Print Delivery Slip']" position="attributes">
+                    <attribute name="states">""</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_delivery_order_inherit_stock" model="ir.ui.view">
+            <field name="name">stock.picking.out.form</field>
+            <field name="model">stock.picking.out</field>
             <field name="inherit_id" ref="delivery.view_delivery_order_inherit_stock"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/header//button[@string='Print Delivery Order' and @states='confirmed,assigned']" position="attributes">
