@@ -126,7 +126,6 @@ class PrintPick(report_sxw.rml_parse):
                     agreg.setdefault(key, []).append(move)
         objects = []
         for agr in agreg:
-            print agr
             objects.append(PickingAgregation(agr[0], agr[1], agreg[agr]))
         return super(PrintPick, self).set_context(objects, data, ids,
                                                   report_type=report_type)
