@@ -26,6 +26,7 @@ import time
 
 
 class BillOfLadingOut(report_sxw.rml_parse):
+
     def _get_invoice_address(self, picking):
         if picking.sale_id:
             return picking.sale_id.partner_invoice_id
@@ -64,6 +65,7 @@ report_sxw.report_sxw('report.webkit.bill_of_lading_out',
 
 
 class BillOfLadingIn(report_sxw.rml_parse):
+
     def _get_warehouse_address(self, picking):
         # By default, print the warehouse selected from the related
         # purchase order

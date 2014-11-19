@@ -28,7 +28,9 @@ import time
 
 
 class NullMove(object):
+
     """helper class to generate empty lines in the delivery report"""
+
     def __init__(self):
         self.product_id = NullObj()
         self.picking_id = NullObj()
@@ -36,8 +38,10 @@ class NullMove(object):
 
 
 class NullObj(object):
+
     """the null obj has any attribute you want with an empty string
     as the value"""
+
     def __getattr__(self, attr):
         return ''
 
@@ -122,7 +126,6 @@ class PrintPick(report_sxw.rml_parse):
                     agreg.setdefault(key, []).append(move)
         objects = []
         for agr in agreg:
-            print agr
             objects.append(PickingAgregation(agr[0], agr[1], agreg[agr]))
         return super(PrintPick, self).set_context(objects, data, ids,
                                                   report_type=report_type)
