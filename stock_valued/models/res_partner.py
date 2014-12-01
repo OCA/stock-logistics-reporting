@@ -19,8 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-from openerp.addons.decimal_precision import decimal_precision as dp
+from openerp import models, fields
 
 
 class ResPartner(models.Model):

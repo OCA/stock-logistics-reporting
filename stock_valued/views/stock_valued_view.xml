@@ -27,7 +27,9 @@
                         <field name="sale_discount"/>
                     </group>
                     <group>
-                        <field name="sale_price_subtotal"/>
+                        <field name="sale_price_untaxed"/>
+                        <field name="sale_taxes"/>
+                        <field name="sale_subtotal"/>
                     </group>
                 </xpath>
             </field>

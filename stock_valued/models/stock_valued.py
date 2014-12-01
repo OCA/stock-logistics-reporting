@@ -31,9 +31,15 @@ class StockPicking(models.Model):
                  'sale_id.amount_total')
     def _compute_amount(self):
         if self.sale_id:
-            self.amount_untaxed = self.sale_id.amount_untaxed
-            self.amount_tax = self.sale_id.amount_tax
-            self.amount_total = self.sale_id.amount_total
+            if self.pack_operation_ids:
+                for operation in self.pack_operation_ids:
+                    self.amount_untaxed += operation.sale_subtotal
+                    self.amount_tax += operation.sale_taxes
+                self.amount_total = self.amount_untaxed + self.amount_tax
+            else:
+                self.amount_untaxed = self.sale_id.amount_untaxed
+                self.amount_tax = self.sale_id.amount_tax
+                self.amount_total = self.sale_id.amount_total
 
     amount_untaxed = fields.Float(compute='_compute_amount',
                                   digits_compute=dp.get_precision('Account'),
@@ -50,26 +56,77 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     @api.one
-    @api.depends('procurement_id.sale_line_id.price_unit',
+    @api.depends('procurement_id.sale_line_id',
+                 'procurement_id.sale_line_id.price_unit',
                  'procurement_id.sale_line_id.discount',
-                 'procurement_id.sale_line_id.price_subtotal')
+                 'procurement_id.sale_line_id.price_subtotal',
+                 'procurement_id.sale_line_id.price_reduce',
+                 'procurement_id.sale_line_id.order_id')
     def _sale_prices(self):
         if self.procurement_id.sale_line_id:
             sale_line = self.procurement_id.sale_line_id
-            self.sale_price_subtotal = sale_line.price_subtotal
+            self.sale_taxes = sale_line.order_id._amount_line_tax(sale_line)
+            self.sale_price_untaxed = sale_line.price_reduce
             self.sale_price_unit = sale_line.price_unit
             self.sale_discount = sale_line.discount
+            self.sale_subtotal = sale_line.price_subtotal
         else:
-            self.sale_price_subtotal = 0
+            self.sale_taxes = 0
+            self.sale_price_untaxed = 0
+            self.sale_subtotal = 0
             self.sale_price_unit = 0
             self.sale_discount = 0
 
-    sale_price_subtotal = fields.Float(
+    sale_subtotal = fields.Float(
         compute='_sale_prices', digits_compute=dp.get_precision('Account'),
         string='Subtotal')
     sale_price_unit = fields.Float(compute='_sale_prices',
                                    digits_compute=dp.get_precision('Account'),
                                    string='Price')
+    sale_price_untaxed = fields.Float(
+        compute='_sale_prices', digits_compute=dp.get_precision('Account'),
+        string='Price Untaxed')
+    sale_taxes = fields.Float(compute='_sale_prices',
+                              digits_compute=dp.get_precision('Account'),
+                              string='Total Taxes')
+    sale_discount = fields.Float(compute='_sale_prices',
+                                 digits_compute=dp.get_precision('Account'),
+                                 string='Discount (%)')
+
+
+class StockPackOperation(models.Model):
+    _inherit = "stock.pack.operation"
+
+    @api.one
+    def _sale_prices(self):
+        self.sale_taxes = 0
+        self.sale_price_untaxed = 0
+        self.sale_subtotal = 0
+        self.sale_price_unit = 0
+        self.sale_discount = 0
+        if self.linked_move_operation_ids:
+            move = self.linked_move_operation_ids[0].move_id
+            if move.procurement_id.sale_line_id:
+                self.sale_taxes = round((move.sale_taxes / move.product_qty)
+                                        * self.product_qty, 2)
+                self.sale_price_untaxed = move.sale_price_untaxed
+                self.sale_price_unit = move.sale_price_unit
+                self.sale_discount = move.sale_discount
+                self.sale_subtotal = round(self.sale_price_untaxed *
+                                           self.product_qty, 2)
+
+    sale_subtotal = fields.Float(
+        compute='_sale_prices', digits_compute=dp.get_precision('Account'),
+        string='Subtotal')
+    sale_price_unit = fields.Float(compute='_sale_prices',
+                                   digits_compute=dp.get_precision('Account'),
+                                   string='Price')
+    sale_price_untaxed = fields.Float(
+        compute='_sale_prices', digits_compute=dp.get_precision('Account'),
+        string='Price Untaxed')
+    sale_taxes = fields.Float(compute='_sale_prices',
+                              digits_compute=dp.get_precision('Account'),
+                              string='Total Taxes')
     sale_discount = fields.Float(compute='_sale_prices',
                                  digits_compute=dp.get_precision('Account'),
                                  string='Discount (%)')
