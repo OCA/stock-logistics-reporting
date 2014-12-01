@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data> 
+
+        <record model="ir.actions.report.xml" id="delivery.report_shipping">
+            <field name="report_file">stock_valued_picking/report/shipping.rml</field>
+        </record>
+
+    </data>
+</openerp>
+
