@@ -1,0 +1,102 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_valued_picking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-29 10:48+0000\n"
+"PO-Revision-Date: 2014-04-29 12:49+0100\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: stock_valued_picking
+#: code:_description:0
+#: model:ir.model,name:stock_valued_picking.model_stock_picking_out
+#, python-format
+msgid "Delivery Orders"
+msgstr ""
+
+#. module: stock_valued_picking
+#: code:_description:0
+#: model:ir.model,name:stock_valued_picking.model_res_partner
+#, python-format
+msgid "Partner"
+msgstr ""
+
+#. module: stock_valued_picking
+#: code:_description:0
+#: model:ir.model,name:stock_valued_picking.model_stock_picking
+#, python-format
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.move,sale_price_subtotal:0
+msgid "Price subtotal"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.picking,currency_id:0
+#: field:stock.picking.out,currency_id:0
+msgid "Sale currency"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.move,sale_discount:0
+msgid "Sale discount (%)"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.move,sale_price_unit:0
+msgid "Sale price unit"
+msgstr ""
+
+#. module: stock_valued_picking
+#: code:_description:0
+#: model:ir.model,name:stock_valued_picking.model_stock_move
+#, python-format
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.picking,amount_tax:0
+#: field:stock.picking.out,amount_tax:0
+#: report:sale.shipping:0
+msgid "Taxes"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.picking,amount_total:0
+#: field:stock.picking.out,amount_total:0
+#: report:sale.shipping:0
+msgid "Total"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:stock.picking,amount_untaxed:0
+#: field:stock.picking.out,amount_untaxed:0
+#: report:sale.shipping:0
+msgid "Untaxed amount"
+msgstr ""
+
+#. module: stock_valued_picking
+#: field:res.partner,valued_picking:0
+msgid "Valued picking"
+msgstr ""
+
+#. module: stock_valued_picking
+#: report:sale.shipping:0
+msgid "Unit price"
+msgstr ""
+
+#. module: stock_valued_picking
+#: report:sale.shipping:0
+msgid "Subtotal"
+msgstr ""
+
