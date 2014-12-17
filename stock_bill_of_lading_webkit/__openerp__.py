@@ -60,7 +60,7 @@ Contributors
         'delivery',
         'report_webkit',
         'stock',
-        'stock_pickup_date',
+        'stock_picking_pickup_date',
     ],
     'data': ['report.xml', 'stock_view.xml'],
     'installable': True,

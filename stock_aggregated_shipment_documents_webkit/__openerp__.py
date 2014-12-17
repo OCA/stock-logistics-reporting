@@ -68,7 +68,7 @@ Contributors
         'report_webkit',
         'stock',
         'stock_bill_of_lading_webkit',
-        'stock_pickup_date',
+        'stock_picking_pickup_date',
     ],
     'data': [
         'report.xml',
