@@ -47,6 +47,12 @@ Constraints
 - as the real invoice is not yet created, the prices displayed on the
   Commercial Invoice are the one from the partner's pricelist
 
+Repo Dependencies
+-----------------
+
+Some dependencies of this module can be found in:
+- stock-logistics-warehouse
+
 Contributors
 ------------
 * Vincent Vinet <vincent.vinet@savoirfairelinux.com>
@@ -59,10 +65,10 @@ Contributors
         'base',
         'base_headers_webkit',
         'delivery',
-        'pickup_date_on_delivery_order',
         'report_webkit',
         'stock',
         'stock_bill_of_lading_webkit',
+        'stock_pickup_date',
     ],
     'data': [
         'report.xml',
