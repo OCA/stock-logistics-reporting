@@ -36,7 +36,8 @@
 
     def get_price_total(line):
         if line.sale_line_id:
-            return line.sale_line_id.price_subtotal
+            qty_ratio = line.product_qty / line.sale_line_id.product_uom_qty
+            return line.sale_line_id.price_subtotal * qty_ratio
         else:
             return line.product_qty * line.product_id.list_price
 
