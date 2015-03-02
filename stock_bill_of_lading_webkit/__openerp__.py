@@ -52,7 +52,7 @@ Contributors
 * Mathieu Benoit (mathieu.benoit@savoirfairelinux.com)
 * Camptocamp with its original module stock_picking_webkit
     """,
-    'author': 'Savoir-faire Linux',
+    'author': "Savoir-faire Linux,Odoo Community Association (OCA)",
     'website': 'http://www.savoirfairelinux.com',
     'depends': [
         'base',
