@@ -26,7 +26,7 @@
     'description': """
 Replaces the legacy rml picking Order report by a brand new webkit report.
     """,
-    'author': 'Camptocamp',
+    'author': "Camptocamp,Odoo Community Association (OCA)",
     'website': 'http://www.openerp.com',
     'depends': ['base', 'report_webkit', 'base_headers_webkit', 'stock', 'delivery'],
     'data': ['report.xml'],
