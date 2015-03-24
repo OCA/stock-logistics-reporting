@@ -59,7 +59,8 @@ Contributors
         'report_webkit',
         'base_headers_webkit',
         'stock',
-        'delivery'
+        'delivery',
+        'partner_shipping_details',
     ],
     'data': ['report.xml', 'stock_view.xml'],
     'installable': True,

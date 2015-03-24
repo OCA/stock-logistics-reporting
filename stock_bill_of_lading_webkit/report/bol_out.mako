@@ -29,7 +29,11 @@
                 %if picking.partner_id.email:
                     <tr><td><b>${_("Email:")}</b> ${picking.partner_id.email }</td></tr>
                 %endif
+                %if picking.partner_id.shipping_notes:
+                    <tr><td><b>${_("Shipping Notes:")}</b> ${picking.partner_id.shipping_notes }</td></tr>
+                %endif
             </table>
+            <br />
             <%
             invoice_addr = invoice_address(picking)
             %>
