@@ -84,18 +84,26 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Customer Ref")}</td>
-                <td style="font-weight:bold;">${_("Origin")}</td>
-                <td style="font-weight:bold;">${_("Scheduled Date")}</td>
-                <td style="font-weight:bold;">${_('Total Weight')}</td>
-                <td style="font-weight:bold;">${_('Delivery Method')}</td>
+                <th>${_("Customer Ref")}</th>
+                <th>${_("Origin")}</th>
+                <th>${_("Delivery Date")}</th>
+                <th>${_('Total Weight')}</th>
             </tr>
             <tr>
                 <td>${picking.sale_id.client_order_ref if picking.sale_id else ''}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
-                <td>${picking.weight}</td>
-                <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${sum([line.weight for line in objects])}</td>
+            </tr>
+            <tr>
+                <th colspan="2">${_('Delivery Method')}</th>
+                <th>${_('Pickup Date')}</td>
+                <th>${_('Number of spots')}</th>
+            </tr>
+            <tr>
+                <td colspan="2">${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${formatLang(picking.pickup_date, date_time=True) or ''}</td>
+                <td>${picking.number_of_packages}</td>
             </tr>
         </table>
     
