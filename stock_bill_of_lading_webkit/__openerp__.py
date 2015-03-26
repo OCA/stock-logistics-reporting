@@ -59,7 +59,7 @@ Contributors
         'base_headers_webkit',
         'delivery',
         'partner_shipping_details',
-        'report_webkit'
+        'report_webkit',
         'stock',
         'stock_picking_pickup_date',
     ],
