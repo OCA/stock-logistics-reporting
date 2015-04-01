@@ -123,10 +123,10 @@
                 weight = line.product_id.weight * line.product_qty 
                 %>
                 <tr class="line">
-                    <td style="text-align:left; " >${ line.product_id.name }</td>
-                    <td style="text-align:left; " >${ line.product_id.description or ''}</td>
-                    <td style="text-align:left; " >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
-                    <td style="text-align:right; " >${ formatLang(weight) }</td>
+                    <td style="text-align:left;">${ line.product_id.name }</td>
+                    <td style="text-align:left;">${ line.product_id.description or ''}</td>
+                    <td style="text-align:left;">${ line.prodlot_id and line.prodlot_id.name or ''}</td>
+                    <td style="text-align:right;">${ formatLang(weight) }</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
                 </tr>
             %endfor
@@ -137,7 +137,7 @@
             <p class="std_text">${picking.note | carriage_returns}</p>
         %endif
 
-        <p style="page-break-after: always"/>
+        <p style="page-break-after: auto"/>
         <br/>
     %endfor
 </body>

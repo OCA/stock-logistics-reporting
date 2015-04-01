@@ -99,7 +99,7 @@
             <p class="std_text">${picking.note | carriage_returns}</p>
         %endif
 
-        <p style="page-break-after: always"/>
+        <p style="page-break-after: auto"/>
         <br/>
     %endfor
 </body>
