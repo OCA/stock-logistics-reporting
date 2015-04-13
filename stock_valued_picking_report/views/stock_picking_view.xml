@@ -2,31 +2,39 @@
 <openerp>
     <data>
 
+        <record model="ir.ui.view" id="view_move_picking_tree">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree" />
+            <field name="arch" type="xml">
+                <field name="location_id" position="before">
+                    <field name="sale_price_unit" invisible="not context.get('show_valued')"/>
+                    <field name="sale_discount" invisible="not context.get('show_valued')" groups="sale.group_discount_per_so_line"/>
+                    <field name="sale_price_subtotal" invisible="not context.get('show_valued')"/>
+                </field>
+            </field>
+        </record>
+
         <!-- Inherited from : /addons/stock/stock_view.xml -->
         <record model="ir.ui.view" id="view_picking_form_valued">
             <field name="name">Valued Stock Picking</field>
             <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="inherit_id" ref="stock_picking_taxes.view_picking_form"/>
             <field name="arch" type="xml">
-                <field name="move_lines" position="after">
-                    <group class="oe_subtotal_footer oe_right"
-                           attrs="{'invisible': ['|', ('sale_id', '=', False),
-                                                 ('valued', '=', False)]}">
-                        <field name="sale_id" invisible="1"/>
-                        <field name="valued" invisible="1"/>
-                        <field name="amount_untaxed"
-                                widget="monetary"
-                                options="{'currency_field': 'currency_id'}"/>
-                        <field name="amount_tax"
-                                widget="monetary"
-                                options="{'currency_field': 'currency_id'}"/>
-                        <field name="amount_total"
-                                class="oe_subtotal_footer_separator"
-                                widget="monetary"
-                                options="{'currency_field': 'currency_id'}"/>
-                    </group>
-                    <div class="oe_clear"/>
+                <field name="move_lines" position="attributes">
+                    <attribute name="context_valued">{'show_valued': bool(sale_id) and valued}</attribute>
                 </field>
+                <group name="subtotal_footer" position="before">
+                    <group class="oe_subtotal_footer oe_right" name="valued_info">
+                        <field name="valued" invisible="1"/>
+                    </group>
+                </group>
+                <group name="subtotal_footer" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('sale_id', '=', False),('valued', '=', False)]}</attribute>
+                </group>
+                <page string="Taxes" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('sale_id', '=', False),('valued', '=', False)]}</attribute>
+                </page>
             </field>
         </record>
 

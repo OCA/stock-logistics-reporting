@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="valued_report_picking" inherit_id="stock.report_picking">
+            <xpath expr="//table[@t-if='not o.pack_operation_ids']//strong[.='Destination']/../.."
+                   position="after">
+                <t t-if="o.partner_id.valued_picking">
+                    <th><strong>Unit Price</strong></th>
+                    <th groups="sale.group_discount_per_so_line">
+                        <strong>Discount</strong>
+                    </th>
+                    <th><strong>Subtotal</strong></th>
+                </t>
+            </xpath>
+            <xpath expr="//span[@t-field='move.location_dest_id']/../.." position="after">
+                <t t-if="o.partner_id.valued_picking">
+                    <td><span t-field="move.sale_price_unit" /></td>
+                    <td groups="sale.group_discount_per_so_line">
+                        <span t-field="move.sale_discount" />
+                    </td>
+                    <td><span t-field="move.sale_price_subtotal" /></td>
+                </t>
+            </xpath>
+            <xpath expr="//table[@t-if='o.pack_operation_ids']" position="after">
+                <br />
+                <br />
+                <table>
+                    <tr>
+                        <td>Untaxed amount</td>
+                        <td><span t-field="o.amount_untaxed" /></td>
+                    </tr>
+                    <tr>
+                        <td>Taxes</td>
+                        <td><span t-field="o.amount_tax" />
+                            <table>
+                                <tr t-foreach="o.taxes" t-as="tax">
+                                    <td><span t-field="tax.name" /></td>
+                                    <td><span t-field="tax.amount" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td><span t-field="o.amount_total" /></td>
+                    </tr>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</openerp>
