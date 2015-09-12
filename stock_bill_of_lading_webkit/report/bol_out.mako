@@ -3,6 +3,18 @@
 <head>
     <style type="text/css">
         ${css}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.left {
+    text-align: right;
+}
     </style>
 </head>
 
@@ -14,22 +26,25 @@
     %>
     %for picking in objects:
         <% setLang(picking.partner_id.lang) %>
+        <%
+        shipping_addr = shipping_address(picking)
+        %>
         <div class="address">
+            <table class="recipient">
+                <tr><td class="address_title">${_("Contact info for shipping:")}</td></tr>
+                %if picking.partner_id.phone:
+                    <tr><td><b>${_("Phone:")}</b> ${picking.partner_id.phone }</td></tr>
+                %endif
+                %if picking.partner_id.mobile:
+                    <tr><td><b>${_("Cell:")}</b> ${picking.partner_id.mobile }</td></tr>
+                %endif
+                %if picking.partner_id.email:
+                    <tr><td><b>${_("Email:")}</b> ${picking.partner_id.email }</td></tr>
+                %endif
+            </table>
             <%
             invoice_addr = invoice_address(picking)
             %>
-            <table class="recipient">
-                <tr><td class="address_title">${_("Contact info:")}</td></tr>
-                %if invoice_addr.phone:
-                    <tr><td><b>${_("Phone:")}</b> ${invoice_addr.phone }</td></tr>
-                %endif
-                %if invoice_addr.mobile:
-                    <tr><td><b>${_("Cell:")}</b> ${invoice_addr.mobile }</td></tr>
-                %endif
-                %if invoice_addr.email:
-                    <tr><td><b>${_("Email:")}</b> ${invoice_addr.email }</td></tr>
-                %endif
-            </table>
             <table class="invoice">
                 <tr><td class="address_title">${_("Customer name & address:")}</td></tr>
                 <tr><td>${invoice_addr.title and invoice_addr.title.name or ''} ${invoice_addr.name }</td></tr>
@@ -44,25 +59,21 @@
             </table>
         </div>
         <div class="address">
+            <table class="recipient">
+                <tr><td class="address_title">${_("Ship to:")}</td></tr>
+                <tr><td>${shipping_addr.title and shipping_addr.title.name or ''} ${shipping_addr.name }</td></tr>
+                %if shipping_addr.contact_address:
+                    <% address_lines = shipping_addr.contact_address.split("\n") %>
+                    %for part in address_lines:
+                        %if part:
+                        <tr><td>${part}</td></tr>
+                        %endif
+                    %endfor
+                %endif
+            </table>
             <%
             picking_addr = picking_address(picking)
             %>
-            <table class="recipient">
-                <tr><td class="address_title">${_("Ship to:")}</td></tr>
-                %if picking.partner_id.parent_id:
-                <tr><td>${picking.partner_id.parent_id.name or ''}</td></tr>
-                <tr><td>${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
-                <% address_lines = picking.partner_id.contact_address.split("\n")[1:] %>
-                %else:
-                <tr><td >${picking.partner_id.title and picking.partner_id.title.name or ''} ${picking.partner_id.name }</td></tr>
-                <% address_lines = picking.partner_id.contact_address.split("\n") %>
-                %endif
-                %for part in address_lines:
-                    %if part:
-                    <tr><td>${part}</td></tr>
-                    %endif
-                %endfor
-            </table>
             <table class="invoice">
                 <tr><td class="address_title">${_("Pick from:")}</td></tr>
                 <tr><td>${picking_addr.title and picking_addr.title.name or ''} ${picking_addr.name }</td></tr>
@@ -81,28 +92,36 @@
         
         <table class="basic_table" width="100%">
             <tr>
-                <td style="font-weight:bold;">${_("Customer Ref")}</td>
-                <td style="font-weight:bold;">${_("Origin")}</td>
-                <td style="font-weight:bold;">${_("Scheduled Date")}</td>
-                <td style="font-weight:bold;">${_('Total Weight')}</td>
-                <td style="font-weight:bold;">${_('Delivery Method')}</td>
+                <th>${_("Customer Ref")}</th>
+                <th>${_("Origin")}</th>
+                <th>${_("Delivery Date")}</th>
+                <th>${_('Total Weight')}</th>
             </tr>
             <tr>
                 <td>${picking.sale_id.client_order_ref if picking.sale_id else ''}</td>
                 <td>${picking.origin or ''}</td>
                 <td>${formatLang(picking.min_date, date=True)}</td>
-                <td>${picking.weight}</td>
-                <td>${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${sum([line.weight for line in objects])}</td>
+            </tr>
+            <tr>
+                <th colspan="2">${_('Delivery Method')}</th>
+                <th>${_('Pickup Date')}</td>
+                <th>${_('Number of spots')}</th>
+            </tr>
+            <tr>
+                <td colspan="2">${picking.carrier_id and picking.carrier_id.name or ''}</td>
+                <td>${formatLang(picking.pickup_date, date_time=True) or ''}</td>
+                <td>${picking.number_of_packages}</td>
             </tr>
         </table>
     
         <table class="list_sale_table" width="100%" style="margin-top: 20px;">
             <thead>
                 <tr>
-                    <th style="text-align:left; ">${_("Item")}</th>
-                    <th style="text-align:left; ">${_("Description")}</th>
-                    <th style="text-align:left; ">${_("Serial Number")}</th>
-                    <th style="text-align:right; ">${_("Weight (kg)")}</th>
+                    <th class="left">${_("Item")}</th>
+                    <th class="left">${_("Description")}</th>
+                    <th class="left">${_("Serial Number")}</th>
+                    <th class="right">${_("Weight (kg)")}</th>
                     <th class="amount">${_("Quantity")}</th>
                 </tr>
             </thead>
@@ -112,10 +131,10 @@
                 weight = line.product_id.weight * line.product_qty 
                 %>
                 <tr class="line">
-                    <td style="text-align:left; " >${ line.product_id.name }</td>
-                    <td style="text-align:left; " >${ line.product_id.description or ''}</td>
-                    <td style="text-align:left; " >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
-                    <td style="text-align:right; " >${ formatLang(weight) }</td>
+                    <td class="left" >${ line.product_id.name }</td>
+                    <td class="left" >${ line.product_id.description or ''}</td>
+                    <td class="left" >${ line.prodlot_id and line.prodlot_id.name or ''}</td>
+                    <td class="right" >${ formatLang(weight) }</td>
                     <td class="amount" >${ formatLang(line.product_qty) } ${line.product_uom.name}</td>
                 </tr>
             %endfor
