@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report 
+            string="Picking In Partner Language" 
+            id="action_report_partner_picking" 
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            name="stock_picking_partner_lang.report_picking_partner_language" 
+            file="stock_picking_partner_lang.report_picking_partner_language"
+        />
+
+    </data>
+</openerp>
