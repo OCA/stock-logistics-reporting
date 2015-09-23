@@ -7,3 +7,18 @@ Odoo Stock Logistics Reporting
 Reports for the Odoo Logistics modules.
 
  - Stock Picking Partner Lang: adds possibility to print picking in partner language
+
+[//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[stock_picking_partner_lang](stock_picking_partner_lang/) | 8.0.1.0.0 | Adds report for stock picking in partner language
+
+Unported addons
+---------------
+addon | version | summary
+--- | --- | ---
+[stock_picking_webkit](__unported__/stock_picking_webkit/) | 1.0.1 (unported) | Picking reports using Webkit Library
+
+[//]: # (end addons)
