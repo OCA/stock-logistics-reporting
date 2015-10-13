@@ -19,6 +19,6 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[stock_picking_webkit](__unported__/stock_picking_webkit/) | 1.0.1 (unported) | Picking reports using Webkit Library
+[stock_picking_webkit](stock_picking_webkit/) | 1.0.1 (unported) | Picking reports using Webkit Library
 
 [//]: # (end addons)
