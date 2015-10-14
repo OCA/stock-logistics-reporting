@@ -31,5 +31,5 @@
         'views/stock_picking_partner_language.xml',
         'picking_report.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
