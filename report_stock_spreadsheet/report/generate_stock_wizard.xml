@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="sbg_generate_stock_wizard" model="ir.ui.view">
+            <field name="name">Generate stock product spreadsheet</field>
+            <field name="model">report_stock.generate_stock</field>
+            <field name="arch" type="xml">
+                <form string="Generate file">
+
+
+                    <field invisible="1" name="state"/>
+                    <field name="name" invisible="1"/>
+ 
+                    <group states="choose" string="Press button">
+                        <h2>to generate file</h2>
+                    </group>
+ 
+                    <div states="choose">
+                        <p>Here is the generated file: <field name="data" readonly="1" filename="name"/></p>
+                    </div>
+ 
+                    <div states="get">
+                        <h2>File generation complete</h2>
+                        <p>Here is the generated file: <field name="data" readonly="1" filename="name"/></p>
+                    </div>
+                    <footer states="choose">
+                        <button name="generate_file" string="Generate file" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Close" type="object"/>
+                    </footer>
+ 
+                </form>
+            </field>
+        </record>
+
+        <record id="generate_stock_action" model="ir.actions.act_window">
+            <field name="name">Generate product catalog spreadsheet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report_stock.generate_stock</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Generate product stock spreadsheet"
+            action="generate_stock_action"
+            id="generate_stock_menu"
+            parent="stock.menu_traceability"
+            sequence="100"
+        />
+
+
+    </data>
+</openerp>

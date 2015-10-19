@@ -1,0 +1,1 @@
+import generate_stock_wizard
