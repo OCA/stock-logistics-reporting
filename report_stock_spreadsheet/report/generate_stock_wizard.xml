@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-        <record id="sbg_generate_stock_wizard" model="ir.ui.view">
+        <record id="generate_stock_wizard" model="ir.ui.view">
             <field name="name">Generate stock product spreadsheet</field>
             <field name="model">report_stock.generate_stock</field>
             <field name="arch" type="xml">

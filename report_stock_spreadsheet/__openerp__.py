@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# © <2015> <Miguel Chuga>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 ##############################################################################
 #
 #    Copyright (C) 2015 Agile Business Group sagl
@@ -22,7 +24,7 @@
 {
     'name': 'Report Stock',
     'version': '0.1',
-    'website' : 'https://mcsistemas.net',
+    'website': 'https://mcsistemas.net',
     'category': 'Report',
     'summary': 'Generate stock to xls',
     'description': """
@@ -30,15 +32,14 @@ This module generate stock in locations to xls
 
 """,
     'author': 'Miguel Chuga',
-    'depends': ['base','stock'],
-    'data': ['report/generate_stock_wizard.xml',
+    'license': 'AGPL-3',
+    'depends': [
+        'base',
+        'stock'
     ],
-    'demo': [
-        
-    ],
-    'test': [
+    'data': [
+        'report/generate_stock_wizard.xml',
     ],
     'installable': True,
     'auto_install': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
