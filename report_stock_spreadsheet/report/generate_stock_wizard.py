@@ -8,7 +8,7 @@ from openerp.tools.translate import _
 from openerp import models, fields, api, exceptions, tools
 
 
-class Generate_Stock_Wizard(models.Model):
+class GenerateStockWizard(models.Model):
     _name = "report_stock.generate_stock"
     data = fields.Binary('File', readonly=True)
     name = fields.Char('File Name', readonly=True)

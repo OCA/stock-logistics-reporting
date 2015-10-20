@@ -5,6 +5,7 @@ addons:
   apt:
     packages:
       - python-openpyxl   
+      - openpyxl
 
 language: python
 
