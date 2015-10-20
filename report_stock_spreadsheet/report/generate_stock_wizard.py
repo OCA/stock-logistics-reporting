@@ -49,6 +49,7 @@ class Generate_Stock_Wizard(models.Model):
 
         border_bottom = Border(bottom=Side(style='thin'))
         border_right = Border(right=Side(style='thin'))
+        border_corner = Border(right=Side(style='thin'),bottom=Side(style='thin'))
         font_bold = Font(bold=True)
 
         sql = """
@@ -142,12 +143,9 @@ class Generate_Stock_Wizard(models.Model):
 
             sql_quant = """
                 Select product_id,location_id,sum(qty) qty
-                from stock_quant Where location_id = %s
-                group by product_id,location_id",
-            """,
-            (location,)
-
-            cr.execute(sql_quant)
+                from stock_quant
+            """   
+            cr.execute(sql_quant + "Where location_id = %s group by product_id,location_id", (location,))
 
             row = 3
             for product_quant in cr.dictfetchall():
