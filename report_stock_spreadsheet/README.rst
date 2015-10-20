@@ -24,7 +24,7 @@
       <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
     <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
     <link rel="assets" href="https://assets-cdn.github.com/">
-    <link rel="web-socket" href="wss://live.github.com/_sockets/NDE3MjQwNzo2ZjhhNTk4YmNjZmJhMGViZTYyMGIxMDhiOGQ1ODBhZTo1MTNiZWVmODk0MWFjNTkzMzMxNjc0NmYxZDMwNWZkMTgxYmI2ZDYxODkyYWZlYjhhOGEyOTcxMzA1M2U1YjVm--9323bc6efbc09380a2cdeee054850e4c7ab9f0bf">
+    <link rel="web-socket" href="wss://live.github.com/_sockets/NDE3MjQwNzo2ZjhhNTk4YmNjZmJhMGViZTYyMGIxMDhiOGQ1ODBhZToxNmY3ODVlMWM1NTYwMzM5NDJkNzNjMzU2YWU2MmViZTIyODU2NGEwYjBlZGQzYmNkNWNiMmQ2YjkxMjIzNmNj--8a6b438550b52973dae7b26e2b662ac7afad67cf">
     <meta name="pjax-timeout" content="1000">
     <link rel="sudo-modal" href="/sessions/sudo_modal">
 
@@ -35,7 +35,7 @@
     <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
     <meta name="google-analytics" content="UA-3769691-2">
 
-<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="BA9714D5:7D29:2138C407:56266DBB" name="octolytics-dimension-request_id" /><meta content="4172407" name="octolytics-actor-id" /><meta content="miguelchuga" name="octolytics-actor-login" /><meta content="40edaa56eef68336ca2a6a05ac41cf30901ce23cb8e178aee1d82145a06c6b7d" name="octolytics-actor-hash" />
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="BE94C69E:0D19:175F181B:5626B852" name="octolytics-dimension-request_id" /><meta content="4172407" name="octolytics-actor-id" /><meta content="miguelchuga" name="octolytics-actor-login" /><meta content="40edaa56eef68336ca2a6a05ac41cf30901ce23cb8e178aee1d82145a06c6b7d" name="octolytics-actor-hash" />
 
 <meta content="Rails, view, blob#show" data-pjax-transient="true" name="analytics-event" />
 
@@ -55,14 +55,14 @@
 
     <meta content="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" name="form-nonce" />
 
-    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-60348b331fa450b2228c6d7901d9afe1921385ec9f6f544047e84a4073d825c1.css" media="all" rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-87ba34c2ad3c86d930ca81705ecb535fee6c2c258bd95a531a76a308fd9c9143.css" media="all" rel="stylesheet" />
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github2-9e83ef1ecc7ceba3d66e3033dd980274ecac3fac0bc5b987cf82d42c663f6f8a.css" media="all" rel="stylesheet" />
     
     
     
 
 
-    <meta http-equiv="x-pjax-version" content="ef4817c743444ed4205f254c8a1a8b49">
+    <meta http-equiv="x-pjax-version" content="156b24f573dabf560d1806c78e6273c6">
 
       
   <meta name="description" content="Contribute to stock-logistics-reporting development by creating an account on GitHub.">
@@ -210,7 +210,7 @@
             Settings
           </a>
 
-          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/logout" class="logout-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="HltvAWUXmLyuCKoAFv0D6jNNsyntYXoj6RKQ7Y/9YVe/d+j1BigsN7Gug2OL+Zj5RLaQHY3o/zHlDHiLr/54bg==" /></div>
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/logout" class="logout-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="DjLIrvdICQdVwhnq+a9wqdJmPzn+RC4/+A0JhGyRNt3KQYz/5lUIeIMc/3AxiP7zSnMJqxEKRfjfQNblLBaeeg==" /></div>
             <button class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
               Sign out
             </button>
@@ -248,7 +248,7 @@
 <ul class="pagehead-actions">
 
   <li>
-      <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="YI8ogKPiWLRS2GHf3cMRMCll45UNA5c63xsfbzQczDinWkqkYUnALUT+yEBF9PLyy6ZJoENTkn4HrxW22AQNWQ==" /></div>    <input id="repository_id" name="repository_id" type="hidden" value="44542544" />
+      <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="CNK1wdHX1w+a259bbWZO4aaBxPHaFe267HluDyOyDJrTh8On6/rOq1wZA99s65wJ/puupSgw0CXqcN/rFVhdNg==" /></div>    <input id="repository_id" name="repository_id" type="hidden" value="44542544" />
 
       <div class="select-menu js-menu-container js-select-menu">
         <a href="/miguelchuga/stock-logistics-reporting/subscription"
@@ -323,7 +323,7 @@
     
   <div class="js-toggler-container js-social-container starring-container ">
 
-    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="fJQ1xNAnqvz+bhuMpDVtBfkXUfFlvh3PXTmNPsA0jmDidNRD+hTyDE+274qldX8pqva2BKFZULVJ4n5dPs+mNQ==" /></div>
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="nbd/WmWgIH+acsBxjqNZwBZcm7t4xuy+aBGHCDvv8XMfDFbvjodtXADJaxxSg9fFxau9FnzQSDECRartxgRCVw==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Unstar this repository" title="Unstar miguelchuga/stock-logistics-reporting"
@@ -335,7 +335,7 @@
           0
         </a>
 </form>
-    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/star" class="js-toggler-form unstarred js-star-button" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="oWDfp5/3pspJj2qFuLVcTyTx0bA+rxEm9cEjO2L3cczgbrqNQgkOXGSuu3BgG9ghm+UphwKewNy5ncik6hLnAQ==" /></div>
+    <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/star" class="js-toggler-form unstarred js-star-button" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="p3qzDHNCLiYCIFiA8y9akA+zRx25yVAKTwBIVkrJx0MJTX5sO0Z5/e3r5Gl8xZXOtFEbBGzho4L/dnwzBjzkKQ==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Star this repository" title="Star miguelchuga/stock-logistics-reporting"
@@ -493,7 +493,7 @@
 
 
 <div class="clone-options text-small text-muted">You can clone with
-  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=http&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="EffS5f6NgvIBb1sTZVA8YnN0qo5y/++/O9Sp2r6w2dq28BO+f74pkRF2S9CrNKT7swU0qLnBpIXE/S/4VIUM7g==" /></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form>, <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=ssh&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="VQf8v+0LX1v3ncbCteSPwcrWa5j4CGVYaAqceRIsway+1E9V1efHXEMA9E/uA+rxzh1XFy8Fs2IJkWtsB4rdKg==" /></div><button class="btn-link js-clone-selector" data-protocol="ssh" type="submit">SSH</button></form>, or <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="QhR6Lb8J9wOJmL7bbah112XM2+hnobt1qXN44zUSDFAcaH6vYJFTz7bKlczHoWLj1ZxOM17T/E2RJYQtVcSdCA==" /></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
+  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=http&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="xSLVZ6jM7ZD7oX7icNPG9QD0islx2eP7nDB0fvdudVezhr5ntzDHWSu6Cc2T1547eTJcUeKz+LU8la4wKR9rNA==" /></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form>, <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=ssh&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="TkNgDF9ZmmJ+fSfiJF05HB8lhy1AV2ZbVuK6iSL2xKybsYq1euLgSBs3hannRIDYq2KniczdndU4lm3dnU9VQQ==" /></div><button class="btn-link js-clone-selector" data-protocol="ssh" type="submit">SSH</button></form>, or <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=push" class="inline-form js-clone-selector-form is-enabled" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="bhuqBcc4uEa33jr0Um5Pv2Fv9CR91p0PsH79ByR6eOWwuba2aUIJAeBxP06QUX+dIZwrvAMmkbs+4muHOfsQQQ==" /></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
   <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
     <span class="octicon octicon-question"></span>
   </a>
@@ -513,7 +513,7 @@
 
           
 
-<a href="/miguelchuga/stock-logistics-reporting/blob/aa8b3822609b8f275eae307f6be294e2fb7d6e72/stock-logistics-reporting/README.rst" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+<a href="/miguelchuga/stock-logistics-reporting/blob/7af84a66f600e0e56399218543b80085e3daddf1/stock_picking_partner_lang/README.rst" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
 
 <!-- blob contrib key: blob_contributors:v21:61f5e7a5b82a319809f4b8d0ee83e8db -->
 
@@ -557,7 +557,7 @@
 
 
             <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/miguelchuga/stock-logistics-reporting/blob/6.1/stock-logistics-reporting/README.rst"
+               href="/miguelchuga/stock-logistics-reporting/blob/6.1/stock_picking_partner_lang/README.rst"
                data-name="6.1"
                data-skip-pjax="true"
                rel="nofollow">
@@ -567,7 +567,7 @@
               </span>
             </a>
             <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/miguelchuga/stock-logistics-reporting/blob/7.0/stock-logistics-reporting/README.rst"
+               href="/miguelchuga/stock-logistics-reporting/blob/7.0/stock_picking_partner_lang/README.rst"
                data-name="7.0"
                data-skip-pjax="true"
                rel="nofollow">
@@ -577,7 +577,7 @@
               </span>
             </a>
             <a class="select-menu-item js-navigation-item js-navigation-open "
-               href="/miguelchuga/stock-logistics-reporting/blob/8.0/stock-logistics-reporting/README.rst"
+               href="/miguelchuga/stock-logistics-reporting/blob/8.0/stock_picking_partner_lang/README.rst"
                data-name="8.0"
                data-skip-pjax="true"
                rel="nofollow">
@@ -587,7 +587,7 @@
               </span>
             </a>
             <a class="select-menu-item js-navigation-item js-navigation-open selected"
-               href="/miguelchuga/stock-logistics-reporting/blob/9.0/stock-logistics-reporting/README.rst"
+               href="/miguelchuga/stock-logistics-reporting/blob/9.0/stock_picking_partner_lang/README.rst"
                data-name="9.0"
                data-skip-pjax="true"
                rel="nofollow">
@@ -598,7 +598,7 @@
             </a>
         </div>
 
-          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="1sJrV3WWS4EDy768ETQPg5ocw8KMwdmyuXTXNX0KShPCY+x/xQq6Mtevy23eJ+D0FRQuW74iyyocHuYLHnZ6vA==" /></div>
+          <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="zAvOwpPiWLOHjgNUBimLvL/Nb+fUN39LvqQIgAE38rlv3FOvrYjAzk1mk9eGxXc1giarh3gvYPd/0cZDRuaFyg==" /></div>
             <span class="octicon octicon-git-branch select-menu-item-icon"></span>
             <div class="select-menu-item-text">
               <span class="select-menu-item-heading">Create branch: <span class="js-new-item-name"></span></span>
@@ -606,7 +606,7 @@
             </div>
             <input type="hidden" name="name" id="name" class="js-new-item-value">
             <input type="hidden" name="branch" id="branch" value="9.0">
-            <input type="hidden" name="path" id="path" value="stock-logistics-reporting/README.rst">
+            <input type="hidden" name="path" id="path" value="stock_picking_partner_lang/README.rst">
 </form>
       </div>
 
@@ -635,7 +635,7 @@
     </div>
 
     <div class="breadcrumb js-zeroclipboard-target">
-      <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/miguelchuga/stock-logistics-reporting" class="" data-branch="9.0" data-pjax="true" itemscope="url"><span itemprop="title">stock-logistics-reporting</span></a></span></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/miguelchuga/stock-logistics-reporting/tree/9.0/stock-logistics-reporting" class="" data-branch="9.0" data-pjax="true" itemscope="url"><span itemprop="title">stock-logistics-reporting</span></a></span><span class="separator">/</span><strong class="final-path">README.rst</strong>
+      <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/miguelchuga/stock-logistics-reporting" class="" data-branch="9.0" data-pjax="true" itemscope="url"><span itemprop="title">stock-logistics-reporting</span></a></span></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/miguelchuga/stock-logistics-reporting/tree/9.0/stock_picking_partner_lang" class="" data-branch="9.0" data-pjax="true" itemscope="url"><span itemprop="title">stock_picking_partner_lang</span></a></span><span class="separator">/</span><strong class="final-path">README.rst</strong>
     </div>
   </div>
 
@@ -650,7 +650,7 @@
       <div>
         <img alt="@hurrinico" class="avatar" height="20" src="https://avatars3.githubusercontent.com/u/7517867?v=3&amp;s=40" width="20" />
         <a href="/hurrinico" class="user-mention" rel="contributor">hurrinico</a>
-          <a href="/miguelchuga/stock-logistics-reporting/commit/39e72196ab908cee27f25435a641e15578325858" class="message" data-pjax="true" title="[ADD] Add new module stock-logistics-reporting">[ADD] Add new module stock-logistics-reporting</a>
+          <a href="/miguelchuga/stock-logistics-reporting/commit/39e72196ab908cee27f25435a641e15578325858" class="message" data-pjax="true" title="[ADD] Add new module stock_picking_partner_lang">[ADD] Add new module stock_picking_partner_lang</a>
       </div>
 
     <div class="commit-tease-contributors">
@@ -677,18 +677,18 @@
   <div class="file-actions">
 
     <div class="btn-group">
-      <a href="/miguelchuga/stock-logistics-reporting/raw/9.0/stock-logistics-reporting/README.rst" class="btn btn-sm " id="raw-url">Raw</a>
-        <a href="/miguelchuga/stock-logistics-reporting/blame/9.0/stock-logistics-reporting/README.rst" class="btn btn-sm js-update-url-with-hash">Blame</a>
-      <a href="/miguelchuga/stock-logistics-reporting/commits/9.0/stock-logistics-reporting/README.rst" class="btn btn-sm " rel="nofollow">History</a>
+      <a href="/miguelchuga/stock-logistics-reporting/raw/9.0/stock_picking_partner_lang/README.rst" class="btn btn-sm " id="raw-url">Raw</a>
+        <a href="/miguelchuga/stock-logistics-reporting/blame/9.0/stock_picking_partner_lang/README.rst" class="btn btn-sm js-update-url-with-hash">Blame</a>
+      <a href="/miguelchuga/stock-logistics-reporting/commits/9.0/stock_picking_partner_lang/README.rst" class="btn btn-sm " rel="nofollow">History</a>
     </div>
 
 
-        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/edit/9.0/stock-logistics-reporting/README.rst" class="inline-form js-update-url-with-hash" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="bsX/N3j511Sn1KczVRky2lEdQ92In/98GbHWyvuJ6de8BuQKQKeQ/uovU5ILy+WPxsyQCXUYgRUme4m58Q92vQ==" /></div>
+        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/edit/9.0/stock_picking_partner_lang/README.rst" class="inline-form js-update-url-with-hash" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="0b+OvfeY8t3krNkdjENGMl7A1M7GvLi9T/DDtBR12hDy+0kn9fqkLUiS4C3uC3ZaG54WdETnQpbXQ1Dgja6wKA==" /></div>
           <button class="octicon-btn tooltipped tooltipped-nw" type="submit"
             aria-label="Edit this file" data-hotkey="e" data-disable-with>
             <span class="octicon octicon-pencil"></span>
           </button>
-</form>        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/delete/9.0/stock-logistics-reporting/README.rst" class="inline-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="s9f35aeki4ejdIV5z8t+G4q7ASFyt+ohBXbp3Wl8r5+dO86n9drZzZMGpmBsZkb5lvmqjRYFjgLHUxX8yVP6NA==" /></div>
+</form>        <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/miguelchuga/stock-logistics-reporting/delete/9.0/stock_picking_partner_lang/README.rst" class="inline-form" data-form-nonce="f3c5a4c7e13d4e450d1d364e5a87937efb367eff" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="j3TzLSZRXa/iWXvgxhmGLkiLHD/mw4Sq1iwhj9H8iCSKSqEl+QfePjJQ33O0k6F0ktzPnwDrwqB+wFKqrGg1KQ==" /></div>
           <button class="octicon-btn octicon-btn-danger tooltipped tooltipped-nw" type="submit"
             aria-label="Delete this file" data-disable-with>
             <span class="octicon octicon-trashcan"></span>
@@ -707,20 +707,20 @@
     <article class="markdown-body entry-content" itemprop="mainContentOfPage"><a href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://camo.githubusercontent.com/88d42f6cede496fc36ca1d6f65746211d8ca40fd/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6c6963656e63652d4147504c2d2d332d626c75652e737667" data-canonical-src="https://img.shields.io/badge/licence-AGPL--3-blue.svg" style="max-width:100%;">
 </a>
 <a name="user-content-stock-picking-partner-language"></a>
-<h2><a id="user-content-stock-picking-partner-language" class="anchor" href="#stock-picking-partner-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>Report Stock to Spreadsheet</h2>
+<h2><a id="user-content-stock-picking-partner-language" class="anchor" href="#stock-picking-partner-language" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stock Picking Partner Language</h2>
 <p>This module allows to print pickings in partner language.</p>
 <a name="user-content-bug-tracker"></a>
 <h3><a id="user-content-bug-tracker" class="anchor" href="#bug-tracker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bug Tracker</h3>
 <p>Bugs are tracked on <a href="https://github.com/OCA/stock-logistics-reporting/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-<a href="https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock-logistics-reporting%0Aversion:%208.0.1.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">here</a>.</p>
+<a href="https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_picking_partner_lang%0Aversion:%208.0.1.0.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">here</a>.</p>
 <a name="user-content-credits"></a>
 <h3><a id="user-content-credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h3>
 <a name="user-content-contributors"></a>
 <h4><a id="user-content-contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h4>
 <ul>
-<li>Miguel Chuga &lt;<a href="mailto:mchuga@mcsistemas.net">mchuga@mcsistemas.net</a>&gt;</li>
+<li>Nicola Malcontenti &lt;<a href="mailto:nicola.malcontenti@agilebg.com">nicola.malcontenti@agilebg.com</a>&gt;</li>
 </ul>
 <a name="user-content-maintainer"></a>
 <h4><a id="user-content-maintainer" class="anchor" href="#maintainer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maintainer</h4>
@@ -769,7 +769,7 @@ promote its widespread use.</p>
       <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
 </a>
     <ul class="site-footer-links">
-      <li>&copy; 2015 <span title="0.11060s from github-fe118-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+      <li>&copy; 2015 <span title="0.12523s from github-fe123-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
         <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
         <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
@@ -795,7 +795,7 @@ promote its widespread use.</p>
 
 
       <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/frameworks-080f1c155a28f5a4315d4a6862aeafb7e27bca0a74db6f7ae9e0048e321369d1.js"></script>
-      <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-d93d228828812b57da6aabbd4454c639406e0d694d2b8f6584a190548afdf5d5.js"></script>
+      <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-082ff5d23a1157a97624a0ec81abc8a4fb94f37b7b945ae037c2dd3653b10d27.js"></script>
       
       
     <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner hidden">
