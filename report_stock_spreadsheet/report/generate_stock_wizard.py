@@ -1,11 +1,8 @@
 from tempfile import NamedTemporaryFile
 from openpyxl import Workbook
-from openpyxl.cell import get_column_letter
-from openpyxl.worksheet import ColumnDimension
-from openpyxl.styles import Border, Side, Font, Style
+from openpyxl.styles import Border, Side, Font
 import base64
-from openerp.tools.translate import _
-from openerp import models, fields, api, exceptions, tools
+from openerp import models, fields
 
 
 class GenerateStockWizard(models.Model):
@@ -21,7 +18,6 @@ class GenerateStockWizard(models.Model):
             context = {}
 
         product_obj = self.pool.get('product.product')
-        quant_obj = self.pool.get('stock.quant')
         location_obj = self.pool.get('stock.location')
 
         this = self.browse(cr, uid, ids)[0]
