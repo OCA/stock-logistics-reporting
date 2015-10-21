@@ -49,7 +49,7 @@
             name="Generate product stock spreadsheet"
             action="generate_stock_action"
             id="generate_stock_menu"
-            parent="stock.next_id_61"
+            parent="stock.menu_stock_inventory_control"
             sequence="100"
         />
 
