@@ -1,4 +1,4 @@
-sudo: false 
+sudo: true 
 cache: pip
 
 addons:
@@ -18,6 +18,9 @@ env:
 
 virtualenv:
   system_site_packages: true
+
+before_install:
+  - sudo apt-get instal python-openpyxl
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
