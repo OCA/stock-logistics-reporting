@@ -1,4 +1,4 @@
-sudo: true 
+sudo:  false 
 cache: pip
 
 addons:
@@ -21,10 +21,10 @@ virtualenv:
 
 
 install:
-  - sudo pip install openpyxl  
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly ${VERSION}
+  - pip install openpyxl
 
 script:
   - travis_run_tests ${VERSION}
