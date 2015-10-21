@@ -4,7 +4,8 @@ cache: pip
 addons:
   apt:
     packages:
-      - python-openpyxl   
+      - expect-dev  # provides unbuffer utility
+      - python-lxml # because pip installation is slow
 
 language: python
 
