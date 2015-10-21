@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from tempfile import NamedTemporaryFile
 from openpyxl import Workbook
 from openpyxl.styles import Border, Side, Font
@@ -123,7 +124,6 @@ class GenerateStockWizard(models.Model):
         for location in location_ids:
 
             location_id = location_obj.browse(cr, uid, location)
-            print location_id.display_name
             ws = wb.create_sheet()
             ws['A1'].value = location_id.display_name
             ws.title = location_id.display_name.replace('/', '_')

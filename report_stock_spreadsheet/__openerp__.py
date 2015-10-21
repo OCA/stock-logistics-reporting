@@ -7,7 +7,9 @@
     "version": "8.0.1.0.0",
     "category": "Report",
     "website": "https://mcsistemas.net",
-    "author": "<Miguel Chuga>, MC-Sistemas",
+    "author": "Miguel Chuga,"
+              # "MC-Sistemas,"
+              "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
