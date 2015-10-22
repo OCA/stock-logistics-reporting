@@ -3,7 +3,7 @@
    :alt: License: AGPL-3
 
 ==============================
-Stock Report Spreadsheet
+Stock Report Spreadsheet 8.0
 ==============================
 
 This module allows to print pickings in partner language.
