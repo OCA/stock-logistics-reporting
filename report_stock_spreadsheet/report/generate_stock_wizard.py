@@ -225,3 +225,4 @@ class GenerateStockWizard(models.Model):
             'views': [(False, 'form')],
             'target': 'new',
         }
+
