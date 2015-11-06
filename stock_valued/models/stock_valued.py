@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Odoo, Open Source Management Solution
-#    Copyright (c) 2014 Acysos S.L. (http://acysos.com) All Rights Reserved.
+#    Copyright (c) 2014-2015 Acysos S.L. (http://acysos.com)
+#    All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -37,9 +38,10 @@ class StockPicking(models.Model):
                     self.amount_tax += operation.sale_taxes
                 self.amount_total = self.amount_untaxed + self.amount_tax
             else:
-                self.amount_untaxed = self.sale_id.amount_untaxed
-                self.amount_tax = self.sale_id.amount_tax
-                self.amount_total = self.sale_id.amount_total
+                for move in self.move_lines:
+                    self.amount_untaxed += move.sale_subtotal
+                    self.amount_tax += move.sale_taxes
+                self.amount_total = self.amount_untaxed + self.amount_tax
 
     amount_untaxed = fields.Float(compute='_compute_amount',
                                   digits_compute=dp.get_precision('Account'),
@@ -50,6 +52,7 @@ class StockPicking(models.Model):
     amount_total = fields.Float(compute='_compute_amount',
                                 digits_compute=dp.get_precision('Account'),
                                 string='Total')
+    stock_valued = fields.Boolean(string="Stock Valued")
 
 
 class StockMove(models.Model):
@@ -65,11 +68,14 @@ class StockMove(models.Model):
     def _sale_prices(self):
         if self.procurement_id.sale_line_id:
             sale_line = self.procurement_id.sale_line_id
-            self.sale_taxes = sale_line.order_id._amount_line_tax(sale_line)
+            self.sale_taxes = round(
+                (sale_line.order_id._amount_line_tax(sale_line) /
+                 sale_line.product_uom_qty) * self.product_qty, 2)
             self.sale_price_untaxed = sale_line.price_reduce
             self.sale_price_unit = sale_line.price_unit
             self.sale_discount = sale_line.discount
-            self.sale_subtotal = sale_line.price_subtotal
+            self.sale_subtotal = round(sale_line.price_reduce *
+                                       self.product_qty, 2)
         else:
             self.sale_taxes = 0
             self.sale_price_untaxed = 0
@@ -107,8 +113,8 @@ class StockPackOperation(models.Model):
         if self.linked_move_operation_ids:
             move = self.linked_move_operation_ids[0].move_id
             if move.procurement_id.sale_line_id:
-                self.sale_taxes = round((move.sale_taxes / move.product_qty)
-                                        * self.product_qty, 2)
+                self.sale_taxes = round((move.sale_taxes / move.product_qty) *
+                                        self.product_qty, 2)
                 self.sale_price_untaxed = move.sale_price_untaxed
                 self.sale_price_unit = move.sale_price_unit
                 self.sale_discount = move.sale_discount

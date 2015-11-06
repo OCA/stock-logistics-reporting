@@ -47,6 +47,7 @@ msgstr "Movimiento de existencias"
 
 #. module: stock_valued
 #: field:res.partner,stock_valued:0
+#: field:stock.picking,stock_valued:0
 msgid "Stock Valued"
 msgstr "Albarán valorado"
 

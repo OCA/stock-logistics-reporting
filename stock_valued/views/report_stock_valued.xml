@@ -4,35 +4,35 @@
     <template id="report_picking_valued"
       inherit_id="stock.report_picking">
       <xpath expr="//table[@t-if='not o.pack_operation_ids']/thead/tr/t[contains(@t-if, 'outgoing')]" position="after">
-        <t t-if="o.partner_id.stock_valued">
+        <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <th><strong>Price</strong></th>
             <th><strong>Discount</strong></th>
             <th><strong>Subtotal</strong></th>
         </t>
       </xpath>
       <xpath expr="//table[@t-if='o.pack_operation_ids']/thead/tr/t[contains(@t-if, 'outgoing')]" position="after">
-        <t t-if="o.partner_id.stock_valued">
+        <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <th><strong>Price</strong></th>
             <th><strong>Discount</strong></th>
             <th><strong>Subtotal</strong></th>
         </t>
       </xpath>
       <xpath expr="//table[@t-if='not o.pack_operation_ids']/tbody/tr[contains(@t-foreach, 'o.move_lines')]/t[contains(@t-if, 'outgoing')]" position="after">
-        <t t-if="o.partner_id.stock_valued">
+        <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <td><span t-field="move.sale_price_unit"/></td>
             <td><span t-field="move.sale_discount"/></td>
             <td><span t-field="move.sale_subtotal"/></td>
         </t>
       </xpath>
       <xpath expr="//table[@t-if='o.pack_operation_ids']/tbody/tr[contains(@t-foreach, 'o.pack_operation_ids')]/t[contains(@t-if, 'outgoing')]" position="after">
-        <t t-if="o.partner_id.stock_valued">
+        <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <td><span t-field="pack_operation.sale_price_unit"/></td>
             <td><span t-field="pack_operation.sale_discount"/></td>
             <td><span t-field="pack_operation.sale_subtotal"/></td>
         </t>
       </xpath>
       <xpath expr="//div[contains(@class, 'page')]/table[3]" position="after">
-        <t t-if="o.partner_id.stock_valued">
+        <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <table class="table table-condensed">
                 <tbody>
                     <tr>

@@ -13,6 +13,9 @@
                         <field name="amount_total" sum="Total amount"/>
                     </group>
                 </field>
+                <field name="partner_id" position="after">
+                	<field name="stock_valued"/>
+                </field>
             </field>
         </record>
         

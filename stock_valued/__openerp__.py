@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Odoo, Open Source Management Solution
-#    Copyright (c) 2014 Acysos S.L. (http://acysos.com) All Rights Reserved.
+#    Copyright (c) 2015 Acysos S.L. (http://acysos.com) All Rights Reserved.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    "name": "Stock valued",
+    "name": "Stock picking valued",
     "version": "1.0",
     "author": "Acysos S.L.",
     "category": "Stock Management",

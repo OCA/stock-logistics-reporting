@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-01 00:56+0000\n"
-"PO-Revision-Date: 2014-12-01 00:56+0000\n"
+"POT-Creation-Date: 2015-09-10 08:49+0000\n"
+"PO-Revision-Date: 2015-09-10 08:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,7 @@ msgstr ""
 
 #. module: stock_valued
 #: field:res.partner,stock_valued:0
+#: field:stock.picking,stock_valued:0
 msgid "Stock Valued"
 msgstr ""
 
