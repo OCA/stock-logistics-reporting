@@ -17,7 +17,7 @@
             <th><strong>Subtotal</strong></th>
         </t>
       </xpath>
-      <xpath expr="//table[@t-if='not o.pack_operation_ids']/tbody/tr[contains(@t-foreach, 'o.move_lines')]/t[contains(@t-if, 'outgoing')]" position="after">
+      <xpath expr="//table[@t-if='not o.pack_operation_ids']/tbody/tr[contains(@t-foreach, 'o.move_lines')]//t[contains(@t-if, 'outgoing')]" position="after">
         <t t-if="o.partner_id.stock_valued or o.stock_valued">
             <td><span t-field="move.sale_price_unit"/></td>
             <td><span t-field="move.sale_discount"/></td>
