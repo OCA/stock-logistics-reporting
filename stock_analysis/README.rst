@@ -8,7 +8,8 @@ Stock Analysis
 
 This module extends the stock reporting to allow better stock per location analysis.
 By default, it adds a pivot table where lines are products and columns are locations.
-See screenshot
+
+.. image:: /stock_analysis/images/demo_analysis.png
 
 Usage
 =====
