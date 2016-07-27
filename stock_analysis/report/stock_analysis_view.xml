@@ -8,6 +8,7 @@
          <field name="arch" type="xml">
              <graph string="Stock Analysis" type="pivot" stacked="True">
                  <field name="product_id" type="row"/>
+                 <field name="lot_id" type="row"/>
                  <field name="location_id" type="col"/>
                  <field name="qty" type="measure"/>
              </graph>
@@ -34,7 +35,7 @@
                 <group expand="1" string="Group By">
                     <filter string="Category" name="Category" context="{'group_by':'categ_id'}"/>
                     <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
-                    <filter string="Serial Number" name="Lot" context="{'group_by':'lot_id'}"/>
+                    <filter string="Lot" name="Lot" context="{'group_by':'lot_id'}"/>
                     <filter string="Package" name="Package" context="{'group_by':'package_id'}"/>
                     <filter string="Company" name="Company" context="{'group_by':'company_id'}"/>
                 </group>
