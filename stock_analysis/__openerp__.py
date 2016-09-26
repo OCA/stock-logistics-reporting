@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2016 Lorenzo Battistini - Agile Business Group - I.A.S. Ingenieria, Aplicaciones y Software
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 {
     "name": "Stock Analysis",
     "summary": "Analysis view for stock",
@@ -13,10 +14,11 @@
     & I.A.S. Ingenieria, Aplicaciones y Software
     """,
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
+    'installable': True,
+    'auto_install': False,
+    'application': True,
     "depends": [
-        "stock",
+        "base", "stock",
     ],
     "data": [
         'views/stock_analysis_view.xml',

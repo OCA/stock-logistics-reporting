@@ -2,13 +2,15 @@
 # © 2016 Lorenzo Battistini - Agile Business Group - I.A.S. Ingenieria, Aplicaciones y Software
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, tools
+from openerp import models, fields, api, exceptions, tools
+from openerp.tools.translate import _
 
 
 class StockAnalysis(models.Model):
     _name = 'stock.analysis'
     _auto = False
     _rec_name = 'product_id'
+
 
     product_id = fields.Many2one(
         'product.product', string='Product', readonly=True)
@@ -25,10 +27,11 @@ class StockAnalysis(models.Model):
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=True)
 
+
     def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table)
+        tools.drop_view_if_exists(cr, 'stock_analysis')
         cr.execute(
-            """CREATE or REPLACE VIEW %s as (
+            """CREATE or REPLACE VIEW stock_analysis as (
             SELECT
                 quant.id AS id,
                 quant.product_id AS product_id,
@@ -44,5 +47,4 @@ class StockAnalysis(models.Model):
             JOIN product_template template
                 ON template.id = prod.product_tmpl_id
             )"""
-            % (self._table)
         )
