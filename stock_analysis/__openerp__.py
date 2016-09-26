@@ -7,7 +7,11 @@
     "version": "9.0.1.3",
     "category": "Inventory, Logistic, Storage",
     "website": "https://www.agilebg.com - http://www.ias.com.co/",
-    "author": "Agile Business Group, Odoo Community Association (OCA) & I.A.S. Ingenieria, Aplicaciones y Software",
+    "author":
+    """
+    Agile Business Group, Odoo Community Association (OCA)
+    & I.A.S. Ingenieria, Aplicaciones y Software
+    """,
     "license": "AGPL-3",
     "application": False,
     "installable": True,
@@ -15,7 +19,7 @@
         "stock",
     ],
     "data": [
-        'report/stock_analysis_view.xml',
+        'views/stock_analysis_view.xml',
         'security/ir.model.access.csv',
     ],
     'images': [
