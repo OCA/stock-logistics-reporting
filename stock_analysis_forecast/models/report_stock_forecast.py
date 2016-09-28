@@ -74,7 +74,7 @@ class ReportStockForecast(models.Model):
                 to_date(
                     to_char(CURRENT_DATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')) END
             AS date,
-            SUM(sm.product_qty) AS product_qty,
+            0 AS product_qty,
             SUM(sm.product_qty) AS in_quantity,
             0 AS out_quantity
             FROM
@@ -106,7 +106,7 @@ class ReportStockForecast(models.Model):
                         to_date(to_char(CURRENT_DATE, 'YYYY/MM/DD'),
                         'YYYY/MM/DD')) END
                 AS date,
-                SUM(-(sm.product_qty)) AS product_qty,
+                0 AS product_qty,
                 0 AS in_quantity,
                 SUM(sm.product_qty) AS out_quantity
             FROM
