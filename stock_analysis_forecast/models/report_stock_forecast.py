@@ -17,6 +17,8 @@ class ReportStockForecast(models.Model):
     product_id = fields.Many2one(
         'product.product', string='Product', readonly=True)
     quantity = fields.Float(readonly=True)
+    incoming_quantity = fields.Float(readonly=True)
+    outgoing_quantity = fields.Float(readonly=True)
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'report_stock_forecast')
@@ -24,14 +26,20 @@ class ReportStockForecast(models.Model):
         MIN(id) as id,
         product_id as product_id,
         date as date,
-        sum(product_qty) AS quantity
+        sum(product_qty) AS quantity,
+        sum(in_quantity) AS incoming_quantity,
+        sum(out_quantity) AS outgoing_quantity
         FROM
         (SELECT
         MIN(id) as id,
         MAIN.product_id as product_id,
         SUB.date as date,
         CASE WHEN MAIN.date = SUB.date
-            THEN sum(MAIN.product_qty) ELSE 0 END as product_qty
+            THEN sum(MAIN.product_qty) ELSE 0 END as product_qty,
+        CASE WHEN MAIN.date = SUB.date
+            THEN sum(MAIN.in_quantity) ELSE 0 END as in_quantity,
+        CASE WHEN MAIN.date = SUB.date
+            THEN sum(MAIN.out_quantity) ELSE 0 END as out_quantity
         FROM
         (SELECT
             MIN(sq.id) as id,
@@ -40,7 +48,9 @@ class ReportStockForecast(models.Model):
                 'week',
                 to_date(to_char(CURRENT_DATE, 'YYYY/MM/DD'),
                 'YYYY/MM/DD')) as date,
-            SUM(sq.qty) AS product_qty
+            SUM(sq.qty) AS product_qty,
+            0 AS in_quantity,
+            0 AS out_quantity
             FROM
             stock_quant as sq
             LEFT JOIN
@@ -64,7 +74,9 @@ class ReportStockForecast(models.Model):
                 to_date(
                     to_char(CURRENT_DATE, 'YYYY/MM/DD'), 'YYYY/MM/DD')) END
             AS date,
-            SUM(sm.product_qty) AS product_qty
+            SUM(sm.product_qty) AS product_qty,
+            SUM(sm.product_qty) AS in_quantity,
+            0 AS out_quantity
             FROM
                stock_move as sm
             LEFT JOIN
@@ -94,7 +106,9 @@ class ReportStockForecast(models.Model):
                         to_date(to_char(CURRENT_DATE, 'YYYY/MM/DD'),
                         'YYYY/MM/DD')) END
                 AS date,
-                SUM(-(sm.product_qty)) AS product_qty
+                SUM(-(sm.product_qty)) AS product_qty,
+                0 AS in_quantity,
+                SUM(sm.product_qty) AS out_quantity
             FROM
                stock_move as sm
             LEFT JOIN
