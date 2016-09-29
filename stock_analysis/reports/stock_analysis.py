@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2016 Lorenzo Battistini - Agile Business Group - I.A.S. Ingenieria,
-# Aplicaciones y Software
+# © 2016 Lorenzo Battistini - Agile Business Group - I.A.S. Colombia.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, tools
@@ -26,11 +25,9 @@ class StockAnalysis(models.Model):
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=True)
 
-    def init(self, cr):
-        tools.drop_view_if_exists(cr, 'stock_analysis')
-        cr.execute(
-            """CREATE or REPLACE VIEW stock_analysis as (
-            SELECT
+    def _select(self):
+        select_str = """
+                SELECT
                 quant.id AS id,
                 quant.product_id AS product_id,
                 quant.location_id AS location_id,
@@ -39,10 +36,21 @@ class StockAnalysis(models.Model):
                 quant.package_id AS package_id,
                 quant.in_date AS in_date,
                 quant.company_id,
-                template.categ_id AS categ_id
+                template.categ_id AS categ_i
+            """
+        return select_str
+
+    def _from(self):
+        from_str = """
             FROM stock_quant AS quant
             JOIN product_product prod ON prod.id = quant.product_id
             JOIN product_template template
                 ON template.id = prod.product_tmpl_id
-            )"""
-        )
+        """
+        return from_str
+
+    def init(self, cr):
+        tools.drop_view_if_exists(cr, self._table)
+        cr.execute("""CREATE or REPLACE VIEW %s as (
+            %s %s
+        )""" % (self._table, self._select(), self._from()))

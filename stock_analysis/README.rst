@@ -16,7 +16,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/151/8.0
+   :target: https://runbot.odoo-community.org/runbot/151/9.0
 
 Bug Tracker
 ===========
@@ -28,7 +28,7 @@ help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
 stock-logistics-reporting/issues/new?body=module:%20
 stock_analysis%0Aversion:%20
-8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+9.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
 =======
@@ -42,6 +42,7 @@ Contributors
 ------------
 
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* I.A.S. Colombia
 
 Maintainer
 ----------
