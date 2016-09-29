@@ -19,6 +19,8 @@ class ReportStockForecast(models.Model):
     quantity = fields.Float(readonly=True)
     incoming_quantity = fields.Float(readonly=True)
     outgoing_quantity = fields.Float(readonly=True)
+    location_id = fields.Many2one(
+        'stock.location', string='Location', readonly=True)
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'report_stock_forecast')
@@ -28,11 +30,13 @@ class ReportStockForecast(models.Model):
         date as date,
         sum(product_qty) AS quantity,
         sum(in_quantity) AS incoming_quantity,
-        sum(out_quantity) AS outgoing_quantity
+        sum(out_quantity) AS outgoing_quantity,
+        location_id
         FROM
         (SELECT
         MIN(id) as id,
         MAIN.product_id as product_id,
+        MAIN.location_id as location_id,
         SUB.date as date,
         CASE WHEN MAIN.date = SUB.date
             THEN sum(MAIN.product_qty) ELSE 0 END as product_qty,
@@ -50,7 +54,8 @@ class ReportStockForecast(models.Model):
                 'YYYY/MM/DD')) as date,
             SUM(sq.qty) AS product_qty,
             0 AS in_quantity,
-            0 AS out_quantity
+            0 AS out_quantity,
+            sq.location_id
             FROM
             stock_quant as sq
             LEFT JOIN
@@ -59,7 +64,7 @@ class ReportStockForecast(models.Model):
             stock_location location_id ON sq.location_id = location_id.id
             WHERE
             location_id.usage = 'internal'
-            GROUP BY date, sq.product_id
+            GROUP BY date, sq.product_id, sq.location_id
             UNION ALL
             SELECT
             MIN(-sm.id) as id,
@@ -76,7 +81,8 @@ class ReportStockForecast(models.Model):
             AS date,
             0 AS product_qty,
             SUM(sm.product_qty) AS in_quantity,
-            0 AS out_quantity
+            0 AS out_quantity,
+            dest_location.id as location_id
             FROM
                stock_move as sm
             LEFT JOIN
@@ -91,7 +97,7 @@ class ReportStockForecast(models.Model):
                 sm.state IN ('confirmed','assigned','waiting') and
                 source_location.usage != 'internal' and
                 dest_location.usage = 'internal'
-            GROUP BY sm.date_expected,sm.product_id
+            GROUP BY sm.date_expected, sm.product_id, dest_location.id
             UNION ALL
             SELECT
                 MIN(-sm.id) as id,
@@ -108,7 +114,8 @@ class ReportStockForecast(models.Model):
                 AS date,
                 0 AS product_qty,
                 0 AS in_quantity,
-                SUM(sm.product_qty) AS out_quantity
+                SUM(sm.product_qty) AS out_quantity,
+                source_location.id as location_id
             FROM
                stock_move as sm
             LEFT JOIN
@@ -123,7 +130,7 @@ class ReportStockForecast(models.Model):
                 sm.state IN ('confirmed','assigned','waiting') and
             source_location.usage = 'internal' and
             dest_location.usage != 'internal'
-            GROUP BY sm.date_expected,sm.product_id)
+            GROUP BY sm.date_expected, sm.product_id, source_location.id)
          as MAIN
      LEFT JOIN
      (SELECT DISTINCT date
@@ -150,6 +157,6 @@ class ReportStockForecast(models.Model):
               or (source_location.usage = 'internal'
                  AND dest_location.usage != 'internal'))) AS DATE_SEARCH)
              SUB ON (SUB.date IS NOT NULL)
-    GROUP BY MAIN.product_id,SUB.date, MAIN.date
+    GROUP BY MAIN.product_id,SUB.date, MAIN.date, MAIN.location_id
     ) AS FINAL
-    GROUP BY product_id,date)""")
+    GROUP BY product_id,date, location_id)""")

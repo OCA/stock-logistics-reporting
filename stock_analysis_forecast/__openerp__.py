@@ -5,12 +5,13 @@
 
 {
     'name': 'Stock Analysis Forecast',
-    'summary': """
-        Analysis wiew for stock forecast""",
+    'summary': "Analysis wiew for stock forecast",
     'version': '8.0.1.0.0',
-    'category': 'Inventory, Logistic, Storage',
+    'category': 'Warehouse Management',
     'license': 'LGPL-3',
-    'author': 'Agile Business Group, Odoo Community Association (OCA)',
+    'author': 'Odoo S.A,'
+              'Agile Business Group,'
+              'Odoo Community Association (OCA)',
     'website': 'https://www.agilebg.com',
     'depends': [
         'product',

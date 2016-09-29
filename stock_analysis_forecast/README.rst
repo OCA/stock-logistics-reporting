@@ -6,7 +6,17 @@
 Stock Analysis Forecast
 =======================
 
-Backport (with adjustments) of the report_stock_forecast analysis view of Odoo 9.
+Backport (with improvements) of the report_stock_forecast analysis view of Odoo 9.
+
+By default, it adds a pivot table grouped by date where lines are products and columns are locations.
+Each column is further divided into Quantity, Incoming quantity and Outgoing quantity.
+Quantity column doesn't take into account incoming and outgoing quantities.
+
+See example:
+
+.. figure:: static/description/forecast.png
+   :width: 600 px
+   :alt: Sample forecast report
 
 Usage
 =====
@@ -36,6 +46,7 @@ Contributors
 
 * Odoo SA <https://www.odoo.com>
 * Alex Comba <alex.comba@agilebg.com>
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 
 **This module is a backport from Odoo SA and as such, it is not included in the OCA CLA.
 That means we do not have a copy of the copyright on it like all other OCA modules.**
