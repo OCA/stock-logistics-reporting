@@ -12,6 +12,7 @@
         <field name="arch" type="xml">
             <graph string="Stock Level forecast" type="pivot" stacked="True">
                 <field name="product_id" type="row"/>
+                <field name="location_id" type="col"/>
                 <field name="quantity" type="measure"/>
                 <field name="incoming_quantity" type="measure"/>
                 <field name="outgoing_quantity" type="measure"/>
@@ -29,7 +30,7 @@
                 <group expand="1" string="Group By">
                     <filter string="Pivot" name="pivot_by"
                         context="{'row_group_by': ['product_id'],
-                                  'col_group_by': ['date:week'],
+                                  'col_group_by': ['date:week', 'location_id'],
                                   'measures': ['quantity', 'incoming_quantity', 'outgoing_quantity']}"/>
                 </group>
            </search>
