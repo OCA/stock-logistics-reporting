@@ -37,13 +37,10 @@ class ReportStockForecast(models.Model):
         MIN(id) AS id,
         MAIN.product_id AS product_id,
         MAIN.location_id AS location_id,
-        SUB.date AS date,
-        CASE WHEN MAIN.date = SUB.date
-            THEN sum(MAIN.product_qty) ELSE 0 END AS product_qty,
-        CASE WHEN MAIN.date = SUB.date
-            THEN sum(MAIN.in_quantity) ELSE 0 END AS in_quantity,
-        CASE WHEN MAIN.date = SUB.date
-            THEN sum(MAIN.out_quantity) ELSE 0 END AS out_quantity
+        MAIN.date AS date,
+        sum(MAIN.product_qty) AS product_qty,
+        sum(MAIN.in_quantity) AS in_quantity,
+        sum(MAIN.out_quantity) AS out_quantity
         FROM
         (SELECT
             MIN(sq.id) AS id,
@@ -122,30 +119,6 @@ class ReportStockForecast(models.Model):
             dest_location.usage != 'internal'
             GROUP BY sm.date_expected, sm.product_id, source_location.id)
          AS MAIN
-     LEFT JOIN
-     (SELECT DISTINCT date
-      FROM
-      (
-             SELECT date_trunc('day', CURRENT_DATE) AS DATE
-             UNION ALL
-             SELECT date_trunc(
-                'day',
-                to_date(to_char(sm.date_expected, 'YYYY/MM/DD'),
-                'YYYY/MM/DD')) AS date
-             FROM stock_move sm
-             LEFT JOIN
-                stock_location source_location
-                ON sm.location_id = source_location.id
-             LEFT JOIN
-                stock_location dest_location
-                ON sm.location_dest_id = dest_location.id
-             WHERE
-             sm.state IN ('confirmed','assigned','waiting') AND
-             ((dest_location.usage = 'internal'
-              AND source_location.usage != 'internal')
-              OR (source_location.usage = 'internal'
-                 AND dest_location.usage != 'internal'))) AS DATE_SEARCH)
-             SUB ON (SUB.date IS NOT NULL)
-    GROUP BY MAIN.product_id, SUB.date, MAIN.date, MAIN.location_id
+    GROUP BY MAIN.product_id, MAIN.date, MAIN.date, MAIN.location_id
     ) AS FINAL
     GROUP BY product_id, date, location_id)""")
