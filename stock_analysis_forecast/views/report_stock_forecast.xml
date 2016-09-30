@@ -26,6 +26,8 @@
         <field name="arch" type="xml">
             <search string="Stock Level forecast">
                 <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="categ_id"/>
                 <field name="date"/>
                 <filter name="internal_location" string="Internal location" domain="[('location_id.usage', '=', 'internal')]"/>
                 <separator/>
