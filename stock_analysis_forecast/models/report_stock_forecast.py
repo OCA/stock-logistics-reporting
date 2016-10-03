@@ -66,7 +66,8 @@ class ReportStockForecast(models.Model):
             stock_location location_id ON sq.location_id = location_id.id
             WHERE
             location_id.usage = 'internal'
-            GROUP BY date, sq.product_id, sq.location_id, product_product.product_tmpl_id
+            GROUP BY date, sq.product_id, sq.location_id,
+                     product_product.product_tmpl_id
             UNION ALL
             SELECT
             MIN(-sm.id) AS id,
@@ -95,7 +96,8 @@ class ReportStockForecast(models.Model):
                 sm.state IN ('confirmed','assigned','waiting') AND
                 source_location.usage != 'internal' AND
                 dest_location.usage = 'internal'
-            GROUP BY sm.date_expected, sm.product_id, dest_location.id, product_product.product_tmpl_id
+            GROUP BY sm.date_expected, sm.product_id, dest_location.id,
+                     product_product.product_tmpl_id
             UNION ALL
             SELECT
                 MIN(-sm.id) AS id,
@@ -124,7 +126,8 @@ class ReportStockForecast(models.Model):
                 sm.state IN ('confirmed','assigned','waiting') AND
             source_location.usage = 'internal' AND
             dest_location.usage != 'internal'
-            GROUP BY sm.date_expected, sm.product_id, source_location.id, product_product.product_tmpl_id)
+            GROUP BY sm.date_expected, sm.product_id, source_location.id,
+                     product_product.product_tmpl_id)
          AS MAIN
     GROUP BY MAIN.product_id, MAIN.date, MAIN.location_id, MAIN.product_tmpl_id
     ) AS FINAL
