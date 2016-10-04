@@ -29,7 +29,6 @@
                 <field name="location_id"/>
                 <field name="categ_id"/>
                 <field name="date"/>
-                <filter name="internal_location" string="Internal location" domain="[('location_id.usage', '=', 'internal')]"/>
                 <separator/>
                 <filter name="stockable" string="Stockable products" domain="[('product_id.type', '=', 'product')]"/>
                 <filter name="consumable" string="Consumable products" domain="[('product_id.type', '=', 'consu')]"/>
@@ -43,7 +42,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">graph</field>
         <field name="search_view_id" ref="view_stock_level_forecast_filter"/>
-        <field name="context">{'search_default_internal_location':1}</field>
         <field name="view_id" ref="view_stock_level_forecast_pivot"/>
     </record>
 
