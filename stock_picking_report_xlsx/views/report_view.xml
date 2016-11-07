@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        
+        <report
+             id="stock_piccking_xlsx"
+             model="stock.picking"
+             string="Print to XLSX"
+             report_type="xlsx"
+             name="stock.picking.xlsx"
+             file="stock.picking.xlsx"
+             attachment_use="False"
+         />
+    </data>
+</openerp>
