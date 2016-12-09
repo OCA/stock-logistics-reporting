@@ -1,19 +1,62 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_valued_picking_report
+# 	* stock_valued_picking_report
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 10:01+0000\n"
-"PO-Revision-Date: 2015-04-20 10:01+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2017-03-13 14:39+0100\n"
+"PO-Revision-Date: 2017-03-13 14:41+0100\n"
+"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Discount</strong>"
+msgstr "<strong>Dto</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Subtotal</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Taxes</strong>"
+msgstr "<strong>Impuestos</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Total</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Precio</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+msgid "<strong>Untaxed Amount</strong>"
+msgstr "<strong>Base imponible</strong>"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_currency_id
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_valued_picking_report
+#: model:ir.model,name:stock_valued_picking_report.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr "Operación de empaquetado"
 
 #. module: stock_valued_picking_report
 #: model:ir.model,name:stock_valued_picking_report.model_res_partner
@@ -21,42 +64,64 @@ msgid "Partner"
 msgstr "Empresa"
 
 #. module: stock_valued_picking_report
-#: model:ir.model,name:stock_valued_picking_report.model_stock_picking
-msgid "Picking List"
-msgstr "Albarán"
-
-#. module: stock_valued_picking_report
-#: model:ir.model,name:stock_valued_picking_report.model_stock_move
-msgid "Stock Move"
-msgstr "Movimiento de existencias"
-
-#. module: stock_valued_picking_report
-#: view:website:stock.report_picking
-msgid "Subtotal"
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_subtotal
+msgid "Price subtotal"
 msgstr "Subtotal"
 
 #. module: stock_valued_picking_report
-#: view:website:stock.report_picking
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_line
+msgid "Related order line"
+msgstr "Linea pedido relacionada"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_discount
+msgid "Sale discount (%)"
+msgstr "Descuento venta (%)"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_unit
+msgid "Sale price unit"
+msgstr "Precio venta"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_tax_description
+msgid "Tax Description"
+msgstr "Descripción de impuesto"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_tax
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_tax_id
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_tax
 msgid "Taxes"
 msgstr "Impuestos"
 
 #. module: stock_valued_picking_report
-#: view:website:stock.report_picking
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_total
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_total
 msgid "Total"
 msgstr "Total"
 
 #. module: stock_valued_picking_report
-#: view:website:stock.report_picking
-msgid "Untaxed amount"
+#: model:ir.model,name:stock_valued_picking_report.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_untaxed
+msgid "Untaxed Amount"
 msgstr "Base imponible"
 
 #. module: stock_valued_picking_report
-#: field:stock.picking,valued:0
-msgid "Valued"
-msgstr "Valorado"
-
-#. module: stock_valued_picking_report
-#: field:res.partner,valued_picking:0
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_res_partner_valued_picking
+#: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_valued
 msgid "Valued picking"
 msgstr "Albarán valorado"
 
+#. module: stock_valued_picking_report
+#: model:ir.model.fields,help:stock_valued_picking_report.field_res_partner_valued_picking
+#: model:ir.model.fields,help:stock_valued_picking_report.field_stock_picking_valued
+msgid "You can select which partners have valued pickings"
+msgstr "Puede seleccionar que empresas tienen albarán valorado"
+
+#~ msgid "Amount total"
+#~ msgstr "Importe total"

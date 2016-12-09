@@ -1,33 +1,38 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (c) 2014 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
-#                       Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
-#    Copyright (c) 2015 Antiun Ingenieria (http://www.antiun.com)
-#                       Antonio Espinosa <antonioea@antiun.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# Copyright 2014 Pedro M. Baeza - Tecnativa <pedro.baeza@tecnativa.com>
+# Copyright 2015 Antonio Espinosa - Tecnativa <antonio.espinosa@tecnativa.com>
+# Copyright 2016 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import fields, models
+from openerp import api, fields, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    valued = fields.Boolean(
-        string='Valued', related='partner_id.valued_picking', store=True,
-        readonly=True)
+    valued = fields.Boolean(related='partner_id.valued_picking')
+    currency_id = fields.Many2one(
+        related='sale_id.currency_id',
+        string='Currency')
+    amount_untaxed = fields.Monetary(
+        compute='_compute_amount_all',
+        string='Untaxed Amount')
+    amount_tax = fields.Monetary(
+        compute='_compute_amount_all',
+        string='Taxes')
+    amount_total = fields.Monetary(
+        compute='_compute_amount_all',
+        string='Total')
+
+    @api.multi
+    def _compute_amount_all(self):
+        for pick in self:
+            amount_untaxed = sum(pick.pack_operation_ids.mapped(
+                'sale_price_subtotal'))
+            amount_tax = sum(pick.pack_operation_ids.mapped(
+                'sale_price_tax'))
+            pick.update({
+                'amount_untaxed': amount_untaxed,
+                'amount_tax': amount_tax,
+                'amount_total': amount_untaxed + amount_tax,
+            })
