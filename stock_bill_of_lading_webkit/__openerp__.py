@@ -56,10 +56,12 @@ Contributors
     'website': 'http://www.savoirfairelinux.com',
     'depends': [
         'base',
-        'report_webkit',
         'base_headers_webkit',
+        'delivery',
+        'partner_shipping_details',
+        'report_webkit',
         'stock',
-        'delivery'
+        'stock_picking_pickup_date',
     ],
     'data': ['report.xml', 'stock_view.xml'],
     'installable': True,
