@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        string="Picking Operations (Description)"
+        id="action_report_picking_description"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="stock_picking_report_custom_description.report_picking_description"
+        file="stock_picking_report_custom_description.report_picking_operations_description"
+    />
+    <report
+        string="Delivery Slip (Description)"
+        id="action_report_delivery_description"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="stock_picking_report_custom_description.report_deliveryslip_description"
+        file="stock_picking_report_custom_description.report_deliveryslip_description"
+    />
+</odoo>
