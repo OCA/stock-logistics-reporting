@@ -16,6 +16,7 @@
     ],
     "data": [
         "views/report_deliveryslip.xml",
+        "views/report_stockpicking_operations.xml",
         "views/stock_report.xml",
     ],
 }
