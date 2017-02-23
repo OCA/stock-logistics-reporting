@@ -2,10 +2,8 @@
 <odoo>
 
     <template id="report_delivery_document_description" inherit_id="stock.report_delivery_document" primary="True">
-        <xpath expr="//table[@t-if='not o.pack_operation_ids']" position="attributes">
-            <attribute name="t-if"></attribute>
-        </xpath>
-        <xpath expr="//table[@t-if='o.pack_operation_ids']" position="replace">
+        <xpath expr="//tbody/tr/td/span[@t-field='pack_operation.product_id']" position="replace">
+            <t t-call="stock_picking_report_custom_description.pack_operation_product_description"/>
         </xpath>
         <xpath expr="//tr/td/span[@t-field='move.product_id']" position="attributes">
             <attribute name="t-field">move.name</attribute>
