@@ -4,9 +4,9 @@
 
 {
     "name": "Stock Picking Report Custom Description",
-    "summary": "New report to print move description in delivery split",
+    "summary": "Show moves description in picking reports",
     "version": "9.0.1.0.0",
-    "category": "Stock",
+    "category": "Warehouse",
     "website": "http://www.tecnativa.com",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
