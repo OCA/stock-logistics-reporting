@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<template id="report_picking_description" inherit_id="stock.report_picking" primary="True">
+<template id="report_picking_description" inherit_id="stock.report_picking" priority="99" primary="True">
     <xpath expr="//tbody/tr/td/span[@t-field='pack_operation.product_id']" position="replace">
         <t t-call="stock_picking_report_custom_description.pack_operation_product_description"/>
     </xpath>
