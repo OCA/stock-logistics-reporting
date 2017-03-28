@@ -20,6 +20,7 @@ addon | version | summary
 [stock_picking_report_xlsx](stock_picking_report_xlsx/) | 8.0.1.0.0 | Adds Pciking report in XLS Format
 
 
+
 Unported addons
 ---------------
 addon | version | summary
