@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Odoo SA <https://www.odoo.com>
+     Copyright 2016 Alex Comba - Agile Business Group
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<openerp>
+<data>
+
+    <record id="view_stock_level_forecast_pivot" model="ir.ui.view">
+        <field name="name">Stock.forecast.pivot</field>
+        <field name="model">report.stock.forecast</field>
+        <field name="arch" type="xml">
+            <graph string="Stock Level forecast" type="pivot" stacked="True">
+                <field name="product_id" type="row"/>
+                <field name="location_id" type="col"/>
+                <field name="quantity" type="measure"/>
+                <field name="incoming_quantity" type="measure"/>
+                <field name="outgoing_quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_stock_level_forecast_filter" model="ir.ui.view">
+        <field name="name">view.stock.level.forecast.filter</field>
+        <field name="model">report.stock.forecast</field>
+        <field name="arch" type="xml">
+            <search string="Stock Level forecast">
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <field name="categ_id"/>
+                <field name="date"/>
+                <separator/>
+                <filter name="stockable" string="Stockable products" domain="[('product_id.type', '=', 'product')]"/>
+                <filter name="consumable" string="Consumable products" domain="[('product_id.type', '=', 'consu')]"/>
+           </search>
+        </field>
+    </record>
+
+    <record id="action_stock_level_forecast_report_product" model="ir.actions.act_window">
+        <field name="name">Stock Level Forecast</field>
+        <field name="res_model">report.stock.forecast</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        <field name="search_view_id" ref="view_stock_level_forecast_filter"/>
+        <field name="view_id" ref="view_stock_level_forecast_pivot"/>
+    </record>
+
+    <menuitem parent="stock.next_id_61" action="action_stock_level_forecast_report_product" id="menu_report_action_stock_level_forecast_report_product"/>
+
+</data>
+</openerp>
