@@ -15,6 +15,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [stock_analysis](stock_analysis/) | 8.0.1.0.0 | Analysis view for stock
+[stock_analysis_forecast](stock_analysis_forecast/) | 8.0.1.0.0 | Analysis wiew for stock forecast
 [stock_picking_partner_lang](stock_picking_partner_lang/) | 8.0.1.0.0 | Adds report for stock picking in partner language
 
 
