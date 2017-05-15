@@ -7,7 +7,7 @@
     "summary": "Show moves description in picking reports",
     "version": "9.0.1.0.0",
     "category": "Warehouse",
-    "website": "http://www.tecnativa.com",
+    "website": "https://www.tecnativa.com",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
