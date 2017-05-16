@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_valued
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-01 00:57+0000\n"
+"PO-Revision-Date: 2014-12-01 00:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Discount"
+msgstr "Descuento"
+
+#. module: stock_valued
+#: model:ir.model,name:stock_valued.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr "Operación de empaquetado"
+
+#. module: stock_valued
+#: model:ir.model,name:stock_valued.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: stock_valued
+#: model:ir.model,name:stock_valued.model_stock_picking
+msgid "Picking List"
+msgstr "Albarán"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Price"
+msgstr "Precio"
+
+#. module: stock_valued
+#: model:ir.model,name:stock_valued.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_valued
+#: field:res.partner,stock_valued:0
+#: field:stock.picking,stock_valued:0
+msgid "Stock Valued"
+msgstr "Albarán valorado"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Taxes:"
+msgstr "Impuestos:"
+
+#. module: stock_valued
+#: view:stock.picking:stock_valued.view_picking_form_valued
+msgid "Total amount"
+msgstr "Total"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Total:"
+msgstr "Total:"
+
+#. module: stock_valued
+#: view:website:stock.report_picking
+msgid "Untaxed Amount:"
+msgstr "Base imponible:"
+
+#. module: stock_valued
+#: view:stock.picking:stock_valued.view_picking_form_valued
+msgid "Untaxed amount"
+msgstr "Base imponible"
+
