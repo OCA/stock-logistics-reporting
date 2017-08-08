@@ -10,6 +10,7 @@ Reports for the Odoo Logistics modules.
 
 [//]: # (addons)
 
+
 Unported addons
 ---------------
 addon | version | summary
