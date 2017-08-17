@@ -10,9 +10,11 @@ from openerp import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    valued = fields.Boolean(related='partner_id.valued_picking')
+    valued = fields.Boolean(
+        related='partner_id.valued_picking', readonly=True,
+    )
     currency_id = fields.Many2one(
-        related='sale_id.currency_id',
+        related='sale_id.currency_id', readonly=True,
         string='Currency')
     amount_untaxed = fields.Monetary(
         compute='_compute_amount_all',

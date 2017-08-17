@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
         <xpath expr="//table[@t-if='o.pack_operation_ids']/thead/tr"
                position="inside">
-            <t t-if="o.valued and o.sale_id">
+            <t t-if="o.valued and o.sale_id and o.pack_operation_ids">
                 <th class="text-right"><strong>Unit Price</strong></th>
                 <th class="text-right" groups="sale.group_discount_per_so_line">
                     <strong>Discount</strong>
@@ -23,8 +24,8 @@
             </t>
         </xpath>
         <xpath expr="//table[@t-if='o.pack_operation_ids']" position="after">
-            <t t-if="o.valued and o.sale_id">
-                <table class="table table-condensed table-bordered mt32">
+            <t t-if="o.valued and o.sale_id and o.pack_operation_ids">
+                <table class="table table-condensed mt32">
                     <thead>
                         <tr>
                             <th class="text-right"><strong>Untaxed Amount</strong></th>
@@ -49,4 +50,5 @@
             </t>
         </xpath>
     </template>
+
 </odoo>

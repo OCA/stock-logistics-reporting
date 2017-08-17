@@ -12,5 +12,5 @@ class ResPartner(models.Model):
 
     valued_picking = fields.Boolean(
         default=True,
-        help='You can select which partners have valued pickings'
+        help='You can select which partners have valued pickings',
     )

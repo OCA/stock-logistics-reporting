@@ -12,7 +12,7 @@ class StockPackOperation(models.Model):
     _inherit = "stock.pack.operation"
 
     currency_id = fields.Many2one(
-        related='sale_line.currency_id',
+        related='sale_line.currency_id', readonly=True,
         string='Currency')
     sale_line = fields.Many2one(
         comodel_name='sale.order.line',
