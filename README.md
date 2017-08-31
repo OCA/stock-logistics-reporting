@@ -10,6 +10,13 @@ Reports for the Odoo Logistics modules.
 
 [//]: # (addons)
 
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[stock_valued_picking_report](stock_valued_picking_report/) | 9.0.1.0.0 | Adding Valued Picking on Delivery Slip report
+
+
 Unported addons
 ---------------
 addon | version | summary
