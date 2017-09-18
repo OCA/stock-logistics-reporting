@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[@t-if='o.pack_operation_ids']/thead/tr"
+               position="inside">
+            <t t-if="o.valued and o.sale_id and o.pack_operation_ids">
+                <th class="text-right"><strong>Unit Price</strong></th>
+                <th class="text-right" groups="sale.group_discount_per_so_line">
+                    <strong>Discount</strong>
+                </th>
+                <th class="text-right"><strong>Subtotal</strong></th>
+                <th class="text-right"><strong>Taxes</strong></th>
+            </t>
+        </xpath>
+        <xpath expr="//span[@t-field='pack_operation.product_uom_id']/.." position="after">
+            <t t-if="o.valued">
+                <td class="text-right"><span t-field="pack_operation.sale_price_unit" /></td>
+                <td class="text-right" groups="sale.group_discount_per_so_line">
+                    <span t-field="pack_operation.sale_discount" />
+                </td>
+                <td class="text-right"><span t-field="pack_operation.sale_price_subtotal" /></td>
+                <td class="text-right"><span t-field="pack_operation.sale_tax_description"/></td>
+            </t>
+        </xpath>
+        <xpath expr="//table[@t-if='o.pack_operation_ids']" position="after">
+            <t t-if="o.valued and o.sale_id and o.pack_operation_ids">
+                <table class="table table-condensed mt32">
+                    <thead>
+                        <tr>
+                            <th class="text-right"><strong>Untaxed Amount</strong></th>
+                            <th class="text-right"><strong>Taxes</strong></th>
+                            <th class="text-right"><strong>Total</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.amount_total"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
