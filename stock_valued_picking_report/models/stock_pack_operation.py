@@ -68,8 +68,10 @@ class StockPackOperation(models.Model):
             sum_amount_untaxed += amount_untaxed
             rm = sale_line.order_id.company_id.tax_calculation_rounding_method
             if rm == 'round_globally':
+                price = sale_line.price_unit * (1 - (sale_line.discount or
+                                                     0.0) / 100)
                 taxes = sale_line.tax_id.compute_all(
-                    sale_line.price_reduce,
+                    price,
                     sale_line.order_id.currency_id,
                     sale_line.product_uom_qty,
                     product=sale_line.product_id,
