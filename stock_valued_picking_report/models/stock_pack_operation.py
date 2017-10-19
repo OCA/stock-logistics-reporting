@@ -54,33 +54,31 @@ class StockPackOperation(models.Model):
 
     @api.multi
     def sale_lines_values(self, sale_lines):
-        sum_qty = 0.0
-        sum_price = 0.0
-        sum_discount = 0.0
-        sum_amount_untaxed = 0.0
-        sum_amount_tax = 0.0
-        sum_amount_total = 0.0
+        sum_qty = sum_price = sum_discount = sum_amount_untaxed = 0.0
+        sum_amount_tax = sum_amount_total = 0.0
+        rm = sale_lines[0].order_id.company_id.tax_calculation_rounding_method
         for sale_line in sale_lines:
             sum_qty += sale_line.product_uom_qty
             sum_price += sale_line.price_unit * sale_line.product_uom_qty
             sum_discount += sale_line.discount * sale_line.product_uom_qty
-            amount_untaxed = sale_line.price_subtotal
+            amount_untaxed = sale_line.product_uom_qty * (
+                sale_line.price_unit * (
+                    1 - (sale_line.discount or 0.0) / 100.0))
             sum_amount_untaxed += amount_untaxed
-            rm = sale_line.order_id.company_id.tax_calculation_rounding_method
+            price = sale_line.price_unit * (1 - (sale_line.discount or
+                                                 0.0) / 100)
+            taxes = sale_line.tax_id.compute_all(
+                price,
+                sale_line.currency_id,
+                sale_line.product_uom_qty,
+                product=sale_line.product_id,
+                partner=sale_line.order_id.partner_id
+            )
             if rm == 'round_globally':
-                price = sale_line.price_unit * (1 - (sale_line.discount or
-                                                     0.0) / 100)
-                taxes = sale_line.tax_id.compute_all(
-                    price,
-                    sale_line.order_id.currency_id,
-                    sale_line.product_uom_qty,
-                    product=sale_line.product_id,
-                    partner=sale_line.order_id.partner_shipping_id
-                )
                 amount_tax = sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', []))
             else:
-                amount_tax = sale_line.price_tax
+                amount_tax = taxes['total_included'] - taxes['total_excluded']
             sum_amount_tax += amount_tax
             sum_amount_total += amount_untaxed + amount_tax
         sale_line = sale_lines[:1]

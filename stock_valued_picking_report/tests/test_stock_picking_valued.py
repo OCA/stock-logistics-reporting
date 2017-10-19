@@ -51,7 +51,7 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_tax, 0.0)
             self.assertEqual(picking.amount_total, 0.0)
 
-    def test_03_rounding_method(self):
+    def test_03_tax_rounding_method(self):
         self.sale_order.company_id.tax_calculation_rounding_method = (
             'round_globally')
         self.sale_order.action_confirm()
