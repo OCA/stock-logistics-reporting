@@ -4,8 +4,7 @@
 
 {
     "name": "Stock Valued Picking Triple Discount",
-    "summary": "Adding Triple Discount on Valued Picking Report"
-               "report",
+    "summary": "Adding Triple Discount on Valued Picking Report",
     "version": "10.0.1.0.0",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",

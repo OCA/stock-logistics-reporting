@@ -28,12 +28,12 @@ msgstr "<strong>Cantidad entregada</strong>"
 #. module: stock_valued_picking_triple_discount
 #: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
 msgid "<strong>Disc.2(%)</strong>"
-msgstr "<strong>Disc.2(%)</strong>"
+msgstr "<strong>Dto.2(%)</strong>"
 
 #. module: stock_valued_picking_triple_discount
 #: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
 msgid "<strong>Disc.3(%)</strong>"
-msgstr "<strong>Disc.3(%)</strong>"
+msgstr "<strong>Dto.3(%)</strong>"
 
 #. module: stock_valued_picking_triple_discount
 #: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
