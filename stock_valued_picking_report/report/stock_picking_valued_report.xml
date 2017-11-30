@@ -13,7 +13,7 @@
                 <th class="text-right"><strong>Taxes</strong></th>
             </t>
         </xpath>
-        <xpath expr="//span[@t-field='pack_operation.product_uom_id']/.." position="after">
+        <xpath expr="//span[@t-field='pack_operation.qty_done_uom_ordered']/.." position="after">
             <t t-if="o.valued">
                 <td class="text-right"><span t-field="pack_operation.sale_price_unit" /></td>
                 <td class="text-right" groups="sale.group_discount_per_so_line">
