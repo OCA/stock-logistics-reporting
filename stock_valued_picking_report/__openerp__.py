@@ -8,7 +8,7 @@
 {
     "name": "Stock Valued Picking Report",
     "summary": "Adding Valued Picking on Delivery Slip report",
-    "version": "9.0.1.0.0",
+    "version": "9.0.1.0.1",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "website": "https://www.tecnativa.com",
@@ -21,6 +21,7 @@
         "delivery",
     ],
     "data": [
+        'security/ir.model.access.csv',
         'views/res_partner_view.xml',
         'report/stock_picking_valued_report.xml',
     ],
