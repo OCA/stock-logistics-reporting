@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
+    <template id="valued_report_picking" inherit_id="stock_valued_picking_report.valued_report_picking">
 
         <xpath expr="//t[@t-set='has_serial_number']" position="after">
             <t t-set="has_discount2"
