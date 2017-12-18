@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================================
-Stock Valued Picking Triple Discount
-====================================
+===========================================
+Stock Valued Picking Report Triple Discount
+===========================================
 
 Add triple discount information to valued Delivery Slip report for partners
 where the check to avoid valued picking is set.

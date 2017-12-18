@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_valued_picking_triple_discount
+#	* stock_valued_picking_report_triple_discount
 #
 msgid ""
 msgstr ""
@@ -15,68 +15,68 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<span class=\"pull-left\">Lot/Serial Number</span>"
 msgstr "<span class=\"pull-left\">Número Lote/Serie</span>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Delivered Quantity</strong>"
 msgstr "<strong>Cantidad entregada</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Disc.2(%)</strong>"
 msgstr "<strong>Dto.2(%)</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Disc.3(%)</strong>"
 msgstr "<strong>Dto.3(%)</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Discount(%)</strong>"
 msgstr "<strong>Descuento(%)</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Ordered Quantity</strong>"
 msgstr "<strong>Cantidad pedida</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Product</strong>"
 msgstr "<strong>Producto</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Taxes</strong>"
 msgstr "<strong>Impuestos</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.ui.view,arch_db:stock_valued_picking_triple_discount.valued_report_picking
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.ui.view,arch_db:stock_valued_picking_report_triple_discount.valued_report_picking
 msgid "<strong>Unit Price</strong>"
 msgstr "<strong>Precio Unidad</strong>"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.model,name:stock_valued_picking_triple_discount.model_stock_pack_operation
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.model,name:stock_valued_picking_report_triple_discount.model_stock_pack_operation
 msgid "Packing Operation"
 msgstr "Operación de empaquetado"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.model.fields,field_description:stock_valued_picking_triple_discount.field_stock_pack_operation_sale_discount2
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.model.fields,field_description:stock_valued_picking_report_triple_discount.field_stock_pack_operation_sale_discount2
 msgid "Sale discount 2 (%)"
 msgstr "Descuento 2 de venta (%)"
 
-#. module: stock_valued_picking_triple_discount
-#: model:ir.model.fields,field_description:stock_valued_picking_triple_discount.field_stock_pack_operation_sale_discount3
+#. module: stock_valued_picking_report_triple_discount
+#: model:ir.model.fields,field_description:stock_valued_picking_report_triple_discount.field_stock_pack_operation_sale_discount3
 msgid "Sale discount 3 (%)"
 msgstr "Descuento 3 de venta (%)"
 
