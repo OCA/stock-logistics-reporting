@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="search_template_date_filter">
+            <a class="dropdown-toggle" data-toggle="dropdown" type="button">
+                <span class="fa fa-calendar"/>
+                <t t-if="options['date'].get('string') and options['date'].get('filter') != 'custom'">
+                    <t t-raw="options['date']['string']"/>
+                </t>
+                <t t-if="options['date'].get('filter') == 'custom'">
+                    <t t-if="options['date'].get('date_from')">From: 
+                        <span class="js_format_date">
+                            <t t-esc="options['date']['date_from']"/></span>
+                        <span class="o_reports_date_to">to: 
+                            <span class="js_format_date">
+                                <t t-esc="options['date']['date_to']"/></span>
+                        </span>
+                    </t>
+                </t>
+                <span class="caret"/>
+            </a>
+            <ul class="dropdown-menu o_filters_menu" role="menu">
+                <li class="js_foldable_trigger o_closed_menu" data-filter="custom_filter_date" style="margin-left: 10px; margin-right: 10px;">
+                    <label class="custom-date" for="date_from">Start Date :</label>
+                    <div class="form-group custom-date">
+                        <div class="o_datepicker js_stock_reports_datetimepicker" t-att-data-default-value="options['date']['date_from']">
+                            <input class="o_datepicker_input" name="date_from" type="text"/>
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                    <label class="custom-date" for="date_to" t-if="options['date'].get('date_to') != None">End Date :</label>
+                    <div class="form-group custom-date">
+                        <div class="o_datepicker js_stock_reports_datetimepicker" t-att-data-default-value="options['date'].get('date_to') or options['date'].get('date')">
+                            <input class="o_datepicker_input" name="date_to" type="text"/>
+                            <span class="o_datepicker_button"/>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary js_stock_report_date_filter" data-filter="custom" type="button">Apply</button>
+                </li>
+            </ul>
+        </template>
+        <template id="search_template_products">
+            <a class="dropdown-toggle stock_product_filter" data-toggle="dropdown" type="button">
+                <span class="fa fa-filter"/>Products
+            
+                <span class="caret"/></a>
+            <ul class="dropdown-menu o_filters_menu" role="menu">
+                <li style="margin-left: 10px; margin-right: 10px;">
+                    <select class="js_stock_reports_product_auto_complete" data-filter="product_ids" multiple="multiple" style="min-width: 100px;">
+                        <t t-as="a" t-foreach="product_ids">
+                            <option t-att-value="a[0]">
+                                <t t-esc="a[1]"/>
+                            </option>
+                        </t>
+                    </select>
+                </li>
+            </ul>
+        </template>
+        <template id="search_template">
+            <div class="btn-group o_dropdown o_stock_reports_filter_date" t-if="options.get('date') != None">
+                <t t-call="stock_kardex.search_template_date_filter"/>
+            </div>
+            <div class="btn-group o_dropdown o_stock_reports_filter_product" t-if="options.get('product') != None">
+                <t t-call="stock_kardex.search_template_products"/>
+            </div>
+        </template>
+    </data>
+</odoo>

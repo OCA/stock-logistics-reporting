@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="stockReports.buttons">
+        <t t-foreach="buttons" t-as="button">
+            <button type="button" class="btn btn-primary btn-sm" t-att-action="button.action"><t t-esc="button.name"/></button>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_stock_kardex_general" model="ir.actions.client">
+            <field name="name">Stock Kardex</field>
+            <field name="tag">stock_report</field>
+            <field name="context" eval="{'model': 'stock.kardex.general'}" />
+        </record>
+
+        <menuitem id="menu_action_stock_kardex_general" name="Stock Kardex" action="action_stock_kardex_general" parent="stock.menu_warehouse_report"/>
+
+        <template id="stock_reports_backend" inherit_id="web.assets_backend" active="True">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/stock_kardex/static/src/js/stock_reports.js"></script>
+                <script type="text/javascript" src="/stock_kardex/static/src/js/stock_reports_followup.js"></script>
+                <link rel="stylesheet" href="/stock_kardex/static/src/less/stock_kardex_report.less" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

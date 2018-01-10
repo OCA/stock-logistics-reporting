@@ -1,0 +1,31 @@
+.caret {
+    display: none !important;
+}
+.o_stock_reports_body_print {
+    background-color: white !important;
+    color: black !important;
+    font-size: 12px !important;
+    .o_stock_reports_level0 {
+        .o_account_reports_lines(@border-width: 5px, @font-weight: bold, @border-top-style: double, @border-bottom-style: hidden);
+    }
+    .o_stock_reports_table {
+        font-size: 14px !important;
+        white-space: nowrap !important;
+        > tbody > tr {
+            /* fix thead overlapping http://github.com/wkhtmltopdf/wkhtmltopdf/issues/1524 */
+            page-break-inside: avoid;
+        }
+    }
+}
+a {
+    color: inherit !important;
+}
+[data-parent-id] {
+    border-bottom-style: hidden;
+}
+.print_only {
+    display: block !important;
+}
+.no_print {
+    display: none !important;
+}
