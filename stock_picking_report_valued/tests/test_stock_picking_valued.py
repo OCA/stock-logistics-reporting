@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Tecnativa - David Vidal
 # Copyright 2017 Tecnativa - Luis M. Ontalba
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -38,6 +37,7 @@ class TestStockPickingValued(common.SavepointCase):
         self.sale_order.action_confirm()
         self.assertTrue(len(self.sale_order.picking_ids))
         for picking in self.sale_order.picking_ids:
+            picking.action_assign()
             self.assertEqual(picking.amount_untaxed, 100.0)
             self.assertEqual(picking.amount_tax, 15.0)
             self.assertEqual(picking.amount_total, 115.0)
@@ -46,6 +46,7 @@ class TestStockPickingValued(common.SavepointCase):
         """ Valued picking isn't computed if not reserved """
         self.sale_order.action_confirm()
         for picking in self.sale_order.picking_ids:
+            picking.action_assign()
             picking.do_unreserve()
             self.assertEqual(picking.amount_untaxed, 0.0)
             self.assertEqual(picking.amount_tax, 0.0)
@@ -57,6 +58,7 @@ class TestStockPickingValued(common.SavepointCase):
         self.sale_order.action_confirm()
         self.assertTrue(len(self.sale_order.picking_ids))
         for picking in self.sale_order.picking_ids:
+            picking.action_assign()
             self.assertEqual(picking.amount_untaxed, 100.0)
             self.assertEqual(picking.amount_tax, 15.0)
             self.assertEqual(picking.amount_total, 115.0)
