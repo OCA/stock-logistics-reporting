@@ -1,4 +1,4 @@
-# Copyright 2014 Pedro M. Baeza - Tecnativa <pedro.baeza@tecnativa.com>
+# Copyright 2014-2018 Tecnativa - Pedro M. Baeza
 # Copyright 2015 Antonio Espinosa - Tecnativa <antonio.espinosa@tecnativa.com>
 # Copyright 2016 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
 # Copyright 2016 Luis M. Ontalba - Tecnativa <luis.martinez@tecnativa.com>
@@ -15,19 +15,31 @@ class StockPicking(models.Model):
     )
     currency_id = fields.Many2one(
         related='sale_id.currency_id', readonly=True,
-        string='Currency')
+        string='Currency',
+        related_sudo=True,  # See explanation for sudo in compute method
+    )
     amount_untaxed = fields.Monetary(
         compute='_compute_amount_all',
-        string='Untaxed Amount')
+        string='Untaxed Amount',
+        compute_sudo=True,  # See explanation for sudo in compute method
+    )
     amount_tax = fields.Monetary(
         compute='_compute_amount_all',
-        string='Taxes')
+        string='Taxes',
+        compute_sudo=True,
+    )
     amount_total = fields.Monetary(
         compute='_compute_amount_all',
-        string='Total')
+        string='Total',
+        compute_sudo=True,
+    )
 
     @api.multi
     def _compute_amount_all(self):
+        """This is computed with sudo for avoiding problems if you don't have
+        access to sales orders (stricter warehouse users, inter-company
+        records...).
+        """
         for pick in self:
             amount_untaxed = sum(pick.move_line_ids.mapped(
                 'sale_price_subtotal'))
