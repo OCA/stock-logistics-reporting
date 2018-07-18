@@ -6,107 +6,111 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-07-19 16:14+0000\n"
+"Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
 msgid "<strong>Discount</strong>"
-msgstr ""
+msgstr "<strong>Remise</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
 msgid "<strong>Subtotal</strong>"
-msgstr ""
+msgstr "<strong>Sous total</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+#, fuzzy
 msgid "<strong>Taxes</strong>"
-msgstr ""
+msgstr "<strong>Taxes</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
+#, fuzzy
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Total</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
 msgid "<strong>Unit Price</strong>"
-msgstr ""
+msgstr "<strong>Prix unitaire</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.ui.view,arch_db:stock_valued_picking_report.valued_report_picking
 msgid "<strong>Untaxed Amount</strong>"
-msgstr ""
+msgstr "<strong>Montant HT</strong>"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_currency_id
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Devise"
 
 #. module: stock_valued_picking_report
 #: model:ir.model,name:stock_valued_picking_report.model_stock_pack_operation
 msgid "Packing Operation"
-msgstr ""
+msgstr "Opération de colisage"
 
 #. module: stock_valued_picking_report
 #: model:ir.model,name:stock_valued_picking_report.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Partenaire"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_subtotal
 msgid "Price subtotal"
-msgstr ""
+msgstr "Prix sous total"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_line
 msgid "Related order line"
-msgstr ""
+msgstr "Ligne de commande liée"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_discount
 msgid "Sale discount (%)"
-msgstr ""
+msgstr "Remise de vente (%)"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_unit
 msgid "Sale price unit"
-msgstr ""
+msgstr "Prix de vente unitaire"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_tax_description
 msgid "Tax Description"
-msgstr ""
+msgstr "Descriptif de la taxe"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_tax
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_tax_id
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_tax
 msgid "Taxes"
-msgstr ""
+msgstr "Taxes"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_pack_operation_sale_price_total
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_total
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: stock_valued_picking_report
 #: model:ir.model,name:stock_valued_picking_report.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_stock_picking_amount_untaxed
 msgid "Untaxed Amount"
-msgstr ""
+msgstr "Montant HT"
 
 #. module: stock_valued_picking_report
 #: model:ir.model.fields,field_description:stock_valued_picking_report.field_res_partner_valued_picking
