@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
-        <xpath expr="//table[@t-if='o.move_line_ids']/thead/tr"
+        <xpath expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]/thead/tr"
                position="inside">
             <t t-if="o.valued and o.sale_id and o.move_line_ids">
                 <t t-if="o.state != 'done'">
@@ -34,7 +34,7 @@
                         t-field="move_line.sale_tax_description"/></td>
             </t>
         </xpath>
-        <xpath expr="//table[@t-if='o.move_line_ids']" position="after">
+        <xpath expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]" position="after">
             <t t-if="o.valued and o.sale_id and o.move_line_ids">
                 <table class="table table-condensed mt32">
                     <thead>
