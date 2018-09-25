@@ -1,4 +1,6 @@
-# Copyright 2017 Carlos Dauden <carlos.dauden@tecnativa.com>
+# Copyright 2017 Tecnativa - Carlos Dauden
+# Copyright 2018 Tecnativa - Vicent Cubells
+# Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -6,7 +8,7 @@
     "summary": "Show moves description in picking reports",
     "version": "11.0.1.0.0",
     "category": "Warehouse",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
