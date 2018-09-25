@@ -2,33 +2,9 @@
 <odoo>
 
 <template id="report_picking_description" inherit_id="stock.report_picking" priority="99" primary="True">
-    <xpath expr="//tbody/tr/td/span[@t-field='pack_operation.product_id']" position="replace">
-        <t t-call="stock_picking_report_custom_description.pack_operation_product_description"/>
+    <xpath expr="//tr/td/span[@t-field='move.product_id.display_name']" position="attributes">
+            <attribute name="t-field">move.name</attribute>
     </xpath>
-</template>
-
-<template id="pack_operation_product_description">
-    <t t-if="pack_operation.product_id">
-        <t t-set="distinct_description" t-value="pack_operation.several_product_description"/>
-        <t t-if="not distinct_description">
-            <span t-field="pack_operation.linked_move_operation_ids[:1].move_id.name"/>
-        </t>
-        <t t-if="distinct_description">
-            <span t-field="pack_operation.product_id"/>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th><small>Description</small></th>
-                        <th><small>Qty</small></th>
-                    </tr>
-                </thead>
-                <tr t-foreach="pack_operation.linked_move_operation_ids" t-as="linked_move">
-                    <td><small t-field="linked_move.move_id.name"/></td>
-                    <td><small t-field="linked_move.qty"/></td>
-                </tr>
-            </table>
-        </t>
-    </t>
 </template>
 
 </odoo>

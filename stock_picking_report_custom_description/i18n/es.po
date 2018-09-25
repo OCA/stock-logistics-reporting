@@ -18,31 +18,23 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_picking_report_custom_description
-#: model:ir.ui.view,arch_db:stock_picking_report_custom_description.pack_operation_product_description
-msgid "<small>Description</small>"
-msgstr "<small>Descripción</small>"
-
-#. module: stock_picking_report_custom_description
-#: model:ir.ui.view,arch_db:stock_picking_report_custom_description.pack_operation_product_description
-msgid "<small>Qty</small>"
-msgstr "<small>Ctd.</small>"
-
-#. module: stock_picking_report_custom_description
-#: model:ir.actions.report.xml,name:stock_picking_report_custom_description.action_report_delivery_description
+#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_delivery_description
 msgid "Delivery Slip (Description)"
 msgstr "Vale de entrega (descripción)"
 
 #. module: stock_picking_report_custom_description
-#: model:ir.model,name:stock_picking_report_custom_description.model_stock_pack_operation
-msgid "Packing Operation"
-msgstr "Operación de empaquetado"
-
-#. module: stock_picking_report_custom_description
-#: model:ir.actions.report.xml,name:stock_picking_report_custom_description.action_report_picking_description
+#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_picking_description
 msgid "Picking Operations (Description)"
 msgstr "Operaciones de picking (descripción)"
 
-#. module: stock_picking_report_custom_description
-#: model:ir.model.fields,field_description:stock_picking_report_custom_description.field_stock_pack_operation_several_product_description
-msgid "Several product description"
-msgstr "Varias descripciones de producto"
+#~ msgid "<small>Description</small>"
+#~ msgstr "<small>Descripción</small>"
+
+#~ msgid "<small>Qty</small>"
+#~ msgstr "<small>Ctd.</small>"
+
+#~ msgid "Packing Operation"
+#~ msgstr "Operación de empaquetado"
+
+#~ msgid "Several product description"
+#~ msgstr "Varias descripciones de producto"
