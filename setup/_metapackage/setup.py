@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo10-addon-stock_valued_picking_report',
+        'odoo10-addon-stock_valued_picking_report_triple_discount',
     ],
     classifiers=[
         'Programming Language :: Python',
