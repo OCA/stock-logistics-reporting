@@ -15,6 +15,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [stock_valued_picking_report](stock_valued_picking_report/) | 10.0.1.0.1 | Adding Valued Picking on Delivery Slip report
+[stock_valued_picking_report_triple_discount](stock_valued_picking_report_triple_discount/) | 10.0.1.0.0 | Adding Triple Discount on Valued Picking Report
 
 
 Unported addons
