@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="valued_report_picking" inherit_id="stock_valued_picking_report.valued_report_picking">
+
+        <xpath expr="//t[@t-set='has_serial_number']" position="after">
+            <t t-set="has_discount2"
+               t-value="o.pack_operation_ids.filtered('linked_move_operation_ids.move_id.procurement_id.sale_line_id.discount2')"/>
+            <t t-set="has_discount3"
+                   t-value="o.pack_operation_ids.filtered('linked_move_operation_ids.move_id.procurement_id.sale_line_id.discount3')"/>
+        </xpath>
+        <xpath
+                expr="//table[@t-if='o.pack_operation_ids']/thead/tr/t/th[@groups='sale.group_discount_per_so_line'/.]"
+                position="after">
+            <t t-if="has_discount2">
+                <th class="text-right" groups="sale.group_discount_per_so_line">
+                    <strong>Disc.2(%)</strong>
+                </th>
+            </t>
+            <t t-if="has_discount3">
+                <th class="text-right" groups="sale.group_discount_per_so_line">
+                    <strong>Disc.3(%)</strong>
+                </th>
+            </t>
+        </xpath>
+        <xpath
+                expr="//span[@t-field='pack_operation.sale_discount']/."
+                position="after">
+            <t t-if="has_discount2">
+                <td class="text-right" groups="sale.group_discount_per_so_line">
+                    <span t-field="pack_operation.sale_discount2" />
+                </td>
+            </t>
+            <t t-if="has_discount3">
+                <td class="text-right" groups="sale.group_discount_per_so_line">
+                    <span t-field="pack_operation.sale_discount3" />
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
