@@ -26,7 +26,11 @@ class TestStockPickingValued(common.SavepointCase):
         })
         cls.sale_order = cls.env['sale.order'].create({
             'partner_id': cls.partner.id,
-            'order_line': [(0, 0, {'product_id': cls.product.id})],
+            'order_line': [(0, 0, {
+                'product_id': cls.product.id,
+                'price_unit': 100,
+                'product_uom_qty': 1,
+            })],
             'company_id': cls.env.user.company_id.id,
         })
         cls.sale_order.company_id.tax_calculation_rounding_method = (
