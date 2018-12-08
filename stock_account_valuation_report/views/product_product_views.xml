@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_product_tree2" model="ir.ui.view">
+        <field name="name">product.stock.tree.2.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock_account.view_stock_product_tree2"/>
+        <field name="arch" type="xml">
+            <field name="cost_method" position="after">
+                <field name="valuation" invisible="1"/>
+            </field>
+            <button name="action_valuation_at_date_details" position="attributes">
+                <attribute name="attrs">{'invisible': [('valuation', '!=', 'real_time')]}</attribute>
+            </button>
+            <button name="action_valuation_at_date_details" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </button>
+            <button name="action_valuation_at_date_details" position="after">
+                <button name="action_view_stock_moves"
+                        type="object" icon="fa-info-circle"
+                        attrs="{'invisible': [('cost_method', '!=', 'fifo')]}" />
+            </button>
+            <field name="stock_value" position="after">
+                <field name="account_qty_at_date" sum="Accounting Qty"
+                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                <field name="account_value"
+                       sum="Accounting Valuation"
+                       widget="monetary"
+                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                <button name="action_view_amls"
+                        type="object" icon="fa-info-circle"
+                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}" />
+            </field>
+        </field>
+    </record>
+</odoo>

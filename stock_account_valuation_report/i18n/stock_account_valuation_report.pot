@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_account_valuation_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_account_valuation_report
+#: model:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Accounting Qty"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product_account_qty_at_date
+msgid "Accounting Quantity"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Accounting Valuation"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: code:addons/stock_account_valuation_report/models/product_product.py:115
+#, python-format
+msgid "Accounting Valuation at date"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product_account_value
+msgid "Accounting Value"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: code:addons/stock_account_valuation_report/models/product_product.py:131
+#, python-format
+msgid "Inventory Valuation"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_stock_quantity_history
+msgid "Stock Quantity History"
+msgstr ""
+
