@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_account_quantity_history_location" model="ir.ui.view">
+        <field name="name">Valuation Report</field>
+        <field name="model">stock.quantity.history</field>
+        <field name="inherit_id" ref="stock_account.view_stock_quantity_history"/>
+        <field name="arch" type="xml">
+            <field name="compute_at_date" position="before">
+                <field name="location_id"/>
+                <field name="include_child_locations"
+                       attrs="{'invisible': [('location_id', '=', False)]}"/>
+                <div class="alert alert-warning" colspan="2"
+                     attrs="{'invisible': [('location_id', '=', False)]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-info-circle"/> The accounting valuation is not calculated when you specify a location.
+                    </p>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>
