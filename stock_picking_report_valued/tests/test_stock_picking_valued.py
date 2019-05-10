@@ -11,6 +11,7 @@ class TestStockPickingValued(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingValued, cls).setUpClass()
+        company = cls.env.user.company_id.id
         cls.tax = cls.env['account.tax'].create({
             'name': 'TAX 15%',
             'amount_type': 'percent',
@@ -38,7 +39,24 @@ class TestStockPickingValued(common.SavepointCase):
                 'price_unit': 100,
                 'product_uom_qty': 1,
             })],
-            'company_id': cls.env.user.company_id.id,
+            'company_id': company.id,
+        })
+        cls.sale_order2 = cls.env['sale.order'].create({
+            'partner_id': cls.partner.id,
+            'order_line': [
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                }),
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                    'tax_id': [6, 0, cls.tax10.ids],
+                }),
+            ],
+            'company_id': company.id,
         })
         cls.sale_order.company_id.tax_calculation_rounding_method = (
             'round_per_line')
@@ -75,14 +93,11 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_total, 115.0)
 
     def test_04_lines_distinct_tax(self):
-        self.sale_order.lines[0].copy({
-            'tax_id': [6, 0, self.tax10.ids]
-        })
-        self.sale_order.company_id.tax_calculation_rounding_method = (
+        self.sale_order2.company_id.tax_calculation_rounding_method = (
             'round_globally')
-        self.sale_order.action_confirm()
-        self.assertTrue(len(self.sale_order.picking_ids))
-        for picking in self.sale_order.picking_ids:
+        self.sale_order2.action_confirm()
+        self.assertTrue(len(self.sale_order2.picking_ids))
+        for picking in self.sale_order2.picking_ids:
             picking.action_assign()
             self.assertEqual(picking.amount_untaxed, 200.0)
             self.assertEqual(picking.amount_tax, 25.0)
