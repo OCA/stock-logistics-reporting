@@ -11,7 +11,7 @@ class TestStockPickingValued(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingValued, cls).setUpClass()
-        company = cls.env.user.company_id.id
+        company = cls.env.user.company_id
         cls.tax = cls.env['account.tax'].create({
             'name': 'TAX 15%',
             'amount_type': 'percent',
@@ -53,7 +53,12 @@ class TestStockPickingValued(common.SavepointCase):
                     'product_id': cls.product.id,
                     'price_unit': 100,
                     'product_uom_qty': 1,
-                    'tax_id': [6, 0, cls.tax10.ids],
+                }),
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                    'tax_id': [(6, 0, cls.tax10.ids)],
                 }),
             ],
             'company_id': company.id,
@@ -99,6 +104,6 @@ class TestStockPickingValued(common.SavepointCase):
         self.assertTrue(len(self.sale_order2.picking_ids))
         for picking in self.sale_order2.picking_ids:
             picking.action_assign()
-            self.assertEqual(picking.amount_untaxed, 200.0)
-            self.assertEqual(picking.amount_tax, 25.0)
-            self.assertEqual(picking.amount_total, 225.0)
+            self.assertEqual(picking.amount_untaxed, 300.0)
+            self.assertEqual(picking.amount_tax, 40.0)
+            self.assertEqual(picking.amount_total, 340.0)
