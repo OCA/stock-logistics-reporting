@@ -1,5 +1,6 @@
 # Copyright 2017 Tecnativa - David Vidal
 # Copyright 2017 Tecnativa - Luis M. Ontalba
+# Copyright 2019 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
@@ -10,11 +11,18 @@ class TestStockPickingValued(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingValued, cls).setUpClass()
+        company = cls.env.user.company_id
         cls.tax = cls.env['account.tax'].create({
             'name': 'TAX 15%',
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'amount': 15.0,
+        })
+        cls.tax10 = cls.env['account.tax'].create({
+            'name': 'TAX 10%',
+            'amount_type': 'percent',
+            'type_tax_use': 'sale',
+            'amount': 10.0,
         })
         cls.product = cls.env['product.product'].create({
             'name': 'Test stuff',
@@ -31,7 +39,29 @@ class TestStockPickingValued(common.SavepointCase):
                 'price_unit': 100,
                 'product_uom_qty': 1,
             })],
-            'company_id': cls.env.user.company_id.id,
+            'company_id': company.id,
+        })
+        cls.sale_order2 = cls.env['sale.order'].create({
+            'partner_id': cls.partner.id,
+            'order_line': [
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                }),
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                }),
+                (0, 0, {
+                    'product_id': cls.product.id,
+                    'price_unit': 100,
+                    'product_uom_qty': 1,
+                    'tax_id': [(6, 0, cls.tax10.ids)],
+                }),
+            ],
+            'company_id': company.id,
         })
         cls.sale_order.company_id.tax_calculation_rounding_method = (
             'round_per_line')
@@ -66,3 +96,14 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_untaxed, 100.0)
             self.assertEqual(picking.amount_tax, 15.0)
             self.assertEqual(picking.amount_total, 115.0)
+
+    def test_04_lines_distinct_tax(self):
+        self.sale_order2.company_id.tax_calculation_rounding_method = (
+            'round_globally')
+        self.sale_order2.action_confirm()
+        self.assertTrue(len(self.sale_order2.picking_ids))
+        for picking in self.sale_order2.picking_ids:
+            picking.action_assign()
+            self.assertEqual(picking.amount_untaxed, 300.0)
+            self.assertEqual(picking.amount_tax, 40.0)
+            self.assertEqual(picking.amount_total, 340.0)
