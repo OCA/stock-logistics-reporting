@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem name="Document Comments"
+      id="menu_base_comment_template_picking"
+      action="base_comment_template.action_base_comment_template"
+      parent="stock.menu_stock_config_settings"/>
+
+</odoo>
+
