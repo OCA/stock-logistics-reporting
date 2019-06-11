@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-reporting Odoo addons",
     version=version,
     install_requires=[
+        'odoo11-addon-stock_picking_comment_template',
         'odoo11-addon-stock_picking_report_custom_description',
         'odoo11-addon-stock_picking_report_valued',
     ],
