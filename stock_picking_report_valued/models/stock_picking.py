@@ -41,19 +41,11 @@ class StockPicking(models.Model):
         records...).
         """
         for pick in self:
-            sale = pick.sale_id
-            round_method = sale.company_id.tax_calculation_rounding_method
-            if round_method == 'round_globally':
-                amount_untaxed = sum(pick.move_line_ids.mapped(
-                    'sale_price_subtotal'))
-                amount_tax = sum(pick.move_line_ids.mapped(
-                    'sale_price_tax'))
-            else:
-                round_curr = sale.currency_id.round
-                amount_untaxed = amount_tax = 0.0
-                for tax_id, tax_group in pick.get_taxes_values().items():
-                    amount_untaxed += round_curr(tax_group['base'])
-                    amount_tax += round_curr(tax_group['amount'])
+            round_curr = pick.sale_id.currency_id.round
+            amount_untaxed = amount_tax = 0.0
+            for tax_id, tax_group in pick.get_taxes_values().items():
+                amount_untaxed += round_curr(tax_group['base'])
+                amount_tax += round_curr(tax_group['amount'])
             pick.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
