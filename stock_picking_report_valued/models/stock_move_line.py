@@ -63,16 +63,17 @@ class StockMoveLine(models.Model):
         records...).
         """
         for line in self:
+            sale_line = line.sale_line
             price_unit = (
-                line.sale_line.price_subtotal / line.sale_line.product_uom_qty
-                if line.sale_line.product_uom_qty else 0.0)
+                sale_line.price_subtotal / sale_line.product_uom_qty
+                if sale_line.product_uom_qty else sale_line.price_reduce)
             taxes = line.sale_tax_id.compute_all(
                 price_unit=price_unit,
                 currency=line.currency_id,
                 quantity=line.qty_done or line.product_qty,
                 product=line.product_id,
-                partner=line.sale_line.order_id.partner_shipping_id)
-            if line.sale_line.company_id.tax_calculation_rounding_method == (
+                partner=sale_line.order_id.partner_shipping_id)
+            if sale_line.company_id.tax_calculation_rounding_method == (
                     'round_globally'):
                 price_tax = sum(
                     t.get('amount', 0.0) for t in taxes.get('taxes', []))
