@@ -8,7 +8,7 @@
 {
     "name": "Valued Picking Report",
     "summary": "Adding Valued Picking on Delivery Slip report",
-    "version": "11.0.1.0.2",
+    "version": "11.0.1.0.3",
     "author": "Tecnativa, "
               "Odoo Community Association (OCA)",
     "website": "https://www.tecnativa.com",
