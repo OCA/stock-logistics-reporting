@@ -63,9 +63,11 @@ class StockMoveLine(models.Model):
         records...).
         """
         for line in self:
+            price_unit = (
+                line.sale_line.price_subtotal / line.sale_line.product_uom_qty
+                if line.sale_line.product_uom_qty else 0.0)
             taxes = line.sale_tax_id.compute_all(
-                price_unit=line.sale_line.price_subtotal / (
-                    line.sale_line.product_uom_qty or 0.0),
+                price_unit=price_unit,
                 currency=line.currency_id,
                 quantity=line.qty_done or line.product_qty,
                 product=line.product_id,
