@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo11-addon-stock_picking_comment_template',
         'odoo11-addon-stock_picking_report_custom_description',
         'odoo11-addon-stock_picking_report_valued',
+        'odoo11-addon-stock_report_quantity_by_location',
     ],
     classifiers=[
         'Programming Language :: Python',
