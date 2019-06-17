@@ -31,7 +31,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
     </record>
     <menuitem id="menu_quantity_by_location" name="Inventory by Location"
               parent="stock.menu_warehouse_report"
-              action="action_stock_report_quantity_by_location_prepare"/>
+              action="action_stock_report_quantity_by_location_prepare"
+              groups="stock.group_stock_manager"/>
 
     <record id="stock_report_quantity_by_location_tree_view" model="ir.ui.view">
         <field name="name">Stock Report Quantity By Location Form</field>
