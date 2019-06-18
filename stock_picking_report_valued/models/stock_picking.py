@@ -42,10 +42,11 @@ class StockPicking(models.Model):
         """
         for pick in self:
             round_curr = pick.sale_id.currency_id.round
-            amount_untaxed = amount_tax = 0.0
+            amount_tax = 0.0
             for tax_id, tax_group in pick.get_taxes_values().items():
-                amount_untaxed += round_curr(tax_group['base'])
                 amount_tax += round_curr(tax_group['amount'])
+            amount_untaxed = sum(
+                l.sale_price_subtotal for l in pick.move_line_ids)
             pick.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
@@ -56,15 +57,17 @@ class StockPicking(models.Model):
     def get_taxes_values(self):
         tax_grouped = {}
         for line in self.move_line_ids:
-            tax = line.sale_line.tax_id
-            tax_id = tax.id
-            if tax_id not in tax_grouped:
-                tax_grouped[tax_id] = {
-                    'amount': line.sale_price_tax,
-                    'base': line.sale_price_subtotal,
-                    'tax': tax,
-                }
-            else:
-                tax_grouped[tax_id]['amount'] += line.sale_price_tax
-                tax_grouped[tax_id]['base'] += line.sale_price_subtotal
+            for tax in line.sale_line.tax_id:
+                tax_id = tax.id
+                if tax_id not in tax_grouped:
+                    tax_grouped[tax_id] = {
+                        'base': line.sale_price_subtotal,
+                        'tax': tax,
+                    }
+                else:
+                    tax_grouped[tax_id]['base'] += line.sale_price_subtotal
+        for tax_id, tax_group in tax_grouped.items():
+            tax_grouped[tax_id]['amount'] = tax_group['tax'].compute_all(
+                tax_group['base'], self.sale_id.currency_id
+            )['taxes'][0]['amount']
         return tax_grouped
