@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_picking_document_comments"
+      inherit_id="stock.report_picking">
+      <xpath expr="//table[hasclass('table-sm')]" position="before">
+        <p t-if="o.note1">
+          <span t-field="o.note1"/>
+        </p>
+      </xpath>
+      <xpath expr="//p[@t-field='o.note']" position="after">
+        <p t-if="o.note2">
+          <span t-field="o.note2"/>
+        </p>
+      </xpath>
+    </template>
+
+</odoo>
