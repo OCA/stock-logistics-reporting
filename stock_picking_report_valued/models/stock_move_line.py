@@ -13,27 +13,22 @@ class StockMoveLine(models.Model):
     sale_line = fields.Many2one(
         related='move_id.sale_line_id', readonly=True,
         string='Related order line',
-        related_sudo=True,  # See explanation for sudo in compute method
     )
     currency_id = fields.Many2one(
         related='sale_line.currency_id', readonly=True,
         string='Sale Currency',
-        related_sudo=True,
     )
     sale_tax_id = fields.Many2many(
         related='sale_line.tax_id', readonly=True,
         string='Sale Tax',
-        related_sudo=True,
     )
     sale_price_unit = fields.Float(
         related='sale_line.price_unit', readonly=True,
         string='Sale price unit',
-        related_sudo=True,
     )
     sale_discount = fields.Float(
         related='sale_line.discount', readonly=True,
         string='Sale discount (%)',
-        related_sudo=True,
     )
     sale_tax_description = fields.Char(
         compute='_compute_sale_order_line_fields',
