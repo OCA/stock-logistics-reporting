@@ -20,38 +20,38 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Discount</strong>"
 msgstr "<strong>Popust</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 #, fuzzy
 msgid "<strong>Qty Reserved</strong>"
 msgstr "<strong>Jed.cijena</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Taxes</strong>"
 msgstr "<strong>Porezi</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Total</strong>"
 msgstr "<strong>Total</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Unit Price</strong>"
 msgstr "<strong>Jed.cijena</strong>"
 
 #. module: stock_picking_report_valued
-#: model:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Untaxed Amount</strong>"
 msgstr "<strong>Bez poreza</strong>"
 
@@ -61,60 +61,60 @@ msgid "Contact"
 msgstr ""
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking_currency_id
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__currency_id
 msgid "Currency"
 msgstr "Valuta"
 
 #. module: stock_picking_report_valued
-#: model:ir.model,name:stock_picking_report_valued.model_stock_move_line
-msgid "Packing Operation"
-msgstr "Operacija pakiranja"
-
-#. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_price_subtotal
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_subtotal
 msgid "Price subtotal"
 msgstr ""
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_line
+#: model:ir.model,name:stock_picking_report_valued.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_line
 msgid "Related order line"
 msgstr "Povezana stavka ponude"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_currency_id
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__currency_id
 #, fuzzy
 msgid "Sale Currency"
 msgstr "Valuta"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_tax_id
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_id
 msgid "Sale Tax"
 msgstr ""
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_discount
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_discount
 msgid "Sale discount (%)"
 msgstr "Popust prodaje (%)"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_price_unit
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
 msgid "Sale price unit"
 msgstr "Prodajna cijena"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_tax_description
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_description
 msgid "Tax Description"
 msgstr "Opis poreza"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_price_tax
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking_amount_tax
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_tax
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_tax
 msgid "Taxes"
 msgstr "Porezi"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line_sale_price_total
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking_amount_total
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_total
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_total
 msgid "Total"
 msgstr "Ukupno"
 
@@ -124,23 +124,26 @@ msgid "Transfer"
 msgstr "Transfer"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking_amount_untaxed
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_untaxed
 msgid "Untaxed Amount"
 msgstr "Iznos bez poreza"
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_partner_valued_picking
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_users_valued_picking
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__valued
 msgid "Valued Picking"
 msgstr ""
 
 #. module: stock_picking_report_valued
-#: model:ir.model.fields,help:stock_picking_report_valued.field_res_partner_valued_picking
-#: model:ir.model.fields,help:stock_picking_report_valued.field_res_users_valued_picking
-#: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking_valued
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
 msgid "You can select which partners have valued pickings"
 msgstr ""
+
+#~ msgid "Packing Operation"
+#~ msgstr "Operacija pakiranja"
 
 #~ msgid "Partner"
 #~ msgstr "Partner"
