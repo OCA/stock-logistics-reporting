@@ -23,7 +23,7 @@ Valued Picking Report
     :target: https://runbot.odoo-community.org/runbot/151/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Add amount information to Delivery Slip report.
 You can select at partner level if picking list report must be valued or not.
