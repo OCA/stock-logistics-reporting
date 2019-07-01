@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-stock_picking_comment_template',
+        'odoo12-addon-stock_picking_report_valued',
     ],
     classifiers=[
         'Programming Language :: Python',
