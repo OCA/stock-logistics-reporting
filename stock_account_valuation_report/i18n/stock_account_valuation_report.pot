@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,17 +14,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_account_valuation_report
-#: model:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "Accounting Qty"
 msgstr ""
 
 #. module: stock_account_valuation_report
-#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product_account_qty_at_date
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__account_qty_at_date
 msgid "Accounting Quantity"
 msgstr ""
 
 #. module: stock_account_valuation_report
-#: model:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "Accounting Valuation"
 msgstr ""
 
@@ -35,8 +35,13 @@ msgid "Accounting Valuation at date"
 msgstr ""
 
 #. module: stock_account_valuation_report
-#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product_account_value
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__account_value
 msgid "Accounting Value"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__qty_at_date
+msgid "Inventory Quantity"
 msgstr ""
 
 #. module: stock_account_valuation_report
@@ -46,13 +51,29 @@ msgid "Inventory Valuation"
 msgstr ""
 
 #. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_value
+msgid "Inventory Value"
+msgstr ""
+
+#. module: stock_account_valuation_report
 #: model:ir.model,name:stock_account_valuation_report.model_account_move_line
 msgid "Journal Item"
 msgstr ""
 
 #. module: stock_account_valuation_report
 #: model:ir.model,name:stock_account_valuation_report.model_product_product
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_account_move_line__product_id
 msgid "Product"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_fifo_manual_move_ids
+msgid "Stock Fifo Manual Move"
+msgstr ""
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_fifo_real_time_aml_ids
+msgid "Stock Fifo Real Time Aml"
 msgstr ""
 
 #. module: stock_account_valuation_report
