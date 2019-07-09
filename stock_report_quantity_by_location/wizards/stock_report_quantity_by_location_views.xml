@@ -42,7 +42,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                 <field name="product_id"/>
                 <field name="location_id"/>
                 <field name="quantity"/>
-                <field name="uom_id" groups="product.group_uom"/>
+                <field name="uom_id" groups="uom.group_uom"/>
             </tree>
         </field>
     </record>
@@ -59,8 +59,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
         </field>
     </record>
 
-     <record id="stock_report_quantity_by_location_search" model="ir.ui.view">
-        <field name="name">stock.report.quantity.by.location.search</field>
+     <record id="stock_report_quantity_by_location_search_view" model="ir.ui.view">
+        <field name="name">Stock Report Quantity By Location Search</field>
         <field name="model">stock.report.quantity.by.location</field>
         <field name="arch" type="xml">
             <search string="Search Stock Report Quantity by Location">
@@ -70,7 +70,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                 <field name="product_category_id"/>
                 <filter name="quantity_gt_zero" string="Quantity > 0" domain="[('quantity', '>', '0.0')]"/>
                 <group expand="0" string="Group By">
-                    <filter string="Location" domain="[]" context="{'group_by':'location_id'}" help="Group by Location"/>
+                    <filter name="location" string="Location" domain="[]" context="{'group_by':'location_id'}" help="Group by Location"/>
                 </group>
             </search>
         </field>
