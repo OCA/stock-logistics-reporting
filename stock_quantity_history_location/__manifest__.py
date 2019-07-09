@@ -5,7 +5,7 @@
 {
     'name': 'Stock Quantity History Location',
     'summary': "Provides stock quantity by location on past date",
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Eficent,'
               'Odoo Community Association (OCA)',
