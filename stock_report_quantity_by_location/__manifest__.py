@@ -3,7 +3,7 @@
 {
     "name": "Stock Report Quantity By Location",
     "summary": "Stock Report Quantity By Location",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
