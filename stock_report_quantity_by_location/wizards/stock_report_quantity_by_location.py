@@ -73,5 +73,5 @@ class StockReportQuantityByLocation(models.TransientModel):
         required=True,
     )
     quantity = fields.Float()
-    uom_id = fields.Many2one(comodel_name='product.uom', string='Product UoM',)
+    uom_id = fields.Many2one(comodel_name='uom.uom', string='Product UoM',)
     default_code = fields.Char('Internal Reference',)
