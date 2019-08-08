@@ -4,7 +4,7 @@
     <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
         <xpath expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]/thead/tr"
                position="inside">
-            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and (o.picking_type_code == 'customer')">
                 <t t-if="o.state != 'done'">
                     <th class="text-right"><strong>Qty Reserved</strong></th>
                 </t>
@@ -17,7 +17,7 @@
             </t>
         </xpath>
         <xpath expr="//span[@t-field='move_line.qty_done']/.." position="after">
-            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and (o.picking_type_code == 'customer')">
                 <t t-if="move_line.picking_id.state != 'done'">
                     <td class="text-right">
                         <span t-field="move_line.product_uom_qty"/>
@@ -35,7 +35,7 @@
             </t>
         </xpath>
         <xpath expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]" position="after">
-            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and (o.picking_type_code == 'customer')">
                 <table class="table table-condensed mt32">
                     <thead>
                         <tr>
