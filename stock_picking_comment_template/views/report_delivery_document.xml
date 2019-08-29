@@ -3,7 +3,7 @@
 
     <template id="report_delivery_document_comments"
       inherit_id="stock.report_delivery_document">
-      <xpath expr="//table[hasclass('table-condensed')]" position="before">
+      <xpath expr="//table[hasclass('table-condensed')]" position="after">
         <p t-if="o.note1">
           <span t-field="o.note1"/>
         </p>
