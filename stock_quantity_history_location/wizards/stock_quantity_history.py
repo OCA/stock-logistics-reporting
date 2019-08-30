@@ -20,8 +20,15 @@ class StockQuantityHistory(models.TransientModel):
         ctx = action['context']
         if isinstance(ctx, str):
             ctx = ast.literal_eval(ctx)
-        action['domain'] = [('type', '=', 'product')]
-        if self.location_id:
+        # If we are opening the current quants, filter by domain
+        if self.location_id and not self.compute_at_date and not \
+                self.env.context.get('valuation'):
+            if self.include_child_locations:
+                action['domain'] = [
+                    ('location_id', 'child_of', self.location_id.id)]
+            else:
+                action['domain'] = [('location_id', '=', self.location_id.id)]
+        elif self.location_id:
             ctx['location'] = self.location_id.id
             ctx['compute_child'] = self.include_child_locations
             if ctx.get('company_owned', False):
