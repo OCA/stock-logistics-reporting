@@ -56,9 +56,18 @@ class TestStockQuantityHistoryLocation(SavepointCase):
     def test_wizard_current(self):
         wizard = self.env['stock.quantity.history'].create({
             "location_id": self.test_stock_loc.id,
+            "include_child_locations": False,
+            "compute_at_date": 0,
+        })
+        action = wizard.with_context().open_table()
+        self.assertEquals(action['domain'],
+                          [('location_id', '=', self.test_stock_loc.id)])
+        wizard = self.env['stock.quantity.history'].create({
+            "location_id": self.test_stock_loc.id,
             "include_child_locations": True,
             "compute_at_date": 0,
         })
         action = wizard.with_context().open_table()
-        self.assertEquals(action['context']['location'],
-                          self.test_stock_loc.id)
+        self.assertEquals(action['domain'],
+                          [('location_id', 'child_of',
+                            self.test_stock_loc.id)])
