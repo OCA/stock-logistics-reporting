@@ -1,0 +1,26 @@
+<odoo>
+
+    <record id="action_stock_inventory_valuation_report_html" model="ir.actions.client">
+        <field name="name">Inventory Valuation Report</field>
+        <field name="tag">stock_inventory_valuation_report_backend</field>
+        <field name="context" eval="{'active_model': 'report.stock.inventory.valuation.report'}" />
+    </record>
+
+    <report string="Stock Inventory Valuation Report PDF"
+            id="action_stock_inventory_valuation_report_pdf"
+            model="report.stock.inventory.valuation.report"
+            name="stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf"
+            file="stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf"
+            report_type="qweb-pdf"
+            print_report_name="'Inventory Valuation Report - [%s]' % object.date"
+            paperformat="stock_inventory_valuation_report.paperformat_inventory_valuation_report"/>
+
+    <report string="Stock Inventory Valuation Report XLSX"
+            id="action_stock_inventory_valuation_report_xlsx"
+            model="report.stock.inventory.valuation.report"
+            name="s_i_v_r.report_stock_inventory_valuation_report_xlsx"
+            file="Inventory Valuation Report"
+            report_type="xlsx"
+            attachment_use="False"/>
+
+</odoo>
