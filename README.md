@@ -7,5 +7,3 @@ Odoo Stock Logistics Reporting
 Reports for the Odoo Logistics modules.
 
  - Stock Picking Partner Lang: adds possibility to print picking in partner language
-
-
