@@ -38,7 +38,7 @@ Known issues / Roadmap
 ======================
 
 * If there are several sale order lines with same product but different
-price or taxes the picking value is not valid.
+  price or taxes the picking value is not valid.
 
 Bug Tracker
 ===========
