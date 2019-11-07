@@ -7,9 +7,16 @@ from odoo import api, fields, models
 class StockCardView(models.TransientModel):
     _name = 'stock.card.view'
     _description = 'Stock Card View'
-    _inherit = 'stock.move'
-    _order = 'id'
+    _order = 'date'
 
+    date = fields.Datetime()
+    product_id = fields.Many2one(comodel_name='product.product')
+    product_qty = fields.Float()
+    product_uom_qty = fields.Float()
+    product_uom = fields.Many2one(comodel_name='uom.uom')
+    reference = fields.Char()
+    location_id = fields.Many2one(comodel_name='stock.location')
+    location_dest_id = fields.Many2one(comodel_name='stock.location')
     is_initial = fields.Boolean()
     product_in = fields.Float()
     product_out = fields.Float()
@@ -48,9 +55,9 @@ class StockCardReport(models.TransientModel):
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         self._cr.execute("""
-            SELECT move.id, move.name, move.date, move.product_id,
-                move.product_qty, move.product_uom_qty, move.product_uom,
-                move.location_id, move.location_dest_id, move.reference,
+            SELECT move.date, move.product_id, move.product_qty,
+                move.product_uom_qty, move.product_uom, move.reference,
+                move.location_id, move.location_dest_id,
                 case when move.location_dest_id in %s
                     then move.product_qty end as product_in,
                 case when move.location_id in %s
