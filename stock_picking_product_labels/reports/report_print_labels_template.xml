@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <template id="report_productbarcode_picking">
+                <t t-call="web.basic_layout">
+                        <t t-foreach="docs" t-as="picking">
+                          <t t-foreach="picking.move_lines" t-as="move_line">
+                              <t t-foreach="int(move_line.quantity_done)" t-as="">
+                                <div class="page">
+                                    <t t-call="product.report_simple_barcode">
+                                        <t t-set="product" t-value="move_line.product_id"/>
+                                    </t>
+                                </div>
+                            </t>
+                          </t>
+                        </t>
+                </t>
+        </template>
+     </data>
+</odoo>
