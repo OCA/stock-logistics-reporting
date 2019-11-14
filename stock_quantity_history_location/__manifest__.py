@@ -11,7 +11,7 @@
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/stock-logistics-reporting',
     'depends': [
-        'stock',
+        'stock_account',
     ],
     'data': [
         'wizards/stock_quantity_history.xml',
