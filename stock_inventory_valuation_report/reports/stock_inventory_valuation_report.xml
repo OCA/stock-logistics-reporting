@@ -83,7 +83,7 @@
             </div>
             <div class="act_as_row">
                 <div class="act_as_cell">
-                    <span t-esc="o.date.strftime('%Y-%m-%d')"/>
+                    <span t-esc="o.date"/>
                 </div>
                 <div class="act_as_cell">
                     <span t-field='o.company_id.name'/>

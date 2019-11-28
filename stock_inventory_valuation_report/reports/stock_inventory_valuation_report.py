@@ -11,7 +11,7 @@ class StockInventoryValuationView(models.TransientModel):
     display_name = fields.Char()
     qty_at_date = fields.Float()
     uom_id = fields.Many2one(
-        comodel_name='uom.uom',
+        comodel_name='product.uom',
     )
     currency_id = fields.Many2one(
         comodel_name='res.currency',
