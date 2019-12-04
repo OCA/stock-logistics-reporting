@@ -2,8 +2,8 @@
 <odoo>
 
 <template id="report_picking_description" inherit_id="stock.report_picking" priority="99" primary="True">
-    <xpath expr="//tr/td/span[@t-field='move.product_id.display_name']" position="attributes">
-            <attribute name="t-field">move.name</attribute>
+    <xpath expr="//tr/td/span[@t-field='ml.product_id.display_name']" position="attributes">
+            <attribute name="t-field">ml.move_id.name</attribute>
     </xpath>
 </template>
 
