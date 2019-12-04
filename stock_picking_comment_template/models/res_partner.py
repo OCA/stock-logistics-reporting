@@ -9,5 +9,5 @@ class ResPartner(models.Model):
 
     comment_template_id = fields.Many2one(
         comodel_name='base.comment.template',
-        string='Conditions template',
+        string='Picking conditions template',
     )
