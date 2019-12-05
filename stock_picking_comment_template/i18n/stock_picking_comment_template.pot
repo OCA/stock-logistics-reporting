@@ -34,12 +34,6 @@ msgid "Comments"
 msgstr ""
 
 #. module: stock_picking_comment_template
-#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
-#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
-msgid "Picking conditions template"
-msgstr ""
-
-#. module: stock_picking_comment_template
 #: model:ir.model,name:stock_picking_comment_template.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -52,6 +46,12 @@ msgstr ""
 #. module: stock_picking_comment_template
 #: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
 msgid "Load a template"
+msgstr ""
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
+msgid "Picking conditions template"
 msgstr ""
 
 #. module: stock_picking_comment_template
