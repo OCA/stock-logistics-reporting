@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_comment_template
+# 	* stock_picking_comment_template
 #
 msgid ""
 msgstr ""
@@ -37,12 +37,6 @@ msgid "Comments"
 msgstr "コメント"
 
 #. module: stock_picking_comment_template
-#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
-#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
-msgid "Conditions template"
-msgstr "条件テンプレート"
-
-#. module: stock_picking_comment_template
 #: model:ir.model,name:stock_picking_comment_template.model_res_partner
 msgid "Contact"
 msgstr "連絡先"
@@ -58,9 +52,22 @@ msgid "Load a template"
 msgstr "テンプレートをロード"
 
 #. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
+#, fuzzy
+#| msgid "Conditions template"
+msgid "Picking conditions template"
+msgstr "条件テンプレート"
+
+#. module: stock_picking_comment_template
 #: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
-msgid "The comments will be displayed on the printed document. You can load a predefined template, write your own text or load a template and then modify it only for this document."
-msgstr "コメントは印刷されるドキュメントに表示されます。直接テキストを入力するか、既存のテンプレートをロードして内容を修正するなどしてください。"
+msgid ""
+"The comments will be displayed on the printed document. You can load a "
+"predefined template, write your own text or load a template and then modify "
+"it only for this document."
+msgstr ""
+"コメントは印刷されるドキュメントに表示されます。直接テキストを入力するか、既"
+"存のテンプレートをロードして内容を修正するなどしてください。"
 
 #. module: stock_picking_comment_template
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__note1
