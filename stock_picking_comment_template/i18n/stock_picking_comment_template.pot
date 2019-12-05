@@ -36,7 +36,7 @@ msgstr ""
 #. module: stock_picking_comment_template
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
-msgid "Conditions template"
+msgid "Picking conditions template"
 msgstr ""
 
 #. module: stock_picking_comment_template
