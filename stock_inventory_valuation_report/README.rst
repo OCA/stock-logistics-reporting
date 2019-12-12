@@ -63,6 +63,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Pimolnat Suntian <pimolnats@ecosoft.co.th>
+* Stefan Wild <stefan.wild@sewisoft.de>
 
 Maintainers
 ~~~~~~~~~~~
