@@ -1,4 +1,4 @@
-# Copyright 2019 Eficent Business and IT Consulting Services, S.L.
+# Copyright 2019 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import SavepointCase
@@ -49,11 +49,10 @@ class TestStockQuantityHistoryLocation(SavepointCase):
             {
                 "location_id": self.test_stock_loc.id,
                 "include_child_locations": True,
-                "compute_at_date": 1,
-                "date": "2019-08-12",
+                "inventory_datetime": "2019-08-12 00:00:00",
             }
         )
-        action = wizard.with_context(company_owned=True).open_table()
+        action = wizard.with_context(company_owned=True).open_at_date()
         self.assertEquals(
             self.product.with_context(action["context"]).qty_available, 100.0
         )
@@ -66,24 +65,14 @@ class TestStockQuantityHistoryLocation(SavepointCase):
 
     def test_wizard_current(self):
         wizard = self.env["stock.quantity.history"].create(
-            {
-                "location_id": self.test_stock_loc.id,
-                "include_child_locations": False,
-                "compute_at_date": 0,
-            }
+            {"location_id": self.test_stock_loc.id, "include_child_locations": False}
         )
-        action = wizard.with_context().open_table()
-        self.assertEquals(
-            action["domain"], [("location_id", "=", self.test_stock_loc.id)]
-        )
+        action = wizard.with_context().open_at_date()
+        self.assertEquals(action["context"]["compute_child"], False)
+        self.assertEquals(action["context"]["location"], self.test_stock_loc.id)
         wizard = self.env["stock.quantity.history"].create(
-            {
-                "location_id": self.test_stock_loc.id,
-                "include_child_locations": True,
-                "compute_at_date": 0,
-            }
+            {"location_id": self.test_stock_loc.id, "include_child_locations": True}
         )
-        action = wizard.with_context().open_table()
-        self.assertEquals(
-            action["domain"], [("location_id", "child_of", self.test_stock_loc.id)]
-        )
+        action = wizard.with_context().open_at_date()
+        self.assertEquals(action["context"]["compute_child"], True)
+        self.assertEquals(action["context"]["location"], self.test_stock_loc.id)
