@@ -19,6 +19,13 @@ msgid "Include child locations"
 msgstr ""
 
 #. module: stock_quantity_history_location
+#. openerp-web
+#: code:addons/stock_quantity_history_location/static/src/js/inventory_report.js:0
+#, python-format
+msgid "Inventory at Date & Location"
+msgstr ""
+
+#. module: stock_quantity_history_location
 #: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__location_id
 msgid "Location"
 msgstr ""
