@@ -39,6 +39,9 @@ class TestStockQuantityHistoryLocation(SavepointCase):
         move._action_done()
         move.date = "2019-08-11"
 
+
+class StockQuantityHistoryLocationTests(TestStockQuantityHistoryLocation):
+
     def test_wizard_past_date(self):
         wizard = self.env['stock.quantity.history'].create({
             "location_id": self.test_stock_loc.id,
