@@ -9,12 +9,6 @@
                 <field name="location_id"/>
                 <field name="include_child_locations"
                        attrs="{'invisible': [('location_id', '=', False)]}"/>
-                <div class="alert alert-warning" role="alert" colspan="2"
-                     attrs="{'invisible': [('location_id', '=', False)]}"
-                     style="margin-bottom:0px;">
-                    <p><i class="fa fa-info-circle"/> The accounting valuation is not calculated when you specify a location.
-                    </p>
-                </div>
             </field>
         </field>
     </record>
