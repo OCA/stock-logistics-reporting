@@ -53,14 +53,19 @@ class StockInventoryValuationReport(models.TransientModel):
                               create=False, edit=False))
         ReportLine = self.env['stock.inventory.valuation.view']
         for product in products:
+            standard_price = product.standard_price
+            if self.date:
+                standard_price = product.get_history_price(
+                    self.env.user.company_id.id,
+                    date=self.date)
             line = {
                 'display_name': product.display_name,
                 'qty_at_date': product.qty_at_date,
                 'uom_id': product.uom_id,
                 'currency_id': product.currency_id,
                 'cost_currency_id': product.cost_currency_id,
-                'standard_price': product.standard_price,
-                'stock_value': product.stock_value,
+                'standard_price': standard_price,
+                'stock_value': product.qty_at_date * standard_price,
                 'cost_method': product.cost_method,
             }
             if product.qty_at_date != 0:
