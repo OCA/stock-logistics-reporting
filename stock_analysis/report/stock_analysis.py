@@ -2,8 +2,8 @@
 # © 2016 Lorenzo Battistini - Agile Business Group
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import tools
-from openerp import models, fields
+from odoo import tools
+from odoo import models, fields, api
 
 
 class StockAnalysis(models.Model):
@@ -26,9 +26,10 @@ class StockAnalysis(models.Model):
     company_id = fields.Many2one(
         'res.company', string='Company', readonly=True)
 
-    def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table)
-        cr.execute(
+    @api.model_cr
+    def init(self):
+        tools.drop_view_if_exists(self.env.cr, self._table)
+        self.env.cr.execute(
             """CREATE or REPLACE VIEW %s as (
             SELECT
                 quant.id AS id,

@@ -4,7 +4,7 @@
 {
     "name": "Stock Analysis",
     "summary": "Analysis view for stock",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Inventory, Logistic, Storage",
     "website": "https://www.agilebg.com",
     "author": "Agile Business Group, Odoo Community Association (OCA)",
