@@ -4,7 +4,7 @@
 # Copyright 2016-2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
@@ -42,7 +42,6 @@ class StockMoveLine(models.Model):
         compute="_compute_sale_order_line_fields", string="Total", compute_sudo=True
     )
 
-    @api.multi
     def _compute_sale_order_line_fields(self):
         """This is computed with sudo for avoiding problems if you don't have
         access to sales orders (stricter warehouse users, inter-company
