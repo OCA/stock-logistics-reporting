@@ -9,7 +9,7 @@
                     <th class="text-right"><strong>Qty Reserved</strong></th>
                 </t>
                 <th class="text-right"><strong>Unit Price</strong></th>
-                <th class="text-right" groups="sale.group_discount_per_so_line">
+                <th class="text-right" groups="product.group_discount_per_so_line">
                     <strong>Discount</strong>
                 </th>
                 <th class="text-right"><strong>Subtotal</strong></th>
@@ -25,7 +25,7 @@
                 </t>
                 <td class="text-right"><span
                         t-field="move_line.sale_price_unit" /></td>
-                <td class="text-right" groups="sale.group_discount_per_so_line">
+                <td class="text-right" groups="product.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
                 </td>
                 <td class="text-right"><span
@@ -36,7 +36,7 @@
         </xpath>
         <xpath expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]" position="after">
             <t t-if="o.valued and o.sale_id and o.move_line_ids">
-                <table class="table table-condensed mt32">
+                <table class="table table-sm mt32">
                     <thead>
                         <tr>
                             <th class="text-right"><strong>Untaxed Amount</strong></th>
