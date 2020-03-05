@@ -99,7 +99,9 @@
         <div class="act_as_thead">
             <div class="act_as_row labels">
                 <div class="act_as_cell">#</div>
-                <div class="act_as_cell">Display Name</div>
+                <div class="act_as_cell">Reference</div>
+                <div class="act_as_cell">Name</div>
+                <div class="act_as_cell">Barcode</div>
                 <div class="act_as_cell">Quantity</div>
                 <div class="act_as_cell">Cost</div>
                 <div class="act_as_cell">Value</div>
@@ -113,7 +115,13 @@
                 <t t-esc="n"/>
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.display_name"/>
+                <t t-esc="line.reference"/>
+            </div>
+            <div class="act_as_cell left">
+                <t t-esc="line.name"/>
+            </div>
+            <div class="act_as_cell left">
+                <t t-esc="line.barcode"/>
             </div>
             <div class="act_as_cell right">
                 <t t-esc="'{0:,.3f}'.format(line.qty_at_date)"/>
