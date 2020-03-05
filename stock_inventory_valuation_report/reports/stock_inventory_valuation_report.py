@@ -8,7 +8,9 @@ class StockInventoryValuationView(models.TransientModel):
     _name = 'stock.inventory.valuation.view'
     _description = 'Stock Inventory Valuation View'
 
-    display_name = fields.Char()
+    name = fields.Char()
+    reference = fields.Char()
+    barcode = fields.Char()
     qty_at_date = fields.Float()
     uom_id = fields.Many2one(
         comodel_name='uom.uom',
@@ -54,7 +56,9 @@ class StockInventoryValuationReport(models.TransientModel):
         ReportLine = self.env['stock.inventory.valuation.view']
         for product in products:
             line = {
-                'display_name': product.display_name,
+                'name': product.name,
+                'reference': product.default_code,
+                'barcode': product.barcode,
                 'qty_at_date': product.qty_at_date,
                 'uom_id': product.uom_id,
                 'currency_id': product.currency_id,
