@@ -23,16 +23,34 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 'width': 12,
             },
-            '2_display_name': {
+            '2_reference': {
                 'header': {
-                    'value': 'Display Name',
+                    'value': 'Reference',
                 },
                 'data': {
-                    'value': self._render('display_name'),
+                    'value': self._render('reference'),
+                },
+                'width': 15,
+            },
+            '3_name': {
+                'header': {
+                    'value': 'Name',
+                },
+                'data': {
+                    'value': self._render('name'),
                 },
                 'width': 36,
             },
-            '3_qty_at_date': {
+            '4_barcode': {
+                'header': {
+                    'value': 'Barcode',
+                },
+                'data': {
+                    'value': self._render('barcode'),
+                },
+                'width': 15,
+            },
+            '5_qty_at_date': {
                 'header': {
                     'value': 'Quantity',
                 },
@@ -42,7 +60,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 'width': 18,
             },
-            '4_standard_price': {
+            '6_standard_price': {
                 'header': {
                     'value': 'Cost',
                 },
@@ -52,7 +70,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 'width': 18,
             },
-            '5_stock_value': {
+            '7_stock_value': {
                 'header': {
                     'value': 'Value',
                 },
@@ -109,7 +127,9 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                     ws, row_pos, ws_params, col_specs_section='data',
                     render_space={
                         'n': row_pos-5,
-                        'display_name': line.display_name or '',
+                        'name': line.name or '',
+                        'reference': line.reference or '',
+                        'barcode': line.barcode or '',
                         'qty_at_date': line.qty_at_date or 0.000,
                         'standard_price': line.standard_price or 0.00,
                         'stock_value': line.stock_value or 0.00,
@@ -117,4 +137,4 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                     default_format=self.format_tcell_left)
                 total += line.stock_value
 
-            ws.write(row_pos, 4, total, self.format_theader_blue_amount_right)
+            ws.write(row_pos, 6, total, self.format_theader_blue_amount_right)
