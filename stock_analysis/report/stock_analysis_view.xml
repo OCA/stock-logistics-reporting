@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_analysis_pivot" model="ir.ui.view">
+         <field name="name">stock.analysis.pivot</field>
+         <field name="model">stock.analysis</field>
+         <field name="arch" type="xml">
+            <pivot string="Stock Analysis" disable_linking="True">
+                 <field name="product_id" type="row"/>
+                 <field name="location_id" type="col"/>
+                 <field name="quantity" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="stock_analysis_pivot_search" model="ir.ui.view">
+        <field name="name">stock.analysis.search</field>
+        <field name="model">stock.analysis</field>
+        <field name="arch" type="xml">
+            <search string="Stock Analysis">
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="package_id"/>
+                <field name="location_id"/>
+                <field name="categ_id"/>
+                <field name="company_id"/>
+                <filter name="internal_location" string="Internal location" domain="[('location_id.usage', '=', 'internal')]"/>
+                <separator/>
+                <filter name="stockable" string="Stockable products" domain="[('product_id.type', '=', 'product')]"/>
+                <filter name="consumable" string="Consumable products" domain="[('product_id.type', '=', 'consu')]"/>
+                <separator/>
+                <filter string="This Year" name="year" domain="[('in_date','&lt;=', time.strftime('%%Y-12-31')),('in_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Category" name="Category" context="{'group_by':'categ_id'}"/>
+                    <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Serial Number" name="Lot" context="{'group_by':'lot_id'}"/>
+                    <filter string="Package" name="Package" context="{'group_by':'package_id'}"/>
+                    <filter string="Company" name="Company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_analysis_pivot" model="ir.actions.act_window">
+        <field name="name">Stock Analysis</field>
+        <field name="res_model">stock.analysis</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="search_view_id" ref="stock_analysis_pivot_search"/>
+        <field name="view_id" ref="stock_analysis_pivot"/>
+        <field name="context">{'search_default_internal_location':1}</field>
+    </record>
+
+    <menuitem action="action_stock_analysis_pivot" id="menu_action_stock_analysis_pivot" parent="stock.menu_warehouse_report"/>
+
+</odoo>
