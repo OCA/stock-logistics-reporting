@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-stock_account_quantity_history_location',
         'odoo12-addon-stock_account_valuation_report',
+        'odoo12-addon-stock_analysis',
         'odoo12-addon-stock_inventory_valuation_report',
         'odoo12-addon-stock_picking_comment_template',
         'odoo12-addon-stock_picking_product_label',
