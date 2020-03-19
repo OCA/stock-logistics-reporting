@@ -51,7 +51,7 @@
     </template>
 
     <template id="stock_card_report.report_stock_card_report_base">
-        <t t-foreach="o.results.mapped('product_id')" t-as="product">
+        <t t-foreach="o.product_ids" t-as="product">
             <div class="page">
                 <div class="row">
                     <t t-set="title">Stock Card - <t t-raw="product.name"/></t>
