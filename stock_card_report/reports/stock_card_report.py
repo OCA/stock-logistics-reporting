@@ -46,12 +46,8 @@ class StockCardReport(models.TransientModel):
     @api.multi
     def _compute_results(self):
         self.ensure_one()
-        change = False
-        if not self.date_from:
-            change = True
-            self.date_from = '0001-01-01'
-        if not self.date_to:
-            self.date_to = fields.Date.context_today(self)
+        date_from = self.date_from or '0001-01-01'
+        self.date_to = self.date_to or fields.Date.context_today(self)
         locations = self.env['stock.location'].search(
             [('id', 'child_of', [self.location_id.id])])
         self._cr.execute("""
@@ -69,15 +65,12 @@ class StockCardReport(models.TransientModel):
                 and CAST(move.date AS date) <= %s
             ORDER BY move.date, move.reference
         """, (
-            tuple(locations.ids), tuple(locations.ids), self.date_from,
+            tuple(locations.ids), tuple(locations.ids), date_from,
             tuple(locations.ids), tuple(locations.ids),
-            tuple(self.product_ids.ids+[0]), self.date_to))
+            tuple(self.product_ids.ids), self.date_to))
         stock_card_results = self._cr.dictfetchall()
         ReportLine = self.env['stock.card.view']
-        for line in stock_card_results:
-            self.results += ReportLine.new(line)
-        if change:
-            self.date_from = not change
+        self.results = [ReportLine.new(line).id for line in stock_card_results]
 
     @api.multi
     def _get_initial(self, product_line):
