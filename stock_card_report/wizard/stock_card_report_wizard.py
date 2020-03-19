@@ -42,14 +42,14 @@ class StockCardReportWizard(models.TransientModel):
         action = self.env.ref(
             'stock_card_report.action_report_stock_card_report_html')
         vals = action.read()[0]
-        context1 = vals.get('context', {})
-        if isinstance(context1, pycompat.string_types):
-            context1 = safe_eval(context1)
+        context = vals.get('context', {})
+        if isinstance(context, pycompat.string_types):
+            context = safe_eval(context)
         model = self.env['report.stock.card.report']
         report = model.create(self._prepare_stock_card_report())
-        context1['active_id'] = report.id
-        context1['active_ids'] = report.ids
-        vals['context'] = context1
+        context['active_id'] = report.id
+        context['active_ids'] = report.ids
+        vals['context'] = context
         return vals
 
     @api.multi
@@ -68,7 +68,7 @@ class StockCardReportWizard(models.TransientModel):
         self.ensure_one()
         return {
             'date_from': self.date_from,
-            'date_to': self.date_to,
+            'date_to': self.date_to or fields.Date.context_today(self),
             'product_ids': [(6, 0, self.product_ids.ids)],
             'location_id': self.location_id.id,
         }

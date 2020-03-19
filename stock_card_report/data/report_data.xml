@@ -12,14 +12,14 @@
             name="stock_card_report.report_stock_card_report_pdf"
             file="stock_card_report.report_stock_card_report_pdf"
             report_type="qweb-pdf"
-            print_report_name="'Stock Card Report - [%s]' % object.location_id.name"
+            print_report_name="'Stock Card Report - [%s]' % object.location_id.display_name"
             paperformat="stock_card_report.paperformat_stock_card"/>
 
     <report string="Stock Card XLSX"
             id="action_stock_card_report_xlsx"
             model="report.stock.card.report"
             name="stock_card_report.report_stock_card_report_xlsx"
-            file="Stock_Card_Report"
+            file="Stock Card Report"
             report_type="xlsx"
             attachment_use="False"/>
 
