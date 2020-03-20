@@ -39,7 +39,6 @@ class StockCardReport(models.TransientModel):
         help="Use compute fields, so there is nothing store in database",
     )
 
-    @api.multi
     def _compute_results(self):
         self.ensure_one()
         date_from = self.date_from or "0001-01-01"
@@ -77,13 +76,11 @@ class StockCardReport(models.TransientModel):
         ReportLine = self.env["stock.card.view"]
         self.results = [ReportLine.new(line).id for line in stock_card_results]
 
-    @api.multi
     def _get_initial(self, product_line):
         product_input_qty = sum(product_line.mapped("product_in"))
         product_output_qty = sum(product_line.mapped("product_out"))
         return product_input_qty - product_output_qty
 
-    @api.multi
     def print_report(self, report_type="qweb"):
         self.ensure_one()
         action = (
