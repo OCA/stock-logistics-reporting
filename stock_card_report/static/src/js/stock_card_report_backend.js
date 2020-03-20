@@ -1,19 +1,20 @@
 odoo.define('stock_card_report.stock_card_report_backend', function (require) {
     'use strict';
 
+    var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
-    var Widget = require('web.Widget');
-    var ControlPanelMixin = require('web.ControlPanelMixin');
     var ReportWidget = require('web.Widget');
 
 
-    var report_backend = Widget.extend(ControlPanelMixin, {
+    var report_backend = AbstractAction.extend({
+        hasControlPanel: true,
         // Stores all the parameters of the action.
         events: {
             'click .o_stock_card_reports_print': 'print',
             'click .o_stock_card_reports_export': 'export',
         },
         init: function (parent, action) {
+            this._super.apply(this, arguments);
             this.actionManager = parent;
             this.given_context = {};
             this.odoo_context = action.context;
@@ -25,17 +26,16 @@ odoo.define('stock_card_report.stock_card_report_backend', function (require) {
                 action.params.active_id;
             this.given_context.model = action.context.active_model || false;
             this.given_context.ttype = action.context.ttype || false;
-            return this._super.apply(this, arguments);
         },
         willStart: function () {
-            return $.when(this.get_html());
+            return Promise.all([this._super.apply(this, arguments), this.get_html()]);
         },
         set_html: function () {
             var self = this;
-            var def = $.when();
+            var def = Promise.resolve();
             if (!this.report_widget) {
                 this.report_widget = new ReportWidget(this, this.given_context);
-                def = this.report_widget.appendTo(this.$el);
+                def = this.report_widget.appendTo(this.$('.o_content'));
             }
             def.then(function () {
                 self.report_widget.$el.html(self.html);
@@ -100,7 +100,7 @@ odoo.define('stock_card_report.stock_card_report_backend', function (require) {
             });
         },
         canBeRemoved: function () {
-            return $.when();
+            return Promise.resolve();
         },
     });
 

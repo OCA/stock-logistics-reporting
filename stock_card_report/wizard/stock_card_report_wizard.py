@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.tools import pycompat
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -25,13 +24,12 @@ class StockCardReportWizard(models.TransientModel):
         self.date_from = self.date_range_id.date_start
         self.date_to = self.date_range_id.date_end
 
-    @api.multi
     def button_export_html(self):
         self.ensure_one()
         action = self.env.ref("stock_card_report.action_report_stock_card_report_html")
         vals = action.read()[0]
         context = vals.get("context", {})
-        if isinstance(context, pycompat.string_types):
+        if context:
             context = safe_eval(context)
         model = self.env["report.stock.card.report"]
         report = model.create(self._prepare_stock_card_report())
@@ -40,13 +38,11 @@ class StockCardReportWizard(models.TransientModel):
         vals["context"] = context
         return vals
 
-    @api.multi
     def button_export_pdf(self):
         self.ensure_one()
         report_type = "qweb-pdf"
         return self._export(report_type)
 
-    @api.multi
     def button_export_xlsx(self):
         self.ensure_one()
         report_type = "xlsx"

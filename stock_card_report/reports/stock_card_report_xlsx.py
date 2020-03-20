@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class ReportStockCardReportXlsx(models.AbstractModel):
     _name = "report.stock_card_report.report_stock_card_report_xlsx"
+    _description = "Stock Card Report XLSX"
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, objects):
