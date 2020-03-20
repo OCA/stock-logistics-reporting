@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 class TestStockCard(common.TransactionCase):
     def setUp(self):
-        super(TestStockCard, self).setUp()
+        super().setUp()
 
         # Create uom:
         uom_id = self.ref("uom.product_uom_unit")
@@ -126,7 +126,7 @@ class TestStockCard(common.TransactionCase):
 
 class TestStockCardReport(common.TransactionCase):
     def setUp(self):
-        super(TestStockCardReport, self).setUp()
+        super().setUp()
 
         # Create uom:
         uom_id = self.ref("uom.product_uom_unit")
