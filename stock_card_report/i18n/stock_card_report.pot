@@ -1,17 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_card_report
+# 	* stock_card_report
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: stock_card_report
+#: model:ir.actions.report,print_report_name:stock_card_report.action_stock_card_report_pdf
+msgid "'Stock Card Report - [%s]' % object.location_id.display_name"
+msgstr ""
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_buttons
@@ -236,6 +241,11 @@ msgid "Stock Card Report Wizard"
 msgstr ""
 
 #. module: stock_card_report
+#: model:ir.model,name:stock_card_report.model_report_stock_card_report_report_stock_card_report_xlsx
+msgid "Stock Card Report XLSX"
+msgstr ""
+
+#. module: stock_card_report
 #: model:ir.model,name:stock_card_report.model_stock_card_view
 msgid "Stock Card View"
 msgstr ""
@@ -259,9 +269,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "or"
 msgstr ""
-
-#. module: stock_card_report
-#: model:ir.model,name:stock_card_report.model_report_stock_card_report_report_stock_card_report_xlsx
-msgid "report.stock_card_report.report_stock_card_report_xlsx"
-msgstr ""
-
