@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-reporting Odoo addons",
     version=version,
     install_requires=[
+        'odoo13-addon-stock_card_report',
         'odoo13-addon-stock_quantity_history_location',
     ],
     classifiers=[
