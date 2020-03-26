@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-stock_card_report',
+        'odoo13-addon-stock_picking_report_valued',
         'odoo13-addon-stock_quantity_history_location',
     ],
     classifiers=[
