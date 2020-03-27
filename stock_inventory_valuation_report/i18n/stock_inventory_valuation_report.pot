@@ -210,3 +210,20 @@ msgstr ""
 msgid "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
 msgstr ""
 
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__name
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Name"
+msgstr ""
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__reference
+msgid "Reference"
+msgstr ""
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__barcode
+msgid "Barcode"
+msgstr ""
