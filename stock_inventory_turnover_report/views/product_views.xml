@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_stock_inv_turns_tree" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="categ_id" invisible="True"/>
+                <field name="display_name"/>
+                <field name="total_cost" string="Current Cost"/>
+                <field name="standard_price"/>
+                <field name="qty_available"/>
+                <field name="qty_available_6m"/>
+                <field name="qty_available_12m"/>
+                <field name="qty_consumed_6m"/>
+                <field name="qty_consumed_12m"/>
+                <field name="qty_gotten_6m"/>
+                <field name="qty_gotten_12m"/>
+                <field name="months_of_inventory_6m"/>
+                <field name="months_of_inventory_12m"/>
+                <field name="inventory_turns_6m"/>
+                <field name="inventory_turns_12m"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_inv_turns_search" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <filter string="Category" name="group_by_categ" domain="[]" context="{'group_by': 'categ_id'}" />
+                <filter string="Is in stock" name="filter_is_in_stock" domain="[('qty_available', '>', 0)]" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_inv_turns_report" model="ir.actions.act_window">
+        <field name="name">Inventory Turnover</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_id" ref="view_stock_inv_turns_tree"/>
+        <field name="context">{'search_default_group_by_categ': True, 'search_default_filter_is_in_stock': True}</field>
+    </record>
+
+    <menuitem id="menu_stock_inv_turns_report"
+          name="Inventory Turnover"
+          parent="stock.menu_warehouse_report"
+          action="stock_inv_turns_report"
+          sequence="50"/>
+    </data>
+
+</odoo>
