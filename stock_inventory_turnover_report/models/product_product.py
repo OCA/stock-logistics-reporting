@@ -9,13 +9,15 @@ class Product(models.Model):
     _inherit = "product.product"
 
     def _compute_quantities_in_dict(self, from_date):
+        # Filter locations from context -> (quant, in, out)
+        domain_locs = self._get_domain_locations()
         domain_base = [
             ('product_id', 'in', self.ids),
             ('date', '>=', from_date)]
-        domain_in = domain_base + [
+        domain_in = domain_locs[1] + domain_base + [
             ('picking_id.picking_type_id.code',
              'in', ['incoming', 'mrp_operation'])]
-        domain_return = domain_base + [
+        domain_return = domain_locs[2] + domain_base + [
             ('location_dest_id.usage',
              'in', ['supplier', 'inventory'])  # loss
             ]
