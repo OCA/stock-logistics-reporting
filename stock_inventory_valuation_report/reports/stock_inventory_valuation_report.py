@@ -58,7 +58,7 @@ class StockInventoryValuationReport(models.TransientModel):
                 'qty_at_date': product.qty_available,
                 'uom_id': product.uom_id,
                 'currency_id': product.currency_id,
-                'cost_currency_id': product.cost_currency_id,
+                'cost_currency_id': product.currency_id,
                 'standard_price': product.standard_price,
                 'stock_value': product.stock_value,
                 'cost_method': product.cost_method,
