@@ -106,7 +106,7 @@ odoo.define('stock_card_report.stock_card_report_backend', function (require) {
 
     core.action_registry.add(
         "stock_card_report_backend",
-        report_backend
+        report_backend,
     );
     return report_backend;
 });
