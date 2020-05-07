@@ -1,0 +1,151 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_inventory_turnover_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_available_12m
+msgid "= Qty. on hand 12 months ago"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__total_cost
+msgid "= Qty. on hand x Current Cost"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_turnover_report.view_stock_inv_turns_search
+msgid "Category"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_turnover_report.view_stock_inv_turns_tree
+msgid "Current Cost"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.actions.act_window,name:stock_inventory_turnover_report.stock_inv_turns_report
+#: model:ir.ui.menu,name:stock_inventory_turnover_report.menu_stock_inv_turns_report
+msgid "Inventory Turnover"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__inventory_turns_12m
+msgid "Inventory Turns / Cycles in the last 12 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__inventory_turns_6m
+msgid "Inventory Turns / Cycles in the last 6 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__inventory_turns_12m
+msgid "Inventory Turns 12M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__inventory_turns_6m
+msgid "Inventory Turns 6M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_turnover_report.view_stock_inv_turns_search
+msgid "Is in stock"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__months_of_inventory_12m
+msgid "Months Of Inventory 12M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__months_of_inventory_6m
+msgid "Months Of Inventory 6M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__months_of_inventory_12m
+msgid "Months of Inventory, in the last 12 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__months_of_inventory_6m
+msgid "Months of Inventory, in the last 6 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model,name:stock_inventory_turnover_report.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_available_12m
+msgid "Qty Available 12M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_available_6m
+msgid "Qty Available 6M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_consumed_12m
+msgid "Qty Consumed 12M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_consumed_6m
+msgid "Qty Consumed 6M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_gotten_12m
+msgid "Qty Gotten 12M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__qty_gotten_6m
+msgid "Qty Gotten 6M"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_gotten_12m
+msgid "Qty. Procured or Produced in the the last 12 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_gotten_6m
+msgid "Qty. Procured or Produced in the the last 6 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_consumed_12m
+msgid "Qty. consumed in the the last 12 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_consumed_6m
+msgid "Qty. consumed in the the last 6 months"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,help:stock_inventory_turnover_report.field_product_product__qty_available_6m
+msgid "Qty. on hand 6 months ago"
+msgstr ""
+
+#. module: stock_inventory_turnover_report
+#: model:ir.model.fields,field_description:stock_inventory_turnover_report.field_product_product__total_cost
+msgid "Total Cost"
+msgstr ""
+
