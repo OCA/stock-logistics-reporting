@@ -39,7 +39,9 @@ class StockPicking(models.Model):
             amount_tax = 0.0
             for tax_group in pick.get_taxes_values().values():
                 amount_tax += round_curr(tax_group["amount"])
-            amount_untaxed = sum(l.sale_price_subtotal for l in pick.move_line_ids)
+            amount_untaxed = sum(
+                line.sale_price_subtotal for line in pick.move_line_ids
+            )
             pick.update(
                 {
                     "amount_untaxed": amount_untaxed,
