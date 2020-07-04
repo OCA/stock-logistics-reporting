@@ -2,17 +2,17 @@
 <odoo>
 
     <template id="report_picking_document_comments"
-      inherit_id="stock.report_picking">
-      <xpath expr="//table[hasclass('table-sm')]" position="before">
-        <p t-if="o.note1">
-          <span t-field="o.note1"/>
-        </p>
-      </xpath>
-      <xpath expr="//p[@t-field='o.note']" position="after">
-        <p t-if="o.note2">
-          <span t-field="o.note2"/>
-        </p>
-      </xpath>
+              inherit_id="stock.report_picking">
+        <xpath expr="//table[hasclass('table-sm')]" position="before">
+            <p t-if="o.get_comment_template('before_lines', o.company_id.id, o.partner_id and o.partner_id.id or False)">
+                <span t-raw="o.get_comment_template('before_lines', o.company_id.id, o.partner_id and o.partner_id.id or False)"/>
+            </p>
+        </xpath>
+        <xpath expr="//p[@t-field='o.note']" position="after">
+            <p t-if="o.get_comment_template('after_lines', o.company_id.id, o.partner_id and o.partner_id.id or False)">
+                <span t-raw="o.get_comment_template('after_lines', o.company_id.id, o.partner_id and o.partner_id.id or False)"/>
+            </p>
+        </xpath>
     </template>
 
 </odoo>
