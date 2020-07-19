@@ -4,7 +4,7 @@
 {
     'name': 'Stock Inventory Valuation Report',
     'summary': 'Add report button on Inventory Valuation.',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     'category': 'Warehouse',
     'website': 'https://github.com/OCA/stock-logistics-reporting',
     'author': 'Ecosoft,Odoo Community Association (OCA)',
