@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_analysis
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__categ_id
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Category"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__company_id
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Company"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Consumable products"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Group By"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__in_date
+msgid "Incoming Date"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Internal location"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__location_id
+msgid "Location"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__lot_id
+msgid "Lot"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__package_id
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Package"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__product_id
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Product"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model.fields,field_description:stock_analysis.field_stock_analysis__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Serial Number"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.actions.act_window,name:stock_analysis.action_stock_analysis_pivot
+#: model:ir.ui.menu,name:stock_analysis.menu_action_stock_analysis_pivot
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Stock Analysis"
+msgstr ""
+
+#. module: stock_analysis
+#: model:ir.model,name:stock_analysis.model_stock_analysis
+msgid "Stock analysis view"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "Stockable products"
+msgstr ""
+
+#. module: stock_analysis
+#: model_terms:ir.ui.view,arch_db:stock_analysis.stock_analysis_pivot_search
+msgid "This Year"
+msgstr ""
