@@ -8,6 +8,7 @@
         report_type="qweb-pdf"
         name="stock_move_value_report.report_stock_move_line_value"
         file="stock_move_value_report.report_stock_move_line_value"
+        paperformat="base.paperformat_euro"
     />
 
     <report
@@ -17,6 +18,7 @@
         report_type="qweb-pdf"
         name="stock_move_value_report.report_stock_move_value"
         file="stock_move_value_report.report_stock_move_value"
+        paperformat="base.paperformat_euro"
     />
 
     <report
@@ -26,6 +28,7 @@
         report_type="qweb-pdf"
         name="stock_move_value_report.report_stock_picking_value"
         file="stock_move_value_report.report_stock_picking_value"
+        paperformat="base.paperformat_euro"
     />
 
     <report
@@ -35,6 +38,7 @@
         report_type="qweb-pdf"
         name="stock_move_value_report.report_stock_scrap_value"
         file="stock_move_value_report.report_stock_scrap_value"
+        paperformat="base.paperformat_euro"
     />
 
     <report
@@ -44,6 +48,7 @@
         report_type="qweb-pdf"
         name="stock_move_value_report.report_stock_inventory_value"
         file="stock_move_value_report.report_stock_inventory_value"
+        paperformat="base.paperformat_euro"
     />
 
 </odoo>
