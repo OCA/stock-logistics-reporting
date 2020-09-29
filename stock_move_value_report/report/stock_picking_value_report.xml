@@ -6,7 +6,7 @@
             <t t-call="web.external_layout">
                 <div class="page">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-6">
                             <div t-if="picking.move_lines and picking.move_lines[0].partner_id and picking.move_lines[0].partner_id.id != picking.partner_id.id">
                                 <span><strong>Delivery Address:</strong></span>
                                 <div t-field="picking.move_lines[0].partner_id"
@@ -30,15 +30,15 @@
                             </div>
                             <div t-if="picking.partner_id" name="partner_header">
                                 <div t-field="picking.partner_id"
-                                    t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
                                 <p t-if="picking.sudo().partner_id.vat"><t t-esc="picking.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="picking.sudo().partner_id.vat"/></p>
                             </div>
                         </div>
                     </div>
                     <br/>
-                    <h1 t-field="picking.name" class="mt0 pull-left"/>
+                    <h1 t-field="picking.name" class="mt0 float-left"/>
                     <div class="clearfix"/>
-                    <table class="table table-condensed">
+                    <table class="table table-sm">
                         <thead>
                             <tr>
                                 <th t-if="picking.origin"><strong>Order (Origin)</strong></th>
