@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-stock_card_report',
         'odoo12-addon-stock_inventory_turnover_report',
         'odoo12-addon-stock_inventory_valuation_report',
+        'odoo12-addon-stock_move_value_report',
         'odoo12-addon-stock_picking_comment_template',
         'odoo12-addon-stock_picking_product_label',
         'odoo12-addon-stock_picking_report_custom_description',
