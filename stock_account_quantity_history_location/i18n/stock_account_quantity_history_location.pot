@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_account_quantity_history_location
-#: model:ir.ui.view,arch_db:stock_account_quantity_history_location.view_stock_account_quantity_history_location
-msgid "<i class=\"fa fa-info-circle\"/> The accounting valuation is not calculated when you specify a location."
+#: model:ir.model,name:stock_account_quantity_history_location.model_stock_quantity_history
+msgid "Stock Quantity History"
 msgstr ""
 
