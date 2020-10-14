@@ -24,6 +24,11 @@ msgid "Location"
 msgstr ""
 
 #. module: stock_quantity_history_location
+#: model:ir.model,name:stock_quantity_history_location.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: stock_quantity_history_location
 #: model:ir.model,name:stock_quantity_history_location.model_stock_quantity_history
 msgid "Stock Quantity History"
 msgstr ""
