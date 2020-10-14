@@ -7,7 +7,7 @@
     'summary': """
         Glue module between Stock Account and Stock Quantity History Location
         modules""",
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'license': 'AGPL-3',
     'author': 'Eficent,'
               'Odoo Community Association (OCA)',
