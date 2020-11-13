@@ -54,7 +54,7 @@
         <t t-foreach="o.product_ids" t-as="product">
             <div class="page">
                 <div class="row">
-                    <t t-set="title">Stock Card - <t t-raw="product.name"/></t>
+                    <t t-set="title">Stock Card - <t t-raw="product.display_name"/></t>
                     <h4 class="mt0" t-esc="title" style="text-align: center;"/>
                 </div>
                 <!-- Display filters -->
