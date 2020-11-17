@@ -2,7 +2,7 @@
     display: table !important;
     background-color: white;
 }
-.act_as_row  {
+.act_as_row {
     display: table-row !important;
     page-break-inside: avoid;
 }
@@ -14,21 +14,21 @@
     display: table-header-group !important;
 }
 .act_as_row.labels {
-    background-color:#F0F0F0 !important;
+    background-color: #f0f0f0 !important;
 }
 .data_table {
     width: 100% !important;
-    border-left:0px;
-    border-right:0px;
-    text-align:center;
-    font-size:10px;
-    padding-right:3px;
-    padding-left:3px;
-    padding-top:2px;
-    padding-bottom:2px;
-    border-collapse:collapse;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+    font-size: 10px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-collapse: collapse;
 }
-.data_table .act_as_cell{
+.data_table .act_as_cell {
     border: 1px solid lightGrey;
     text-align: center;
 }
@@ -39,13 +39,13 @@
     font-weight: bold;
 }
 .act_as_cell.left {
-    text-align:left;
+    text-align: left;
 }
 .act_as_cell.right {
-    text-align:right;
+    text-align: right;
 }
 .custom_footer {
-    font-size:7px !important;
+    font-size: 7px !important;
 }
 .button_row {
     padding-bottom: 10px;
