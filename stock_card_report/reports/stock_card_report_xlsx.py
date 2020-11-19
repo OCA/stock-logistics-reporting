@@ -5,6 +5,11 @@ import logging
 
 from odoo import models
 
+from odoo.addons.report_xlsx_helper.report.report_xlsx_format import (
+    FORMATS,
+    XLS_HEADERS,
+)
+
 _logger = logging.getLogger(__name__)
 
 
@@ -29,33 +34,33 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                 "header": {"value": "Date from"},
                 "data": {
                     "value": self._render("date_from"),
-                    "format": self.format_tcell_date_center,
+                    "format": FORMATS["format_tcell_date_center"],
                 },
             },
             "2_date_to": {
                 "header": {"value": "Date to"},
                 "data": {
                     "value": self._render("date_to"),
-                    "format": self.format_tcell_date_center,
+                    "format": FORMATS["format_tcell_date_center"],
                 },
             },
             "3_location": {
                 "header": {"value": "Location"},
                 "data": {
                     "value": self._render("location"),
-                    "format": self.format_tcell_center,
+                    "format": FORMATS["format_tcell_center"],
                 },
             },
         }
         initial_template = {
             "1_ref": {
-                "data": {"value": "Initial", "format": self.format_tcell_center},
+                "data": {"value": "Initial", "format": FORMATS["format_tcell_center"]},
                 "colspan": 4,
             },
             "2_balance": {
                 "data": {
                     "value": self._render("balance"),
-                    "format": self.format_tcell_amount_right,
+                    "format": FORMATS["format_tcell_amount_right"],
                 }
             },
         }
@@ -64,7 +69,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                 "header": {"value": "Date"},
                 "data": {
                     "value": self._render("date"),
-                    "format": self.format_tcell_date_left,
+                    "format": FORMATS["format_tcell_date_left"],
                 },
                 "width": 25,
             },
@@ -72,7 +77,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                 "header": {"value": "Reference"},
                 "data": {
                     "value": self._render("reference"),
-                    "format": self.format_tcell_left,
+                    "format": FORMATS["format_tcell_left"],
                 },
                 "width": 25,
             },
@@ -109,8 +114,8 @@ class ReportStockCardReportXlsx(models.AbstractModel):
     def _stock_card_report(self, wb, ws, ws_params, data, objects, product):
         ws.set_portrait()
         ws.fit_to_pages(1, 0)
-        ws.set_header(self.xls_headers["standard"])
-        ws.set_footer(self.xls_footers["standard"])
+        ws.set_header(XLS_HEADERS["xls_headers"]["standard"])
+        ws.set_footer(XLS_HEADERS["xls_footers"]["standard"])
         self._set_column_width(ws, ws_params)
         # Title
         row_pos = 0
@@ -121,7 +126,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
             row_pos,
             ws_params,
             col_specs_section="header",
-            default_format=self.format_theader_blue_center,
+            default_format=FORMATS["format_theader_blue_center"],
             col_specs="col_specs_filter",
             wanted_list="wanted_list_filter",
         )
@@ -145,7 +150,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
             row_pos,
             ws_params,
             col_specs_section="header",
-            default_format=self.format_theader_blue_center,
+            default_format=FORMATS["format_theader_blue_center"],
         )
         ws.freeze_panes(row_pos, 0)
         balance = objects._get_initial(
@@ -177,5 +182,5 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                     "output": line.product_out or 0,
                     "balance": balance,
                 },
-                default_format=self.format_tcell_amount_right,
+                default_format=FORMATS["format_tcell_amount_right"],
             )

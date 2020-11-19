@@ -98,7 +98,7 @@ class StockCardReport(models.TransientModel):
             rcontext["o"] = report
             result["html"] = self.env.ref(
                 "stock_card_report.report_stock_card_report_html"
-            ).render(rcontext)
+            )._render(rcontext)
         return result
 
     @api.model
