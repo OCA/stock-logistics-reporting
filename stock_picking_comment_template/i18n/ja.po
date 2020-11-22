@@ -55,7 +55,6 @@ msgstr "テンプレートをロード"
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
 #, fuzzy
-#| msgid "Conditions template"
 msgid "Picking conditions template"
 msgstr "条件テンプレート"
 
