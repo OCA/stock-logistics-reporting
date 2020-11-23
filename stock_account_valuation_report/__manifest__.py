@@ -5,7 +5,7 @@
 
 {
     "name": "Stock Account Valuation Report",
-    "version": "11.0.1.0.0",
+    "version": "10.0.1.0.0",
     "summary": "Improves logic of the Inventory Valuation Report",
     "author": "Eficent, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",

@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_stock_product_tree2" model="ir.ui.view">
-        <field name="name">product.stock.tree.2.inherit</field>
+    <record id="view_stock_product_valuation" model="ir.ui.view">
+        <field name="name">product.stock.valuation</field>
         <field name="model">product.product</field>
-        <field name="inherit_id" ref="stock_account.view_stock_product_tree2"/>
         <field name="arch" type="xml">
-            <field name="cost_method" position="after">
-                <field name="valuation" invisible="1"/>
-            </field>
-            <button name="action_valuation_at_date_details" position="attributes">
-                <attribute name="attrs">{'invisible': [('valuation', '!=', 'real_time')]}</attribute>
-            </button>
-            <button name="action_valuation_at_date_details" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </button>
-            <button name="action_valuation_at_date_details" position="after">
+            <tree>
+                <field name="display_name"/>
+                <field name="qty_at_date"/>
+                <field name="uom_id" groups="product.group_uom"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="stock_value" sum="Stock Valuation" widget="monetary" options="{'currency_field': 'cost_currency_id'}"/>
                 <button name="action_view_stock_moves"
                         type="object" icon="fa-info-circle"
-                        attrs="{'invisible': [('cost_method', '!=', 'fifo')]}" />
-            </button>
-            <field name="stock_value" position="after">
+                        attrs="{'invisible': [('cost_method', '!=', 'real')]}" />
                 <field name="account_qty_at_date" sum="Accounting Qty"
                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
                 <field name="account_value"
@@ -29,7 +22,23 @@
                 <button name="action_view_amls"
                         type="object" icon="fa-info-circle"
                         attrs="{'invisible': [('valuation', '!=', 'real_time')]}" />
-            </field>
+                <field name="cost_method" invisible="1"/>
+                <field name="valuation" invisible="1"/>
+            </tree>
         </field>
     </record>
+
+    <record model="ir.actions.act_window" id="open_inventory_valuation">
+        <field name="name">Dual Inventory Valuation</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('type', '=', 'product'), ('qty_available', '!=', 0)]</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="view_id" ref="view_stock_product_valuation"/>
+        <field name="help">This analysis gives you a fast overview on the current stock level of your products and their current inventory value.</field>
+    </record>
+
+    <menuitem id="menu_inventory_valuation" name="Dual Inventory Valuation"
+     parent="stock.menu_warehouse_report" sequence="99" action="open_inventory_valuation"/>
+
 </odoo>
