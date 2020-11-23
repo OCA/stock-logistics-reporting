@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="valued_report_picking" inherit_id="stock_picking_report_valued.valued_report_picking">
+        <xpath expr="//t[@t-if=&quot;move_line.picking_id.state != 'done'&quot;]/.." position="attributes">
+            <attribute name="t-if">o.valued and o.sale_id and o.move_line_ids and (move_line.phantom_line or not move_line.phantom_product_id)</attribute>
+        </xpath>
+        <xpath expr="//tr[@t-foreach='o.move_line_ids']" position="attributes">
+            <attribute name="t-foreach">o.move_line_ids.filtered(lambda x: not x.phantom_product_id or x.phantom_line)</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']" position="attributes">
+            <attribute name="t-if">not move_line.phantom_line</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']" position="before">
+            <span t-field="move_line.sale_line.product_id" t-if="move_line.phantom_line"/>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id.sudo().description_pickingout']" position="attributes">
+            <attribute name="t-if">not move_line.phantom_line</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id.sudo().description_pickingout']" position="before">
+            <span t-field="move_line.sale_line.product_id.sudo().description_pickingout" t-if="move_line.phantom_line"/>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="attributes">
+            <attribute name="t-if">not move_line.phantom_line</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="after">
+            <td class="text-center" t-if="move_line.phantom_line">
+                <span t-field="move_line.phantom_delivered_qty"/>
+                <span t-field="move_line.sale_line.product_uom"/>
+            </td>  
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.lot_id.name']" position="attributes">
+            <attribute name="t-if">not move_line.phantom_line</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.lot_id.name']" position="after">
+            <t t-set="kit_move_lines" t-value="move_line.sale_line.mapped('move_ids.move_line_ids').filtered(lambda x: x.sale_line == move_line.sale_line)" />
+            <t t-if="kit_move_lines and move_line.phantom_line">
+                <table class="table-borderless">
+                    <t t-foreach="kit_move_lines.mapped('product_id')" t-as="kit_component">
+                        <small class="font-italic" t-esc="kit_component.display_name" />
+                        <t t-if="kit_move_lines.mapped('lot_id')">
+                            <span class="font-italic">: </span>
+                        </t>
+                        <small t-esc="', '.join([k.lot_id.name for k in kit_move_lines.filtered(lambda x: x.lot_id and x.product_id == kit_component)])" />
+                        <br/>
+                    </t>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
