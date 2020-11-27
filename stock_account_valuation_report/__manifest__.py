@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2018 Eficent Business and IT Consulting Services, S.L.
 #   (<https://www.eficent.com>)
 # Copyright 2018 Aleph Objects, Inc.
@@ -12,8 +13,6 @@
     "category": "Warehouse Management",
     "depends": ["stock_account"],
     "license": "AGPL-3",
-    "data": [
-        "views/product_product_views.xml",
-    ],
-    'installable': True,
+    "data": ["views/product_product_views.xml"],
+    "installable": True,
 }
