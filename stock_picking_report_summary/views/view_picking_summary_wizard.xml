@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+@author: Quentin DUPONT (quentin.dupont@grap.coop)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo><data>
+
+    <record id="view_picking_summary_wizard_form" model="ir.ui.view">
+        <field name="model">picking.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Product Summary">
+                <group colspan="4">
+                    <group string="General Parameters">
+                        <field name="picking_line_qty"/>
+                    </group>
+                    <group string="Summary" colspan="2">
+                        <field name="print_summary"/>
+                    </group>
+                    <group string="Pickings Details" colspan="2">
+                        <field name="print_detail"/>
+                        <field name="print_unity_in_list" attrs="{'invisible': [('print_detail', '=', False)]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="%(report_picking_summary)d" string="Print Summary" type="action" icon="fa-print" class="oe_highlight"/>
+                    <button icon="fa-ban" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</data></odoo>
