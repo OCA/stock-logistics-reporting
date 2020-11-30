@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="picking_summary">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="picking_w">
+                <style type="text/css">
+                    table, th, td { 
+                        border: 1px solid #4a4a4a;
+                        width:100%;
+                    }
+                    h1 {
+                        text-align:center;
+                    }
+                    th, td { 
+                        padding: 8px; 
+                    } 
+                   .align-center{
+                        text-align:center;
+                   }
+                </style>
+                <!-- Summary Part -->
+                <p t-if="picking_w.print_summary">
+                    <h1>Products Summary</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th class="align-center">Quantity</th>
+                                <th class="align-center">Unity</th>
+                                <th class="align-center">Unit Price</th>
+                                <th class="align-center">Total price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="picking_w.product_line_ids" t-as="product_line">
+                                <tr>
+                                    <td><span t-field="product_line.product_id.name"/></td>
+                                    <td><span t-esc="product_line.product_id.categ_id.name.capitalize()"/></td>
+                                    <td class="align-center">
+                                        <span t-field="product_line.quantity_total"/>
+                                    </td>
+                                    <td class="align-center">
+                                        <span t-field="product_line.product_id.uom_id.name"/>
+                                    </td>
+                                    <td class="align-center">
+                                        <span t-esc="round(product_line.product_id.standard_price,2)"/>
+                                    </td>
+                                    <td class="align-center">
+                                        <span t-esc="round(product_line.standard_price_total,2)"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5">Standard Price Total</th>
+                                <td class="align-center">
+                                    <span t-esc="round(picking_w.standard_price_total,2)"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </p>
+
+                <!-- Detail Part -->
+                <p t-if="picking_w.print_detail">
+                    <h1>Pickings List</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="align-center">Quantity</th>
+                                <th t-if="picking_w.print_unity_in_list" class="align-center">Unity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="picking_w.picking_line_ids" t-as="picking_line">
+                                <tr class="line" style="background-color:#ddd">
+                                    <th colspan="3"><span t-field="picking_line.picking_id.partner_id.name" /> - <span t-field="picking_line.picking_id.name" /></th>
+                                </tr>
+                                <t t-foreach="picking_line.picking_id.move_lines" t-as="move_line">
+
+                                    <t t-set="td_move_style" t-value="move_line.product_qty == 0 and 'border:1px black solid; color:gray;' or 'border:1px black solid; color:black;'"/>
+                                    <tr t-att-style="td_move_style">
+                                        <td>
+                                            <span t-field="move_line.product_id.name"/>
+                                        </td>
+                                        <td class="align-center">
+                                            <span t-field="move_line.product_qty"/>
+                                        </td>
+                                        <td t-if="picking_w.print_unity_in_list" class="align-center">
+                                            <span t-field="move_line.product_id.uom_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <t t-if="picking_line.picking_id.note">
+                                    <tr class="line">
+                                        <td colspan="100%">
+                                            <span t-field="picking_line.picking_id.note" />
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </t>
+                        </tbody>
+                    </table>
+                </p>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
