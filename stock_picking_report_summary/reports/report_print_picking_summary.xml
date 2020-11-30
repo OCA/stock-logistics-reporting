@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="report_picking_summary"
+        string="Picking Summary (PDF)"
+        model="picking.summary.wizard"
+        report_type="qweb-pdf"
+        name="stock_picking_report_summary.picking_summary"
+        paperformat="paperformat_picking_summary"
+    />
+</odoo>
