@@ -85,7 +85,10 @@ class ProductProduct(models.Model):
                 product.stock_fifo_manual_move_ids = moves
                 sv = 0.0
                 for mv in moves:
-                    sv += mv.price_unit * mv.product_uom_qty
+                    if mv._is_in():
+                        sv += mv.price_unit * mv.product_uom_qty
+                    elif mv._is_out():
+                        sv -= mv.price_unit * mv.product_uom_qty
                 product.stock_value = sv
                 product.qty_at_date = qty_available
             # Retrieve the values from inventory
