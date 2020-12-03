@@ -10,9 +10,6 @@
                 <field name="uom_id" groups="product.group_uom"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="stock_value" sum="Stock Valuation" widget="monetary" options="{'currency_field': 'cost_currency_id'}"/>
-                <button name="action_view_stock_moves"
-                        type="object" icon="fa-info-circle"
-                        attrs="{'invisible': [('cost_method', '!=', 'real')]}" />
                 <field name="account_qty_at_date" sum="Accounting Qty"
                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
                 <field name="account_value"

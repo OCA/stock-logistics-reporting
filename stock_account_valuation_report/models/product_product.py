@@ -25,12 +25,8 @@ class ProductProduct(models.Model):
     stock_fifo_real_time_aml_ids = fields.Many2many(
         "account.move.line", compute="_compute_inventory_value"
     )
-    stock_fifo_manual_move_ids = fields.Many2many(
-        "stock.move", compute="_compute_inventory_value"
-    )
 
     def _compute_inventory_value(self):
-        stock_move = self.env["stock.move"]
         self.env["account.move.line"].check_access_rights("read")
         location = self.env.context.get("location", False)
         accounting_values = {}
@@ -61,15 +57,41 @@ class ProductProduct(models.Model):
             self._context.get("from_date"),
             self._context.get("to_date"),
         )
-        for product in self:
+
+        # pylint: disable=E8103
+        self.env.cr.execute(
+            """
+            SELECT MAX(id) FROM product_product;
+        """
+        )
+        quant_data = {
+            key: [0, 0] for key in range(1, self.env.cr.fetchone()[0] + 1)
+        }
+        # Retrieve the values from inventory for real cost
+        # pylint: disable=E8103
+        self.env.cr.execute(
+            """
+            SELECT pp.id as x_product_id, sum(qty) as x_quantity,
+            sum(cost)*sum(qty) as x_total_value
+            FROM stock_quant sq
+            INNER JOIN stock_location sl ON sq.location_id = sl.id
+            INNER JOIN product_product pp ON sq.product_id = pp.id
+            INNER JOIN product_template pt ON pp.product_tmpl_id = pt.id
+            WHERE sl.usage = 'internal'
+            GROUP BY pp.id
+        """
+        )
+        for x_product_id, x_quantity, x_total_value in self.env.cr.fetchall():
+            quant_data[x_product_id][0] = x_quantity
+            quant_data[x_product_id][1] = x_total_value
+
+        for product in self.filtered(lambda p: p.type == "product"):
             qty_available = quantities_dict[product.id]["qty_available"]
             # Retrieve the values from accounting
             # We cannot provide location-specific accounting valuation,
-            # so better, leave the data empty in that case:
-            stock_move_domain = [
-                ("product_id", "=", product.id)
-            ] + stock_move._get_all_base_domain()
-            moves = stock_move.search(stock_move_domain)
+            # so better, leave the data empty in that case
+
+            # if product is not "real time" accounting is not relevant
             if product.valuation == "real_time" and not location:
                 valuation_account_id = (
                     product.categ_id.property_stock_valuation_account_id.id
@@ -82,16 +104,13 @@ class ProductProduct(models.Model):
                 product.stock_fifo_real_time_aml_ids = self.env[
                     "account.move.line"
                 ].browse(aml_ids)
-                product.stock_fifo_manual_move_ids = moves
-                sv = 0.0
-                for mv in moves:
-                    if mv._is_in():
-                        sv += mv.price_unit * mv.product_uom_qty
-                    elif mv._is_out():
-                        sv -= mv.price_unit * mv.product_uom_qty
-                product.stock_value = sv
-                product.qty_at_date = qty_available
-            # Retrieve the values from inventory
+            # if no quant it is just zero
+            if quant_data.get(product.id, False):
+                product.qty_at_date = quant_data[product.id][0]
+                product.stock_value = quant_data[product.id][1]
+            else:
+                product.qty_at_date = 0.0
+                product.stock_value = 0.0
             if product.cost_method in ["standard", "average"]:
                 price_used = product.standard_price
                 product.stock_value = price_used * qty_available
