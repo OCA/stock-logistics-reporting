@@ -69,8 +69,7 @@ class ProductProduct(models.Model):
         }
         # Retrieve the values from inventory for real cost
         # pylint: disable=E8103
-        self.env.cr.execute(
-            """
+        query = """
             SELECT pp.id as x_product_id, sum(qty) as x_quantity,
             sum(cost)*sum(qty) as x_total_value
             FROM stock_quant sq
@@ -78,9 +77,12 @@ class ProductProduct(models.Model):
             INNER JOIN product_product pp ON sq.product_id = pp.id
             INNER JOIN product_template pt ON pp.product_tmpl_id = pt.id
             WHERE sl.usage = 'internal'
+            AND sq.company_id = %%s %s
             GROUP BY pp.id
         """
-        )
+        params = (self.env.user.company_id.id, )
+        query = query % ("",)
+        self.env.cr.execute(query, params=params)
         for x_product_id, x_quantity, x_total_value in self.env.cr.fetchall():
             quant_data[x_product_id][0] = x_quantity
             quant_data[x_product_id][1] = x_total_value
