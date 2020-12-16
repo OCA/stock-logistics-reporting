@@ -26,7 +26,8 @@ class StockMoveLine(models.Model):
     def _compute_phantom_product_id(self):
         """Relate every line with its kit product"""
         for line in self.filtered(
-                lambda x: x.sale_line.product_id._is_phantom_bom()):
+                lambda x: x.sale_line and
+                x.sale_line.product_id._is_phantom_bom()):
             line.phantom_product_id = line.sale_line.product_id
 
     def _compute_sale_order_line_fields(self):
