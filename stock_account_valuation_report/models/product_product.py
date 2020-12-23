@@ -10,15 +10,9 @@ from odoo import fields, models, _
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    stock_value = fields.Float(
-        "Inventory Value", compute="_compute_inventory_value"
-    )
-    account_value = fields.Float(
-        "Accounting Value", compute="_compute_inventory_value"
-    )
-    qty_at_date = fields.Float(
-        "Inventory Quantity", compute="_compute_inventory_value"
-    )
+    stock_value = fields.Float("Inventory Value", compute="_compute_inventory_value")
+    account_value = fields.Float("Accounting Value", compute="_compute_inventory_value")
+    qty_at_date = fields.Float("Inventory Quantity", compute="_compute_inventory_value")
     account_qty_at_date = fields.Float(
         "Accounting Quantity", compute="_compute_inventory_value"
     )
@@ -64,9 +58,7 @@ class ProductProduct(models.Model):
             SELECT MAX(id) FROM product_product;
         """
         )
-        quant_data = {
-            key: [0, 0] for key in range(1, self.env.cr.fetchone()[0] + 1)
-        }
+        quant_data = {key: [0, 0] for key in range(1, self.env.cr.fetchone()[0] + 1)}
         # Retrieve the values from inventory for real cost
         # pylint: disable=E8103
         query = """
@@ -80,7 +72,7 @@ class ProductProduct(models.Model):
             AND sq.company_id = %%s %s
             GROUP BY pp.id
         """
-        params = (self.env.user.company_id.id, )
+        params = (self.env.user.company_id.id,)
         query = query % ("",)
         self.env.cr.execute(query, params=params)
         for x_product_id, x_quantity, x_total_value in self.env.cr.fetchall():
@@ -95,9 +87,9 @@ class ProductProduct(models.Model):
 
             # if product is not "real time" accounting is not relevant
             if product.valuation == "real_time" and not location:
-                valuation_account_id = (
-                    product.categ_id.property_stock_valuation_account_id.id
-                )
+                valuation_account_id = product.categ_id.with_context(
+                    force_company=self.env.user.company_id.id
+                ).property_stock_valuation_account_id.id
                 value, quantity, aml_ids = accounting_values.get(
                     (product.id, valuation_account_id)
                 ) or (0, 0, [])
@@ -134,9 +126,7 @@ class ProductProduct(models.Model):
                 (
                     "id",
                     "in",
-                    self.with_context(
-                        to_date=to_date
-                    ).stock_fifo_real_time_aml_ids.ids,
+                    self.with_context(to_date=to_date).stock_fifo_real_time_aml_ids.ids,
                 )
             ],
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
@@ -159,9 +149,7 @@ class ProductProduct(models.Model):
                 (
                     "id",
                     "in",
-                    self.with_context(
-                        to_date=to_date
-                    ).stock_fifo_manual_move_ids.ids,
+                    self.with_context(to_date=to_date).stock_fifo_manual_move_ids.ids,
                 )
             ],
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
