@@ -1,6 +1,6 @@
 # Copyright 2017 Tecnativa - David Vidal
 # Copyright 2017 Tecnativa - Luis M. Ontalba
-# Copyright 2019 Tecnativa - Carlos Dauden
+# Copyright 2019-2021 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
@@ -107,3 +107,16 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_untaxed, 300.0)
             self.assertEqual(picking.amount_tax, 40.0)
             self.assertEqual(picking.amount_total, 340.0)
+
+    def test_05_partial_delivery_computed_price(self):
+        self.assertTrue(self.partner.valued_picking)
+        self.sale_order.order_line.price_unit = 23.45
+        self.sale_order.order_line.product_uom_qty = 3.72
+        self.sale_order.action_confirm()
+        self.assertTrue(len(self.sale_order.picking_ids))
+        for picking in self.sale_order.picking_ids:
+            picking.action_assign()
+            picking.move_line_ids.qty_done = 3.55
+            self.assertAlmostEqual(picking.amount_untaxed, 83.25, 2)
+            self.assertAlmostEqual(picking.amount_tax, 12.49, 2)
+            self.assertAlmostEqual(picking.amount_total, 95.74, 2)
