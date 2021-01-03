@@ -1,10 +1,11 @@
 # Copyright 2014-2018 Tecnativa - Pedro M. Baeza
 # Copyright 2015 Antonio Espinosa - Tecnativa <antonio.espinosa@tecnativa.com>
 # Copyright 2018 Luis M. Ontalba - Tecnativa <luis.martinez@tecnativa.com>
-# Copyright 2016-2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+# Copyright 2016-2021 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
+from odoo.tools.float_utils import float_round
 
 
 class StockMoveLine(models.Model):
@@ -47,10 +48,14 @@ class StockMoveLine(models.Model):
         access to sales orders (stricter warehouse users, inter-company
         records...).
         """
+        prec = self.env['decimal.precision'].precision_get('Product Price')
         for line in self:
             sale_line = line.sale_line
             price_unit = (
-                sale_line.price_subtotal / sale_line.product_uom_qty
+                float_round(
+                    sale_line.price_subtotal / sale_line.product_uom_qty,
+                    precision_digits=prec,
+                )
                 if sale_line.product_uom_qty
                 else sale_line.price_reduce
             )
