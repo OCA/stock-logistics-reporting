@@ -1,6 +1,6 @@
 To get the stock picking valued report:
 
-#. Create a Sale Order with stockable products a *Valued picking* able
+#. Create a Sales Order with storable products a *Valued picking* able
    customer.
 #. Confirm the Sale Order.
 #. Click on *Delivery* stat button.
