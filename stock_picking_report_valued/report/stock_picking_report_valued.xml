@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
+        <xpath
+            expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]/thead/tr"
+            position="inside"
+        >
+            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+                <t t-if="o.state != 'done'">
+                    <th class="text-right"><strong>Qty Reserved</strong></th>
+                </t>
+                <th class="text-right"><strong>Unit Price</strong></th>
+                <th class="text-right" groups="product.group_discount_per_so_line">
+                    <strong>Discount</strong>
+                </th>
+                <th class="text-right"><strong>Subtotal</strong></th>
+                <th class="text-right"><strong>Taxes</strong></th>
+            </t>
+        </xpath>
+        <xpath
+            expr="//t[@t-foreach='packages']//t[@t-if='has_serial_number']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+                add="or (o.valued and o.sale_id and o.move_line_ids)"
+                separator=" "
+            />
+        </xpath>
+        <xpath
+            expr="//t[@name='no_package_move_lines']//t[@t-if='has_serial_number']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+                add="or (o.valued and o.sale_id and o.move_line_ids)"
+                separator=" "
+            />
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_line_table']/tbody/t[@t-else='']//t[@t-if='has_serial_number']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+                add="or (o.valued and o.sale_id and o.move_line_ids)"
+                separator=" "
+            />
+        </xpath>
+        <xpath
+            expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]"
+            position="after"
+        >
+            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+                <table class="table table-sm mt32">
+                    <thead>
+                        <tr>
+                            <th class="text-right"><strong>Untaxed Amount</strong></th>
+                            <th class="text-right"><strong>Taxes</strong></th>
+                            <th class="text-right"><strong>Total</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed" />
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax" />
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.amount_total" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="valued_report_picking_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="after">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+                <t t-if="move_line.picking_id.state != 'done'">
+                    <td class="text-right">
+                        <span t-field="move_line.product_uom_qty" />
+                        <span t-field="move_line.product_uom_id" /></td>
+                </t>
+                <td class="text-right"><span t-field="move_line.sale_price_unit" /></td>
+                <td class="text-right" groups="product.group_discount_per_so_line">
+                    <span t-field="move_line.sale_discount" />
+                </td>
+                <td class="text-right"><span
+                        t-field="move_line.sale_price_subtotal"
+                    /></td>
+                <td class="text-right"><span
+                        t-field="move_line.sale_tax_description"
+                    /></td>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
