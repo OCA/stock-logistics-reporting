@@ -8,6 +8,7 @@ from odoo.addons import decimal_precision as dp
 
 class PickingSummaryWizardProduct(models.TransientModel):
     _name = 'picking.summary.wizard.product'
+    _description = 'Picking Summary Wizard Product'
 
     wizard_id = fields.Many2one(comodel_name='picking.summary.wizard')
 

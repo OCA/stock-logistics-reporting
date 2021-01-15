@@ -8,6 +8,7 @@ from odoo.addons import decimal_precision as dp
 
 class PickingSummaryWizard(models.TransientModel):
     _name = 'picking.summary.wizard'
+    _description = 'Picking Summary Wizard'
 
     # Default Section
     def _default_picking_line_qty(self):
