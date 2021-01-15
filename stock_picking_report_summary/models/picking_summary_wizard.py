@@ -34,16 +34,16 @@ class PickingSummaryWizard(models.TransientModel):
             for move in picking.move_lines:
                 if move.product_id.id not in product_lines.keys():
                     product_lines[move.product_id.id] = {
-                         'name': move.product_id.name,
-                         'categ': move.product_id.categ_id.name.capitalize(),
-                         'qty': move.product_qty
+                        'name': move.product_id.name,
+                        'categ': move.product_id.categ_id.name.capitalize(),
+                        'qty': move.product_qty
                     }
                 else:
                     old_qty = product_lines[move.product_id.id]['qty']
                     product_lines[move.product_id.id] = {
-                         'name': move.product_id.name,
-                         'categ': move.product_id.categ_id.name.capitalize(),
-                         'qty': old_qty + move.product_qty
+                        'name': move.product_id.name,
+                        'categ': move.product_id.categ_id.name.capitalize(),
+                        'qty': old_qty + move.product_qty
                     }
         # Arranged in alphabetical order for category then product name
         product_lines_sorted = sorted(
