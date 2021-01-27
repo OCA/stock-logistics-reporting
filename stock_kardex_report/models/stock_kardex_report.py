@@ -22,5 +22,6 @@ class StockKardexReport(models.Model):
     qty_done = fields.Float("Done", readonly=True, digits=(10, 2))
     date = fields.Datetime(readonly=True)
     origin = fields.Char(readonly=True)
+    picking = fields.Char(readonly=True)
     balance = fields.Float(readonly=True, digits=(10, 2))
     cost = fields.Float(readonly=True, digits=(10, 2))

@@ -98,10 +98,12 @@ class StockKardexReportWiz(models.TransientModel):
             sml.lot_id, sml.owner_id, sml.package_id,
             sml.qty_done, sml.move_id, sml.location_id,
             sml.location_dest_id, sm.date, sm.origin,
-            sm.state, sm.price_unit
+            sp.name as picking,sm.state, sm.price_unit
             FROM stock_move_line sml
             INNER JOIN stock_move sm
             ON sml.move_id = sm.id
+            INNER JOIN stock_picking sp
+            ON sp.id = sml.picking_id
             WHERE
             sm.date >= %s
             AND sm.date <= %s),
@@ -161,6 +163,7 @@ class StockKardexReportWiz(models.TransientModel):
                 "date": rec["date"],
                 "balance": total,
                 "origin": origin,
+                "picking": rec["picking"],
                 "cost": total_cost,
             }
             report_list.append(line)
