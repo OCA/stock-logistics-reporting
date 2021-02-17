@@ -9,14 +9,12 @@
     "website": "https://www.tecnativa.com",
     "category": "Warehouse",
     "license": "AGPL-3",
-    "depends": [
-        "stock",
-    ],
+    "depends": ["stock"],
     "data": [
-        'views/product_views.xml',
-        'views/report_deliveryslip.xml',
-        'views/res_config_settings_views.xml',
-        'views/res_partner_view.xml',
+        "views/product_views.xml",
+        "views/report_deliveryslip.xml",
+        "views/res_config_settings_views.xml",
+        "views/res_partner_view.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
