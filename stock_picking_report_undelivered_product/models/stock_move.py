@@ -5,12 +5,10 @@ from odoo import fields, models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     splitted_stock_move_orig_id = fields.Many2one(
-        comodel_name='stock.move',
-        string="Splitted from",
-        readonly=True,
+        comodel_name="stock.move", string="Splitted from", readonly=True
     )
 
     def _prepare_move_split_vals(self, qty):
@@ -18,5 +16,5 @@ class StockMove(models.Model):
         Store origin stock move which create splitted move.
         """
         vals = super(StockMove, self)._prepare_move_split_vals(qty)
-        vals['splitted_stock_move_orig_id'] = self.id
+        vals["splitted_stock_move_orig_id"] = self.id
         return vals
