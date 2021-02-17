@@ -11,23 +11,18 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         self.ProductProduct = self.env["product.product"]
         self.StockPicking = self.env["stock.picking"]
         self.StockQuant = self.env["stock.quant"]
-
+        self.BackOrderWiz = self.env["stock.backorder.confirmation"]
         self.warehouse = self.env.ref("stock.warehouse0")
         self.stock_location = self.env.ref("stock.stock_location_stock")
         self.customer_location = self.env.ref("stock.stock_location_customers")
         self.picking_type_out = self.env.ref("stock.picking_type_out")
 
         self.partner_display = self.ResPartner.create(
-            {
-                "name": "Partner for test display",
-                "customer": True,
-                "display_undelivered_in_picking": True,
-            }
+            {"name": "Partner for test display", "display_undelivered_in_picking": True}
         )
         self.partner_no_display = self.ResPartner.create(
             {
                 "name": "Partner for test on display",
-                "customer": True,
                 "display_undelivered_in_picking": False,
             }
         )
@@ -77,14 +72,17 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
             line.product_uom_qty = 20.00
         return picking_form.save()
 
+    def _transfer_picking_no_backorder(self, picking):
+        # Transfer picking with no create backorder option
+        backorder_wizard = self.BackOrderWiz.create({"pick_ids": [(4, picking.id)]})
+        backorder_wizard.process_cancel_backorder()
+
     def test_displayed_customer(self):
         picking = self._create_picking(self.partner_display)
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
-        picking.action_done()
-        # Cancel backorder
-        picking.backorder_ids.action_cancel()
+        self._transfer_picking_no_backorder(picking)
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
@@ -97,9 +95,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
-        picking.action_done()
-        # Cancel backorder
-        picking.backorder_ids.action_cancel()
+        self._transfer_picking_no_backorder(picking)
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
@@ -115,9 +111,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
-        picking.action_done()
-        # Cancel backorder
-        picking.backorder_ids.action_cancel()
+        self._transfer_picking_no_backorder(picking)
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
@@ -161,9 +155,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
-        picking.action_done()
-        # Cancel backorder
-        picking.backorder_ids.action_cancel()
+        self._transfer_picking_no_backorder(picking)
 
         # Empty setting method field
         picking.company_id.undelivered_product_slip_report_method = False
