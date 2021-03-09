@@ -6,12 +6,17 @@
                 <t t-foreach="docs" t-as="o">
                     <t
                         t-set="move_line_ids"
-                        t-value="o.picking_ids.mapped('move_line_ids').sorted(lambda line: line.location_id.display_name)"
+                        t-value="o.picking_ids.mapped('move_line_ids').sorted(lambda line: (line.location_id.display_name, line.product_id.name))"
                     />
                     <t
                         t-set="has_serial_number"
                         t-value="move_line_ids.filtered('lot_id')"
                         groups="stock.group_production_lot"
+                    />
+                    <t
+                        t-set="has_uom"
+                        t-value="move_line_ids.filtered('product_uom_id')"
+                        groups="uom.group_uom"
                     />
                     <t t-call="web.external_layout">
                         <div class="page">
@@ -39,6 +44,7 @@
                                             </th>
                                             <th>Quantity</th>
                                             <th width="23%">Transfer</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,8 +95,8 @@
                                                 />
                                                 </t>
                                                 <span
-                                                t-field="move_operation.uom_id"
-                                                groups="move_operation.group_uom"
+                                                t-field="move_operation.product_uom_id"
+                                                groups="uom.group_uom"
                                             />
                                             </td>
                                             <td>
