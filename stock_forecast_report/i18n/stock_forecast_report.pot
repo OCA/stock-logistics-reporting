@@ -1,0 +1,126 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_forecast_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__date
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+msgid "Date"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+#: selection:report.stock.quantity,state:0
+msgid "Forecasted Deliveries"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.actions.act_window,name:stock_forecast_report.report_stock_quantity_action
+#: model:ir.ui.menu,name:stock_forecast_report.menu_forecast_inventory
+msgid "Forecasted Inventory"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+#: selection:report.stock.quantity,state:0
+msgid "Forecasted Receipts"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+#: selection:report.stock.quantity,state:0
+msgid "Forecasted Stock"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+msgid "Forecasted this Week"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+msgid "Group By"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__move_ids
+msgid "Move"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_tmpl_id
+msgid "Product Template"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+msgid "Report Quantity"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__state
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
+msgid "State"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model,name:stock_forecast_report.model_report_stock_quantity
+msgid "Stock Quantity Report"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__warehouse_id
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_graph
+msgid "report_stock_quantity_graph"
+msgstr ""
+
+#. module: stock_forecast_report
+#: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_pivot
+msgid "report_stock_quantity_pivot"
+msgstr ""
+
