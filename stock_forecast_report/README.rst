@@ -44,7 +44,7 @@ To use this module, you need to:
 Known issues / Roadmap
 ======================
 
-* This is a backport from the 14.0 Odoo core forecast report.
+This won't be needed on 14.0+.
 
 Bug Tracker
 ===========
