@@ -18,7 +18,10 @@ class StockQuantityHistory(models.TransientModel):
         # anomalies, such as, non 0 stock_value on cost_method FIFO
         if not self.location_id:
             domain = ast.literal_eval(action['domain'])
-            domain.pop(domain.index(('qty_available', '!=', 0)))
+            try:
+                domain.remove(('qty_available', '!=', 0))
+            except ValueError:
+                pass
             action['domain'] = domain
         ctx = action['context']
         if isinstance(ctx, str):
