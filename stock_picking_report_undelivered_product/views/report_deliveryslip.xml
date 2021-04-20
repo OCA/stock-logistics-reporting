@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="undeliverd_product">
+        <t t-if="o.partner_id.display_undelivered_in_picking and o.state == 'done'">
+            <!-- Get stock moves from backorder according to setting values -->
+            <t
+                t-if="not o.company_id.undelivered_product_slip_report_method or o.company_id.undelivered_product_slip_report_method == 'all'"
+            >
+                <t
+                    t-set="undelivered_moves"
+                    t-value="o.mapped('move_lines').filtered(lambda l: l.quantity_done == 0.0 and l.state == 'cancel' and l.product_id.display_undelivered_in_picking)"
+                />
+            </t>
+            <t
+                t-if="o.company_id.undelivered_product_slip_report_method == 'partially_undelivered'"
+            >
+                <t
+                    t-set="undelivered_moves"
+                    t-value="o.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and l.splitted_stock_move_orig_id)"
+                />
+            </t>
+            <t
+                t-if="o.company_id.undelivered_product_slip_report_method == 'completely_undelivered'"
+            >
+                <t
+                    t-set="undelivered_moves"
+                    t-value="o.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and not l.splitted_stock_move_orig_id)"
+                />
+            </t>
+            <table
+                t-if="undelivered_moves"
+                class="table table-sm table-bordered mt0"
+                id="undelivered_product"
+            >
+                <thead>
+                    <tr><th colspan="7"><strong
+                            >Remaining products (not delivered yet)</strong></th></tr>
+                    <tr>
+                        <th><strong>Reference</strong></th>
+                        <th><strong>Product</strong></th>
+                        <th class="text-right"><strong>Quantity</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t
+                        t-foreach="undelivered_moves.sorted(key=lambda l: (l.product_id.default_code, l.product_id.name))"
+                        t-as="undelivered_move"
+                    >
+                        <tr
+                            t-att-class="'partially_undelivered_line' if undelivered_move.splitted_stock_move_orig_id else 'completely_undelivered_line'"
+                        >
+                            <td>
+                                <span
+                                    t-field="undelivered_move.product_id.default_code"
+                                />
+                            </td>
+                            <td>
+                                <span t-field="undelivered_move.product_id.name" />
+                            </td>
+                            <td class="text-right">
+                                <span
+                                    t-field="undelivered_move.product_uom_qty"
+                                /> <span
+                                    groups="uom.group_uom"
+                                    t-field="undelivered_move.product_uom"
+                                />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+    <template
+        id="report_delivery_document"
+        inherit_id="stock.report_delivery_document"
+        priority="200"
+    >
+        <xpath
+            expr="//table[@t-if=&quot;o.move_line_ids and o.state=='done'&quot;]"
+            position="after"
+        >
+            <t t-call="stock_picking_report_undelivered_product.undeliverd_product" />
+        </xpath>
+    </template>
+
+</odoo>
