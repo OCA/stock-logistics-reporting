@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_report_undelivered_product
+# 	* stock_picking_report_undelivered_product
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,17 +49,17 @@ msgid "Contact"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: selection:res.company,undelivered_product_slip_report_method:0
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__all
 msgid "Display all undelivered product lines"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: selection:res.company,undelivered_product_slip_report_method:0
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__completely_undelivered
 msgid "Display only completely undelivered product lines"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: selection:res.company,undelivered_product_slip_report_method:0
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__partially_undelivered
 msgid "Display only partially undelivered product lines"
 msgstr ""
 
@@ -106,4 +106,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
 msgid "Undelivered product lines in delivery slip report"
 msgstr ""
-
