@@ -50,9 +50,9 @@ class StockInventoryValuationReport(models.TransientModel):
         if not self.compute_at_date:
             self.date = fields.Datetime.now()
         products = self.env['product.product'].\
-            search([('type', '=', 'product'), ('qty_available', '!=', 0)]).\
             with_context(dict(to_date=self.date, company_owned=True,
-                              create=False, edit=False))
+                              create=False, edit=False)).\
+            search([('type', '=', 'product'), ('qty_available', '!=', 0)])
         ReportLine = self.env['stock.inventory.valuation.view']
         for product in products:
             standard_price = product.standard_price
