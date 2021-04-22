@@ -140,8 +140,8 @@
             <div class="act_as_row labels">
                 <div class="act_as_cell">Date</div>
                 <div class="act_as_cell">Reference</div>
-                <div class="act_as_cell">Input</div>
-                <div class="act_as_cell">Output</div>
+                <div class="act_as_cell">In</div>
+                <div class="act_as_cell">Out</div>
                 <div class="act_as_cell">Balance</div>
             </div>
         </div>
@@ -153,7 +153,7 @@
                 <t t-esc="product_line.date.strftime('%Y-%m-%d')" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="product_line.reference" />
+                <t t-esc="product_line.display_name" />
             </div>
             <div class="act_as_cell right">
                 <t t-esc="'{0:,.3f}'.format(product_line.product_in)" />
