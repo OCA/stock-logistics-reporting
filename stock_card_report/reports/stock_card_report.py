@@ -20,6 +20,16 @@ class StockCardView(models.TransientModel):
     is_initial = fields.Boolean()
     product_in = fields.Float()
     product_out = fields.Float()
+    picking_id = fields.Many2one(comodel_name="stock.picking")
+
+    def name_get(self):
+        result = []
+        for rec in self:
+            name = rec.reference
+            if rec.picking_id.origin:
+                name = "{} ({})".format(name, rec.picking_id.origin)
+            result.append((rec.id, name))
+        return result
 
 
 class StockCardReport(models.TransientModel):
@@ -55,7 +65,8 @@ class StockCardReport(models.TransientModel):
                     then move.product_qty end as product_in,
                 case when move.location_id in %s
                     then move.product_qty end as product_out,
-                case when move.date < %s then True else False end as is_initial
+                case when move.date < %s then True else False end as is_initial,
+                move.picking_id
             FROM stock_move move
             WHERE (move.location_id in %s or move.location_dest_id in %s)
                 and move.state = 'done' and move.product_id in %s

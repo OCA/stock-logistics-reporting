@@ -82,12 +82,12 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                 "width": 25,
             },
             "3_input": {
-                "header": {"value": "Input"},
+                "header": {"value": "In"},
                 "data": {"value": self._render("input")},
                 "width": 25,
             },
             "4_output": {
-                "header": {"value": "Output"},
+                "header": {"value": "Out"},
                 "data": {"value": self._render("output")},
                 "width": 25,
             },
@@ -177,7 +177,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
                 col_specs_section="data",
                 render_space={
                     "date": line.date or "",
-                    "reference": line.reference or "",
+                    "reference": line.display_name or "",
                     "input": line.product_in or 0,
                     "output": line.product_out or 0,
                     "balance": balance,
