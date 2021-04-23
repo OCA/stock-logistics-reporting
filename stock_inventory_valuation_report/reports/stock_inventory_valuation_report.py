@@ -11,7 +11,7 @@ class StockInventoryValuationView(models.TransientModel):
     name = fields.Char()
     reference = fields.Char()
     barcode = fields.Char()
-    qty_at_date = fields.Float()
+    qty_available = fields.Float()
     uom_id = fields.Many2one(
         comodel_name="uom.uom",
     )
@@ -44,7 +44,6 @@ class StockInventoryValuationReport(models.TransientModel):
         help="Use compute fields, so there is nothing store in database",
     )
 
-    @api.multi
     def _compute_results(self):
         self.ensure_one()
         if not self.compute_at_date:
@@ -53,32 +52,34 @@ class StockInventoryValuationReport(models.TransientModel):
             self.env["product.product"]
             .search([("type", "=", "product"), ("qty_available", "!=", 0)])
             .with_context(
-                dict(to_date=self.date, company_owned=True, create=False, edit=False)
+                dict(to_date=self.date, company_owned=True,
+                     create=False, edit=False)
             )
         )
         ReportLine = self.env["stock.inventory.valuation.view"]
         for product in products:
             standard_price = product.standard_price
             if self.date:
-                standard_price = product.get_history_price(
-                    self.env.user.company_id.id, date=self.date
-                )
+                pass
+                # ***** I have not found 'get_history_price' *********
+                # standard_price = product.get_history_price(
+                #     self.env.user.company_id.id, date=self.date
+                # )
             line = {
                 "name": product.name,
                 "reference": product.default_code,
                 "barcode": product.barcode,
-                "qty_at_date": product.qty_at_date,
+                "qty_available": product.qty_available,
                 "uom_id": product.uom_id,
                 "currency_id": product.currency_id,
                 "cost_currency_id": product.cost_currency_id,
                 "standard_price": standard_price,
-                "stock_value": product.qty_at_date * standard_price,
+                "stock_value": product.qty_available * standard_price,
                 "cost_method": product.cost_method,
             }
-            if product.qty_at_date != 0:
+            if product.qty_available != 0:
                 self.results += ReportLine.new(line)
 
-    @api.multi
     def print_report(self, report_type="qweb"):
         self.ensure_one()
         action = (
