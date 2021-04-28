@@ -10,6 +10,11 @@ class StockReportByLocationPrepare(models.TransientModel):
     location_ids = fields.Many2many(
         comodel_name="stock.location", string="Locations", required=True
     )
+    with_quantity = fields.Boolean(
+        string="Quantity > 0",
+        default=True,
+        help="Show only the products that have existing quantity on hand",
+    )
 
     def open(self):
         self.ensure_one()
@@ -42,20 +47,23 @@ class StockReportByLocationPrepare(models.TransientModel):
                 for quant_group in quant_groups
             }
             products = self.env["product.product"].search([("type", "=", "product")])
+            vals_list = []
             for product in products:
-                r = self.env["stock.report.quantity.by.location"].create(
-                    {
-                        "product_id": product.id,
-                        "product_category_id": product.categ_id.id,
-                        "uom_id": product.uom_id.id,
-                        "quantity": mapping.get(product.id, 0.0),
-                        "location_id": loc.id,
-                        "wiz_id": self.id,
-                        "default_code": product.default_code,
-                    }
-                )
-                recs.append(r.id)
-        return recs
+                quantity = mapping.get(product.id, 0.0)
+                if (self.with_quantity and quantity) or not self.with_quantity:
+                    vals_list.append(
+                        {
+                            "product_id": product.id,
+                            "product_category_id": product.categ_id.id,
+                            "uom_id": product.uom_id.id,
+                            "quantity": mapping.get(product.id, 0.0),
+                            "location_id": loc.id,
+                            "wiz_id": self.id,
+                            "default_code": product.default_code,
+                        }
+                    )
+            recs = self.env["stock.report.quantity.by.location"].create(vals_list)
+        return recs.ids
 
 
 class StockReportQuantityByLocation(models.TransientModel):
