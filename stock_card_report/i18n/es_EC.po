@@ -18,8 +18,8 @@ msgstr ""
 
 #. module: stock_card_report
 #: model:ir.actions.report,print_report_name:stock_card_report.action_stock_card_report_pdf
-msgid "'Stock Card Report - [%s]' % object.location_id.display_name"
-msgstr "Reporte kardex"
+msgid "'Stock Card Report - [%s]' % (object.location_id.complete_name)"
+msgstr ""
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_buttons
@@ -105,14 +105,14 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_card_report
+#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
+msgid "In"
+msgstr ""
+
+#. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_base
 msgid "Initial"
 msgstr "Inicial"
-
-#. module: stock_card_report
-#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
-msgid "Input"
-msgstr "Ingreso"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__is_initial
@@ -156,13 +156,18 @@ msgstr "Ubicación destino"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
-msgid "Output"
-msgstr "Salida"
+msgid "Out"
+msgstr ""
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_range_id
 msgid "Period"
 msgstr "Periodo"
+
+#. module: stock_card_report
+#: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__picking_id
+msgid "Picking"
+msgstr ""
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__product_ids
@@ -272,3 +277,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "or"
 msgstr ""
+
+#~ msgid "'Stock Card Report - [%s]' % object.location_id.display_name"
+#~ msgstr "Reporte kardex"
+
+#~ msgid "Input"
+#~ msgstr "Ingreso"
+
+#~ msgid "Output"
+#~ msgstr "Salida"
