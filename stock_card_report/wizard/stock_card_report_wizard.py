@@ -27,7 +27,7 @@ class StockCardReportWizard(models.TransientModel):
     def button_export_html(self):
         self.ensure_one()
         action = self.env.ref("stock_card_report.action_report_stock_card_report_html")
-        vals = action.read()[0]
+        vals = action.sudo().read()[0]
         context = vals.get("context", {})
         if context:
             context = safe_eval(context)
