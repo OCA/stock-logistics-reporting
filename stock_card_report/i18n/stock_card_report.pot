@@ -102,13 +102,13 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_card_report
-#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_base
-msgid "Initial"
+#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
+msgid "In"
 msgstr ""
 
 #. module: stock_card_report
-#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
-msgid "Input"
+#: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_base
+msgid "Initial"
 msgstr ""
 
 #. module: stock_card_report
@@ -153,12 +153,17 @@ msgstr ""
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
-msgid "Output"
+msgid "Out"
 msgstr ""
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_range_id
 msgid "Period"
+msgstr ""
+
+#. module: stock_card_report
+#: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__picking_id
+msgid "Picking"
 msgstr ""
 
 #. module: stock_card_report
