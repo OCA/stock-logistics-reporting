@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-stock_picking_report_undelivered_product',
         'odoo13-addon-stock_picking_report_valued',
         'odoo13-addon-stock_quantity_history_location',
+        'odoo13-addon-stock_report_quantity_by_location',
     ],
     classifiers=[
         'Programming Language :: Python',
