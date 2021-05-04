@@ -66,7 +66,7 @@
     <template id="stock_move_lines_value_total">
         <div class="clearfix">
             <div id="total" class="row">
-                <div class="col-xs-4 float-right">
+                <div class="col-4 float-right">
                     <table class="table table-sm" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;">
                         <tr class="border-black">
                             <td><strong>Total</strong></td>
@@ -140,7 +140,7 @@
                 <!-- Total all moves -->
                 <div class="clearfix">
                     <div id="total" class="row">
-                        <div class="col-xs-4 pull-right">
+                        <div class="col-4 float-right">
                             <table class="table table-sm" style="min-width: 250px;max-width: 400px;page-break-inside: avoid;">
                                 <tr class="border-black">
                                     <td><strong>Total operations value balance</strong></td>
