@@ -18,7 +18,7 @@
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
                             </div>
                         </div>
-                        <div class="col-xs-5 col-xs-offset-1">
+                        <div class="offset-1 col-5">
                             <div t-if="picking.picking_type_id.code=='incoming' and picking.partner_id">
                                 <span><strong>Partner Address:</strong></span>
                             </div>
