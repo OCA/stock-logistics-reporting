@@ -1,13 +1,16 @@
 # Copyright 2019 ForgeFlow S.L.
+# Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo import fields
+
+from .common import TestCommon
 
 
-class TestStockQuantityHistoryLocation(SavepointCase):
+class TestStockQuantityHistoryLocation(TestCommon):
     @classmethod
     def setUpClass(cls):
-        super(TestStockQuantityHistoryLocation, cls).setUpClass()
+        super().setUpClass()
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.main_company = cls.env.ref("base.main_company")
         cls.product = cls.env.ref("product.product_product_3")
@@ -26,30 +29,14 @@ class TestStockQuantityHistoryLocation(SavepointCase):
                 "company_id": cls.main_company.id,
             }
         )
-        # Create a move for the past
-        move = cls.env["stock.move"].create(
-            {
-                "name": "Stock move in",
-                "location_id": cls.supplier_location.id,
-                "location_dest_id": cls.child_test_stock_loc.id,
-                "product_id": cls.product.id,
-                "product_uom": cls.product.uom_id.id,
-                "product_uom_qty": 100.0,
-            }
-        )
-        move._action_confirm()
-        move._action_assign()
-        move_line = move.move_line_ids[0]
-        move_line.qty_done = 100.0
-        move._action_done()
-        move.date = "2019-08-11"
+        cls._create_stock_move(cls, location_dest_id=cls.child_test_stock_loc, qty=100)
 
     def test_wizard_past_date(self):
         wizard = self.env["stock.quantity.history"].create(
             {
                 "location_id": self.test_stock_loc.id,
                 "include_child_locations": True,
-                "inventory_datetime": "2019-08-12 00:00:00",
+                "inventory_datetime": fields.Datetime.now(),
             }
         )
         action = wizard.with_context(company_owned=True).open_at_date()
