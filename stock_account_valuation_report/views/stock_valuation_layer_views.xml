@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_valuation_layer_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="account_move_line_id" invisible="1" />
+                <field name="account_qty_at_date" />
+                <field name="account_value" sum="Total Acc Value" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_form" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form" />
+        <field name="arch" type="xml">
+            <field name="value" position="after">
+                <field name="account_move_line_id" invisible="1" />
+                <field name="account_qty_at_date" />
+                <field name="account_value" sum="Total Acc Value" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_search" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.search</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_search" />
+        <field name="arch" type="xml">
+            <search string="Valuation Layer?">
+                <field name="product_id" />
+                <field name="account_qty_at_date" />
+                <field name="account_value" sum="Total Acc Value" />
+            </search>
+        </field>
+    </record>
+
+</odoo>
