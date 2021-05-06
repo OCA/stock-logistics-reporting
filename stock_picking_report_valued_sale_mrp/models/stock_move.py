@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     def _get_components_per_kit(self):
         """Compute how many kit components were demanded from this line. We
@@ -16,13 +16,9 @@ class StockMove(models.Model):
             return 0
         component_demand = sum(
             sale_line.move_ids.filtered(
-                lambda x: x.product_id == self.product_id and
-                not x.origin_returned_move_id and
-                (
-                    x.state != "cancel" or (
-                        x.state == "cancel" and x.backorder_id
-                    )
-                )
+                lambda x: x.product_id == self.product_id
+                and not x.origin_returned_move_id
+                and (x.state != "cancel" or (x.state == "cancel" and x.backorder_id))
             ).mapped("product_uom_qty")
         )
         return component_demand / sale_line.product_uom_qty

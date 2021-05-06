@@ -1,11 +1,12 @@
 # Copyright 2020 Tecnativa - David Vidal
-from odoo.addons.stock_picking_report_valued.tests\
-    .test_stock_picking_valued import TestStockPickingValued
 from odoo.tests import Form
+
+from odoo.addons.stock_picking_report_valued.tests.test_stock_picking_valued import (
+    TestStockPickingValued,
+)
 
 
 class TestStockPickingValuedMrp(TestStockPickingValued):
-
     @classmethod
     def setUpClass(cls):
         """We want to run parent class tests again to ensure everything
@@ -13,36 +14,37 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         super().setUpClass()
         cls.res_partner = cls.env["res.partner"]
         cls.product_product = cls.env["product.product"]
-        cls.product_kit = cls.product_product.create({
-            "name": "Product test 1",
-            "type": "consu",
-        })
-        cls.product_kit_comp_1 = cls.product_product.create({
-            "name": "Product Component 1",
-            "type": "product",
-        })
-        cls.product_kit_comp_2 = cls.product_product.create({
-            "name": "Product Component 2",
-            "type": "product",
-        })
-        cls.bom = cls.env["mrp.bom"].create({
-            "product_id": cls.product_kit.id,
-            "product_tmpl_id": cls.product_kit.product_tmpl_id.id,
-            "type": "phantom",
-            "bom_line_ids": [
-                (0, 0, {
-                    "product_id": cls.product_kit_comp_1.id,
-                    "product_qty": 2,
-                }),
-                (0, 0, {
-                    "product_id": cls.product_kit_comp_2.id,
-                    "product_qty": 4,
-                })
-            ]})
-        cls.product_2 = cls.product_product.create({
-            "name": "Product test 2",
-            "type": "product",
-        })
+        cls.product_kit = cls.product_product.create(
+            {"name": "Product test 1", "type": "consu"}
+        )
+        cls.product_kit_comp_1 = cls.product_product.create(
+            {"name": "Product Component 1", "type": "product"}
+        )
+        cls.product_kit_comp_2 = cls.product_product.create(
+            {"name": "Product Component 2", "type": "product"}
+        )
+        cls.bom = cls.env["mrp.bom"].create(
+            {
+                "product_id": cls.product_kit.id,
+                "product_tmpl_id": cls.product_kit.product_tmpl_id.id,
+                "type": "phantom",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {"product_id": cls.product_kit_comp_1.id, "product_qty": 2},
+                    ),
+                    (
+                        0,
+                        0,
+                        {"product_id": cls.product_kit_comp_2.id, "product_qty": 4},
+                    ),
+                ],
+            }
+        )
+        cls.product_2 = cls.product_product.create(
+            {"name": "Product test 2", "type": "product"}
+        )
         order_form = Form(cls.env["sale.order"])
         order_form.partner_id = cls.partner
         with order_form.order_line.new() as line_form:
@@ -56,7 +58,8 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         # Maybe other modules create additional lines in the create
         # method in sale.order model, so let's find the correct line.
         cls.order_line = cls.sale_order_3.order_line.filtered(
-            lambda r: r.product_id == cls.product_kit)
+            lambda r: r.product_id == cls.product_kit
+        )
         cls.order_out_picking = cls.sale_order_3.picking_ids
 
     def test_01_picking_confirmed(self):
