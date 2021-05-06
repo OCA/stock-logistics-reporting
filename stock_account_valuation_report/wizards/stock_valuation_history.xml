@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_valuation_history" model="ir.ui.view">
+        <field name="name">Dual Valuation Report at Date</field>
+        <field name="model">stock.valuation.history</field>
+        <field name="arch" type="xml">
+            <form string="Choose your date">
+                <group>
+                    <field name="inventory_datetime" />
+                </group>
+                <footer>
+                    <button
+                        name="open_at_date"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="history_valuation_action" model="ir.actions.act_window">
+        <field name="name">Dual Inventory Valuation</field>
+        <field name="res_model">stock.valuation.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_stock_valuation_history" />
+    </record>
+
+    <menuitem
+        id="menu_dual_valuation"
+        name="Dual Inventory Valuation"
+        parent="stock.menu_warehouse_report"
+        sequence="120"
+        action="history_valuation_action"
+    />
+</odoo>
