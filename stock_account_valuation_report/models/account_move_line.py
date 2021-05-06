@@ -1,4 +1,5 @@
-# Copyright 2018 Eficent Business and IT Consulting Services, S.L.
+# Copyright 2020 ForgeFlow S.L.
+# Copyright 2019 Aleph Objects, Inc.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
