@@ -14,6 +14,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                         <field name="location_ids" widget="many2many_tags" />
                     </group>
                     <group>
+                        <field name="availability" />
                         <field name="with_quantity" />
                     </group>
                 </group>
