@@ -3,6 +3,9 @@
 
 import logging
 import datetime
+
+from dateutil.relativedelta import relativedelta
+
 from odoo.tests import common
 from odoo.tools import test_reports
 
@@ -102,3 +105,90 @@ class TestStockInventoryValuationReport(common.TransactionCase):
         wizard.button_export_html()
         wizard.button_export_pdf()
         wizard.button_export_xlsx()
+
+    def test_date_report_result(self):
+        """
+        Check that report shows the correct product quantity
+        when specifying a date in the past.
+        """
+        product = self.env['product.product'].create({
+            'name': 'test valuation report date',
+            'type': 'product',
+            'categ_id': self.env.ref('product.product_category_all').id,
+        })
+        stock_location_id = self.ref('stock.stock_location_stock')
+        partner_id = self.ref('base.res_partner_4')
+        product_qty = 100
+        date_with_stock = datetime.datetime.now() + relativedelta(days=-1)
+
+        # Receive the product
+        receipt = self.env['stock.picking'].create({
+            'location_id': self.ref('stock.stock_location_suppliers'),
+            'location_dest_id': stock_location_id,
+            'partner_id': partner_id,
+            'picking_type_id': self.ref('stock.picking_type_in'),
+            'move_lines': [(0, 0, {
+                'name': 'Receive product',
+                'product_id': product.id,
+                'product_uom': product.uom_id.id,
+                'product_uom_qty': product_qty,
+                'quantity_done': product_qty,
+            })]
+        })
+        receipt.action_confirm()
+        receipt.action_done()
+        receipt.move_lines.date = date_with_stock
+        self.assertEqual(
+            product.with_context(to_date=date_with_stock).qty_available,
+            product_qty)
+        self.assertEqual(product.qty_available, product_qty)
+
+        # Report should have a line with the product and its quantity
+        report = self.env['report.stock.inventory.valuation.report'].create({
+            'company_id': self.company_id.id,
+            'compute_at_date': 0,
+            })
+        product_row = report.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(len(product_row), 1)
+        self.assertEqual(product_row.qty_at_date, product_qty)
+
+        # Delivery the product
+        delivery = self.env['stock.picking'].create({
+            'location_id':  stock_location_id,
+            'location_dest_id': self.ref('stock.stock_location_customers'),
+            'partner_id': partner_id,
+            'picking_type_id': self.ref('stock.picking_type_out'),
+            'move_lines': [(0, 0, {
+                'name': 'Deliver product',
+                'product_id': product.id,
+                'product_uom': product.uom_id.id,
+                'product_uom_qty': product_qty,
+                'quantity_done': product_qty,
+            })]
+        })
+        delivery.action_confirm()
+        delivery.action_done()
+        self.assertEqual(
+            product.with_context(to_date=date_with_stock).qty_available,
+            product_qty)
+        self.assertEqual(product.qty_available, 0)
+
+        # Report should not have a line with the product
+        # because it is not available
+        report = self.env['report.stock.inventory.valuation.report'].create({
+            'company_id': self.company_id.id,
+            'compute_at_date': 0,
+            })
+        product_row = report.results.filtered(lambda r: r.name == product.name)
+        self.assertFalse(product_row)
+
+        # Report computed specifying the date
+        # when there was stock should have the product and its quantity
+        report = self.env['report.stock.inventory.valuation.report'].create({
+            'company_id': self.company_id.id,
+            'compute_at_date': 1,
+            'date': date_with_stock,
+        })
+        product_row = report.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(len(product_row), 1)
+        self.assertEqual(product_row.qty_at_date, product_qty)
