@@ -10,6 +10,12 @@ class StockReportByLocationPrepare(models.TransientModel):
     location_ids = fields.Many2many(
         comodel_name="stock.location", string="Locations", required=True
     )
+    availability = fields.Selection(
+        string="Availability",
+        selection=[("on_hand", "On Hand"), ("unreserved", "Unreserved")],
+        default="on_hand",
+        help="Unreserved is the Stock On Hand minus the reservations",
+    )
     with_quantity = fields.Boolean(
         string="Quantity > 0",
         default=True,
@@ -39,13 +45,20 @@ class StockReportByLocationPrepare(models.TransientModel):
         for loc in self.location_ids:
             quant_groups = self.env["stock.quant"].read_group(
                 [("location_id", "child_of", [loc.id])],
-                ["quantity", "product_id"],
+                ["quantity", "reserved_quantity", "product_id"],
                 ["product_id"],
             )
-            mapping = {
-                quant_group["product_id"][0]: quant_group["quantity"]
-                for quant_group in quant_groups
-            }
+            if self.availability == "on_hand":
+                mapping = {
+                    quant_group["product_id"][0]: quant_group["quantity"]
+                    for quant_group in quant_groups
+                }
+            else:
+                mapping = {
+                    quant_group["product_id"][0]: quant_group["quantity"]
+                    - quant_group["reserved_quantity"]
+                    for quant_group in quant_groups
+                }
             products = self.env["product.product"].search([("type", "=", "product")])
             vals_list = []
             for product in products:
