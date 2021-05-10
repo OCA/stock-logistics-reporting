@@ -5,7 +5,7 @@
 {
     "name": "Stock Quantity History Location",
     "summary": "Provides stock quantity by location on past date",
-    "version": "13.0.1.1.0",
+    "version": "13.0.1.1.1",
     "license": "AGPL-3",
     "author": "ForgeFlow," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
