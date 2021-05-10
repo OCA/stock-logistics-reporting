@@ -2,6 +2,7 @@
 # Copyright 2019 Aleph Objects, Inc.
 # Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import ast
 
 from odoo import fields, models
 
@@ -17,6 +18,8 @@ class StockQuantityHistory(models.TransientModel):
     def open_at_date(self):
         action = super(StockQuantityHistory, self).open_at_date()
         ctx = action["context"]
+        if isinstance(ctx, str):
+            ctx = ast.literal_eval(ctx)
         if self.location_id:
             ctx["location"] = self.location_id.id
             ctx["compute_child"] = self.include_child_locations
