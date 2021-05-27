@@ -119,12 +119,14 @@
                                     t-value="picking.partner_id or (picking.move_lines and picking.move_lines[0].partner_id) or False"
                                 />
                                     <t t-if="partner" name="partner_header">
-                                        <t t-set="address">
-                                            <div
-                                            t-esc="partner"
-                                            t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'
-                                        />
-                                       </t>
+                                        <div class="row">
+                                            <div class="col-5 offset-7">
+                                                <div
+                                                t-esc="partner"
+                                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'
+                                            />
+                                            </div>
+                                        </div>
                                     </t>
 
                                     <div class="page">
@@ -154,6 +156,13 @@
                                                     t-field="picking.scheduled_date"
                                                 />
                                                </t>
+                                            </div>
+                                            <div
+                                            t-if="picking.picking_type_id.code == 'outgoing' and picking.carrier_id"
+                                            class="col-auto"
+                                        >
+                                                <strong>Carrier:</strong>
+                                                <p t-field="picking.carrier_id" />
                                             </div>
                                         </div>
                                         <table
