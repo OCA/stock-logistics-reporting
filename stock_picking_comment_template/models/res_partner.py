@@ -8,6 +8,6 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     comment_template_id = fields.Many2one(
-        comodel_name='base.comment.template',
-        string='Picking conditions template',
+        comodel_name="base.comment.template",
+        string="Picking conditions template",
     )
