@@ -5,16 +5,22 @@
         id="report_delivery_document_comments"
         inherit_id="stock.report_delivery_document"
     >
-      <xpath expr="//table[hasclass('table-sm')]" position="before">
-        <p t-if="o.note1">
-          <span t-field="o.note1" />
-        </p>
-      </xpath>
-      <xpath expr="(//p)[position()=last()]" position="after">
-        <p t-if="o.note2">
-          <span t-field="o.note2" />
-        </p>
-      </xpath>
+        <xpath expr="//table[hasclass('table-sm')]" position="before">
+            <t
+                t-foreach="o.comment_template_ids.filtered(lambda x: x.position == 'before_lines')"
+                t-as="comment_template_top"
+            >
+                <div t-raw="comment_template_top.text" />
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t
+                t-foreach="o.comment_template_ids.filtered(lambda x: x.position == 'after_lines')"
+                t-as="comment_template_bottom"
+            >
+                <div t-raw="comment_template_bottom.text" />
+            </t>
+        </xpath>
     </template>
 
 </odoo>
