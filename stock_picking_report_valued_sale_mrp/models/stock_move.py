@@ -12,7 +12,11 @@ class StockMove(models.Model):
         were manually changed, it could lead to inconsistencies"""
         self.ensure_one()
         sale_line = self.sale_line_id
-        if not sale_line or not sale_line.product_id._is_phantom_bom():
+        if (
+            not sale_line
+            or not sale_line.product_id.get_components()
+            or sale_line.product_id.ids == sale_line.product_id.get_components()
+        ):
             return 0
         component_demand = sum(
             sale_line.move_ids.filtered(
