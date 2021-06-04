@@ -23,8 +23,11 @@ class StockMoveLine(models.Model):
     @api.depends("sale_line")
     def _compute_phantom_product_id(self):
         """Relate every line with its kit product"""
+        self.write({"phantom_product_id": False})
         for line in self.filtered(
-            lambda x: x.sale_line and x.sale_line.product_id._is_phantom_bom()
+            lambda x: x.sale_line
+            and x.sale_line.product_id.get_components()
+            and x.sale_line.product_id.ids != x.sale_line.product_id.get_components()
         ):
             line.phantom_product_id = line.sale_line.product_id
 
@@ -33,7 +36,11 @@ class StockMoveLine(models.Model):
         avoid duplicate the amounts. We also need to recompute the total
         amounts according to the corresponding delivered kits"""
         super()._compute_sale_order_line_fields()
-        kit_lines = self.filtered("phantom_product_id")
+        pickings = self.mapped("picking_id")
+        kit_lines = pickings.move_line_ids.filtered("phantom_product_id")
+        pickings.move_line_ids.write(
+            {"phantom_line": False, "phantom_delivered_qty": 0.0}
+        )
         for sale_line in kit_lines.mapped("sale_line"):
             move_lines = kit_lines.filtered(lambda x: x.sale_line == sale_line)
             # Deduct the kit quantity from the first component in the picking.
