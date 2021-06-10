@@ -24,6 +24,7 @@ addon | version | summary
 [stock_inventory_valuation_show_remaining](stock_inventory_valuation_show_remaining/) | 13.0.1.0.0 | Remaining Inventory Valuation Report
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 13.0.1.0.0 | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 13.0.1.1.0 | Adding Valued Picking on Delivery Slip report
+[stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 13.0.1.0.0 | Allow to summarize the picking related with the selled kits
 [stock_quantity_history_location](stock_quantity_history_location/) | 13.0.1.1.1 | Provides stock quantity by location on past date
 [stock_report_quantity_by_location](stock_report_quantity_by_location/) | 13.0.1.0.0 | Stock Report Quantity By Location
 
