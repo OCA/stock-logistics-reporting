@@ -18,12 +18,24 @@ stages:
 
 jobs:
   include:
+    # Separate tests because the depence stock_picking_group_by_partner_by_carrier
+    # clashes with other module in the repository.
     - stage: test
       env:
         - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT="1"
+          INCLUDE="delivery_line_sale_line_position,stock_picking_group_by_partner_by_carrier_sale_line_position"
     - stage: test
       env:
         - TESTS=1 ODOO_REPO="OCA/OCB"
+          INCLUDE="delivery_line_sale_line_position,stock_picking_group_by_partner_by_carrier_sale_line_position"
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="odoo/odoo" MAKEPOT="1"
+          EXCLUDE="delivery_line_sale_line_position,stock_picking_group_by_partner_by_carrier_sale_line_position"
+    - stage: test
+      env:
+        - TESTS=1 ODOO_REPO="OCA/OCB"
+          EXCLUDE="delivery_line_sale_line_position,stock_picking_group_by_partner_by_carrier_sale_line_position"
 env:
   global:
     - VERSION="13.0" TESTS="0" LINT_CHECK="0" MAKEPOT="0"
