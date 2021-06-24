@@ -14,11 +14,9 @@ odoo.define("stock.InventoryReportLocationListController", function (require) {
             if (this.context.no_at_date) {
                 return;
             }
-            if (this.modelName === "stock.quant") {
-                $node
-                    .find(".o_list_buttons")
-                    .find(".btn-primary")
-                    .html(_t("Inventory at Date & Location"));
+            if (this.modelName === "stock.quant" && this.$buttons.length) {
+                this.$buttons[0].firstElementChild.innerHTML =
+                    "Inventory at Date & Location";
             }
         },
     });
