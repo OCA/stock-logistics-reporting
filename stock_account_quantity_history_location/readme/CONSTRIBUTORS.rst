@@ -3,3 +3,5 @@
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Víctor Martínez
+
+* Sodexis <dev@sodexis.com>
