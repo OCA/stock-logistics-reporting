@@ -3,7 +3,7 @@
 # Copyright 2018 Aleph Objects, Inc.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 
 class ProductProduct(models.Model):
@@ -21,6 +21,47 @@ class ProductProduct(models.Model):
         'account.move.line', compute='_compute_inventory_value')
     stock_fifo_manual_move_ids = fields.Many2many(
         'stock.move', compute='_compute_inventory_value')
+    valuation_discrepancy = fields.Float(
+        compute='_compute_inventory_value',
+        search='_search_valuation_discrepancy',
+    )
+    qty_discrepancy = fields.Float(
+        compute='_compute_inventory_value',
+        search='_search_qty_discrepancy',
+    )
+    valuation = fields.Char(
+        related="product_tmpl_id.valuation", search='_search_valuation')
+
+    @api.model
+    def _search_valuation(self, operator, value):
+        domain = ['|',
+                  ("categ_id.property_valuation", operator, value),
+                  ("property_valuation", operator, value)]
+        products = self.env['product.product'].search(domain)
+        if value:
+            return [('id', 'in', products.ids)]
+        else:
+            return [('id', 'not in', products.ids)]
+
+    @api.model
+    def _search_qty_discrepancy(self, operator, value):
+        products = self.env["product.product"].search(
+            [("type", "=", "product")])
+        pp_list = []
+        for pp in products:
+            if pp.qty_at_date != pp.account_qty_at_date:
+                pp_list.append(pp.id)
+        return [('id', 'in', pp_list)]
+
+    @api.model
+    def _search_valuation_discrepancy(self, operator, value):
+        products = self.env["product.product"].search(
+            [("type", "=", "product")])
+        pp_list = []
+        for pp in products:
+            if pp.stock_value != pp.account_value:
+                pp_list.append(pp.id)
+        return [('id', 'in', pp_list)]
 
     def _compute_inventory_value(self):
         stock_move = self.env['stock.move']
@@ -44,6 +85,7 @@ class ProductProduct(models.Model):
                 params = params + (to_date,)
             else:
                 query = query % ('',)
+            # pylint: disable=E8103
             self.env.cr.execute(query, params=params)
             res = self.env.cr.fetchall()
             for row in res:
@@ -63,6 +105,7 @@ class ProductProduct(models.Model):
                 ORDER  BY "product_id", "datetime" DESC NULLS LAST
                 """
             args = (to_date, tuple(self._ids))
+            # pylint: disable=E8103
             self.env.cr.execute(query, args)
             for row in self.env.cr.dictfetchall():
                 history.update({
@@ -77,7 +120,7 @@ class ProductProduct(models.Model):
             # Retrieve the values from accounting
             # We cannot provide location-specific accounting valuation,
             # so better, leave the data empty in that case:
-            if product.valuation == 'real_time' and not location:
+            if not location:
                 valuation_account_id = \
                     product.categ_id.property_stock_valuation_account_id.id
                 value, quantity, aml_ids = accounting_values.get(
@@ -106,6 +149,8 @@ class ProductProduct(models.Model):
                         product._sum_remaining_values()
                     product.qty_at_date = qty_available
                     product.stock_fifo_manual_move_ids = moves
+            product.valuation_discrepancy = product.stock_value - product.account_value
+            product.qty_discrepancy = product.qty_at_date - product.account_qty_at_date
 
     def action_view_amls(self):
         self.ensure_one()

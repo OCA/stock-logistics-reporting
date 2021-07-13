@@ -8,3 +8,11 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     product_id = fields.Many2one(index=True)
+    unit_price = fields.Float(compute="_compute_unit_price")
+
+    def _compute_unit_price(self):
+        for rec in self:
+            if rec.quantity:
+                rec.unit_price = rec.balance / rec.quantity
+            else:
+                rec.unit_price = rec.product_id.standard_price
