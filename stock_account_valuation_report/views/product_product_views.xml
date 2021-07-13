@@ -9,9 +9,6 @@
                 <field name="valuation" invisible="1"/>
             </field>
             <button name="action_valuation_at_date_details" position="attributes">
-                <attribute name="attrs">{'invisible': [('valuation', '!=', 'real_time')]}</attribute>
-            </button>
-            <button name="action_valuation_at_date_details" position="attributes">
                 <attribute name="invisible">True</attribute>
             </button>
             <button name="action_valuation_at_date_details" position="after">
@@ -20,16 +17,57 @@
                         attrs="{'invisible': [('cost_method', '!=', 'fifo')]}" />
             </button>
             <field name="stock_value" position="after">
-                <field name="account_qty_at_date" sum="Accounting Qty"
-                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                <field name="account_qty_at_date"
+                       />
                 <field name="account_value"
                        sum="Accounting Valuation"
                        widget="monetary"
-                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                       />
                 <button name="action_view_amls"
                         type="object" icon="fa-info-circle"
-                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}" />
+                        />
+                <field name="qty_discrepancy"
+                       sum="Qty Discrepancy"
+                       />
+                <field name="valuation_discrepancy"
+                       sum="Valuation Discrepancy"
+                       />
             </field>
         </field>
     </record>
+
+    <record id="view_stock_account_aml" model="ir.ui.view">
+        <field name="name">stock.account.aml</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="stock_account.view_stock_account_aml"/>
+        <field name="arch" type="xml">
+            <field name="balance" position="after">
+                <field name="unit_price" />
+            </field>
+        </field>
+    </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+        <field name="name">product.product.search</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="valuation_discrepancy"/>
+            </field>
+            <filter name="inactive" position="after">
+                <separator/>
+                <filter string="Real time" name="real_valuation"
+                        domain="[('valuation', '=', 'real_time')]"/>
+                <filter string="Manual" name="manual_valuation"
+                        domain="[('valuation', '=', 'manual_periodic')]"/>
+                <filter string="Qty Discrepancy" name="qty_discrepancy_not_null"
+                        domain="[('qty_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"/>
+                <filter string="Valuation Discrepancy" name="valuation_discrepancy_not_null"
+                        domain="[('valuation_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"/>
+            </filter>
+        </field>
+    </record>
+
+
 </odoo>
