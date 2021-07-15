@@ -43,7 +43,11 @@ class StockPicking(models.Model):
         for pick in self:
             round_curr = pick.sale_id.currency_id.round
             amount_tax = 0.0
-            for tax_id, tax_group in pick.get_taxes_values().items():
+            # In v12 the support for compute_sudo on non stored fields is
+            # limited (officially unsupported) so we have to mainaint some
+            # some sudo() calls. This is not necessary from v13
+            # https://github.com/odoo/odoo/blob/12.0/odoo/fields.py#L179
+            for tax_id, tax_group in pick.sudo().get_taxes_values().items():
                 amount_tax += round_curr(tax_group['amount'])
             amount_untaxed = sum(
                 l.sale_price_subtotal for l in pick.move_line_ids)
