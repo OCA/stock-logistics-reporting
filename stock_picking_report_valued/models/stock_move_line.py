@@ -58,7 +58,11 @@ class StockMoveLine(models.Model):
         records...).
         """
         for line in self:
-            sale_line = line.sale_line
+            # In v12 the support for compute_sudo on non stored fields is
+            # limited (officially unsupported) so we have to mainaint some
+            # some sudo() calls. This is not necessary from v13
+            # https://github.com/odoo/odoo/blob/12.0/odoo/fields.py#L179
+            sale_line = line.sale_line.sudo()
             price_unit = (
                 sale_line.price_subtotal / sale_line.product_uom_qty
                 if sale_line.product_uom_qty else sale_line.price_reduce)
