@@ -24,7 +24,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
         for product in objects.product_ids:
             for ws_params in self._get_ws_params(workbook, data, product):
                 nr += 1
-                ws_name = str(nr) + ' ' + ws_params.get("ws_name")
+                ws_name = str(nr) + " " + ws_params.get("ws_name")
                 ws_name = self._check_ws_name(ws_name)
                 ws = workbook.add_worksheet(ws_name)
                 generate_ws_method = getattr(self, ws_params["generate_ws_method"])
