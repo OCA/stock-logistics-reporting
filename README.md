@@ -12,17 +12,17 @@ Reports for the Odoo Logistics modules.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[stock_analysis](stock_analysis/) | 8.0.1.0.0 | Analysis view for stock
-[stock_analysis_forecast](stock_analysis_forecast/) | 8.0.1.0.0 | Analysis wiew for stock forecast
-[stock_picking_partner_lang](stock_picking_partner_lang/) | 8.0.1.0.0 | Adds report for stock picking in partner language
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[stock_analysis](stock_analysis/) | 8.0.1.0.0 |  | Analysis view for stock
+[stock_analysis_forecast](stock_analysis_forecast/) | 8.0.1.0.0 |  | Analysis wiew for stock forecast
+[stock_picking_partner_lang](stock_picking_partner_lang/) | 8.0.1.0.0 |  | Adds report for stock picking in partner language
 
 
 Unported addons
 ---------------
-addon | version | summary
---- | --- | ---
-[stock_picking_webkit](stock_picking_webkit/) | 1.0.1 (unported) | Picking reports using Webkit Library
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[stock_picking_webkit](stock_picking_webkit/) | 1.0.1 (unported) |  | Picking reports using Webkit Library
 
 [//]: # (end addons)
