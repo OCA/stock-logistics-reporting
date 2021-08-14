@@ -17,10 +17,10 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[stock_card_report](stock_card_report/) | 14.0.1.0.2 | Add stock card report on Inventory Reporting.
-[stock_picking_report_valued](stock_picking_report_valued/) | 14.0.1.0.0 | Adding Valued Picking on Delivery Slip report
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[stock_card_report](stock_card_report/) | 14.0.1.0.2 |  | Add stock card report on Inventory Reporting.
+[stock_picking_report_valued](stock_picking_report_valued/) | 14.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
 
 [//]: # (end addons)
 
