@@ -6,24 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-08-25 14:50+0000\n"
+"Last-Translator: Mario Riva <mario.riva@agilebg.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__date
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__display_name
@@ -34,93 +36,93 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 #: selection:report.stock.quantity,state:0
 msgid "Forecasted Deliveries"
-msgstr ""
+msgstr "Consegne previste"
 
 #. module: stock_forecast_report
 #: model:ir.actions.act_window,name:stock_forecast_report.report_stock_quantity_action
 #: model:ir.ui.menu,name:stock_forecast_report.menu_forecast_inventory
 msgid "Forecasted Inventory"
-msgstr ""
+msgstr "Inventario previsto"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 #: selection:report.stock.quantity,state:0
 msgid "Forecasted Receipts"
-msgstr ""
+msgstr "Ricezioni previste"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 #: selection:report.stock.quantity,state:0
 msgid "Forecasted Stock"
-msgstr ""
+msgstr "Magazzino previsto"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 msgid "Forecasted this Week"
-msgstr ""
+msgstr "Previsto per questa settimana"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 msgid "Group By"
-msgstr ""
+msgstr "Raggruppa per"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__move_ids
 msgid "Move"
-msgstr ""
+msgstr "Movimento"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_id
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_tmpl_id
 msgid "Product Template"
-msgstr ""
+msgstr "Modello di prodotto"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__product_qty
 msgid "Quantity"
-msgstr ""
+msgstr "Quantità"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 msgid "Report Quantity"
-msgstr ""
+msgstr "Rendiconto quantità"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__state
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_search
 msgid "State"
-msgstr ""
+msgstr "Stato"
 
 #. module: stock_forecast_report
 #: model:ir.model,name:stock_forecast_report.model_report_stock_quantity
 msgid "Stock Quantity Report"
-msgstr ""
+msgstr "Rendiconto quantità di magazzino"
 
 #. module: stock_forecast_report
 #: model:ir.model.fields,field_description:stock_forecast_report.field_report_stock_quantity__warehouse_id
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazzino"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_graph
 msgid "report_stock_quantity_graph"
-msgstr ""
+msgstr "Grafico rendiconto quantità di magazzino"
 
 #. module: stock_forecast_report
 #: model_terms:ir.ui.view,arch_db:stock_forecast_report.stock_report_view_pivot
 msgid "report_stock_quantity_pivot"
-msgstr ""
+msgstr "Pivot rendiconto quantità di magazzino"
