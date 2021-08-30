@@ -9,6 +9,7 @@
     "website": "https://www.tecnativa.com",
     "category": "Warehouse",
     "license": "AGPL-3",
+    "maintainers": ["cubells"],
     "depends": [
         "stock",
     ],

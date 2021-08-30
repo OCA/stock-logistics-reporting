@@ -6,15 +6,15 @@
             <!-- Get stock moves from backorder according to setting values -->
             <t t-if="not o.company_id.undelivered_product_slip_report_method or o.company_id.undelivered_product_slip_report_method == 'all'">
                 <t t-set="backorder_moves"
-                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking)"/>
+                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state != 'cancel' and l.product_id.display_undelivered_in_picking)"/>
             </t>
             <t t-if="o.company_id.undelivered_product_slip_report_method == 'partially_undelivered'">
                 <t t-set="backorder_moves"
-                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and l.splitted_stock_move_orig_id)"/>
+                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state != 'cancel' and l.product_id.display_undelivered_in_picking and l.splitted_stock_move_orig_id)"/>
             </t>
             <t t-if="o.company_id.undelivered_product_slip_report_method == 'completely_undelivered'">
                 <t t-set="backorder_moves"
-                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and not l.splitted_stock_move_orig_id)"/>
+                   t-value="o.backorder_ids.mapped('move_lines').filtered(lambda l: l.state != 'cancel' and l.product_id.display_undelivered_in_picking and not l.splitted_stock_move_orig_id)"/>
             </t>
             <table t-if="backorder_moves" class="table table-sm table-bordered mt0" id="undelivered_product">
                 <thead>
