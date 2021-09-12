@@ -25,6 +25,8 @@ Stock Inventory Valuation Pivot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
+This module extends the functionality of stock inventory valuation report to
+add a pivot view.
 
 **Table of contents**
 
