@@ -19,10 +19,12 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[delivery_line_sale_line_position](delivery_line_sale_line_position/) | 13.0.1.0.0 |  | Adds the sale line position to the delivery report lines
 [stock_account_quantity_history_location](stock_account_quantity_history_location/) | 13.0.1.0.0 |  | Glue module between Stock Account and Stock Quantity History Location modules
 [stock_card_report](stock_card_report/) | 13.0.1.0.0 |  | Add stock card report on Inventory Reporting.
 [stock_inventory_valuation_pivot](stock_inventory_valuation_pivot/) | 13.0.1.0.0 |  | Add pivot view to the stock inventory valuation report
 [stock_inventory_valuation_show_remaining](stock_inventory_valuation_show_remaining/) | 13.0.1.0.0 |  | Remaining Inventory Valuation Report
+[stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 13.0.1.0.0 |  | Glue module for sale position and delivery report grouped
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 13.0.1.0.0 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 13.0.1.1.0 |  | Adding Valued Picking on Delivery Slip report
 [stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 13.0.1.0.0 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Allow to summarize the picking related with the selled kits
