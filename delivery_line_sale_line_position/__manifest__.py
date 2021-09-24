@@ -4,12 +4,12 @@
 {
     "name": "Delivery Line Sale Line Position",
     "summary": "Adds the sale line position to the delivery report lines",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "Delivery",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-reporting",
-    "depends": ["sale_order_line_position"],
+    "depends": ["stock", "sale_order_line_position"],
     "data": [
         "report/report_deliveryslip.xml",
         "views/stock_move.xml",
