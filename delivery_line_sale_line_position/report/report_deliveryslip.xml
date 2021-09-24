@@ -36,10 +36,13 @@
     <xpath expr="//th[@name='th_sml_product']" position="before">
       <th t-if="has_line_position" name="th_sml_pos"><strong>Pos</strong></th>
     </xpath>
-    <xpath
-            expr="//table[@name='stock_move_line_table']/tbody/tr/*[1]"
-            position="before"
-        >
+  </template>
+
+  <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+    <xpath expr="//span[@t-field='move_line.product_id']/.." position="before">
       <td t-if="has_line_position">
         <span t-field="move_line.move_id.position_sale_line" />
       </td>
