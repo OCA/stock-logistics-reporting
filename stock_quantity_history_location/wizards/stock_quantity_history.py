@@ -11,7 +11,7 @@ class StockQuantityHistory(models.TransientModel):
     _inherit = "stock.quantity.history"
 
     location_id = fields.Many2one(
-        "stock.location", domain=[("usage", "in", ["internal", "transit"])]
+        "stock.location", domain=[("usage", "in", ["internal", "transit", "view"])]
     )
     include_child_locations = fields.Boolean("Include child locations", default=True)
 
