@@ -8,8 +8,8 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def _get_sorted_moves(self):
-        self.ensure_one()
-        return self.move_lines.sorted(
+        moves = super()._get_sorted_moves()
+        return moves.sorted(
             lambda m: m.sale_line_id.order_id.id * 1000 + m.sale_line_id.position
         )
 
