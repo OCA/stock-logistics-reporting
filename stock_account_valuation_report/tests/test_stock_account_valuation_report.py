@@ -237,8 +237,7 @@ class TestStockAccountValuationReport(TransactionCase):
         return True
 
     def test_01_stock_receipt(self):
-        """Receive into stock and ship to the customer
-        """
+        """Receive into stock and ship to the customer"""
         # Create receipt
         in_picking = self._create_receipt(self.product, 1.0)
         # Receive one unit.
@@ -280,8 +279,7 @@ class TestStockAccountValuationReport(TransactionCase):
         self.assertEquals(self.product.account_qty_at_date, 0.0)
 
     def test_02_drop_ship(self):
-        """Drop shipment from vendor to customer
-        """
+        """Drop shipment from vendor to customer"""
         # Create drop_shipment
         dropship_picking = self._create_drophip_picking(self.product, 1.0)
         # Receive one unit.
@@ -313,8 +311,7 @@ class TestStockAccountValuationReport(TransactionCase):
         self.assertEquals(self.product.account_qty_at_date, 0.0)
 
     def test_03_stock_receipt_several_costs_several_dates(self):
-        """Receive into stock at different cost
-        """
+        """Receive into stock at different cost"""
         # Create receipt
         in_picking = self._create_receipt(self.product, 1.0)
         # Receive one unit.
