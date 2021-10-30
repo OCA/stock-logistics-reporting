@@ -22,10 +22,12 @@ class ProductProduct(models.Model):
         "stock.valuation.layer", compute="_compute_inventory_value"
     )
     valuation_discrepancy = fields.Float(
-        compute="_compute_inventory_value", search="_search_valuation_discrepancy",
+        compute="_compute_inventory_value",
+        search="_search_valuation_discrepancy",
     )
     qty_discrepancy = fields.Float(
-        compute="_compute_inventory_value", search="_search_qty_discrepancy",
+        compute="_compute_inventory_value",
+        search="_search_qty_discrepancy",
     )
     valuation = fields.Selection(
         related="product_tmpl_id.valuation", search="_search_valuation"
@@ -76,7 +78,12 @@ class ProductProduct(models.Model):
             WHERE aml.product_id IN %%s
             AND aml.company_id=%%s %s
             GROUP BY aml.product_id, aml.account_id"""
-        params = (tuple(self._ids,), self.env.company.id)
+        params = (
+            tuple(
+                self._ids,
+            ),
+            self.env.company.id,
+        )
         if to_date:
             # pylint: disable=sql-injection
             query = query % ("AND aml.date <= %s",)
@@ -98,7 +105,12 @@ class ProductProduct(models.Model):
             GROUP BY product_id
             ORDER BY "product_id" DESC NULLS LAST
             """
-        params = (tuple(self._ids,), self.env.company.id)
+        params = (
+            tuple(
+                self._ids,
+            ),
+            self.env.company.id,
+        )
         if to_date:
             # pylint: disable=sql-injection
             query = query % ("AND svl.create_date <= %s",)
@@ -160,7 +172,13 @@ class ProductProduct(models.Model):
             "view_mode": "tree,form",
             "context": self.env.context,
             "res_model": "account.move.line",
-            "domain": [("id", "in", self.stock_fifo_real_time_aml_ids.ids,)],
+            "domain": [
+                (
+                    "id",
+                    "in",
+                    self.stock_fifo_real_time_aml_ids.ids,
+                )
+            ],
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
         }
         return action
@@ -176,7 +194,13 @@ class ProductProduct(models.Model):
             "view_mode": "tree,form",
             "context": self.env.context,
             "res_model": "stock.valuation.layer",
-            "domain": [("id", "in", self.stock_valuation_layer_ids.ids,)],
+            "domain": [
+                (
+                    "id",
+                    "in",
+                    self.stock_valuation_layer_ids.ids,
+                )
+            ],
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
         }
         return action
