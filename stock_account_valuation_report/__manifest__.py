@@ -4,13 +4,17 @@
 
 {
     "name": "Stock Account Valuation Report",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "summary": "Improves logic of the Inventory Valuation Report",
     "author": "ForgeFlow S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse Management",
     "depends": ["stock_account"],
     "license": "AGPL-3",
-    "data": ["views/product_product_views.xml", "wizards/stock_valuation_history.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/product_product_views.xml",
+        "wizards/stock_valuation_history.xml",
+    ],
     "installable": True,
 }
