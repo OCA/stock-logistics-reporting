@@ -16,8 +16,8 @@ class StockValuationHistory(models.TransientModel):
     )
 
     def open_at_date(self):
-        action = self.env["ir.actions.act_window"].for_xml_id(
-            "stock_account_valuation_report", "product_valuation_action"
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "stock_account_valuation_report.product_valuation_action"
         )
         domain = [("type", "=", "product")]
         product_id = self.env.context.get("product_id", False)

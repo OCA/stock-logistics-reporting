@@ -130,7 +130,6 @@ class TestStockAccountValuationReport(TransactionCase):
                     "type": "product",
                     "standard_price": standard_price,
                     "valuation": "real_time",
-                    "invoice_policy": "delivery",
                 }
             )
             return template.product_variant_ids[0]
@@ -251,32 +250,32 @@ class TestStockAccountValuationReport(TransactionCase):
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
-        self.assertEquals(balance_inv, 10.0)
+        self.assertEqual(balance_inv, 10.0)
         move = in_picking.move_lines
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
-        self.assertEquals(layer.remaining_value, 10.0)
+        self.assertEqual(layer.remaining_value, 10.0)
         # The accounting value and the stock value match
-        self.assertEquals(self.product.stock_value, 10.0)
-        self.assertEquals(self.product.account_value, 10.0)
+        self.assertEqual(self.product.stock_value, 10.0)
+        self.assertEqual(self.product.account_value, 10.0)
         # The qty also match
-        self.assertEquals(self.product.qty_at_date, 1.0)
-        self.assertEquals(self.product.account_qty_at_date, 1.0)
+        self.assertEqual(self.product.qty_at_date, 1.0)
+        self.assertEqual(self.product.account_qty_at_date, 1.0)
         # Create an out picking
         out_picking = self._create_delivery(self.product, 1)
         self._do_picking(out_picking, fields.Datetime.now(), 1.0)
         # The original layer must have been reduced.
-        self.assertEquals(layer.remaining_qty, 0.0)
-        self.assertEquals(layer.remaining_value, 0.0)
+        self.assertEqual(layer.remaining_qty, 0.0)
+        self.assertEqual(layer.remaining_value, 0.0)
         # The layer out took that out
         move = out_picking.move_lines
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
-        self.assertEquals(layer.value, -10.0)
+        self.assertEqual(layer.value, -10.0)
         # The report shows the material is gone
         self.product._compute_inventory_value()
-        self.assertEquals(self.product.stock_value, 0.0)
-        self.assertEquals(self.product.account_value, 0.0)
-        self.assertEquals(self.product.qty_at_date, 0.0)
-        self.assertEquals(self.product.account_qty_at_date, 0.0)
+        self.assertEqual(self.product.stock_value, 0.0)
+        self.assertEqual(self.product.account_value, 0.0)
+        self.assertEqual(self.product.qty_at_date, 0.0)
+        self.assertEqual(self.product.account_qty_at_date, 0.0)
 
     def test_02_drop_ship(self):
         """Drop shipment from vendor to customer"""
@@ -295,20 +294,20 @@ class TestStockAccountValuationReport(TransactionCase):
         # Inventory is 0
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
-        self.assertEquals(balance_inv, 0.0)
+        self.assertEqual(balance_inv, 0.0)
         # There are two a stock valuation layers associated to this product
         move = dropship_picking.move_lines
         layers = self.layer_model.search([("stock_move_id", "=", move.id)])
-        self.assertEquals(len(layers), 2)
+        self.assertEqual(len(layers), 2)
         in_layer = layers.filtered(lambda l: l.quantity > 0)
         # Check that the layer created for the outgoing move
-        self.assertEquals(in_layer.remaining_qty, 0.0)
-        self.assertEquals(in_layer.remaining_value, 0.0)
+        self.assertEqual(in_layer.remaining_qty, 0.0)
+        self.assertEqual(in_layer.remaining_value, 0.0)
         # The report shows the material is gone
-        self.assertEquals(self.product.stock_value, 0.0)
-        self.assertEquals(self.product.account_value, 0.0)
-        self.assertEquals(self.product.qty_at_date, 0.0)
-        self.assertEquals(self.product.account_qty_at_date, 0.0)
+        self.assertEqual(self.product.stock_value, 0.0)
+        self.assertEqual(self.product.account_value, 0.0)
+        self.assertEqual(self.product.qty_at_date, 0.0)
+        self.assertEqual(self.product.account_qty_at_date, 0.0)
 
     def test_03_stock_receipt_several_costs_several_dates(self):
         """Receive into stock at different cost"""
@@ -325,10 +324,10 @@ class TestStockAccountValuationReport(TransactionCase):
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
-        self.assertEquals(balance_inv, 10.0)
+        self.assertEqual(balance_inv, 10.0)
         move = in_picking.move_lines
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
-        self.assertEquals(layer.remaining_value, 10.0)
+        self.assertEqual(layer.remaining_value, 10.0)
         # Receive more
         in_picking2 = self._create_receipt(self.product, 2.0, False, 20.0)
         # Receive two unitsat double cost.
@@ -344,15 +343,15 @@ class TestStockAccountValuationReport(TransactionCase):
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
-        self.assertEquals(balance_inv, 50.0)
+        self.assertEqual(balance_inv, 50.0)
         move2 = in_picking2.move_lines
         layer = self.layer_model.search([("stock_move_id", "=", move2.id)])
-        self.assertEquals(layer.remaining_value, 40.0)
+        self.assertEqual(layer.remaining_value, 40.0)
         # Now we check the report reflects the same
-        self.assertEquals(self.product.stock_value, 50.0)
-        self.assertEquals(self.product.account_value, 50.0)
-        self.assertEquals(self.product.qty_at_date, 3.0)
-        self.assertEquals(self.product.account_qty_at_date, 3.0)
+        self.assertEqual(self.product.stock_value, 50.0)
+        self.assertEqual(self.product.account_value, 50.0)
+        self.assertEqual(self.product.qty_at_date, 3.0)
+        self.assertEqual(self.product.account_qty_at_date, 3.0)
         # That is the value tomorrow, today it is less
         # We hack the date in the account move, not a topic for this module
         aml_layer = layer.account_move_id.line_ids
@@ -363,7 +362,7 @@ class TestStockAccountValuationReport(TransactionCase):
         self.product.with_context(
             at_date=fields.Datetime.now() + relativedelta(days=1)
         )._compute_inventory_value()
-        self.assertEquals(self.product.stock_value, 10.0)
-        self.assertEquals(self.product.account_value, 10.0)
-        self.assertEquals(self.product.qty_at_date, 1.0)
-        self.assertEquals(self.product.account_qty_at_date, 1.0)
+        self.assertEqual(self.product.stock_value, 10.0)
+        self.assertEqual(self.product.account_value, 10.0)
+        self.assertEqual(self.product.qty_at_date, 1.0)
+        self.assertEqual(self.product.account_qty_at_date, 1.0)
