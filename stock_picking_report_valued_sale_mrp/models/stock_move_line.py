@@ -35,6 +35,14 @@ class StockMoveLine(models.Model):
         avoid duplicate the amounts. We also need to recompute the total
         amounts according to the corresponding delivered kits"""
         super()._compute_sale_order_line_fields()
+        for picking in self.mapped("picking_id"):
+            self.filtered(
+                lambda x: x.picking_id == picking
+            )._compute_sale_order_line_fields_by_picking()
+
+    def _compute_sale_order_line_fields_by_picking(self):
+        """We want to compute the lines value by picking to avoid mixing lines
+        if they wen't altogether"""
         kit_lines = self.filtered("phantom_product_id")
         for sale_line in kit_lines.mapped("sale_line"):
             move_lines = kit_lines.filtered(
