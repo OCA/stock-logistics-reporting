@@ -3,7 +3,7 @@
 {
     "name": "Valued picking linked with MRP Kits",
     "summary": "Allow to summarize the picking related with the selled kits",
-    "version": "13.0.1.0.2",
+    "version": "13.0.1.0.3",
     "development_status": "Beta",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-reporting",
