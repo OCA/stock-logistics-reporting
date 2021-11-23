@@ -37,13 +37,22 @@ class StockMoveLine(models.Model):
         amounts according to the corresponding delivered kits"""
         super()._compute_sale_order_line_fields()
         pickings = self.mapped("picking_id")
-        kit_lines = pickings.move_line_ids.filtered("phantom_product_id")
         pickings.move_line_ids.update(
             {"phantom_line": False, "phantom_delivered_qty": 0.0}
         )
+        for picking in pickings:
+            self.filtered(
+                lambda x: x.picking_id == picking
+            )._compute_sale_order_line_fields_by_picking()
+
+    def _compute_sale_order_line_fields_by_picking(self):
+        """We want to compute the lines value by picking to avoid mixing lines
+        if they weren't shipped altogether.
+        """
+        kit_lines = self.filtered("phantom_product_id")
         for sale_line in kit_lines.mapped("sale_line"):
             move_lines = kit_lines.filtered(lambda x: x.sale_line == sale_line)
-            # Deduct the kit quantity from the first component in the picking.
+            # Deduce the kit quantity from the first component in the picking.
             # If the the kit is partially delivered, this could lead to an
             # unacurate value.
             phantom_line = move_lines[:1]
