@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_report_quantity_by_location
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__availability
+msgid "Availability"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_prepare_form_view
 msgid "Cancel"
 msgstr ""
@@ -97,6 +102,11 @@ msgid "Locations"
 msgstr ""
 
 #. module: stock_report_quantity_by_location
+#: model:ir.model.fields.selection,name:stock_report_quantity_by_location.selection__stock_report_quantity_by_location_prepare__availability__on_hand
+msgid "On Hand"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
 #: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__product_id
 msgid "Product"
 msgstr ""
@@ -156,6 +166,16 @@ msgstr ""
 #. module: stock_report_quantity_by_location
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_pivot_view
 msgid "Stock by Location"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields.selection,name:stock_report_quantity_by_location.selection__stock_report_quantity_by_location_prepare__availability__unreserved
+msgid "Unreserved"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields,help:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__availability
+msgid "Unreserved is the Stock On Hand minus the reservations"
 msgstr ""
 
 #. module: stock_report_quantity_by_location
