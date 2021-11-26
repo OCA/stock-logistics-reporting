@@ -15,7 +15,11 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[stock_account_valuation_report](stock_account_valuation_report/) | 15.0.1.0.0 |  | Improves logic of the Inventory Valuation Report
 
 [//]: # (end addons)
 
