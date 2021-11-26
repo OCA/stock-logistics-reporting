@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_report_quantity_by_location
+# 	* stock_report_quantity_by_location
 #
 msgid ""
 msgstr ""
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.10\n"
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__availability
+msgid "Availability"
+msgstr ""
 
 #. module: stock_report_quantity_by_location
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_prepare_form_view
@@ -100,6 +105,11 @@ msgid "Locations"
 msgstr "Ubicaciones"
 
 #. module: stock_report_quantity_by_location
+#: model:ir.model.fields.selection,name:stock_report_quantity_by_location.selection__stock_report_quantity_by_location_prepare__availability__on_hand
+msgid "On Hand"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
 #: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__product_id
 msgid "Product"
 msgstr "Producto"
@@ -120,6 +130,7 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: stock_report_quantity_by_location
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__with_quantity
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_search_view
 msgid "Quantity > 0"
 msgstr "Cantidad > 0"
@@ -135,6 +146,11 @@ msgid "Search Stock Report Quantity by Location"
 msgstr "Buscar cantidad de informe de stock por ubicación"
 
 #. module: stock_report_quantity_by_location
+#: model:ir.model.fields,help:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__with_quantity
+msgid "Show only the products that have existing quantity on hand"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
 #: model:ir.model,name:stock_report_quantity_by_location.model_stock_report_quantity_by_location
 msgid "Stock Report By Location"
 msgstr "Informe de stock por ubicación"
@@ -145,7 +161,7 @@ msgid "Stock Report Quantity By Location Prepare"
 msgstr "Cantidad de informe de stock por ubicación Preparar"
 
 #. module: stock_report_quantity_by_location
-#: code:addons/stock_report_quantity_by_location/wizards/stock_report_quantity_by_location.py:20
+#: code:addons/stock_report_quantity_by_location/wizards/stock_report_quantity_by_location.py:0
 #, python-format
 msgid "Stock Report by Location"
 msgstr "Informe de stock por ubicación"
@@ -154,6 +170,16 @@ msgstr "Informe de stock por ubicación"
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_pivot_view
 msgid "Stock by Location"
 msgstr "Inventario por Ubicación"
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields.selection,name:stock_report_quantity_by_location.selection__stock_report_quantity_by_location_prepare__availability__unreserved
+msgid "Unreserved"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields,help:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__availability
+msgid "Unreserved is the Stock On Hand minus the reservations"
+msgstr ""
 
 #. module: stock_report_quantity_by_location
 #: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__wiz_id
