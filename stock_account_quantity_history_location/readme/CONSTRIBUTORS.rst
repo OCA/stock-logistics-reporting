@@ -4,4 +4,6 @@
 
   * Víctor Martínez
 
-* Sodexis <dev@sodexis.com>
+* `Sodexis <https://www.sodexis.com>`_:
+
+  * Atchuthan Ubendran
