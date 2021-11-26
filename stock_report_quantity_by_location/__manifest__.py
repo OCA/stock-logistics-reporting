@@ -3,7 +3,7 @@
 {
     "name": "Stock Report Quantity By Location",
     "summary": "Stock Report Quantity By Location",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse Management",
