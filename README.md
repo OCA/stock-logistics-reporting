@@ -20,6 +20,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 14.0.1.0.0 |  | Adds the sale line position to the delivery report lines
+[stock_account_quantity_history_location](stock_account_quantity_history_location/) | 14.0.1.0.0 |  | Glue module between Stock Account and Stock Quantity History Location modules
 [stock_card_report](stock_card_report/) | 14.0.1.0.2 |  | Add stock card report on Inventory Reporting.
 [stock_picking_comment_template](stock_picking_comment_template/) | 14.0.1.0.0 |  | Comments texts templates on Picking documents
 [stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 14.0.1.0.1 |  | Glue module for sale position and delivery report grouped
