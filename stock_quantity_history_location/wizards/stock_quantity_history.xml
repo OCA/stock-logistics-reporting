@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="stock_quantity_history_location_assets_backend"
+        name="mrp_workorder assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/stock_quantity_history_location/static/src/js/inventory_report.js"
+            />
+        </xpath>
+    </template>
+
+    <record id="view_stock_quantity_history_location" model="ir.ui.view">
+        <field name="name">Inventory Report</field>
+        <field name="model">stock.quantity.history</field>
+        <field name="inherit_id" ref="stock.view_stock_quantity_history" />
+        <field name="arch" type="xml">
+            <field name="inventory_datetime" position="before">
+                <field
+                    name="location_id"
+                    invisible="context.get('active_model') == 'stock.valuation.layer'"
+                />
+                <field
+                    name="include_child_locations"
+                    attrs="{'invisible': [('location_id', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
