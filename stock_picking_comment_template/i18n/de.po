@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_comment_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-03-18 09:07+0000\n"
+"Last-Translator: André Volksdorf <volksdorf@smartpage.de>\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__note2
+msgid "Bottom Comment"
+msgstr "Suffix-Textbaustein"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template2_id
+msgid "Bottom Comment Template"
+msgstr "Suffix-Textbausteinvorlage"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Bottom Comments"
+msgstr "Suffix-Textbausteine"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Comments"
+msgstr "Textbausteine"
+
+#. module: stock_picking_comment_template
+#: model:ir.model,name:stock_picking_comment_template.model_res_partner
+msgid "Contact"
+msgstr "Partner"
+
+#. module: stock_picking_comment_template
+#: model:ir.ui.menu,name:stock_picking_comment_template.menu_base_comment_template_picking
+msgid "Document Comments"
+msgstr "Textbausteine"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Load a template"
+msgstr "Textbausteinvorlage laden"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
+msgid "Picking conditions template"
+msgstr ""
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "The comments will be displayed on the printed document. You can load a predefined template, write your own text or load a template and then modify it only for this document."
+msgstr ""
+"Diese Textbausteine werden auf Dokumentbelegen gedruckt. Es kann eine "
+"bereits existierende Vorlage geladen, ein neuer eigenständiger Text "
+"geschrieben oder eine Vorlage nach dem Laden nur für dieses Dokument "
+"angepasst werden."
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__note1
+msgid "Top Comment"
+msgstr "Präfix-Textbaustein"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template1_id
+msgid "Top Comment Template"
+msgstr "Präfix-Textbausteinvorlage"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Top Comments"
+msgstr "Präfix-Textbausteine"
+
+#. module: stock_picking_comment_template
+#: model:ir.model,name:stock_picking_comment_template.model_stock_picking
+msgid "Transfer"
+msgstr ""
