@@ -17,10 +17,13 @@ TODO: add repo description.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[stock_card_report](stock_card_report/) | 14.0.1.0.2 | Add stock card report on Inventory Reporting.
-[stock_picking_report_valued](stock_picking_report_valued/) | 14.0.1.0.0 | Adding Valued Picking on Delivery Slip report
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[delivery_line_sale_line_position](delivery_line_sale_line_position/) | 14.0.1.0.0 |  | Adds the sale line position to the delivery report lines
+[stock_card_report](stock_card_report/) | 14.0.1.0.2 |  | Add stock card report on Inventory Reporting.
+[stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 14.0.1.0.1 |  | Glue module for sale position and delivery report grouped
+[stock_picking_report_valued](stock_picking_report_valued/) | 14.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
+[stock_quantity_history_location](stock_quantity_history_location/) | 14.0.1.0.0 |  | Provides stock quantity by location on past date
 
 [//]: # (end addons)
 
