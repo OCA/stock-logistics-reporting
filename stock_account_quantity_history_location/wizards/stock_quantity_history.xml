@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_account_quantity_history_location" model="ir.ui.view">
+        <field name="name">Valuation Report</field>
+        <field name="model">stock.quantity.history</field>
+        <field name="inherit_id" ref="stock.view_stock_quantity_history" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('stock.group_stock_multi_locations'))]"
+        />
+        <field name="arch" type="xml">
+            <field name="inventory_datetime" position="before">
+                <field
+                    name="location_id"
+                    invisible="context.get('active_model') != 'stock.valuation.layer'"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
