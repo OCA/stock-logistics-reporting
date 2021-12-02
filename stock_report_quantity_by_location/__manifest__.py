@@ -9,6 +9,9 @@
     "category": "Warehouse Management",
     "license": "AGPL-3",
     "depends": ["product", "stock"],
-    "data": ["wizards/stock_report_quantity_by_location_views.xml"],
+    "data": [
+        "wizards/stock_report_quantity_by_location_views.xml",
+        "security/ir.model.access.csv",
+    ],
     "installable": True,
 }
