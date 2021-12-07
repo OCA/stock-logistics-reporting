@@ -26,10 +26,30 @@
                        sum="Accounting Valuation"
                        widget="monetary"
                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                <field name="qty_discrepancy" sum="Discrepancy Qty"
+                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
+                <field name="valuation_discrepancy"
+                       sum="Valuation Discrepancy"
+                       widget="monetary"
+                       attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
                 <button name="action_view_amls"
                         type="object" icon="fa-info-circle"
                         attrs="{'invisible': [('valuation', '!=', 'real_time')]}" />
             </field>
         </field>
     </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+        <field name="name">product.product.search</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock_account.view_inventory_valuation_search"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator/>
+                <filter string="Valuation Discrepancy" name="valuation_discrepancy_not_null"
+                        domain="[('valuation_discrepancy', '!=', 0.0)]"/>
+            </filter>
+        </field>
+    </record>
+
 </odoo>

@@ -1,9 +1,20 @@
-# Copyright 2018 Eficent Business and IT Consulting Services, S.L.
-#   (<https://www.eficent.com>)
+# Copyright 2018-2021 ForgeFlow S.L.
 # Copyright 2018 Aleph Objects, Inc.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models, _
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
+
+import operator
+
+ops = {
+    "=": operator.eq,
+    "!=": operator.ne,
+    "<=": operator.le,
+    ">=": operator.ge,
+    ">": operator.gt,
+    "<": operator.lt,
+}
 
 
 class ProductProduct(models.Model):
@@ -21,12 +32,22 @@ class ProductProduct(models.Model):
         'account.move.line', compute='_compute_inventory_value')
     stock_fifo_manual_move_ids = fields.Many2many(
         'stock.move', compute='_compute_inventory_value')
+    valuation_discrepancy = fields.Float(
+        string="Valuation discrepancy",
+        compute="_compute_inventory_value",
+        search="_search_valuation_discrepancy",
+    )
+    qty_discrepancy = fields.Float(
+        string="Quantity discrepancy",
+        compute="_compute_inventory_value",
+    )
 
     def _compute_inventory_value(self):
         stock_move = self.env['stock.move']
         self.env['account.move.line'].check_access_rights('read')
         to_date = self.env.context.get('to_date', False)
         location = self.env.context.get('location', False)
+        target_move = self.env.context.get('target_move', False)
         accounting_values = {}
         if not location:
             query = """
@@ -34,9 +55,11 @@ class ProductProduct(models.Model):
                 sum(aml.debit) - sum(aml.credit), sum(quantity),
                 array_agg(aml.id)
                 FROM account_move_line AS aml
+                INNER JOIN account_move as am on am.id = aml.move_id
                 WHERE aml.product_id IN %%s
-                AND aml.company_id=%%s %s
-                GROUP BY aml.product_id, aml.account_id"""
+                AND aml.company_id=%%s %s""" \
+                    + (target_move == "posted" and " AND am.state = 'posted' " or "") \
+                    + """GROUP BY aml.product_id, aml.account_id"""
             params = (tuple(self._ids, ), self.env.user.company_id.id)
             if to_date:
                 # pylint: disable=sql-injection
@@ -72,7 +95,18 @@ class ProductProduct(models.Model):
             self._context.get('lot_id'), self._context.get('owner_id'),
             self._context.get('package_id'), self._context.get('from_date'),
             self._context.get('to_date'))
+        computed_data = {}
         for product in self:
+            computed_data.setdefault(product.id, {
+                'account_value': 0.0,
+                'account_qty_at_date': 0.0,
+                'stock_fifo_real_time_aml_ids': [],
+                'stock_value': 0.0,
+                'qty_at_date': 0.0,
+                'stock_fifo_manual_move_ids': [],
+                'valuation_discrepancy': 0.0,
+                'qty_discrepancy': 0.0,
+            })
             qty_available = quantities_dict[product.id]['qty_available']
             # Retrieve the values from accounting
             # We cannot provide location-specific accounting valuation,
@@ -82,9 +116,9 @@ class ProductProduct(models.Model):
                     product.categ_id.property_stock_valuation_account_id.id
                 value, quantity, aml_ids = accounting_values.get(
                     (product.id, valuation_account_id)) or (0, 0, [])
-                product.account_value = value
-                product.account_qty_at_date = quantity
-                product.stock_fifo_real_time_aml_ids = \
+                computed_data[product.id]['account_value'] = value
+                computed_data[product.id]['account_qty_at_date'] = quantity
+                computed_data[product.id]['stock_fifo_real_time_aml_ids'] = \
                     self.env['account.move.line'].browse(aml_ids)
             # Retrieve the values from inventory
             if product.cost_method in ['standard', 'average']:
@@ -92,20 +126,52 @@ class ProductProduct(models.Model):
                 price_used = product.standard_price
                 if to_date:
                     price_used = history.get(product.id, 0)
-                product.stock_value = price_used * qty_available
-                product.qty_at_date = qty_available
+                computed_data[product.id]['stock_value'] = price_used * qty_available
+                computed_data[product.id]['qty_at_date'] = qty_available
             elif product.cost_method == 'fifo':
                 if to_date:
                     if product.product_tmpl_id.valuation == 'manual_periodic':
-                        product.stock_value = sum(moves.mapped('value'))
-                        product.qty_at_date = qty_available
-                        product.stock_fifo_manual_move_ids = stock_move.browse(
+                        computed_data[product.id]['stock_value'] = sum(moves.mapped('value'))
+                        computed_data[product.id]['qty_at_date'] = qty_available
+                        computed_data[product.id]['stock_fifo_manual_move_ids'] = stock_move.browse(
                             moves.ids)
                 else:
-                    product.stock_value, moves = \
+                    computed_data[product.id]['stock_value'], moves = \
                         product._sum_remaining_values()
-                    product.qty_at_date = qty_available
-                    product.stock_fifo_manual_move_ids = moves
+                    computed_data[product.id]['qty_at_date'] = qty_available
+                    computed_data[product.id]['stock_fifo_manual_move_ids'] = moves
+            if product.categ_id.property_valuation == 'real_time':
+                computed_data[product.id]['valuation_discrepancy'] = \
+                    computed_data[product.id]['stock_value'] - computed_data[product.id]['account_value']
+                computed_data[product.id]['qty_discrepancy'] = \
+                    computed_data[product.id]['qty_at_date'] - computed_data[product.id]['account_qty_at_date']
+            for key in computed_data[product.id].keys():
+                product[key] = computed_data[product.id].get(key)
+        return computed_data
+
+    @api.multi
+    def _search_valuation_discrepancy(self, search_operator, value):
+        if search_operator not in ops.keys():
+            raise UserError(
+                _("Search operator %s not implemented for value %s")
+                % (search_operator, value)
+            )
+        products = self.search(
+            [
+                ("active", "=", True),
+                ("categ_id.property_valuation", "=", "real_time"),
+            ]
+        )
+        found_ids = []
+        if products:
+            computed_data = products._compute_inventory_value()
+            for product in products:
+                accounting_v = computed_data.get(product.id, {}).get('account_value')
+                inventory_v = computed_data.get(product.id, {}).get('stock_value')
+                valuation_discrepancy = inventory_v - accounting_v
+                if ops[search_operator](valuation_discrepancy, value):
+                    found_ids.append(product.id)
+        return [("id", "in", found_ids)]
 
     def action_view_amls(self):
         self.ensure_one()

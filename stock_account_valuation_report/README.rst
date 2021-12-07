@@ -23,7 +23,7 @@ Stock Account Valuation Report
     :target: https://runbot.odoo-community.org/runbot/151/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 When you trigger a report of inventory valuation, and you use
 perpetual inventory, you should be able to reconcile the valuation
@@ -55,12 +55,13 @@ Credits
 Authors
 ~~~~~~~
 
-* Eficent
+* ForgeFlow
 
 Contributors
 ~~~~~~~~~~~~
 
 * Jordi Ballester Alomar <jordi.ballester@eficent.com>
+* Christopher Ormaza <chris.ormaza@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~
