@@ -35,20 +35,44 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         domain=[("deprecated", "=", False)],
         required=False,
     )
-    to_date = fields.Date(
+    to_date = fields.Datetime(
         string="To date",
-        required=True,
-        default=fields.Date.today(),
+        required=False,
+        default=fields.Datetime.now(),
     )
     product_ids = fields.Many2many(
         comodel_name="product.product",
+        relation="wizard_discrepancy_product_product_rel",
+        column1="wizard_id",
+        column2="product_id",
+        string="Product",
+    )
+    selected_product_ids = fields.Many2many(
+        comodel_name="product.product",
+        relation="wizard_discrepancy_selected_product_product_rel",
+        column1="wizard_id",
+        column2="product_id",
         string="Product",
     )
 
-    @api.onchange("to_date")
+    @api.model
+    def default_get(self, fields_list):
+        values = super(WizardStockDiscrepancyAdjustment, self).default_get(fields_list)
+        if self.env.context.get('active_model', False) == 'product.product':
+            values['selected_product_ids'] = self.env.context.get('active_ids')
+        if self.env.context.get('to_date_valuation', False):
+            values['to_date'] = self.env.context.get('to_date_valuation', False)
+        return values
+
+    @api.onchange(
+        "to_date",
+        "selected_product_ids",
+                  )
     def _onchange_at_date(self):
         product_model = self.env["product.product"]
-        if self.to_date:
+        if self.selected_product_ids:
+            self.product_ids = self.selected_product_ids.ids or [(6, 0, [])]
+        elif self.to_date:
             products = product_model.with_context(to_date=self.to_date).search(
                 [("valuation_discrepancy", "!=", 0.0)]
             )
@@ -58,10 +82,10 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         move_model = self.env["account.move"]
         product_model = self.env["product.product"]
         moves_created = move_model.browse()
-        if self.product_ids:
+        if self.product_ids or self.selected_product_ids:
             products_with_discrepancy = product_model.with_context(
                 to_date=self.to_date
-            ).browse(self.product_ids.ids)
+            ).browse(self.product_ids.ids or self.selected_product_ids.ids)
             for product in products_with_discrepancy:
                 move_data = {
                     "journal_id": self.journal_id.id,

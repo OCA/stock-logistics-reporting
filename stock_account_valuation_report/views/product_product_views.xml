@@ -18,8 +18,13 @@
                 <button name="action_view_stock_moves"
                         type="object" icon="fa-info-circle"
                         attrs="{'invisible': [('cost_method', '!=', 'fifo')]}" />
+                <button name="%(action_wizard_stock_discrepancy_adjustment_view_form)d"
+                        type="action" icon="fa-compress"
+                        string="Adjust Discrepancy"
+                        attrs="{'invisible': [('valuation_discrepancy', '=', 0.0)]}" />
             </button>
             <field name="stock_value" position="after">
+                <field name="to_date_valuation" invisible="1"/>
                 <field name="account_qty_at_date" sum="Accounting Qty"
                        attrs="{'invisible': [('valuation', '!=', 'real_time')]}"/>
                 <field name="account_value"

@@ -9,17 +9,19 @@
                 <form string="wizard_stock_discrepancy_adjustment_form">
                     <sheet>
                         <group>
-                            <field name="to_date" />
+                            <field name="to_date"
+                                   attrs="{'invisible': [('selected_product_ids', '!=', [])], 'required': [('selected_product_ids', '=', [])]}"/>
                             <field name="journal_id"
                             attrs="{'invisible': [('product_ids', '=', [])], 'required': [('product_ids', '!=', [])]}"/>
                             <field name="increase_account_id"
                             attrs="{'invisible': [('product_ids', '=', [])], 'required': [('product_ids', '!=', [])]}"/>
                             <field name="decrease_account_id"
                             attrs="{'invisible': [('product_ids', '=', [])], 'required': [('product_ids', '!=', [])]}"/>
+                            <field name="selected_product_ids" invisible="1" widget="many2many_tags" />
                         </group>
                         <notebook colspan="4" attrs="{'invisible': [('product_ids', '=', [])]}">
                             <page string="Products with discrepancy">
-                                <field name="product_ids" nolabel="1" >
+                                <field name="product_ids" nolabel="1" attrs="{'readonly': [('selected_product_ids', '!=', [])]}">
                                     <tree edit="false" create="false">
                                         <field name="display_name"/>
                                         <field name="qty_at_date"/>

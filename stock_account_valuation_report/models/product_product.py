@@ -45,6 +45,13 @@ class ProductProduct(models.Model):
         compute="_compute_inventory_value",
     )
 
+    to_date_valuation = fields.Datetime(compute="_compute_to_date_valuation")
+
+    @api.depends()
+    def _compute_to_date_valuation(self):
+        for rec in self:
+            rec.to_date_valuation = self.env.context.get('to_date', fields.Datetime.now())
+
     def _compute_inventory_value(self):
         stock_move = self.env["stock.move"]
         self.env["account.move.line"].check_access_rights("read")
@@ -261,3 +268,4 @@ class ProductProduct(models.Model):
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
         }
         return action
+
