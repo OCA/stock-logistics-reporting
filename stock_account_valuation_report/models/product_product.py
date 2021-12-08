@@ -50,6 +50,7 @@ class ProductProduct(models.Model):
         target_move = self.env.context.get('target_move', False)
         accounting_values = {}
         if not location:
+            # pylint: disable=E8103
             query = """
                 SELECT aml.product_id, aml.account_id,
                 sum(aml.debit) - sum(aml.credit), sum(quantity),
@@ -59,7 +60,7 @@ class ProductProduct(models.Model):
                 WHERE aml.product_id IN %%s
                 AND aml.company_id=%%s %s""" \
                     + (target_move == "posted" and " AND am.state = 'posted' " or "") \
-                    + """GROUP BY aml.product_id, aml.account_id"""
+                    + """ GROUP BY aml.product_id, aml.account_id """
             params = (tuple(self._ids, ), self.env.user.company_id.id)
             if to_date:
                 # pylint: disable=sql-injection
