@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wizard_stock_discrepancy_report_view_form" model="ir.ui.view">
+            <field name="name">wizard_stock_discrepancy_report_view_form</field>
+            <field name="model">wizard.stock.discrepancy.report</field>
+            <field name="arch" type="xml">
+                <form string="Discrepancy Report">
+                    <sheet>
+                        <group>
+                            <field name="to_date"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_show_discrepancy_report"
+                                string="Show Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_stock_discrepancy_report_view_form"
+                model="ir.actions.act_window">
+            <field name="name">Report Stock Valuation Account Discrepancies</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.stock.discrepancy.report</field>
+            <field name="view_type">form</field>
+            <field name="view_id"
+                   ref="wizard_stock_discrepancy_report_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="menu_valuation"
+                  name="Products with Account Discrepancy"
+                  parent="stock.menu_warehouse_report"
+                  sequence="120"
+                  action="action_wizard_stock_discrepancy_report_view_form"/>
+
+
+    </data>
+</odoo>
