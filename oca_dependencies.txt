@@ -2,3 +2,4 @@ account-invoice-reporting
 server-ux
 server-tools
 reporting-engine
+stock-logistics-reporting https://github.com/ForgeFlow/stock-logistics-reporting 12.0-imp-add-discrepancy-support-valuation-report
