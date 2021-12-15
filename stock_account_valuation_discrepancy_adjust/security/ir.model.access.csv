@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_discrepancy,access_product_discrepancy,model_product_discrepancy,,1,1,1,0
+access_wizard_stock_discrepancy_adjustment,access_wizard_stock_discrepancy_adjustment,model_wizard_stock_discrepancy_adjustment,,1,1,1,1
+access_wizard_stock_discrepancy_report,access_wizard_stock_discrepancy_report,model_wizard_stock_discrepancy_adjustment,,1,1,1,1
