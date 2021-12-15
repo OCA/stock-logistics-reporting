@@ -11,8 +11,8 @@
     "category": "Warehouse Management",
     "depends": ["stock_account"],
     "license": "AGPL-3",
+    "maintainers": ["ChrisOForgeFlow"],
     "data": [
-        "wizards/wizard_stock_discrepancy_adjustment_view.xml",
         "views/product_product_views.xml",
         "wizards/stock_quantity_history_view.xml",
     ],
