@@ -22,7 +22,12 @@ class StockQuantityHistory(models.TransientModel):
         if self.compute_at_date:
             action["display_name"] = "%s (%s) %s" % (
                 action["display_name"],
-                format_date(self.env, fields.Datetime.context_timestamp(self.env.user, self.date)),
+                format_date(
+                    self.env,
+                    fields.Datetime.context_timestamp(
+                        self.env.user, self.date
+                    ),
+                ),
                 self.target_move == "posted"
                 and _("All Posted Entries")
                 or _("All Entries"),
@@ -34,7 +39,11 @@ class StockQuantityHistory(models.TransientModel):
                 and _("All Posted Entries")
                 or _("All Entries"),
             )
-        current_context = isinstance(action["context"], str) and safe_eval(action["context"]) or action["context"]
+        current_context = (
+            isinstance(action["context"], str)
+            and safe_eval(action["context"])
+            or action["context"]
+        )
         current_context.update(
             {
                 "target_move": self.target_move,

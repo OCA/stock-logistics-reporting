@@ -20,12 +20,15 @@ ops = {
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    stock_value = fields.Float("Inventory Value",
-                               compute="_compute_inventory_value")
-    account_value = fields.Float("Accounting Value",
-                                 compute="_compute_inventory_value")
-    qty_at_date = fields.Float("Inventory Quantity",
-                               compute="_compute_inventory_value")
+    stock_value = fields.Float(
+        "Inventory Value", compute="_compute_inventory_value"
+    )
+    account_value = fields.Float(
+        "Accounting Value", compute="_compute_inventory_value"
+    )
+    qty_at_date = fields.Float(
+        "Inventory Quantity", compute="_compute_inventory_value"
+    )
     account_qty_at_date = fields.Float(
         "Accounting Quantity", compute="_compute_inventory_value"
     )
@@ -50,7 +53,9 @@ class ProductProduct(models.Model):
     @api.depends()
     def _compute_to_date_valuation(self):
         for rec in self:
-            rec.to_date_valuation = self.env.context.get('to_date', fields.Datetime.now())
+            rec.to_date_valuation = self.env.context.get(
+                "to_date", fields.Datetime.now()
+            )
 
     def _compute_inventory_value(self):
         stock_move = self.env["stock.move"]
@@ -70,8 +75,11 @@ class ProductProduct(models.Model):
                 INNER JOIN account_move as am on am.id = aml.move_id
                 WHERE aml.product_id IN %%s
                 AND aml.company_id=%%s %s"""
-                + (target_move == "posted"
-                   and " AND am.state = 'posted' " or "")
+                + (
+                    target_move == "posted"
+                    and " AND am.state = 'posted' "
+                    or ""
+                )
                 + """ GROUP BY aml.product_id, aml.account_id """
             )
             params = (
@@ -90,7 +98,9 @@ class ProductProduct(models.Model):
             res = self.env.cr.fetchall()
             for row in res:
                 accounting_values[(row[0], row[1])] = (
-                    row[2], row[3], list(row[4])
+                    row[2],
+                    row[3],
+                    list(row[4]),
                 )
         stock_move_domain = [
             ("product_id", "in", self._ids),
@@ -145,17 +155,17 @@ class ProductProduct(models.Model):
                 ) or (0, 0, [])
                 computed_data[product.id]["account_value"] = value
                 computed_data[product.id]["account_qty_at_date"] = quantity
-                computed_data[product.id]["stock_fifo_real_time_aml_ids"] = \
-                    self.env[
-                    "account.move.line"
-                ].browse(aml_ids)
+                computed_data[product.id][
+                    "stock_fifo_real_time_aml_ids"
+                ] = self.env["account.move.line"].browse(aml_ids)
             # Retrieve the values from inventory
             if product.cost_method in ["standard", "average"]:
                 price_used = product.standard_price
                 if to_date:
                     price_used = history.get(product.id, 0)
-                computed_data[product.id]["stock_value"] = \
+                computed_data[product.id]["stock_value"] = (
                     price_used * qty_available
+                )
                 computed_data[product.id]["qty_at_date"] = qty_available
             elif product.cost_method == "fifo":
                 if to_date:
@@ -163,8 +173,9 @@ class ProductProduct(models.Model):
                         computed_data[product.id]["stock_value"] = sum(
                             moves.mapped("value")
                         )
-                        computed_data[product.id]["qty_at_date"] = \
-                            qty_available
+                        computed_data[product.id][
+                            "qty_at_date"
+                        ] = qty_available
                         computed_data[product.id][
                             "stock_fifo_manual_move_ids"
                         ] = stock_move.browse(moves.ids)
@@ -174,8 +185,9 @@ class ProductProduct(models.Model):
                         moves,
                     ) = product._sum_remaining_values()
                     computed_data[product.id]["qty_at_date"] = qty_available
-                    computed_data[product.id]["stock_fifo_manual_move_ids"] = \
-                        moves
+                    computed_data[product.id][
+                        "stock_fifo_manual_move_ids"
+                    ] = moves
             if product.categ_id.property_valuation == "real_time":
                 computed_data[product.id]["valuation_discrepancy"] = (
                     computed_data[product.id]["stock_value"]
@@ -268,4 +280,3 @@ class ProductProduct(models.Model):
             "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
         }
         return action
-
