@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_product_tree2" model="ir.ui.view">
+        <field name="name">product.stock.tree.2</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="display_name" />
+                <field name="qty_at_date" />
+                <field name="uom_id" groups="uom.group_uom" />
+                <field name="currency_id" invisible="1" />
+                <field name="cost_currency_id" invisible="1" />
+                <field name="valuation" invisible="1" />
+                <field
+                    name="stock_value"
+                    sum="Stock Valuation"
+                    widget="monetary"
+                    options="{'currency_field': 'cost_currency_id'}"
+                />
+                <button
+                    name="action_view_valuation_layers"
+                    type="object"
+                    icon="fa-info-circle"
+                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                />
+                <field
+                    name="account_qty_at_date"
+                    sum="Accounting Qty"
+                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                />
+                <field
+                    name="account_value"
+                    sum="Accounting Valuation"
+                    widget="monetary"
+                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                />
+                <button
+                    name="action_view_amls"
+                    type="object"
+                    icon="fa-info-circle"
+                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                />
+                <field name="qty_discrepancy" sum="Qty Discrepancy" />
+                <field name="valuation_discrepancy" sum="Valuation Discrepancy" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_valuation_action" model="ir.actions.act_window">
+        <field name="name">Dual Inventory Valuation</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_stock_product_tree2" />
+        <field name="domain">[('type', '=', 'product')]</field>
+        <field
+            name="context"
+        >{'company_owned': True, 'create': False, 'edit' : False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a product to see its name and valuation.
+            </p>
+        </field>
+    </record>
+
+    <record id="product_search_form_view" model="ir.ui.view">
+        <field name="name">product.product.search</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="valuation_discrepancy" />
+            </field>
+            <filter name="inactive" position="after">
+                <separator />
+                <filter
+                    string="Real time"
+                    name="real_valuation"
+                    domain="[('valuation', '=', 'real_time')]"
+                />
+                <filter
+                    string="Manual"
+                    name="manual_valuation"
+                    domain="[('valuation', '=', 'manual_periodic')]"
+                />
+                <filter
+                    string="Qty Discrepancy"
+                    name="qty_discrepancy_not_null"
+                    domain="[('qty_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"
+                />
+                <filter
+                    string="Valuation Discrepancy"
+                    name="valuation_discrepancy_not_null"
+                    domain="[('valuation_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>
