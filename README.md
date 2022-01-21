@@ -21,6 +21,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 13.0.1.0.0 |  | Adds the sale line position to the delivery report lines
 [stock_account_quantity_history_location](stock_account_quantity_history_location/) | 13.0.1.0.0 |  | Glue module between Stock Account and Stock Quantity History Location modules
+[stock_account_valuation_report](stock_account_valuation_report/) | 13.0.1.0.0 |  | Improves logic of the Inventory Valuation Report
 [stock_card_report](stock_card_report/) | 13.0.1.0.0 |  | Add stock card report on Inventory Reporting.
 [stock_inventory_valuation_pivot](stock_inventory_valuation_pivot/) | 13.0.1.0.0 |  | Add pivot view to the stock inventory valuation report
 [stock_inventory_valuation_show_remaining](stock_inventory_valuation_show_remaining/) | 13.0.1.0.0 |  | Remaining Inventory Valuation Report
