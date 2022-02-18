@@ -18,9 +18,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr t-foreach="inventory.location_ids" t-as="location">
                                 <td>
-                                    <span t-field="inventory.location_id.name" />
+                                    <span t-field="location.name" />
                                 </td>
                                 <td>
                                     <span t-field="inventory.state" />
