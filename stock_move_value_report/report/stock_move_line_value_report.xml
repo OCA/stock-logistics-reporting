@@ -57,14 +57,22 @@
                         <span t-field="move_line.product_uom_id" />
                     </td>
                     <td class="text-right">
+                        <t
+                            t-set="valuation_layers"
+                            t-value="move_line.move_id.stock_valuation_layer_ids"
+                        />
+                        <t
+                            t-set="cost"
+                            t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                        />
                         <span
-                            t-field="move_line.move_id.price_unit"
+                            t-esc="cost"
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                         />
                     </td>
                     <td class="text-right">
                         <span
-                            t-esc="move_line.move_id.price_unit * move_line.qty_done"
+                            t-esc="cost * move_line.qty_done"
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                         />
                     </td>
@@ -76,7 +84,7 @@
     <template id="stock_move_lines_value_total">
         <div class="clearfix">
             <div id="total" class="row">
-                <div class="col-4 float-right">
+                <div class="col-4 ml-auto">
                     <table
                         class="table table-sm"
                         style="min-width: 250px;max-width: 400px;page-break-inside: avoid;"
@@ -84,8 +92,23 @@
                         <tr class="border-black">
                             <td><strong>Total</strong></td>
                             <td class="text-right">
+                                <t t-set="total" t-value="0" />
+                                <t t-foreach="move_lines" t-as="move_line">
+                                    <t
+                                        t-set="valuation_layers"
+                                        t-value="move_line.move_id.stock_valuation_layer_ids"
+                                    />
+                                    <t
+                                        t-set="cost"
+                                        t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                                    />
+                                    <t
+                                        t-set="total"
+                                        t-value="total + cost * move_line.qty_done"
+                                    />
+                                </t>
                                 <span
-                                    t-esc="sum([x.move_id.price_unit * x.qty_done for x in move_lines])"
+                                    t-esc="total"
                                     t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                                 />
                             </td>
@@ -160,7 +183,9 @@
                             />
                             <h4><span>[<t t-esc="inventory.date" />]</span> Inventory <t
                                     t-esc="inventory.name"
-                                />: <t t-esc="inventory.location_id.name" /></h4>
+                                />: <t
+                                    t-esc="', '.join([x.name for x in inventory.location_ids])"
+                                /></h4>
                             <t t-call="stock_move_value_report.stock_move_lines_value">
                                 <t t-set="move_lines" t-value="inventory_move_lines" />
                                 <t
@@ -217,7 +242,7 @@
                 <!-- Total all moves -->
                 <div class="clearfix">
                     <div id="total" class="row">
-                        <div class="col-4 float-right">
+                        <div class="col-4 ml-auto">
                             <table
                                 class="table table-sm"
                                 style="min-width: 250px;max-width: 400px;page-break-inside: avoid;"
