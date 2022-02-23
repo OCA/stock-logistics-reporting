@@ -11,3 +11,7 @@
   * Luis M. Ontalba
   * Ernesto Tejeda
   * Sergio Teruel
+
+* `GreenIce <https://www.greenice.com>`_:
+
+  * Fernando La Chica <fernandolachica@gmail.com>
