@@ -90,6 +90,13 @@
                         <span t-field="move_line.product_uom_qty" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
+                <t
+                    t-elif="move_line.picking_id.state == 'done' and move_line.product_uom_qty == 0"
+                >
+                    <td class="text-right">
+                        <span t-field="move_line.qty_done" />
+                        <span t-field="move_line.product_uom_id" /></td>
+                </t>
                 <td class="text-right"><span t-field="move_line.sale_price_unit" /></td>
                 <td class="text-right" groups="product.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
