@@ -23,7 +23,7 @@ class StockMoveLine(models.Model):
     @api.depends("sale_line")
     def _compute_phantom_product_id(self):
         """Relate every line with its kit product"""
-        self.write({"phantom_product_id": False})
+        self.phantom_product_id = False
         for line in self.filtered(
             lambda x: x.sale_line
             and x.sale_line.product_id.get_components()
@@ -38,7 +38,7 @@ class StockMoveLine(models.Model):
         super()._compute_sale_order_line_fields()
         pickings = self.mapped("picking_id")
         kit_lines = pickings.move_line_ids.filtered("phantom_product_id")
-        pickings.move_line_ids.write(
+        pickings.move_line_ids.update(
             {"phantom_line": False, "phantom_delivered_qty": 0.0}
         )
         for sale_line in kit_lines.mapped("sale_line"):
