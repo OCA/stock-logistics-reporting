@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 [stock_account_quantity_history_location](stock_account_quantity_history_location/) | 14.0.1.0.0 |  | Glue module between Stock Account and Stock Quantity History Location modules
 [stock_card_report](stock_card_report/) | 14.0.1.0.2 |  | Add stock card report on Inventory Reporting.
 [stock_picking_comment_template](stock_picking_comment_template/) | 14.0.1.0.0 |  | Comments texts templates on Picking documents
-[stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 14.0.1.0.1 |  | Glue module for sale position and delivery report grouped
+[stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 14.0.1.0.2 |  | Glue module for sale position and delivery report grouped
 [stock_picking_report_valued](stock_picking_report_valued/) | 14.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
 [stock_quantity_history_location](stock_quantity_history_location/) | 14.0.1.0.0 |  | Provides stock quantity by location on past date
 
