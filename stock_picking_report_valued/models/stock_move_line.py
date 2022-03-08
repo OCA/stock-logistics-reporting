@@ -1,10 +1,11 @@
 # Copyright 2014-2018 Tecnativa - Pedro M. Baeza
-# Copyright 2015 Antonio Espinosa - Tecnativa <antonio.espinosa@tecnativa.com>
-# Copyright 2018 Luis M. Ontalba - Tecnativa <luis.martinez@tecnativa.com>
-# Copyright 2016-2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+# Copyright 2015 Tecnativa - Antonio Espinosa
+# Copyright 2018 Tecnativa - Luis M. Ontalba
+# Copyright 2016-2022 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
+from odoo.tools import float_compare
 
 
 class StockMoveLine(models.Model):
@@ -21,7 +22,7 @@ class StockMoveLine(models.Model):
     )
     sale_price_unit = fields.Float(
         compute="_compute_sale_order_line_fields",
-        readonly=True,
+        compute_sudo=True,
     )
     sale_discount = fields.Float(
         related="sale_line.discount", readonly=True, string="Sale discount (%)"
@@ -43,44 +44,44 @@ class StockMoveLine(models.Model):
         compute="_compute_sale_order_line_fields", string="Total", compute_sudo=True
     )
 
+    def _get_report_valued_quantity(self):
+        return self.qty_done or self.product_qty
+
     def _compute_sale_order_line_fields(self):
         """This is computed with sudo for avoiding problems if you don't have
         access to sales orders (stricter warehouse users, inter-company
         records...).
         """
         for line in self:
-            sale_line = line.sale_line
-            sale_line_uom = sale_line.product_uom
-            price_unit = (
-                sale_line.price_subtotal / sale_line.product_uom_qty
-                if sale_line.product_uom_qty
-                else sale_line.price_reduce
-            )
-            if sale_line_uom != line.product_uom_id:
-                price_unit = sale_line_uom._compute_price(
-                    price_unit, line.product_uom_id
-                )
-            taxes = line.sale_tax_id.compute_all(
-                price_unit=price_unit,
-                currency=line.currency_id,
-                quantity=line.qty_done or line.product_qty,
-                product=line.product_id,
-                partner=sale_line.order_id.partner_shipping_id,
-            )
-            if sale_line.company_id.tax_calculation_rounding_method == (
-                "round_globally"
+            quantity = line._get_report_valued_quantity()
+            valued_line = line.sale_line
+            sale_line_uom = valued_line.product_uom
+            # If order line quantity don't match with move line quantity compute values
+            if valued_line and float_compare(
+                quantity,
+                line.sale_line.product_uom_qty,
+                precision_rounding=line.product_uom_id.rounding,
             ):
-                price_tax = sum(t.get("amount", 0.0) for t in taxes.get("taxes", []))
-            else:
-                price_tax = taxes["total_included"] - taxes["total_excluded"]
+                # Force read to cache M2M field for get values with _convert_to_write
+                line.sale_line.mapped("tax_id")
+                # Create virtual sale line with stock move line quantity
+                sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
+                valued_line = line.sale_line.new(sol_vals)
+                valued_line.product_uom_qty = quantity
+                # Force original price unit to avoid pricelist recomputed (not needed)
+                valued_line.price_unit = line.sale_line.price_unit
+            if sale_line_uom != line.product_uom_id:
+                valued_line.price_unit = sale_line_uom._compute_price(
+                    valued_line.price_unit, line.product_uom_id
+                )
             line.update(
                 {
                     "sale_tax_description": ", ".join(
                         t.name or t.description for t in line.sale_tax_id
                     ),
-                    "sale_price_subtotal": taxes["total_excluded"],
-                    "sale_price_tax": price_tax,
-                    "sale_price_total": taxes["total_included"],
-                    "sale_price_unit": price_unit,
+                    "sale_price_subtotal": valued_line.price_subtotal,
+                    "sale_price_tax": valued_line.price_tax,
+                    "sale_price_total": valued_line.price_total,
+                    "sale_price_unit": valued_line.price_unit,
                 }
             )
