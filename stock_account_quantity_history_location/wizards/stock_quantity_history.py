@@ -29,10 +29,23 @@ class StockQuantityHistory(models.TransientModel):
             )
             action["context"] = ctx
             if self.env.context.get("active_model") == "stock.valuation.layer":
+                operator = "child_of" if self.include_child_locations else "="
                 action["domain"] = expression.AND(
                     [
                         action["domain"],
-                        [("stock_move_id.location_dest_id", "=", self.location_id.id)],
+                        [
+                            "|",
+                            (
+                                "stock_move_id.location_dest_id",
+                                operator,
+                                self.location_id.id,
+                            ),
+                            (
+                                "stock_move_id.location_id",
+                                operator,
+                                self.location_id.id,
+                            ),
+                        ],
                     ]
                 )
         return action
