@@ -8,7 +8,7 @@
     "summary": """
         Glue module between Stock Account and Stock Quantity History Location
         modules""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "Eficent, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
