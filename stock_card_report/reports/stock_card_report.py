@@ -114,4 +114,4 @@ class StockCardReport(models.TransientModel):
 
     @api.model
     def get_html(self, given_context=None):
-        return self.with_context(given_context)._get_html()
+        return self.with_context(**(given_context or {}))._get_html()
