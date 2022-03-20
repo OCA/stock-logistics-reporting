@@ -1,35 +1,18 @@
 <odoo>
 
-    <template
-        id="assets_backend"
-        name="stock_card_report assets"
-        inherit_id="web.assets_backend"
-    >
-        <xpath expr="." position="inside">
-            <link
-                href="/stock_card_report/static/src/css/report.css"
-                rel="stylesheet"
-            />
-            <script
-                type="text/javascript"
-                src="/stock_card_report/static/src/js/stock_card_report_backend.js"
-            />
-        </xpath>
-    </template>
-
     <template id="stock_card_report.internal_layout">
         <div class="article">
             <link
                 href="/stock_card_report/static/src/css/report.css"
                 rel="stylesheet"
             />
-            <t t-raw="0" />
+            <t t-out="0" />
         </div>
         <div class="footer">
             <div class="row">
                 <div class="col-6 custom_footer">
                     <span
-                        t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"
+                        t-out="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"
                     />
                 </div>
                 <div class="col-6 text-right custom_footer">
@@ -71,8 +54,8 @@
         <t t-foreach="o.product_ids" t-as="product">
             <div class="page">
                 <div class="row">
-                    <t t-set="title">Stock Card - <t t-raw="product.name" /></t>
-                    <h4 class="mt0" t-esc="title" style="text-align: center;" />
+                    <t t-set="title">Stock Card - <t t-out="product.name" /></t>
+                    <h4 class="mt0" t-out="title" style="text-align: center;" />
                 </div>
                 <!-- Display filters -->
                 <t t-call="stock_card_report.report_stock_card_report_filters" />
@@ -93,7 +76,7 @@
                         <div class="act_as_cell" />
                         <div class="act_as_cell" />
                         <div class="act_as_cell right">
-                            <t t-esc="'{0:,.3f}'.format(initial)" />
+                            <t t-out="'{0:,.3f}'.format(initial)" />
                         </div>
                     </div>
                     <!-- Display each lines -->
@@ -150,19 +133,19 @@
     <template id="stock_card_report.report_stock_card_lines">
         <div class="act_as_row lines">
             <div class="act_as_cell left">
-                <t t-esc="product_line.date.strftime('%Y-%m-%d')" />
+                <t t-out="product_line.date.strftime('%Y-%m-%d')" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="product_line.display_name" />
+                <t t-out="product_line.display_name" />
             </div>
             <div class="act_as_cell right">
-                <t t-esc="'{0:,.3f}'.format(product_line.product_in)" />
+                <t t-out="'{0:,.3f}'.format(product_line.product_in)" />
             </div>
             <div class="act_as_cell right">
-                <t t-esc="'{0:,.3f}'.format(product_line.product_out)" />
+                <t t-out="'{0:,.3f}'.format(product_line.product_out)" />
             </div>
             <div class="act_as_cell right">
-                <t t-esc="'{0:,.3f}'.format(product_balance)" />
+                <t t-out="'{0:,.3f}'.format(product_balance)" />
             </div>
         </div>
    </template>
