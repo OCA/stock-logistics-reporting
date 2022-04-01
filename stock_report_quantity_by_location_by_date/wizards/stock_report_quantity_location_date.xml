@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_report_quantity_location_date_form_view">
+        <field
+            name="name"
+        >stock.report.quantity.location.date.form (in stock_report_quantity_by_location_by_date)
+        </field>
+        <field name="model">stock.report.quantity.location.date</field>
+        <field name="arch" type="xml">
+            <form string="Stock Report Quantity Location Date">
+                <group>
+                    <field name="location_ids" widget="many2many_tags" />
+                    <field name="pivot_date" />
+                </group>
+                <footer>
+                    <button name="doit" string="OK" class="btn-primary" type="object" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.act_window"
+        id="stock_report_quantity_location_date_act_window"
+    >
+        <field name="name">Stock Report Quantity Location Date</field>
+        <field name="res_model">stock.report.quantity.location.date</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="menu_quantity_by_location_by_date" model="ir.ui.menu">
+        <field name="name">Inventory by Location By Date</field>
+        <field name="parent_id" ref="stock.menu_warehouse_report" />
+        <field name="action" ref="stock_report_quantity_location_date_act_window" />
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_manager'))]" />
+    </record>
+
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.model.access" id="stock_report_quantity_location_date_user">
+        <field
+            name="name"
+        >stock.report.quantity.location.date (in stock_report_quantity_by_location_by_date)</field>
+        <field
+            name="model_id"
+            ref="stock_report_quantity_by_location_by_date.model_stock_report_quantity_location_date"
+        />
+        <field name="group_id" ref="stock.group_stock_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record model="ir.model.access" id="report_stock_quantity_location_date_user">
+        <field
+            name="name"
+        >report.stock.quantity.location.date (in stock_report_quantity_by_location_by_date)</field>
+        <field
+            name="model_id"
+            ref="stock_report_quantity_by_location_by_date.model_report_stock_quantity_location_date"
+        />
+        <field name="group_id" ref="stock.group_stock_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <data noupdate="1">
+        <!-- Ir Rule for company -->
+        <record id="stock_report_quantity_location_date_company_rule" model="ir.rule">
+            <field
+                name="name"
+            >Stock Report Quantity By Location By Date multi-company rule</field>
+            <field name="model_id" ref="model_report_stock_quantity_location_date" />
+            <field
+                name="domain_force"
+            >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
+
+</odoo>

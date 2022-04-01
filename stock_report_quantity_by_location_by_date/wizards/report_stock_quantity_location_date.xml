@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="report_stock_quantity_location_date_tree_view" model="ir.ui.view">
+        <field
+            name="name"
+        >Report Stock Quantity Location Date Tree (in stock_report_quantity_by_location_by_date)</field>
+        <field name="model">report.stock.quantity.location.date</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="quantity" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="report_stock_quantity_location_date_view" model="ir.ui.view">
+        <field
+            name="name"
+        >Report Stock Quantity Location Date Pivot (in stock_report_quantity_by_location_by_date)</field>
+        <field name="model">report.stock.quantity.location.date</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock by Location" disable_linking="True">
+                <field name="product_id" type="row" />
+                <field name="location_id" type="col" />
+                <field name="quantity" type="measure" />
+                <field name="company_id" />
+            </pivot>
+        </field>
+    </record>
+
+     <record id="stock_report_quantity_by_location_search_view" model="ir.ui.view">
+        <field
+            name="name"
+        >Report Stock Quantity Location Date Search (in stock_report_quantity_by_location_by_date)</field>
+        <field name="model">report.stock.quantity.location.date</field>
+        <field name="arch" type="xml">
+            <search string="Search Stock Report Quantity by Location">
+                <field name="product_id" />
+                <field name="company_id" />
+                <field name="location_id" groups="stock.group_stock_multi_locations" />
+                <filter
+                    name="quantity_gt_zero"
+                    string="Quantity > 0"
+                    domain="[('quantity', '>', '0.0')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="location"
+                        string="Location"
+                        domain="[]"
+                        context="{'group_by':'location_id'}"
+                        help="Group by Location"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
