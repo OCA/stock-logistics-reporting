@@ -13,7 +13,7 @@
                 name="t-if"
             >o.valued and o.sale_id and o.move_line_ids and (move_line.phantom_line or not move_line.phantom_product_id)</attribute>
         </xpath>
-        <xpath expr="//tr[@t-foreach='o.move_line_ids']" position="attributes">
+        <xpath expr="//tr[@t-as='move_line']" position="attributes">
             <attribute
                 name="t-foreach"
             >o.move_line_ids.filtered(lambda x: not x.phantom_product_id or x.phantom_line)</attribute>
