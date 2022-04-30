@@ -8,6 +8,7 @@
     "category": "Delivery",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    "development_status": "Alpha",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": [
         "delivery_line_sale_line_position",
