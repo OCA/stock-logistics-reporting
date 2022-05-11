@@ -16,9 +16,13 @@ class PickingSummaryWizardProduct(models.TransientModel):
 
     quantity_total = fields.Float()
 
+    standard_price = fields.Float(
+        related='product_id.standard_price',
+        digits=dp.get_precision('Product Price'))
+
     standard_price_total = fields.Float(
         compute='_compute_standard_price_total',
-        digits=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Price'))
 
     @api.multi
     def _compute_standard_price_total(self):

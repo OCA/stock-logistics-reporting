@@ -17,6 +17,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     </group>
                     <group string="Summary" colspan="2">
                         <field name="print_summary"/>
+                        <field name="print_prices" attrs="{'invisible': [('print_summary', '=', False)]}"/>
                     </group>
                     <group string="Pickings Details" colspan="2">
                         <field name="print_detail"/>

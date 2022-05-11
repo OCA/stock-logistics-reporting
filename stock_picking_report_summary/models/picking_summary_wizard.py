@@ -10,6 +10,37 @@ class PickingSummaryWizard(models.TransientModel):
     _name = 'picking.summary.wizard'
     _description = 'Picking Summary Wizard'
 
+    # Columns Section
+    print_summary = fields.Boolean(
+        string='Print Summary', default=True)
+
+    print_detail = fields.Boolean(
+        string='Print Detail', default=True)
+
+    print_unity_in_list = fields.Boolean(
+        string='Print Unit in Pickings List', default=True)
+
+    print_prices = fields.Boolean(
+        string='Print Standard Prices', default=False)
+
+    product_line_ids = fields.One2many(
+        comodel_name='picking.summary.wizard.product',
+        inverse_name='wizard_id',
+        default=lambda self: self._default_product_line_ids())
+
+    standard_price_total = fields.Float(
+        compute='_compute_standard_price_total',
+        digits=dp.get_precision('Product Price'))
+
+    picking_line_ids = fields.One2many(
+        comodel_name='picking.summary.wizard.picking',
+        inverse_name='wizard_id',
+        default=lambda self: self._default_picking_line_ids())
+
+    picking_line_qty = fields.Integer(
+        string='Number of Selected Picking', readonly=True,
+        default=lambda self: self._default_picking_line_qty())
+
     # Default Section
     def _default_picking_line_qty(self):
         return len(self._context.get('active_ids', []))
@@ -48,41 +79,12 @@ class PickingSummaryWizard(models.TransientModel):
         # Arranged in alphabetical order for category then product name
         product_lines_sorted = sorted(
             product_lines.items(), key=lambda x: (x[1]['categ'], x[1]['name']))
-        # product_lines_sorted = sorted(
-        #     dict(product_lines_sorted).items(),
-        #     key=lambda x: )
         for product_id, name_qty in product_lines_sorted:
             res.append((0, 0, {
                 'product_id': product_id,
                 'quantity_total': name_qty['qty'],
             }))
         return res
-
-    # Columns Section
-    print_summary = fields.Boolean(
-        string='Print Summary', default=True)
-
-    print_detail = fields.Boolean(
-        string='Print Detail', default=True)
-
-    print_unity_in_list = fields.Boolean(
-        string='Print Unit in Pickings List', default=True)
-
-    product_line_ids = fields.One2many(
-        comodel_name='picking.summary.wizard.product',
-        inverse_name='wizard_id', default=_default_product_line_ids)
-
-    standard_price_total = fields.Float(
-        compute='_compute_standard_price_total',
-        digits=dp.get_precision('Product Unit of Measure'))
-
-    picking_line_ids = fields.One2many(
-        comodel_name='picking.summary.wizard.picking',
-        inverse_name='wizard_id', default=_default_picking_line_ids)
-
-    picking_line_qty = fields.Integer(
-        string='Number of Selected Picking', readonly=True,
-        default=_default_picking_line_qty)
 
     # Compute Section
     @api.multi
