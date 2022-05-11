@@ -12,7 +12,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
       <field name="view_type">form</field>
       <field name="view_mode">form</field>
       <field name="target">new</field>
-      <field name="print_report_name">Pickings Summary</field>
       <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
 
