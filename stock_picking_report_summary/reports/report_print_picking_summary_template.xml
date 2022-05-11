@@ -4,16 +4,16 @@
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="picking_w">
                 <style type="text/css">
-                    table, th, td { 
+                    table, th, td {
                         border: 1px solid #4a4a4a;
                         width:100%;
                     }
                     h1 {
                         text-align:center;
                     }
-                    th, td { 
-                        padding: 8px; 
-                    } 
+                    th, td {
+                        padding: 8px;
+                    }
                    .align-center{
                         text-align:center;
                    }
@@ -28,8 +28,8 @@
                                 <th>Category</th>
                                 <th class="align-center">Quantity</th>
                                 <th class="align-center">Unity</th>
-                                <th class="align-center">Unit Price</th>
-                                <th class="align-center">Total price</th>
+                                <th t-if="picking_w.print_prices" class="align-center">Standard Unit&#160;Price</th>
+                                <th t-if="picking_w.print_prices" class="align-center">Total price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,16 +43,16 @@
                                     <td class="align-center">
                                         <span t-field="product_line.product_id.uom_id.name"/>
                                     </td>
-                                    <td class="align-center">
-                                        <span t-esc="round(product_line.product_id.standard_price,2)"/>
+                                    <td t-if="picking_w.print_prices" class="align-center">
+                                        <span t-esc="product_line.product_id.standard_price"/>
                                     </td>
-                                    <td class="align-center">
-                                        <span t-esc="round(product_line.standard_price_total,2)"/>
+                                    <td t-if="picking_w.print_prices" class="align-center">
+                                        <span t-esc="product_line.standard_price_total"/>
                                     </td>
                                 </tr>
                             </t>
                         </tbody>
-                        <tfoot>
+                        <tfoot t-if="picking_w.print_prices">
                             <tr>
                                 <th colspan="5">Standard Price Total</th>
                                 <td class="align-center">
@@ -112,4 +112,3 @@
     </template>
 
 </odoo>
-
