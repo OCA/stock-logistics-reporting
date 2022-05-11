@@ -26,6 +26,9 @@ print a Report summary with two sheets :
 
 * Detail Part (each Picking is shown)
 
+You can choose to print standard prices or not. It can be useful to check some
+values when you prepare your pickings.
+
 **Table of contents**
 
 .. contents::
@@ -42,9 +45,15 @@ To use this module, you need to
 
 * Select any pickings and click on 'Action' / 'Print Picking Summary (PDF)'
 
+* Choose your options
+
 .. figure:: https://raw.githubusercontent.com/quentinDupont/stock-logistics-reporting/12.0_ADD_picking_summary_report/stock_picking_report_summary/static/description/wizard.png
 
 .. figure:: https://raw.githubusercontent.com/quentinDupont/stock-logistics-reporting/12.0_ADD_picking_summary_report/stock_picking_report_summary/static/description/pdf_report.png
+
+Without prices :
+
+.. figure:: https://raw.githubusercontent.com/quentinDupont/stock-logistics-reporting/12.0_ADD_picking_summary_report/stock_picking_report_summary/static/description/pdf_report_wo_prices.png
 
 Bug Tracker
 ===========
@@ -71,6 +80,14 @@ Contributors
 
 Maintainers
 ~~~~~~~~~~~
+
+.. |maintainer-quentinDupont| image:: https://github.com/quentinDupont.png?size=40px
+    :target: https://github.com/quentinDupont
+    :alt: quentinDupont
+
+Current maintainer:
+
+|maintainer-quentinDupont| 
 
 This module is part of the `quentinDupont/stock-logistics-reporting <https://github.com/quentinDupont/stock-logistics-reporting/tree/12.0_ADD_picking_summary_report/stock_picking_report_summary>`_ project on GitHub.
 
