@@ -9,14 +9,11 @@
     "version": "12.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-reporting",
-    "author": "Tecnativa, "
-              "Odoo Community Association (OCA)",
+    "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
     "maintainers": ["carlosdauden"],
     "license": "AGPL-3",
-    "depends": [
-        "stock",
-    ],
+    "depends": ["stock",],
     "data": [
         "views/report_deliveryslip.xml",
         "views/report_stockpicking_operations.xml",
