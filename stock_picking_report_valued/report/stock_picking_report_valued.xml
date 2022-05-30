@@ -10,12 +10,13 @@
                 <t t-if="o.state != 'done'">
                     <th class="text-right"><strong>Qty Reserved</strong></th>
                 </t>
-                <th class="text-right"><strong>Unit Price</strong></th>
-                <th class="text-right" groups="product.group_discount_per_so_line">
+                <th class="text-right" name="unit_price"><strong>Unit Price</strong></th>
+                <th class="text-right" name="discount" groups="product.group_discount_per_so_line">
                     <strong>Discount</strong>
                 </th>
-                <th class="text-right"><strong>Subtotal</strong></th>
-                <th class="text-right"><strong>Taxes</strong></th>
+                <th class="text-right" name="subtotal" ><strong>Subtotal</strong></th>
+                <th class="text-right" name="taxes" ><strong>Taxes</strong></th>
+            </t>
             </t>
         </xpath>
         <xpath
@@ -53,23 +54,23 @@
             position="after"
         >
             <t t-if="o.valued and o.sale_id and o.move_line_ids">
-                <table class="table table-sm mt32">
+                <table class="table table-sm mt32" name="totals">
                     <thead>
                         <tr>
-                            <th class="text-right"><strong>Untaxed Amount</strong></th>
-                            <th class="text-right"><strong>Taxes</strong></th>
-                            <th class="text-right"><strong>Total</strong></th>
+                            <th class="text-right" name="am_untaxed"><strong>Untaxed Amount</strong></th>
+                            <th class="text-right" name="taxes" ><strong>Taxes</strong></th>
+                            <th class="text-right" name="subtotal" ><strong>Total</strong></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-right">
+                            <td class="text-right" name="am_untaxed">
                                 <span t-field="o.amount_untaxed" />
                             </td>
-                            <td class="text-right">
+                            <td class="text-right" name="taxes" >
                                 <span t-field="o.amount_tax" />
                             </td>
-                            <td class="text-right">
+                            <td class="text-right" name="subtotal" >
                                 <span t-field="o.amount_total" />
                             </td>
                         </tr>
@@ -90,14 +91,14 @@
                         <span t-field="move_line.product_uom_qty" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
-                <td class="text-right"><span t-field="move_line.sale_price_unit" /></td>
-                <td class="text-right" groups="product.group_discount_per_so_line">
+                <td class="text-right" name="unit_price"><span t-field="move_line.sale_price_unit" /></td>
+                <td class="text-right" name="discount" groups="product.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
                 </td>
-                <td class="text-right"><span
+                <td class="text-right" name="subtotal"><span
                         t-field="move_line.sale_price_subtotal"
                     /></td>
-                <td class="text-right"><span
+                <td class="text-right" name="taxes"><span
                         t-field="move_line.sale_tax_description"
                     /></td>
             </t>
