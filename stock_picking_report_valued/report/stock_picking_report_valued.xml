@@ -125,4 +125,32 @@
         </xpath>
     </template>
 
+    <template id="aggregated_move_lines_price_part">
+        <td class="text-right" name="move_line_aggregated_price">
+            <span t-esc="aggregated_lines[line]['unit_price']" />
+        </td>
+        <td class="text-right" name="move_line_aggregated_taxl">
+            <span t-esc="aggregated_lines[line]['tax']" />
+        </td>
+        <td class="text-right" name="move_line_aggregated_total">
+            <span
+                t-esc="aggregated_lines[line]['total']"
+                t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+            />
+        </td>
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath expr="//td[last()]" position="after">
+            <t t-if="o.picking_type_id.code == 'outgoing'">
+                <t
+                    t-call="stock_picking_report_valued.aggregated_move_lines_price_part"
+                />
+            </t>
+        </xpath>
+    </template>
+
 </odoo>

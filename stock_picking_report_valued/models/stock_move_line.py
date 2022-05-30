@@ -4,8 +4,11 @@
 # Copyright 2016-2022 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from functools import partial
+
 from odoo import fields, models
 from odoo.tools import float_compare
+from odoo.tools.misc import formatLang
 
 
 class StockMoveLine(models.Model):
@@ -78,3 +81,50 @@ class StockMoveLine(models.Model):
                     "sale_price_total": valued_line.price_total,
                 }
             )
+
+    def _get_aggregated_product_quantities(self, **kwargs):
+        result = super()._get_aggregated_product_quantities(**kwargs)
+        if self.env.context.get("bypass_modification"):
+            return result
+        result = self._get_aggregated_product_quantities_delivery_price(result)
+        return result
+
+    def _get_aggregated_product_quantities_delivery_price(self, aggregated_move_lines):
+        # sale order can have sold products under different prices
+        # currently lines on stock.picking will conceder only first price
+        # so total on sale.order and stock.picking will differ
+        # consider riding of aggregating of lines for stock.picking
+        fmt = partial(
+            formatLang,
+            self.with_context(lang=self.picking_id.partner_id.lang).env,
+            currency_obj=self.picking_id.currency_id,
+        )
+
+        for line in aggregated_move_lines:
+            product = aggregated_move_lines[line]["product"]
+            uom = aggregated_move_lines[line]["product_uom"]
+            sml = self._find_sml(product, uom)
+            qty = aggregated_move_lines[line]["qty_done"] or sml.move_id.product_uom_qty
+            aggregated_move_lines[line].update(
+                {
+                    "unit_price": fmt(sml.sale_price_unit),
+                    "tax": ", ".join(
+                        map(
+                            lambda x: (x.description or x.name),
+                            sml.sale_tax_id,
+                        )
+                    ),
+                    "total": (sml.sale_price_unit * qty),
+                }
+            )
+        return aggregated_move_lines
+
+    def _find_sml(self, product, uom_name):
+        line = fields.first(
+            self.filtered(
+                lambda sml: sml.product_id == product
+                and sml.product_uom_id.name == uom_name
+            )
+        )
+
+        return line
