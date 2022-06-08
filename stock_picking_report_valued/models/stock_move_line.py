@@ -84,14 +84,14 @@ class StockMoveLine(models.Model):
 
     def _get_aggregated_product_quantities(self, **kwargs):
         result = super()._get_aggregated_product_quantities(**kwargs)
-        if self.env.context.get("bypass_modification"):
+        if self.env.context.get("bypass_modification_valued_report"):
             return result
         result = self._get_aggregated_product_quantities_delivery_price(result)
         return result
 
     def _get_aggregated_product_quantities_delivery_price(self, aggregated_move_lines):
         # sale order can have sold products under different prices
-        # currently lines on stock.picking will conceder only first price
+        # currently lines on stock.picking will consider only first price
         # so total on sale.order and stock.picking will differ
         # consider riding of aggregating of lines for stock.picking
         fmt = partial(
