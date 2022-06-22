@@ -55,7 +55,7 @@ class StockMoveLine(models.Model):
             quantity = line._get_report_valued_quantity()
             valued_line = line.sale_line
             # If order line quantity don't match with move line quantity compute values
-            if float_compare(
+            if valued_line and float_compare(
                 quantity,
                 line.sale_line.product_uom_qty,
                 precision_rounding=line.product_uom_id.rounding,
