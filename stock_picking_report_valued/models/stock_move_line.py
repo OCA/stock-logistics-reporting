@@ -51,7 +51,7 @@ class StockMoveLine(models.Model):
         access to sales orders (stricter warehouse users, inter-company
         records...).
         """
-        for line in self:
+        for line in self.filtered("sale_line"):
             quantity = line._get_report_valued_quantity()
             valued_line = line.sale_line
             # If order line quantity don't match with move line quantity compute values
