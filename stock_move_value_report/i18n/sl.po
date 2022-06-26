@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2022-06-26 10:05+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,140 +15,141 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Customer Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Naslov stranke:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Delivery Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Naslov za dobavo:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Partner Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Partnerjev naslov:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Warehouse Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Naslov skladišča:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Commitment Date</strong>"
-msgstr ""
+msgstr "<strong>Datum zaveze</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Date</strong>"
-msgstr ""
+msgstr "<strong>Datum</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Location</strong>"
-msgstr ""
+msgstr "<strong>Lokacija</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Order (Origin)</strong>"
-msgstr ""
+msgstr "<strong>Nalog (izvor)</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Product</strong>"
-msgstr ""
+msgstr "<strong>Proizvod</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Quantity</strong>"
-msgstr ""
+msgstr "<strong>Količina</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Scheduled Date</strong>"
-msgstr ""
+msgstr "<strong>Načrtovani datum</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Source Document</strong>"
-msgstr ""
+msgstr "<strong>Izvorni dokument</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>State</strong>"
-msgstr ""
+msgstr "<strong>Stanje</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Subtotal</strong>"
-msgstr ""
+msgstr "<strong>Subtotal</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "<strong>Total operations value balance</strong>"
-msgstr ""
+msgstr "<strong>Bilanca vrednosti vseh operacij</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value_total
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Skupaj</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Value</strong>"
-msgstr ""
+msgstr "<strong>Vrednost</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Inventory"
-msgstr ""
+msgstr "Inventura"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_inventory_value
 msgid "Inventory Operations Cost Value"
-msgstr ""
+msgstr "Vrednost operacij inventure"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "Lot/Serial Number"
-msgstr ""
+msgstr "Lot/serijska številka"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_move_line_value
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_move_value
 msgid "Operations Cost Value Report"
-msgstr ""
+msgstr "Poročilo o vrednosti operacij"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Picking"
-msgstr ""
+msgstr "Dobavnica"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_picking_value
 msgid "Picking Operations Cost Value"
-msgstr ""
+msgstr "Vrednost operacij z dobavnicami"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "Scrap"
-msgstr ""
+msgstr "Odpis"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_scrap_value
 msgid "Scrap Operations Cost Value"
-msgstr ""
+msgstr "Vrednost operacij odpisov"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
-msgstr ""
+msgstr "Vrednost izbranih operacij"
