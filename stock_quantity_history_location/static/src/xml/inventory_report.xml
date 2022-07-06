@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-extend="StockInventoryReport.Buttons">
+        <t t-jquery="button.o_button_at_date" t-operation="inner">
+            <t t-if="widget.multi_location">Inventory at Date &amp; Location</t>
+            <t t-else="">Inventory at Date</t>
+        </t>
+    </t>
+</templates>
