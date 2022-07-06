@@ -13,10 +13,10 @@ class StockQuantityHistory(models.TransientModel):
     location_id = fields.Many2one(
         "stock.location", domain=[("usage", "in", ["internal", "transit"])]
     )
-    include_child_locations = fields.Boolean("Include child locations", default=True)
+    include_child_locations = fields.Boolean(default=True)
 
     def open_at_date(self):
-        action = super(StockQuantityHistory, self).open_at_date()
+        action = super().open_at_date()
         ctx = action["context"]
         if isinstance(ctx, str):
             ctx = ast.literal_eval(ctx)
