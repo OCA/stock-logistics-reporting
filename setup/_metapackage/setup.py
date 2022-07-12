@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-stock-logistics-reporting Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-delivery_line_sale_line_position>=15.0dev,<15.1dev',
         'odoo-addon-stock_account_valuation_report>=15.0dev,<15.1dev',
     ],
     classifiers=[
