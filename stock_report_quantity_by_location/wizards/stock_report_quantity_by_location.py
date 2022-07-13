@@ -10,6 +10,11 @@ class StockReportByLocationPrepare(models.TransientModel):
     location_ids = fields.Many2many(
         comodel_name="stock.location", string="Locations", required=True
     )
+    availability = fields.Selection(
+        selection=[("on_hand", "On Hand"), ("unreserved", "Unreserved")],
+        default="on_hand",
+        help="Unreserved is the Stock On Hand minus the reservations",
+    )
     with_quantity = fields.Boolean(
         string="Quantity > 0",
         default=True,
