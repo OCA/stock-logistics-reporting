@@ -1,10 +1,10 @@
 # Copyright 2019-21 ForgeFlow, S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockReportQuantityByLocation(SavepointCase):
+class TestStockReportQuantityByLocation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockReportQuantityByLocation, cls).setUpClass()
