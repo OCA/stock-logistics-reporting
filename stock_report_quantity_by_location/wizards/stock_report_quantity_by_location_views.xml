@@ -14,7 +14,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                         <field name="location_ids" widget="many2many_tags" />
                     </group>
                     <group>
-                        <field name="availability" />
                         <field name="with_quantity" />
                     </group>
                 </group>
@@ -58,7 +57,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
             <tree>
                 <field name="product_id" />
                 <field name="location_id" />
-                <field name="quantity" />
+                <field name="quantity_on_hand" />
+                <field name="quantity_reserved" />
+                <field name="quantity_unreserved" />
                 <field name="uom_id" groups="uom.group_uom" />
             </tree>
         </field>
@@ -71,7 +72,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
             <pivot string="Stock by Location" disable_linking="True">
                 <field name="product_id" type="row" />
                 <field name="location_id" type="col" />
-                <field name="quantity" type="measure" />
+                <field name="quantity_on_hand" type="measure" />
+                <field name="quantity_reserved" type="measure" />
+                <field name="quantity_unreserved" type="measure" />
             </pivot>
         </field>
     </record>
@@ -87,8 +90,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                 <field name="product_category_id" />
                 <filter
                     name="quantity_gt_zero"
-                    string="Quantity > 0"
-                    domain="[('quantity', '>', '0.0')]"
+                    string="Quantity On Hand > 0"
+                    domain="[('quantity_on_hand', '>', '0.0')]"
                 />
                 <group expand="0" string="Group By">
                     <filter
