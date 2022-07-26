@@ -10,12 +10,6 @@ class StockReportByLocationPrepare(models.TransientModel):
     location_ids = fields.Many2many(
         comodel_name="stock.location", string="Locations", required=True
     )
-    availability = fields.Selection(
-        string="Availability",
-        selection=[("on_hand", "On Hand"), ("unreserved", "Unreserved")],
-        default="on_hand",
-        help="Unreserved is the Stock On Hand minus the reservations",
-    )
     with_quantity = fields.Boolean(
         string="Quantity > 0",
         default=True,
@@ -48,28 +42,33 @@ class StockReportByLocationPrepare(models.TransientModel):
                 ["quantity", "reserved_quantity", "product_id"],
                 ["product_id"],
             )
-            if self.availability == "on_hand":
-                mapping = {
-                    quant_group["product_id"][0]: quant_group["quantity"]
-                    for quant_group in quant_groups
+            mapping = {}
+            for quant_group in quant_groups:
+                qty_on_hand = quant_group["quantity"]
+                qty_reserved = quant_group["reserved_quantity"]
+                qty_unreserved = qty_on_hand - qty_reserved
+                qty_dict = {
+                    "quantity_on_hand": qty_on_hand,
+                    "quantity_reserved": qty_reserved,
+                    "quantity_unreserved": qty_unreserved,
                 }
-            else:
-                mapping = {
-                    quant_group["product_id"][0]: quant_group["quantity"]
-                    - quant_group["reserved_quantity"]
-                    for quant_group in quant_groups
-                }
+                mapping.setdefault(quant_group["product_id"][0], qty_dict)
             products = self.env["product.product"].search([("type", "=", "product")])
             vals_list = []
             for product in products:
-                quantity = mapping.get(product.id, 0.0)
-                if (self.with_quantity and quantity) or not self.with_quantity:
+                qty_dict = mapping.get(product.id, {})
+                qty_on_hand = qty_dict.get("quantity_on_hand", 0.0)
+                qty_reserved = qty_dict.get("quantity_reserved", 0.0)
+                qty_unreserved = qty_dict.get("quantity_unreserved", 0.0)
+                if (self.with_quantity and qty_on_hand) or not self.with_quantity:
                     vals_list.append(
                         {
                             "product_id": product.id,
                             "product_category_id": product.categ_id.id,
                             "uom_id": product.uom_id.id,
-                            "quantity": mapping.get(product.id, 0.0),
+                            "quantity_on_hand": qty_on_hand,
+                            "quantity_reserved": qty_reserved,
+                            "quantity_unreserved": qty_unreserved,
                             "location_id": loc.id,
                             "wiz_id": self.id,
                             "default_code": product.default_code,
@@ -89,6 +88,8 @@ class StockReportQuantityByLocation(models.TransientModel):
         comodel_name="product.category", string="Product Category"
     )
     location_id = fields.Many2one(comodel_name="stock.location", required=True)
-    quantity = fields.Float()
+    quantity_on_hand = fields.Float(string="Qty On Hand")
+    quantity_reserved = fields.Float(string="Qty Reserved")
+    quantity_unreserved = fields.Float(string="Qty Unreserved")
     uom_id = fields.Many2one(comodel_name="uom.uom", string="Product UoM")
     default_code = fields.Char("Internal Reference")
