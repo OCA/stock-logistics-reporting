@@ -4,7 +4,7 @@
 {
     "name": "Picking Comments",
     "summary": "Comments texts templates on Picking documents",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "C2i Change 2 improve," "Odoo Community Association (OCA)",
