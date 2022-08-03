@@ -75,7 +75,9 @@ class ProductProduct(models.Model):
             sum(aml.balance), sum(quantity),
             array_agg(aml.id)
             FROM account_move_line AS aml
+            INNER JOIN account_move AS am ON am.id = aml.move_id
             WHERE aml.product_id IN %%s
+            AND am.state = 'posted'
             AND aml.company_id=%%s %s
             GROUP BY aml.product_id, aml.account_id"""
         params = (
