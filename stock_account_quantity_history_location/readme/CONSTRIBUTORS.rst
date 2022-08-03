@@ -1,4 +1,6 @@
-* Jordi Ballester Alomar <jordi.ballester@eficent.com>
+* `ForgeFlow <https://www.forgeflow.com>`_:
+
+  * Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
 
 * `Tecnativa <https://www.tecnativa.com>`_:
 

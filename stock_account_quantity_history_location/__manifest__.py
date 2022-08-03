@@ -10,7 +10,7 @@
         modules""",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "author": "Eficent, Odoo Community Association (OCA)",
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": ["stock_account", "stock_quantity_history_location"],
     "data": ["wizards/stock_quantity_history.xml"],
