@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_comment_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2019-07-05 04:43+0000\n"
+"Last-Translator: Yoshi Tashiro <tashiro@roomsfor.hk>\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.7.1\n"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__note2
+msgid "Bottom Comment"
+msgstr "下部コメント"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template2_id
+msgid "Bottom Comment Template"
+msgstr "下部コメントテンプレート"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Bottom Comments"
+msgstr "下部コメント"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Comments"
+msgstr "コメント"
+
+#. module: stock_picking_comment_template
+#: model:ir.model,name:stock_picking_comment_template.model_res_partner
+msgid "Contact"
+msgstr "連絡先"
+
+#. module: stock_picking_comment_template
+#: model:ir.ui.menu,name:stock_picking_comment_template.menu_base_comment_template_picking
+msgid "Document Comments"
+msgstr "ドキュメントコメント"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Load a template"
+msgstr "テンプレートをロード"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_partner__comment_template_id
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_res_users__comment_template_id
+#, fuzzy
+msgid "Picking conditions template"
+msgstr "条件テンプレート"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid ""
+"The comments will be displayed on the printed document. You can load a "
+"predefined template, write your own text or load a template and then modify "
+"it only for this document."
+msgstr ""
+"コメントは印刷されるドキュメントに表示されます。直接テキストを入力するか、既"
+"存のテンプレートをロードして内容を修正するなどしてください。"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__note1
+msgid "Top Comment"
+msgstr "上部コメント"
+
+#. module: stock_picking_comment_template
+#: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template1_id
+msgid "Top Comment Template"
+msgstr "上部コメントテンプレート"
+
+#. module: stock_picking_comment_template
+#: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
+msgid "Top Comments"
+msgstr "上部コメント"
+
+#. module: stock_picking_comment_template
+#: model:ir.model,name:stock_picking_comment_template.model_stock_picking
+msgid "Transfer"
+msgstr "運送"

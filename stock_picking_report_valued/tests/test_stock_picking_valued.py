@@ -101,7 +101,7 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_total, 115.0)
 
     def test_02_confirm_order(self):
-        """ Valued picking isn't computed if not reserved """
+        """Valued picking isn't computed if not reserved"""
         self.sale_order.action_confirm()
         for picking in self.sale_order.picking_ids:
             picking.action_assign()
@@ -129,3 +129,14 @@ class TestStockPickingValued(common.SavepointCase):
             self.assertEqual(picking.amount_untaxed, 300.0)
             self.assertEqual(picking.amount_tax, 40.0)
             self.assertEqual(picking.amount_total, 340.0)
+
+    def test_05_distinct_qty(self):
+        self.assertTrue(self.partner.valued_picking)
+        self.sale_order.action_confirm()
+        self.assertTrue(len(self.sale_order.picking_ids))
+        for picking in self.sale_order.picking_ids:
+            picking.action_assign()
+            picking.move_line_ids.qty_done = 2.0
+            self.assertEqual(picking.amount_untaxed, 200.0)
+            self.assertEqual(picking.amount_tax, 30.0)
+            self.assertEqual(picking.amount_total, 230.0)
