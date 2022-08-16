@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template
+        id="report_delivery_document_description"
+        inherit_id="stock.report_delivery_document"
+        priority="99"
+        primary="True"
+    >
+        <xpath
+            expr="//table[@name='stock_move_table']//span[@t-field='move.product_id']"
+            position="attributes"
+        >
+            <attribute name="t-field">move.name</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-foreach='packages']//t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
+            position="attributes"
+        >
+            <attribute
+                name="t-call"
+            >stock_picking_report_custom_description.stock_report_delivery_has_serial_move_line_description</attribute>
+        </xpath>
+        <xpath
+            expr="//tr[@t-foreach='move_lines']//t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
+            position="attributes"
+        >
+            <attribute
+                name="t-call"
+            >stock_picking_report_custom_description.stock_report_delivery_has_serial_move_line_description</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@name='aggregated_move_lines']/..//t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
+            position="attributes"
+        >
+            <attribute
+                name="t-call"
+            >stock_picking_report_custom_description.stock_report_delivery_has_serial_move_line_description</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line_description"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+        priority="99"
+        primary="True"
+    >
+        <span t-field="move_line.product_id" position="attributes">
+            <attribute name="t-field">move_line.move_id.name</attribute>
+        </span>
+    </template>
+
+    <template id="report_deliveryslip_description">
+        <t t-foreach="docs" t-as="o">
+            <t
+                t-call="stock_picking_report_custom_description.report_delivery_document_description"
+                t-lang="o.partner_id.lang"
+            />
+        </t>
+    </template>
+
+</odoo>
