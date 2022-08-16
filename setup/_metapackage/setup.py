@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo14-addon-stock_card_report',
         'odoo14-addon-stock_picking_comment_template',
         'odoo14-addon-stock_picking_group_by_partner_by_carrier_sale_line_position',
+        'odoo14-addon-stock_picking_report_custom_description',
         'odoo14-addon-stock_picking_report_valued',
         'odoo14-addon-stock_quantity_history_location',
     ],
