@@ -1,6 +1,6 @@
 {
     "name": "Stock Inventory Valuation Pivot",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "summary": "Add pivot view to the stock inventory valuation report",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
