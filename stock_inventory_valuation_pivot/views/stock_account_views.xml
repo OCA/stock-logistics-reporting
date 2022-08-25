@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_inventory_valuation_search" model="ir.ui.view">
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.view_inventory_valuation_search" />
+        <field name="arch" type="xml">
+            <field name="product_tmpl_id" position="after">
+                <field
+                    string="Date Before"
+                    name="create_date"
+                    filter_domain="[('create_date', '&lt;', self)]"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_view_pivot" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.pivot</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="product_id" type="row" />
+                <field name="value" type="measure" />
+                <field name="quantity" type="measure" />
+            </pivot>
+        </field>
+   </record>
+
+    <record
+        id="stock_account.stock_valuation_layer_action"
+        model="ir.actions.act_window"
+    >
+        <field name="view_mode">tree,form,pivot</field>
+    </record>
+</odoo>
