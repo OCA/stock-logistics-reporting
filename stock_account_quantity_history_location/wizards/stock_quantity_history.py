@@ -29,21 +29,23 @@ class StockQuantityHistory(models.TransientModel):
             )
             action["context"] = ctx
             if self.env.context.get("active_model") == "stock.valuation.layer":
+                operator = "child_of" if self.include_child_locations else "="
                 action["domain"] = expression.AND(
                     [
                         action["domain"],
-                        [("stock_move_id.location_dest_id", "=", self.location_id.id)],
+                        [
+                            "|",
+                            (
+                                "stock_move_id.location_dest_id",
+                                operator,
+                                self.location_id.id,
+                            ),
+                            (
+                                "stock_move_id.location_id",
+                                operator,
+                                self.location_id.id,
+                            ),
+                        ],
                     ]
-                )
-        else:
-            # Show 0 quantities on Inventory Valuation to display Account Valuation
-            # anomalies, such as, non 0 stock_value on cost_method FIFO
-            if self.env.context.get("active_model") == "stock.valuation.layer":
-                action["domain"] = expression.AND(
-                    [action["domain"], [("quantity", "!=", 0)]]
-                )
-            else:
-                action["domain"] = expression.AND(
-                    [action["domain"], [("qty_available", "!=", 0)]]
                 )
         return action
