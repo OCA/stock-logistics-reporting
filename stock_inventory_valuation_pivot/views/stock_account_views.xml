@@ -27,12 +27,6 @@
    </record>
 
     <record
-        id="stock_account.action_stock_inventory_valuation"
-        model="ir.actions.act_window"
-    >
-        <field name="view_mode">tree,form,pivot</field>
-    </record>
-    <record
         id="stock_account.stock_valuation_layer_action"
         model="ir.actions.act_window"
     >
