@@ -20,7 +20,8 @@ class StockMoveLine(models.Model):
         related="sale_line.tax_id", readonly=True, string="Sale Tax"
     )
     sale_price_unit = fields.Float(
-        related="sale_line.price_unit", readonly=True, string="Sale price unit"
+        compute="_compute_sale_order_line_fields",
+        readonly=True,
     )
     sale_discount = fields.Float(
         related="sale_line.discount", readonly=True, string="Sale discount (%)"
@@ -49,11 +50,16 @@ class StockMoveLine(models.Model):
         """
         for line in self:
             sale_line = line.sale_line
+            sale_line_uom = sale_line.product_uom
             price_unit = (
                 sale_line.price_subtotal / sale_line.product_uom_qty
                 if sale_line.product_uom_qty
                 else sale_line.price_reduce
             )
+            if sale_line_uom != line.product_uom_id:
+                price_unit = sale_line_uom._compute_price(
+                    price_unit, line.product_uom_id
+                )
             taxes = line.sale_tax_id.compute_all(
                 price_unit=price_unit,
                 currency=line.currency_id,
@@ -75,5 +81,6 @@ class StockMoveLine(models.Model):
                     "sale_price_subtotal": taxes["total_excluded"],
                     "sale_price_tax": price_tax,
                     "sale_price_total": taxes["total_included"],
+                    "sale_price_unit": price_unit,
                 }
             )
