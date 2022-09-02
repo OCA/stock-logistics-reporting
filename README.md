@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 15.0.1.0.0 |  | Adds the sale line position to the delivery report lines
 [stock_account_valuation_report](stock_account_valuation_report/) | 15.0.1.0.0 |  | Improves logic of the Inventory Valuation Report
 [stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.0.1 |  | Adding Valued Picking on Delivery Slip report
+[stock_report_quantity_by_location](stock_report_quantity_by_location/) | 15.0.1.0.0 |  | Stock Report Quantity By Location
 
 [//]: # (end addons)
 
