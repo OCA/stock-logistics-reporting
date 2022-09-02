@@ -21,7 +21,9 @@ class StockMoveLine(models.Model):
         related="sale_line.tax_id", readonly=True, string="Sale Tax"
     )
     sale_price_unit = fields.Float(
-        related="sale_line.price_unit", readonly=True, string="Sale price unit"
+        compute="_compute_sale_order_line_fields",
+        readonly=True,
+        string="Sale price unit",
     )
     sale_discount = fields.Float(
         related="sale_line.discount", readonly=True, string="Sale discount (%)"
@@ -54,6 +56,7 @@ class StockMoveLine(models.Model):
         for line in self:
             quantity = line._get_report_valued_quantity()
             valued_line = line.sale_line
+            sale_line_uom = valued_line.product_uom
             # If order line quantity don't match with move line quantity compute values
             if valued_line and float_compare(
                 quantity,
@@ -68,6 +71,10 @@ class StockMoveLine(models.Model):
                 valued_line.product_uom_qty = quantity
                 # Force original price unit to avoid pricelist recomputed (not needed)
                 valued_line.price_unit = line.sale_line.price_unit
+            if sale_line_uom != line.product_uom_id:
+                valued_line.price_unit = sale_line_uom._compute_price(
+                    valued_line.price_unit, line.product_uom_id
+                )
             line.update(
                 {
                     "sale_tax_description": ", ".join(
@@ -76,5 +83,6 @@ class StockMoveLine(models.Model):
                     "sale_price_subtotal": valued_line.price_subtotal,
                     "sale_price_tax": valued_line.price_tax,
                     "sale_price_total": valued_line.price_total,
+                    "sale_price_unit": valued_line.price_unit,
                 }
             )
