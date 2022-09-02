@@ -79,6 +79,11 @@ msgid "Sale Currency"
 msgstr ""
 
 #. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
+msgid "Sale Price Unit"
+msgstr ""
+
+#. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_id
 msgid "Sale Tax"
 msgstr ""
@@ -86,11 +91,6 @@ msgstr ""
 #. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_discount
 msgid "Sale discount (%)"
-msgstr ""
-
-#. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
-msgid "Sale price unit"
 msgstr ""
 
 #. module: stock_picking_report_valued
