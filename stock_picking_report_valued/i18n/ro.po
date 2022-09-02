@@ -83,6 +83,11 @@ msgid "Sale Currency"
 msgstr "Moneda vânzării"
 
 #. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
+msgid "Sale Price Unit"
+msgstr ""
+
+#. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_id
 msgid "Sale Tax"
 msgstr "TVA"
@@ -91,11 +96,6 @@ msgstr "TVA"
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_discount
 msgid "Sale discount (%)"
 msgstr "Discount (%)"
-
-#. module: stock_picking_report_valued
-#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
-msgid "Sale price unit"
-msgstr "Preţ unitar"
 
 #. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_description
@@ -137,3 +137,6 @@ msgstr "Transfer preţuit"
 #: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
 msgid "You can select which partners have valued pickings"
 msgstr "Puteţi selecta partenerii cu transferuri preţuite"
+
+#~ msgid "Sale price unit"
+#~ msgstr "Preţ unitar"
