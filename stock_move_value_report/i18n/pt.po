@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_move_value_report
+# 	* stock_move_value_report
 #
 msgid ""
 msgstr ""
@@ -107,14 +107,8 @@ msgstr "<strong>Valor</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Inventory"
 msgstr "Inventário"
-
-#. module: stock_move_value_report
-#: model:ir.actions.report,name:stock_move_value_report.action_report_stock_inventory_value
-msgid "Inventory Operations Cost Value"
-msgstr "Custo das Operações de Inventário"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
@@ -152,3 +146,6 @@ msgstr "Custo das Operações de Refugo"
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
 msgstr "Custo das operações selecionadas"
+
+#~ msgid "Inventory Operations Cost Value"
+#~ msgstr "Custo das Operações de Inventário"
