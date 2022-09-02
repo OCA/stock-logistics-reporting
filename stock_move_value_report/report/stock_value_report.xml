@@ -41,14 +41,4 @@
         paperformat="base.paperformat_euro"
     />
 
-    <report
-        string="Inventory Operations Cost Value"
-        id="action_report_stock_inventory_value"
-        model="stock.inventory"
-        report_type="qweb-pdf"
-        name="stock_move_value_report.report_stock_inventory_value"
-        file="stock_move_value_report.report_stock_inventory_value"
-        paperformat="base.paperformat_euro"
-    />
-
 </odoo>

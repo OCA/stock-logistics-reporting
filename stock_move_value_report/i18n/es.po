@@ -107,14 +107,8 @@ msgstr "<strong>Valor</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Inventory"
 msgstr "Inventario"
-
-#. module: stock_move_value_report
-#: model:ir.actions.report,name:stock_move_value_report.action_report_stock_inventory_value
-msgid "Inventory Operations Cost Value"
-msgstr "Valor de Coste de Operaciones de Iventario"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
@@ -152,3 +146,6 @@ msgstr "Valor de Coste de Operaciones de Desecho"
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
 msgstr "Valor de Coste de Operaciones Seleccionadas"
+
+#~ msgid "Inventory Operations Cost Value"
+#~ msgstr "Valor de Coste de Operaciones de Iventario"
