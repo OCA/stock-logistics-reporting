@@ -53,25 +53,35 @@ class StockMoveLine(models.Model):
         access to sales orders (stricter warehouse users, inter-company
         records...).
         """
+        self.sale_tax_description = False
+        self.sale_price_subtotal = False
+        self.sale_price_tax = False
+        self.sale_price_total = False
+        self.sale_price_unit = False
         for line in self:
-            quantity = line._get_report_valued_quantity()
             valued_line = line.sale_line
+            if not valued_line:
+                continue
+            quantity = line._get_report_valued_quantity()
             sale_line_uom = valued_line.product_uom
+            different_uom = valued_line.product_uom != line.product_uom_id
             # If order line quantity don't match with move line quantity compute values
-            if float_compare(
+            different_qty = float_compare(
                 quantity,
                 line.sale_line.product_uom_qty,
                 precision_rounding=line.product_uom_id.rounding,
-            ):
+            )
+            if different_uom or different_qty:
                 # Force read to cache M2M field for get values with _convert_to_write
                 line.sale_line.mapped("tax_id")
                 # Create virtual sale line with stock move line quantity
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
                 valued_line = line.sale_line.new(sol_vals)
                 valued_line.product_uom_qty = quantity
+            if different_qty:
                 # Force original price unit to avoid pricelist recomputed (not needed)
                 valued_line.price_unit = line.sale_line.price_unit
-            if sale_line_uom != line.product_uom_id:
+            if different_uom:
                 valued_line.price_unit = sale_line_uom._compute_price(
                     valued_line.price_unit, line.product_uom_id
                 )
