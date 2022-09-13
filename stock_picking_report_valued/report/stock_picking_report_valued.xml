@@ -90,9 +90,7 @@
                         <span t-field="move_line.product_uom_qty" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
-                <t
-                    t-elif="move_line.picking_id.state == 'done' and move_line.product_uom_qty == 0"
-                >
+                <t t-elif="move_line.picking_id.state == 'done'">
                     <td class="text-right">
                         <span t-field="move_line.qty_done" />
                         <span t-field="move_line.product_uom_id" /></td>
