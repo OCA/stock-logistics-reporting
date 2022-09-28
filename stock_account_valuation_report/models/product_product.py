@@ -67,17 +67,24 @@ class ProductProduct(models.Model):
     def _compute_inventory_value(self):
         self.env["account.move.line"].check_access_rights("read")
         to_date = self.env.context.get("at_date", False)
+        include_draft_entries = self.env.context.get("include_draft_entries", False)
         accounting_values = {}
         layer_values = {}
         # pylint: disable=E8103
-        query = """
+        query = (
+            """
             SELECT aml.product_id, aml.account_id,
             sum(aml.balance), sum(quantity),
             array_agg(aml.id)
             FROM account_move_line AS aml
+            INNER JOIN account_move AS am ON am.id = aml.move_id
             WHERE aml.product_id IN %%s
+            AND am.state """
+            + ("IN ('draft', 'posted')" if include_draft_entries else "= 'posted'")
+            + """
             AND aml.company_id=%%s %s
             GROUP BY aml.product_id, aml.account_id"""
+        )
         params = (
             tuple(
                 self._ids,

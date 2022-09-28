@@ -14,6 +14,7 @@ class StockValuationHistory(models.TransientModel):
         help="Choose a date to get the valuation at that date",
         default=fields.Datetime.now,
     )
+    include_draft_entries = fields.Boolean()
 
     def open_at_date(self):
         action = self.env["ir.actions.act_window"]._for_xml_id(
@@ -32,5 +33,6 @@ class StockValuationHistory(models.TransientModel):
         if self.inventory_datetime:
             action_context = safe_eval(action["context"])
             action_context["at_date"] = self.inventory_datetime
+            action_context["include_draft_entries"] = self.include_draft_entries
             action["context"] = action_context
         return action
