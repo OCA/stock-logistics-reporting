@@ -7,6 +7,7 @@
             <form string="Choose your date">
                 <group>
                     <field name="inventory_datetime" />
+                    <field name="include_draft_entries" />
                 </group>
                 <footer>
                     <button
