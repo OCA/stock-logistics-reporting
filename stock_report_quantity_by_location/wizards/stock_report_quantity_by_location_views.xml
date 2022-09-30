@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2019 Eficent Business and IT Consulting Services, S.L.
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="stock_report_quantity_by_location_prepare_form_view" model="ir.ui.view">
+        <field name="name">Stock Report Quantity By Location Prepare</field>
+        <field name="model">stock.report.quantity.by.location.prepare</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="location_ids" widget="many2many_tags" />
+                    </group>
+                    <group>
+                        <field name="with_quantity" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="open"
+                        string="Retrieve the Inventory Quantities"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record
+        id="action_stock_report_quantity_by_location_prepare"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Inventory By Location</field>
+        <field name="res_model">stock.report.quantity.by.location.prepare</field>
+        <field name="view_mode">form</field>
+        <field
+            name="view_id"
+            ref="stock_report_quantity_by_location_prepare_form_view"
+        />
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        id="menu_quantity_by_location"
+        name="Inventory by Location"
+        parent="stock.menu_warehouse_report"
+        action="action_stock_report_quantity_by_location_prepare"
+        groups="stock.group_stock_manager"
+    />
+
+    <record id="stock_report_quantity_by_location_tree_view" model="ir.ui.view">
+        <field name="name">Stock Report Quantity By Location Form</field>
+        <field name="model">stock.report.quantity.by.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id" />
+                <field name="location_id" />
+                <field name="quantity_on_hand" />
+                <field name="quantity_reserved" />
+                <field name="quantity_unreserved" />
+                <field name="uom_id" groups="uom.group_uom" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_report_quantity_by_location_pivot_view" model="ir.ui.view">
+        <field name="name">Stock Report Quantity By Location Pivot</field>
+        <field name="model">stock.report.quantity.by.location</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock by Location" disable_linking="True">
+                <field name="product_id" type="row" />
+                <field name="location_id" type="col" />
+                <field name="quantity_on_hand" type="measure" />
+                <field name="quantity_reserved" type="measure" />
+                <field name="quantity_unreserved" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+     <record id="stock_report_quantity_by_location_search_view" model="ir.ui.view">
+        <field name="name">Stock Report Quantity By Location Search</field>
+        <field name="model">stock.report.quantity.by.location</field>
+        <field name="arch" type="xml">
+            <search string="Search Stock Report Quantity by Location">
+                <field name="product_id" />
+                <field name="default_code" />
+                <field name="location_id" groups="stock.group_stock_multi_locations" />
+                <field name="product_category_id" />
+                <filter
+                    name="quantity_gt_zero"
+                    string="Quantity On Hand > 0"
+                    domain="[('quantity_on_hand', '>', '0.0')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="location"
+                        string="Location"
+                        domain="[]"
+                        context="{'group_by':'location_id'}"
+                        help="Group by Location"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
