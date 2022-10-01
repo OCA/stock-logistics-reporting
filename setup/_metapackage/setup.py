@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_comment_template',
         'odoo12-addon-stock_picking_product_label',
         'odoo12-addon-stock_picking_report_custom_description',
+        'odoo12-addon-stock_picking_report_summary',
         'odoo12-addon-stock_picking_report_undelivered_product',
         'odoo12-addon-stock_picking_report_valued',
         'odoo12-addon-stock_picking_report_valued_sale_mrp',
