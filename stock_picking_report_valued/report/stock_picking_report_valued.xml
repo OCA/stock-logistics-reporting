@@ -18,6 +18,13 @@
                 <th class="text-right"><strong>Taxes</strong></th>
             </t>
         </xpath>
+        <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
+            <attribute
+                name="t-if"
+                add="and not (o.valued or o.sale_id or o.move_line_ids)"
+                separator=" "
+            />
+        </xpath>
         <xpath
             expr="//t[@t-foreach='packages']//t[@t-if='has_serial_number']"
             position="attributes"
@@ -83,7 +90,7 @@
         id="valued_report_picking_has_serial_move_line"
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
-        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="after">
+        <xpath expr="//td[@name='move_line_lot_qty_done']" position="after">
             <t t-if="o.valued and o.sale_id and o.move_line_ids">
                 <t t-if="move_line.picking_id.state != 'done'">
                     <td class="text-right">
@@ -91,7 +98,7 @@
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
                 <t t-elif="move_line.picking_id.state == 'done'">
-                    <td class="text-right">
+                    <td class="text-center">
                         <span t-field="move_line.qty_done" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
@@ -106,6 +113,13 @@
                         t-field="move_line.sale_tax_description"
                     /></td>
             </t>
+        </xpath>
+        <xpath expr="//td[@name='move_line_lot_qty_done']" position="attributes">
+            <attribute
+                name="t-if"
+                add="not (o.valued or o.sale_id or o.move_line_ids)"
+                separator=" "
+            />
         </xpath>
     </template>
 
