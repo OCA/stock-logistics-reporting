@@ -41,7 +41,7 @@ class Product(models.Model):
             for x in self}
 
     def _compute_inventory_turn_report(self):
-        month = relativedelta(month=1)
+        month = relativedelta(months=1)
         today = fields.Date.today()
         at_6m_ago = today - 6 * month
         at_12m_ago = today - 12 * month
