@@ -24,6 +24,7 @@ class StockMoveLine(models.Model):
         compute="_compute_sale_order_line_fields",
         readonly=True,
         string="Sale price unit",
+        compute_sudo=True,
     )
     sale_discount = fields.Float(
         related="sale_line.discount", readonly=True, string="Sale discount (%)"
