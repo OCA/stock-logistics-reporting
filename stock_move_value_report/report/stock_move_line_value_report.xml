@@ -53,10 +53,12 @@
                         <span t-field="move_line.product_uom_id"/>
                     </td>
                     <td class="text-right">
-                        <span t-field="move_line.move_id.price_unit" t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
+                        <span t-esc="move_line.move_id.value / move_line.qty_done"
+                              t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
                     </td>
                     <td class="text-right">
-                        <span t-esc="move_line.move_id.price_unit * move_line.qty_done" t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
+                        <span t-field="move_line.move_id.value"
+                              t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
                     </td>
                 </tr>
             </tbody>
@@ -71,7 +73,8 @@
                         <tr class="border-black">
                             <td><strong>Total</strong></td>
                             <td class="text-right">
-                                <span t-esc="sum([x.move_id.price_unit * x.qty_done for x in move_lines])" t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
+                                <span t-esc="sum([x.move_id.value for x in move_lines])"
+                                      t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
                             </td>
                         </tr>
                     </table>
@@ -145,7 +148,8 @@
                                 <tr class="border-black">
                                     <td><strong>Total operations value balance</strong></td>
                                     <td class="text-right">
-                                        <strong t-esc="sum([x.move_id.price_unit * x.qty_done for x in move_lines_ids])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        <strong t-esc="sum([x.move_id.value for x in move_lines_ids])"
+                                                t-options="{'widget': 'monetary', 'display_currency': currency_id}"/>
                                     </td>
                                 </tr>
                             </table>
