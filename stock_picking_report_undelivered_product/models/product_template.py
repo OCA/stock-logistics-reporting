@@ -7,6 +7,4 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    display_undelivered_in_picking = fields.Boolean(
-        string="Display undelivered in picking", default=True
-    )
+    display_undelivered_in_picking = fields.Boolean(default=True)
