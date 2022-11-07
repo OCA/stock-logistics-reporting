@@ -7,6 +7,4 @@ from odoo import fields, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    display_undelivered_in_picking = fields.Boolean(
-        string="Display undelivered in picking", default=True
-    )
+    display_undelivered_in_picking = fields.Boolean(default=True)
