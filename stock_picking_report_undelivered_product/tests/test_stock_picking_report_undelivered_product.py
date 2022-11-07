@@ -75,7 +75,9 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
     def _transfer_picking_no_backorder(self, picking):
         # Transfer picking with no create backorder option
         backorder_wizard = self.BackOrderWiz.create({"pick_ids": [(4, picking.id)]})
-        backorder_wizard.process_cancel_backorder()
+        backorder_wizard.with_context(
+            button_validate_picking_ids=picking.id
+        ).process_cancel_backorder()
 
     def test_displayed_customer(self):
         picking = self._create_picking(self.partner_display)
@@ -86,7 +88,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertIn("undelivered_product", str(res[0]))
 
@@ -99,7 +101,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertNotIn("undelivered_product", str(res[0]))
 
@@ -115,7 +117,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertNotIn("undelivered_product", str(res[0]))
 
@@ -162,7 +164,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertIn("test02", str(res[0]))
 
@@ -171,7 +173,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertIn("test02", str(res[0]))
 
@@ -182,7 +184,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertNotIn("test02", str(res[0]))
 
@@ -193,6 +195,6 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         res = (
             self.env["ir.actions.report"]
             ._get_report_from_name("stock.report_deliveryslip")
-            .render_qweb_html(picking.ids)
+            ._render_qweb_html(picking.ids)
         )
         self.assertNotIn("partially_undelivered_line", str(res[0]))
