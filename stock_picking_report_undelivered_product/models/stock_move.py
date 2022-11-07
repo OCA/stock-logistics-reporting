@@ -15,6 +15,6 @@ class StockMove(models.Model):
         """
         Store origin stock move which create splitted move.
         """
-        vals = super(StockMove, self)._prepare_move_split_vals(qty)
+        vals = super()._prepare_move_split_vals(qty)
         vals["splitted_stock_move_orig_id"] = self.id
         return vals
