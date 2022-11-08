@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,6 +49,14 @@ msgid "Contact"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_product__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_template__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_partner__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_users__display_undelivered_in_picking
+msgid "Display Undelivered In Picking"
+msgstr ""
+
+#. module: stock_picking_report_undelivered_product
 #: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__all
 msgid "Display all undelivered product lines"
 msgstr ""
@@ -64,17 +72,14 @@ msgid "Display only partially undelivered product lines"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_product__display_undelivered_in_picking
-#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_template__display_undelivered_in_picking
-#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_partner__display_undelivered_in_picking
-#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_users__display_undelivered_in_picking
-msgid "Display undelivered in picking"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
 #: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_company__undelivered_product_slip_report_method
 #: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_config_settings__undelivered_product_slip_report_method
 msgid "Method to display undelivered product lines in report picking"
+msgstr ""
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
