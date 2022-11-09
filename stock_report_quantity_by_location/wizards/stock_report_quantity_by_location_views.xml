@@ -60,6 +60,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                 <field name="quantity_on_hand" />
                 <field name="quantity_reserved" />
                 <field name="quantity_unreserved" />
+                <field name="quantity_available" />
                 <field name="uom_id" groups="uom.group_uom" />
             </tree>
         </field>
@@ -75,6 +76,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                 <field name="quantity_on_hand" type="measure" />
                 <field name="quantity_reserved" type="measure" />
                 <field name="quantity_unreserved" type="measure" />
+                <field name="quantity_available" type="measure" />
             </pivot>
         </field>
     </record>

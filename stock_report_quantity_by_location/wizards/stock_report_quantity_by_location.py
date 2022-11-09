@@ -53,7 +53,11 @@ class StockReportByLocationPrepare(models.TransientModel):
                     "quantity_unreserved": qty_unreserved,
                 }
                 mapping.setdefault(quant_group["product_id"][0], qty_dict)
-            products = self.env["product.product"].search([("type", "=", "product")])
+            products = (
+                self.env["product.product"]
+                .with_context(location=loc.id)
+                .search([("type", "=", "product")])
+            )
             vals_list = []
             for product in products:
                 qty_dict = mapping.get(product.id, {})
@@ -69,6 +73,7 @@ class StockReportByLocationPrepare(models.TransientModel):
                             "quantity_on_hand": qty_on_hand,
                             "quantity_reserved": qty_reserved,
                             "quantity_unreserved": qty_unreserved,
+                            "quantity_available": product.virtual_available,
                             "location_id": loc.id,
                             "wiz_id": self.id,
                             "default_code": product.default_code,
@@ -91,5 +96,6 @@ class StockReportQuantityByLocation(models.TransientModel):
     quantity_on_hand = fields.Float(string="Qty On Hand")
     quantity_reserved = fields.Float(string="Qty Reserved")
     quantity_unreserved = fields.Float(string="Qty Unreserved")
+    quantity_available = fields.Float(string="Qty Available")
     uom_id = fields.Many2one(comodel_name="uom.uom", string="Product UoM")
     default_code = fields.Char("Internal Reference")
