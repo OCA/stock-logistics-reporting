@@ -41,7 +41,7 @@ class TestStockQuantityHistoryLocation(TestCommon):
         )
         action = wizard.with_context(company_owned=True).open_at_date()
         self.assertEqual(
-            self.product.with_context(action["context"]).qty_available, 100.0
+            self.product.with_context(**action["context"]).qty_available, 100.0
         )
         self.assertEqual(
             self.product.with_context(
