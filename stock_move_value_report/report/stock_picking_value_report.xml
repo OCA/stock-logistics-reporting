@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_stock_picking_value_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-6">
+                            <div
+                                t-if="picking.move_lines and picking.move_lines[0].partner_id and picking.move_lines[0].partner_id.id != picking.partner_id.id"
+                            >
+                                <span><strong>Delivery Address:</strong></span>
+                                <div
+                                    t-field="picking.move_lines[0].partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                                />
+                            </div>
+                            <div
+                                t-if="picking.picking_type_id.code != 'internal' and (not picking.move_lines or not picking.move_lines[0].partner_id) and picking.picking_type_id.warehouse_id.partner_id"
+                            >
+                                <span><strong>Warehouse Address:</strong></span>
+                                <div
+                                    t-field="picking.picking_type_id.warehouse_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                                />
+                            </div>
+                        </div>
+                        <div class="offset-1 col-5">
+                            <div
+                                t-if="picking.picking_type_id.code=='incoming' and picking.partner_id"
+                            >
+                                <span><strong>Partner Address:</strong></span>
+                            </div>
+                            <div
+                                t-if="picking.picking_type_id.code=='internal' and picking.partner_id"
+                            >
+                                <span><strong>Warehouse Address:</strong></span>
+                            </div>
+                            <div
+                                t-if="picking.picking_type_id.code=='outgoing' and picking.partner_id"
+                            >
+                                <span><strong>Customer Address:</strong></span>
+                            </div>
+                            <div t-if="picking.partner_id" name="partner_header">
+                                <div
+                                    t-field="picking.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                                />
+                                <p t-if="picking.sudo().partner_id.vat"><t
+                                        t-esc="picking.company_id.country_id.vat_label or 'TIN'"
+                                    />: <span
+                                        t-field="picking.sudo().partner_id.vat"
+                                    /></p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <h1 t-field="picking.name" class="mt0 float-left" />
+                    <div class="clearfix" />
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th t-if="picking.origin"><strong
+                                    >Order (Origin)</strong></th>
+                                <th><strong>State</strong></th>
+                                <th><strong>Commitment Date</strong></th>
+                                <th name="td_sched_date_h"><strong
+                                    >Scheduled Date</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td t-if="picking.origin">
+                                    <span t-field="picking.origin" />
+                                </td>
+                                <td>
+                                    <span t-field="picking.state" />
+                                </td>
+                                <td>
+                                    <span t-field="picking.date" />
+                                </td>
+                                <td name="td_sched_date">
+                                    <span t-field="picking.scheduled_date" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <h4>[<t t-esc="picking.location_id.name" /> &#8594; <t
+                            t-esc="picking.location_dest_id.name"
+                        />]</h4>
+                    <t t-call="stock_move_value_report.stock_move_lines_value">
+                        <t t-set="move_lines" t-value="picking.move_line_ids" />
+                        <t
+                            t-set="currency_id"
+                            t-value="picking.company_id.currency_id"
+                        />
+                    </t>
+                    <br />
+                    <t t-call="stock_move_value_report.stock_move_lines_value_total">
+                        <t t-set="move_lines" t-value="picking.move_line_ids" />
+                        <t
+                            t-set="currency_id"
+                            t-value="picking.company_id.currency_id"
+                        />
+                    </t>
+                    <p t-esc="picking.note" />
+                </div>
+            </t>
+         </t>
+    </template>
+
+    <template id="report_stock_picking_value">
+        <t t-foreach="docs" t-as="picking">
+            <t t-call="stock_move_value_report.report_stock_picking_value_document" />
+        </t>
+    </template>
+
+</odoo>

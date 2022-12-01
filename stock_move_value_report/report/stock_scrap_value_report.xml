@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_stock_scrap_value_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1 class="mt0 float-left">Scrap <t t-esc="scrap.name" /></h1>
+                    <div class="clearfix" />
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th><strong>Location</strong></th>
+                                <th t-if="scrap.origin"><strong
+                                    >Source Document</strong></th>
+                                <th><strong>State</strong></th>
+                                <th><strong>Date</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span t-field="scrap.location_id.name" />
+                                </td>
+                                <td t-if="scrap.origin">
+                                    <span t-field="scrap.origin" />
+                                </td>
+                                <td>
+                                    <span t-field="scrap.state" />
+                                </td>
+                                <td name="td_sched_date">
+                                    <span
+                                        t-esc="scrap.move_id and scrap.move_id.date"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    <t t-call="stock_move_value_report.stock_move_lines_value">
+                        <t
+                            t-set="move_lines"
+                            t-value="scrap.mapped('move_id.move_line_ids')"
+                        />
+                        <t t-set="currency_id" t-value="res_company.currency_id" />
+                    </t>
+                    <br />
+                    <t t-call="stock_move_value_report.stock_move_lines_value_total">
+                        <t
+                            t-set="move_lines"
+                            t-value="scrap.mapped('move_id.move_line_ids')"
+                        />
+                        <t t-set="currency_id" t-value="res_company.currency_id" />
+                    </t>
+                </div>
+            </t>
+         </t>
+    </template>
+
+    <template id="report_stock_scrap_value">
+        <t t-foreach="docs" t-as="scrap">
+            <t t-call="stock_move_value_report.report_stock_scrap_value_document" />
+        </t>
+    </template>
+
+</odoo>

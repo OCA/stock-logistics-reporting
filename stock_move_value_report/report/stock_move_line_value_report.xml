@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="stock_move_lines_value">
+        <table class="table table-sm mt4 mb0">
+            <t
+                t-set="has_serial_number"
+                t-value="move_lines.mapped('lot_id')"
+                groups="stock.group_production_lot"
+            />
+            <thead>
+                <tr>
+                    <th name="th_product">
+                        <strong>Product</strong>
+                    </th>
+                    <th name="th_lot" t-if="has_serial_number">
+                        Lot/Serial Number
+                    </th>
+                    <th name="th_qty" class="text-center">
+                        <strong>Quantity</strong>
+                    </th>
+                    <th name="th_value" class="text-right">
+                        <strong>Value</strong>
+                    </th>
+                    <th name="th_value_sbtl" class="text-right">
+                        <strong>Subtotal</strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach="move_lines" t-as="move_line">
+                    <td>
+                        <span t-field="move_line.product_id" />
+                        <span t-field="move_line.product_id.sudo().description" />
+                    </td>
+                    <t t-if="has_serial_number">
+                        <td>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <span t-field="move_line.lot_id" />
+                                        <t t-if="not move_line.lot_id">
+                                            <span t-field="move_line.lot_name" />
+                                        </t>
+                                    </td>
+                                    <td name="lot_qty">
+                                        <t t-if="move_line.product_qty">
+                                            <span t-field="move_line.product_qty" />
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </t>
+                    <td class="text-center">
+                        <span t-field="move_line.qty_done" />
+                        <span t-field="move_line.product_uom_id" />
+                    </td>
+                    <td class="text-right">
+                        <t
+                            t-set="valuation_layers"
+                            t-value="move_line.move_id.stock_valuation_layer_ids"
+                        />
+                        <t
+                            t-set="cost"
+                            t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                        />
+                        <span
+                            t-esc="cost"
+                            t-options="{'widget': 'monetary', 'display_currency': currency_id}"
+                        />
+                    </td>
+                    <td class="text-right">
+                        <span
+                            t-esc="cost * move_line.qty_done"
+                            t-options="{'widget': 'monetary', 'display_currency': currency_id}"
+                        />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="stock_move_lines_value_total">
+        <div class="clearfix">
+            <div id="total" class="row">
+                <div class="col-4 ml-auto">
+                    <table
+                        class="table table-sm"
+                        style="min-width: 250px;max-width: 400px;page-break-inside: avoid;"
+                    >
+                        <tr class="border-black">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                <t t-set="total" t-value="0" />
+                                <t t-foreach="move_lines" t-as="move_line">
+                                    <t
+                                        t-set="valuation_layers"
+                                        t-value="move_line.move_id.stock_valuation_layer_ids"
+                                    />
+                                    <t
+                                        t-set="cost"
+                                        t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                                    />
+                                    <t
+                                        t-set="total"
+                                        t-value="total + cost * move_line.qty_done"
+                                    />
+                                </t>
+                                <span
+                                    t-esc="total"
+                                    t-options="{'widget': 'monetary', 'display_currency': currency_id}"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_stock_move_value_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="mb48">Selected operations cost value</h2>
+                    <t
+                        t-set="ml_from_pickings"
+                        t-value="move_lines_ids.filtered('move_id.picking_id')"
+                    />
+                    <t t-set="ml_from_inventories" />
+                    <t
+                        t-set="ml_from_scraps"
+                        t-value="move_lines_ids.filtered('move_id.scrapped')"
+                    />
+                    <!-- ML From Pickings -->
+                    <t t-if="ml_from_pickings">
+                        <t
+                            t-set="pickings"
+                            t-value="ml_from_pickings.mapped('move_id.picking_id')"
+                        />
+                        <t t-foreach="pickings" t-as="picking">
+                            <t
+                                t-set="picking_move_lines"
+                                t-value="ml_from_pickings.filtered(lambda x: x.picking_id == picking)"
+                            />
+                            <h4><span>[<t t-esc="picking.date" />]</span> Picking <t
+                                    t-esc="picking.name"
+                                />: <t t-esc="picking.location_id.name" /> &#8594; <t
+                                    t-esc="picking.location_dest_id.name"
+                                /></h4>
+                            <t t-call="stock_move_value_report.stock_move_lines_value">
+                                <t t-set="move_lines" t-value="picking_move_lines" />
+                                <t
+                                    t-set="currency_id"
+                                    t-value="picking.company_id.currency_id"
+                                />
+                            </t>
+                            <t
+                                t-call="stock_move_value_report.stock_move_lines_value_total"
+                            >
+                                <t t-set="move_lines" t-value="picking_move_lines" />
+                                <t
+                                    t-set="currency_id"
+                                    t-value="picking.company_id.currency_id"
+                                />
+                            </t>
+                        </t>
+                    </t>
+                    <!-- ML From Scraps -->
+                    <t t-if="ml_from_scraps">
+                        <t
+                            t-set="scraps"
+                            t-value="move_lines_ids.mapped('move_id.scrap_ids').filtered(lambda x: x.move_id in ml_from_scraps.mapped('move_id'))"
+                        />
+                        <t t-foreach="scraps" t-as="scrap">
+                            <t
+                                t-set="scrap_move_lines"
+                                t-value="scrap.move_id.move_line_ids"
+                            />
+                            <h4><span>[<t t-esc="scrap.move_id.date" />]</span> Scrap <t
+                                    t-esc="scrap.name"
+                                />: <t t-esc="scrap.location_id.name" /> &#8594; <t
+                                    t-esc="scrap.scrap_location_id.name"
+                                /></h4>
+                            <t t-call="stock_move_value_report.stock_move_lines_value">
+                                <t t-set="move_lines" t-value="scrap_move_lines" />
+                                <t
+                                    t-set="currency_id"
+                                    t-value="res_company.currency_id"
+                                />
+                            </t>
+                            <t
+                                t-call="stock_move_value_report.stock_move_lines_value_total"
+                            >
+                                <t t-set="move_lines" t-value="scrap_move_lines" />
+                                <t
+                                    t-set="currency_id"
+                                    t-value="res_company.currency_id"
+                                />
+                            </t>
+                        </t>
+                    </t>
+                </div>
+                <!-- Total all moves -->
+                <div class="clearfix">
+                    <div id="total" class="row">
+                        <div class="col-4 ml-auto">
+                            <table
+                                class="table table-sm"
+                                style="min-width: 250px;max-width: 400px;page-break-inside: avoid;"
+                            >
+                                <tr class="border-black">
+                                    <td><strong
+                                        >Total operations value balance</strong></td>
+                                    <td class="text-right">
+                                        <strong
+                                            t-esc="sum([x.move_id.price_unit * x.qty_done for x in move_lines_ids])"
+                                            t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+         </t>
+    </template>
+
+    <template id="report_stock_move_line_value">
+        <t t-call="stock_move_value_report.report_stock_move_value_document">
+            <t t-set="move_lines_ids" t-value="docs" />
+            <t t-set="currency_id" t-value="res_company.currency_id" />
+        </t>
+    </template>
+
+</odoo>

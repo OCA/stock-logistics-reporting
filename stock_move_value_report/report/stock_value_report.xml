@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <report
+        string="Operations Cost Value Report"
+        id="action_report_stock_move_line_value"
+        model="stock.move.line"
+        report_type="qweb-pdf"
+        name="stock_move_value_report.report_stock_move_line_value"
+        file="stock_move_value_report.report_stock_move_line_value"
+        paperformat="base.paperformat_euro"
+    />
+
+    <report
+        string="Operations Cost Value Report"
+        id="action_report_stock_move_value"
+        model="stock.move"
+        report_type="qweb-pdf"
+        name="stock_move_value_report.report_stock_move_value"
+        file="stock_move_value_report.report_stock_move_value"
+        paperformat="base.paperformat_euro"
+    />
+
+    <report
+        string="Picking Operations Cost Value"
+        id="action_report_stock_picking_value"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="stock_move_value_report.report_stock_picking_value"
+        file="stock_move_value_report.report_stock_picking_value"
+        paperformat="base.paperformat_euro"
+    />
+
+    <report
+        string="Scrap Operations Cost Value"
+        id="action_report_stock_scrap_value"
+        model="stock.scrap"
+        report_type="qweb-pdf"
+        name="stock_move_value_report.report_stock_scrap_value"
+        file="stock_move_value_report.report_stock_scrap_value"
+        paperformat="base.paperformat_euro"
+    />
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_stock_move_value">
+        <t t-call="stock_move_value_report.report_stock_move_value_document">
+            <t t-set="move_lines_ids" t-value="docs.mapped('move_line_ids')" />
+            <t t-set="currency_id" t-value="res_company.currency_id" />
+        </t>
+    </template>
+
+</odoo>
