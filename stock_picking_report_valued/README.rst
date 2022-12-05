@@ -96,6 +96,10 @@ Contributors
 
   * Fernando La Chica <fernandolachica@gmail.com>
 
+* `Landoo <https://www.landoo.es>`_:
+
+  * Aritz Olea <ao@landoo.es>
+
 Maintainers
 ~~~~~~~~~~~
 
