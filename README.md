@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [stock_card_report](stock_card_report/) | 15.0.1.0.0 |  | Add stock card report on Inventory Reporting.
 [stock_move_value_report](stock_move_value_report/) | 15.0.1.0.0 |  | Stock Move Cost Value Report
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 15.0.1.0.0 |  | Display on picking report delivery slip undelivered products
-[stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.3.1 |  | Adding Valued Picking on Delivery Slip report
+[stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.4.0 |  | Adding Valued Picking on Delivery Slip report
 [stock_report_quantity_by_location](stock_report_quantity_by_location/) | 15.0.1.0.0 |  | Stock Report Quantity By Location
 
 [//]: # (end addons)
