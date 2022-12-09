@@ -95,10 +95,11 @@
                                     </tr>
                                 </t>
 
-                                <t t-if="picking_line.picking_id.note">
+                                <t t-if="picking_line.picking_id.print_summary_extra_info">
                                     <tr class="line">
                                         <td colspan="100%">
-                                            <span t-field="picking_line.picking_id.note" />
+                                            <span style="color: #666; font-style:italic;"
+                                                t-field="picking_line.picking_id.print_summary_extra_info" />
                                         </td>
                                     </tr>
                                 </t>
