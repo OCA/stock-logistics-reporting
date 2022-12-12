@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [stock_inventory_valuation_unit_cost](stock_inventory_valuation_unit_cost/) | 13.0.1.0.0 |  | Add Unit Cost on Inventory Valuation Report
 [stock_move_value_report](stock_move_value_report/) | 13.0.1.0.0 |  | Stock Move Cost Value Report
 [stock_picking_group_by_partner_by_carrier_sale_line_position](stock_picking_group_by_partner_by_carrier_sale_line_position/) | 13.0.1.0.2 |  | Glue module for sale position and delivery report grouped
+[stock_picking_report_custom_description](stock_picking_report_custom_description/) | 13.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Show moves description in picking reports
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 13.0.1.0.0 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 13.0.1.1.5 |  | Adding Valued Picking on Delivery Slip report
 [stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 13.0.1.0.2 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Allow to summarize the picking related with the selled kits
