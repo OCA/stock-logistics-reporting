@@ -25,7 +25,8 @@ Stock Picking Report Custom Description
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module allows to print moves description in picking reports.
+This module transfers the sales order line description to the picking, and
+allows to print such text on the picking reports.
 
 **Table of contents**
 
@@ -38,8 +39,13 @@ Usage
 To use this module, you need to:
 
 #. Create a sale order and set manual description in sale order lines.
-#. Go to *Inventory > Deliveries* and you can print the reports with move name
-   instead product name.
+#. Confirm the order.
+#. Navigate to the delivery through the smart-button.
+#. You can print the reports with move name instead product name on the specific
+   reports:
+
+   * Delivery Slip (Description).
+   * Picking Operations (Description)
 
 Bug Tracker
 ===========

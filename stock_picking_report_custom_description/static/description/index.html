@@ -368,7 +368,8 @@ ul.auto-toc {
 !! changes will be overwritten.                   !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/tree/15.0/stock_picking_report_custom_description"><img alt="OCA/stock-logistics-reporting" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/stock-logistics-reporting-15-0/stock-logistics-reporting-15-0-stock_picking_report_custom_description"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runboat.odoo-community.org/webui/builds.html?repo=OCA/stock-logistics-reporting&amp;target_branch=15.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module allows to print moves description in picking reports.</p>
+<p>This module transfers the sales order line description to the picking, and
+allows to print such text on the picking reports.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -387,8 +388,14 @@ ul.auto-toc {
 <p>To use this module, you need to:</p>
 <ol class="arabic simple">
 <li>Create a sale order and set manual description in sale order lines.</li>
-<li>Go to <em>Inventory &gt; Deliveries</em> and you can print the reports with move name
-instead product name.</li>
+<li>Confirm the order.</li>
+<li>Navigate to the delivery through the smart-button.</li>
+<li>You can print the reports with move name instead product name on the specific
+reports:<ul>
+<li>Delivery Slip (Description).</li>
+<li>Picking Operations (Description)</li>
+</ul>
+</li>
 </ol>
 </div>
 <div class="section" id="bug-tracker">
