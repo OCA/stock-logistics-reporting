@@ -14,7 +14,7 @@
     "maintainers": ["carlosdauden"],
     "license": "AGPL-3",
     "depends": [
-        "stock",
+        "sale_stock",
     ],
     "data": [
         "views/report_deliveryslip.xml",
