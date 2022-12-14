@@ -104,7 +104,7 @@
                         <span t-field="move_line.qty_done" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
-            <t t-if="o.valued and o.sale_id and o.move_line_ids">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <td class="text-right"><span t-field="move_line.sale_price_unit" /></td>
                 <td class="text-right" groups="product.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
