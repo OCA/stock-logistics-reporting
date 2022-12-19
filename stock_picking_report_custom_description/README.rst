@@ -19,13 +19,14 @@ Stock Picking Report Custom Description
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-14-0/stock-logistics-reporting-14-0-stock_picking_report_custom_description
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/151/14.0
-    :alt: Try me on Runbot
+.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
+    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/stock-logistics-reporting&target_branch=14.0
+    :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module allows to print moves description in picking reports.
+This module transfers the sales order line description to the picking, and
+allows to print such text on the picking reports.
 
 **Table of contents**
 
@@ -38,8 +39,13 @@ Usage
 To use this module, you need to:
 
 #. Create a sale order and set manual description in sale order lines.
-#. Go to *Inventory > Deliveries* and you can print the reports with move name
-   instead product name.
+#. Confirm the order.
+#. Navigate to the delivery through the smart-button.
+#. You can print the reports with move name instead product name on the specific
+   reports:
+
+   * Delivery Slip (Description).
+   * Picking Operations (Description).
 
 Bug Tracker
 ===========
