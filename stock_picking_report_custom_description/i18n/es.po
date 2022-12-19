@@ -23,9 +23,29 @@ msgid "Delivery Slip (Description)"
 msgstr "Vale de entrega (descripción)"
 
 #. module: stock_picking_report_custom_description
+#: model:ir.model.fields,field_description:stock_picking_report_custom_description.field_stock_rule__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_report_custom_description
+#: model:ir.model.fields,field_description:stock_picking_report_custom_description.field_stock_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_report_custom_description
+#: model:ir.model.fields,field_description:stock_picking_report_custom_description.field_stock_rule____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_report_custom_description
 #: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_picking_description
 msgid "Picking Operations (Description)"
 msgstr "Operaciones de picking (descripción)"
+
+#. module: stock_picking_report_custom_description
+#: model:ir.model,name:stock_picking_report_custom_description.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
 
 #~ msgid "<small>Description</small>"
 #~ msgstr "<small>Descripción</small>"
