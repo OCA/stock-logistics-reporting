@@ -6,7 +6,7 @@
     "summary": "Display on picking report delivery slip undelivered products",
     "version": "12.0.1.0.0",
     "author": "Tecnativa,Odoo Community Association (OCA)",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse",
     "license": "AGPL-3",
     "depends": [
