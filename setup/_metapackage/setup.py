@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo12-addon-stock_picking_report_undelivered_product',
         'odoo12-addon-stock_picking_report_valued',
         'odoo12-addon-stock_picking_report_valued_sale_mrp',
+        'odoo12-addon-stock_production_lot_traceability_shipment_report',
         'odoo12-addon-stock_quantity_history_location',
         'odoo12-addon-stock_report_quantity_by_location',
     ],
