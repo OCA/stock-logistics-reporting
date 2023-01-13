@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_daily_sale_search_view">
+        <field name="name">stock.daily.sale.search (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale</field>
+        <field name="arch" type="xml">
+            <search string="Search Average Daily Sale">
+                <field name="product_id" />
+                <field name="zone_location_id" />
+                <separator />
+                <filter
+                    string="Can be Sold"
+                    name="filter_to_sell"
+                    domain="[('sale_ok','=',1)]"
+                />
+                <separator />
+                <filter
+                    string="Normal product"
+                    name="normal_product"
+                    domain="[('is_mto','=',False)]"
+                />
+                <filter
+                    string="On Order"
+                    name="on_order"
+                    domain="[('is_mto','=',True)]"
+                />
+                <group expand='0' string='Group by...'>
+                    <filter
+                        string="Zone"
+                        name="group_by_zone"
+                        domain="[]"
+                        context="{'group_by': 'zone_location_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stockdaily_sale_tree_view">
+        <field name="name">stock.daily.sale.tree (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale</field>
+        <field name="arch" type="xml">
+            <tree create="false" delete="false">
+                <field name="product_id" />
+                <field name="abc_classification_level" />
+                <field name="average_qty_by_sale" />
+                <field name="average_daily_sales_count" />
+                <field name="average_daily_qty" />
+                <field name="standard_deviation" />
+                <field name="daily_standard_deviation" />
+                <field name="safety" />
+                <field name="safety_bin_min_qty" />
+                <field name="nbr_sales" />
+                <field name="qty_in_stock" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="warehouse_id" />
+                <field name="zone_location_id" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="stock_average_daily_sale_act_window">
+        <field name="name">Average Daily Sales</field>
+        <field name="res_model">stock.average.daily.sale</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field
+            name="context"
+        >{"search_default_filter_to_sell":1, "search_default_normal_product": 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data found.
+
+                You maybe need to launch the cron to refresh the average daily sale data.
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.menu" id="stock_average_daily_sale_menu">
+        <field name="name">Average Daily Sales</field>
+        <field name="parent_id" ref="stock.menu_warehouse_report" />
+        <field name="action" ref="stock_average_daily_sale_act_window" />
+        <field name="sequence" eval="99" />
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record
+        model="stock.average.daily.sale.config"
+        id="stock_average_daily_sale_config_level_a"
+    >
+        <field name="abc_classification_level">a</field>
+        <field name="period_value">2</field>
+        <field name="period_name">week</field>
+        <field name="standard_deviation_exclude_factor">3</field>
+        <field name="safety_factor">0.3</field>
+        <field name="number_days_qty_in_stock">2</field>
+    </record>
+    <record
+        model="stock.average.daily.sale.config"
+        id="stock_average_daily_sale_config_level_b"
+    >
+        <field name="abc_classification_level">b</field>
+        <field name="period_value">13</field>
+        <field name="period_name">week</field>
+        <field name="standard_deviation_exclude_factor">3</field>
+        <field name="safety_factor">0.3</field>
+        <field name="number_days_qty_in_stock">2</field>
+    </record>
+    <record
+        model="stock.average.daily.sale.config"
+        id="stock_average_daily_sale_config_level_c"
+    >
+        <field name="abc_classification_level">c</field>
+        <field name="period_value">26</field>
+        <field name="period_name">week</field>
+        <field name="standard_deviation_exclude_factor">3</field>
+        <field name="safety_factor">0.3</field>
+        <field name="number_days_qty_in_stock">2</field>
+    </record>
+</odoo>
