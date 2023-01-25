@@ -45,7 +45,7 @@ class StockMoveLine(models.Model):
     )
 
     def _get_report_valued_quantity(self):
-        return self.qty_done or self.product_qty
+        return self.qty_done or self.reserved_qty
 
     def _compute_sale_order_line_fields(self):
         """This is computed with sudo for avoiding problems if you don't have
