@@ -13,6 +13,11 @@ class StockAverageDailySaleConfig(models.Model):
     _name = "stock.average.daily.sale.config"
     _description = "Average daily sales computation parameters"
 
+    abc_classification_profile_id = fields.Many2one(
+        comodel_name="abc.classification.profile",
+        required=True,
+        ondelete="cascade",
+    )
     abc_classification_level = fields.Selection(
         selection=ABC_SELECTION, required=True, readonly=True
     )

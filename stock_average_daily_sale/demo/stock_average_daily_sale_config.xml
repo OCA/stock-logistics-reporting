@@ -6,6 +6,10 @@
         model="stock.average.daily.sale.config"
         id="stock_average_daily_sale_config_level_a"
     >
+        <field
+            name="abc_classification_profile_id"
+            ref="product_abc_classification_sale_stock.abc_classification_profile_sale_stock"
+        />
         <field name="abc_classification_level">a</field>
         <field name="period_value">2</field>
         <field name="period_name">week</field>
@@ -17,6 +21,10 @@
         model="stock.average.daily.sale.config"
         id="stock_average_daily_sale_config_level_b"
     >
+        <field
+            name="abc_classification_profile_id"
+            ref="product_abc_classification_sale_stock.abc_classification_profile_sale_stock"
+        />
         <field name="abc_classification_level">b</field>
         <field name="period_value">13</field>
         <field name="period_name">week</field>
@@ -28,6 +36,10 @@
         model="stock.average.daily.sale.config"
         id="stock_average_daily_sale_config_level_c"
     >
+        <field
+            name="abc_classification_profile_id"
+            ref="product_abc_classification_sale_stock.abc_classification_profile_sale_stock"
+        />
         <field name="abc_classification_level">c</field>
         <field name="period_value">26</field>
         <field name="period_name">week</field>
