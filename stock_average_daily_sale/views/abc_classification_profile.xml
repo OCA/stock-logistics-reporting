@@ -12,9 +12,11 @@
             ref="product_abc_classification.abc_classification_profile_form_view"
         />
         <field name="arch" type="xml">
-            <field name="level_ids" position="after">
-                <field name="stock_average_daily_sale_config_ids" />
-            </field>
+            <page name="levels" position="after">
+                <page name="average_daily_sale" string="Average Daily Sale">
+                    <field name="stock_average_daily_sale_config_ids" nolabel="1" />
+                </page>
+            </page>
         </field>
     </record>
 </odoo>
