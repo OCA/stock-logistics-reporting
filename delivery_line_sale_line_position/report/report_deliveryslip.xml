@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-  <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
-
-    <!-- Changes for when the picking is not yet done -->
-
-    <xpath expr="//table[@name='stock_move_table']/thead" position="before">
-      <t
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <!-- Changes for when the picking is not yet done -->
+        <xpath expr="//table[@name='stock_move_table']/thead" position="before">
+            <t
                 t-set="has_line_position"
                 t-value="any(o.move_lines.filtered(lambda x: x.position_sale_line and x.product_uom_qty))"
             />
-    </xpath>
-
-    <xpath expr="//th[@name='th_sm_product']" position="before">
-      <th t-if="has_line_position" name="th_sm_pos"><strong>Pos</strong></th>
-    </xpath>
-    <!-- The star in the selector may seem not very specific, but it is done -->
-    <!-- in purpose so it works with some other module that change this report. -->
-    <!-- Looking at you stock_picking_group_by_partner_by_carrier -->
-    <xpath expr="//table[@name='stock_move_table']/tbody/tr/*[1]" position="before">
-      <td t-if="has_line_position">
-        <span t-field="move.position_sale_line" />
-      </td>
-    </xpath>
-
-
-    <!-- Changes for when the picking is done -->
-
-    <xpath expr="//table[@name='stock_move_line_table']/thead" position="before">
-      <t
+        </xpath>
+        <xpath expr="//th[@name='th_sm_product']" position="before">
+            <th t-if="has_line_position" name="th_sm_pos"><strong>Pos</strong></th>
+        </xpath>
+        <!-- The star in the selector may seem not very specific, but it is done -->
+        <!-- in purpose so it works with some other module that change this report. -->
+        <!-- Looking at you stock_picking_group_by_partner_by_carrier -->
+        <xpath expr="//table[@name='stock_move_table']/tbody/tr/*[1]" position="before">
+            <td t-if="has_line_position">
+                <span t-field="move.position_sale_line" />
+            </td>
+        </xpath>
+        <!-- Changes for when the picking is done -->
+        <xpath expr="//table[@name='stock_move_line_table']/thead" position="before">
+            <t
                 t-set="has_line_position"
                 t-value="any(o.move_line_ids.mapped('position_sale_line'))"
             />
-    </xpath>
+        </xpath>
+        <xpath expr="//th[@name='th_sml_product']" position="before">
+            <th t-if="has_line_position" name="th_sml_pos"><strong>Pos</strong></th>
+        </xpath>
+    </template>
 
-    <xpath expr="//th[@name='th_sml_product']" position="before">
-      <th t-if="has_line_position" name="th_sml_pos"><strong>Pos</strong></th>
-    </xpath>
-  </template>
-
-  <template
+    <template
         id="stock_report_delivery_has_serial_move_line"
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
-    <xpath expr="//span[@t-field='move_line.product_id']/.." position="before">
-      <td t-if="has_line_position">
-        <span t-field="move_line.move_id.position_sale_line" />
-      </td>
-    </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']/.." position="before">
+            <td t-if="has_line_position">
+                <span t-field="move_line.move_id.position_sale_line" />
+            </td>
+        </xpath>
+    </template>
 
-  </template>
 </odoo>
