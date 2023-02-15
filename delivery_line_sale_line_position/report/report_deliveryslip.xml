@@ -8,14 +8,11 @@
                 t-value="any(o.move_lines.filtered(lambda x: x.position_sale_line and x.product_uom_qty))"
             />
         </xpath>
-        <xpath expr="//th[@name='th_sm_product']" position="before">
+        <xpath expr="//table[@name='stock_move_table']/thead//th[1]" position="before">
             <th t-if="has_line_position" name="th_sm_pos"><strong>Pos</strong></th>
         </xpath>
-        <!-- The star in the selector may seem not very specific, but it is done -->
-        <!-- in purpose so it works with some other module that change this report. -->
-        <!-- Looking at you stock_picking_group_by_partner_by_carrier -->
-        <xpath expr="//table[@name='stock_move_table']/tbody/tr/*[1]" position="before">
-            <td t-if="has_line_position">
+        <xpath expr="//table[@name='stock_move_table']/tbody//td[1]" position="before">
+            <td t-if="has_line_position" name="td_sm_pos">
                 <span t-field="move.position_sale_line" />
             </td>
         </xpath>
@@ -26,18 +23,28 @@
                 t-value="any(o.move_line_ids.mapped('position_sale_line'))"
             />
         </xpath>
-        <xpath expr="//th[@name='th_sml_product']" position="before">
-            <th t-if="has_line_position" name="th_sml_pos"><strong>Pos</strong></th>
+        <xpath
+            expr="//table[@name='stock_move_line_table']/thead//th[1]"
+            position="before"
+        >
+            <th t-if="has_line_position and has_serial_number" name="th_sml_pos"><strong
+                >Pos</strong></th>
         </xpath>
+        <!--
+            NOTE: The rows are rendered by other templates.
+            `stock_report_delivery_has_serial_move_line` if the lines have lots/serials
+            `stock_report_delivery_aggregated_move_lines` if they don't. In this case the lines are
+            aggregated, and so we don't display the position.
+        -->
     </template>
 
     <template
         id="stock_report_delivery_has_serial_move_line"
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
-        <xpath expr="//span[@t-field='move_line.product_id']/.." position="before">
+        <xpath expr="//td[1]" position="before">
             <td t-if="has_line_position">
-                <span t-field="move_line.move_id.position_sale_line" />
+                <span t-field="move_line.position_sale_line" />
             </td>
         </xpath>
     </template>
