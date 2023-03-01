@@ -14,10 +14,12 @@ class StockMoveLine(models.Model):
         readonly=True,
     )
     phantom_line = fields.Boolean(
-        compute="_compute_sale_order_line_fields", compute_sudo=True,
+        compute="_compute_sale_order_line_fields",
+        compute_sudo=True,
     )
     phantom_delivered_qty = fields.Float(
-        compute="_compute_sale_order_line_fields", compute_sudo=True,
+        compute="_compute_sale_order_line_fields",
+        compute_sudo=True,
     )
 
     @api.depends("sale_line")
@@ -35,7 +37,7 @@ class StockMoveLine(models.Model):
         """For kits we only want to store the value in one of the move lines to
         avoid duplicate the amounts. We also need to recompute the total
         amounts according to the corresponding delivered kits"""
-        super()._compute_sale_order_line_fields()
+        res = super()._compute_sale_order_line_fields()
         pickings = self.mapped("picking_id")
         pickings.move_line_ids.update(
             {"phantom_line": False, "phantom_delivered_qty": 0.0}
@@ -44,6 +46,7 @@ class StockMoveLine(models.Model):
             self.filtered(
                 lambda x: x.picking_id == picking
             )._compute_sale_order_line_fields_by_picking()
+        return res
 
     def _compute_sale_order_line_fields_by_picking(self):
         """We want to compute the lines value by picking to avoid mixing lines
