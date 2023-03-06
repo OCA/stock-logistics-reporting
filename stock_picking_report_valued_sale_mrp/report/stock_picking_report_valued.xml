@@ -1,23 +1,74 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template
-        id="valued_report_picking"
-        inherit_id="stock_picking_report_valued.valued_report_picking"
+        id="stock_report_delivery_document_inherit_mrp"
+        inherit_id="mrp.stock_report_delivery_document_inherit_mrp"
     >
+        <!-- disable printing of kits in a separate table -->
         <xpath
-            expr="//t[@t-if=&quot;move_line.picking_id.state != 'done'&quot;]/.."
+            expr="//table[@name='stock_move_line_table']/tbody/t[@t-set='has_kits']"
+            position="attributes"
+        >
+            <attribute name="t-value">env["stock.move.line"]</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@name='no_package_move_lines']/t[@t-set='has_kits']"
+            position="attributes"
+        >
+            <attribute name="t-value">env["stock.move.line"]</attribute>
+        </xpath>
+    </template>
+    <template
+        id="valued_mrp_report_picking"
+        inherit_id="stock.report_delivery_document"
+    >
+        <!-- show only one row for kit products -->
+        <xpath
+            expr="//tr[@t-foreach='package_move_lines']/t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
             position="attributes"
         >
             <attribute
                 name="t-if"
-            >o.valued and o.sale_id and o.move_line_ids and (move_line.phantom_line or not move_line.phantom_product_id)</attribute>
+            >not move_line.phantom_product_id or move_line.phantom_line</attribute>
         </xpath>
-        <xpath expr="//tr[@t-as='move_line']" position="attributes">
+        <xpath
+            expr="//tr[@t-foreach='move_lines']/t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
+            position="attributes"
+        >
             <attribute
-                name="t-foreach"
-            >o.move_line_ids.filtered(lambda x: not x.phantom_product_id or x.phantom_line)</attribute>
+                name="t-if"
+            >not move_line.phantom_product_id or move_line.phantom_line</attribute>
         </xpath>
+        <xpath
+            expr="//tr[@t-foreach='o.move_line_ids']/t[@t-call='stock.stock_report_delivery_has_serial_move_line']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not move_line.phantom_product_id or move_line.phantom_line</attribute>
+        </xpath>
+    </template>
+    <template
+        id="valued_report_picking_has_serial_move_line"
+        inherit_id="stock_picking_report_valued.valued_report_picking_has_serial_move_line"
+    >
+        <!-- Show valued fields for only one of the components of a kit -->
+        <xpath expr="//td[@name='move_line_lot_qty_done']" position="attributes">
+            <attribute
+                name="t-if"
+                add="not (o.valued or o.sale_id or o.move_line_ids or is_outgoing or (move_line.phantom_line or not move_line.phantom_product_id))"
+                separator=" "
+            />
+        </xpath>
+        <xpath
+            expr="//span[@t-field=&quot;move_line.sale_price_unit&quot;]/../.."
+            position="attributes"
+        >
+            <attribute name="t-if">
+                o.valued and o.sale_id and o.move_line_ids and is_outgoing and (move_line.phantom_line or not move_line.phantom_product_id)
+            </attribute>
+        </xpath>
+        <!-- Show the rest of the fields in a special way for the rows corresponding to kits -->
         <xpath expr="//span[@t-field='move_line.product_id']" position="attributes">
             <attribute name="t-if">not move_line.phantom_line</attribute>
         </xpath>
@@ -28,24 +79,19 @@
             />
         </xpath>
         <xpath
-            expr="//span[@t-field='move_line.move_id.description_picking']"
+            expr="//t[@t-value='move_line.move_id.description_picking']"
             position="attributes"
         >
-            <attribute name="t-if">not move_line.phantom_line</attribute>
-        </xpath>
-        <xpath
-            expr="//span[@t-field='move_line.move_id.description_picking']"
-            position="before"
-        >
-            <span
-                t-esc="move_line.sale_line.product_id.sudo()._get_description(o.picking_type_id)"
-                t-if="move_line.phantom_line"
+            <attribute
+                name="t-value"
+                add="if not move_line.phantom_line else move_line.sale_line.product_id.sudo()._get_description(o.picking_type_id)"
+                separator=" "
             />
         </xpath>
-        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="attributes">
+        <xpath expr="//td[@name='move_line_lot_qty_done']" position="attributes">
             <attribute name="t-if">not move_line.phantom_line</attribute>
         </xpath>
-        <xpath expr="//span[@t-field='move_line.qty_done']/.." position="after">
+        <xpath expr="//td[@name='move_line_lot_qty_done']" position="after">
             <td class="text-center" t-if="move_line.phantom_line">
                 <span t-field="move_line.phantom_delivered_qty" />
                 <span t-field="move_line.sale_line.product_uom" />
@@ -78,5 +124,4 @@
             </t>
         </xpath>
     </template>
-
 </odoo>
