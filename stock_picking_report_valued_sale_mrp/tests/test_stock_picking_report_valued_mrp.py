@@ -70,6 +70,6 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         self.assertAlmostEqual(self.order_out_picking.amount_tax, 14.95)
         self.assertAlmostEqual(self.order_out_picking.amount_total, 164.45)
         # Run the report to detect hidden errors
-        self.env.ref("stock.action_report_delivery").render_qweb_html(
+        self.env.ref("stock.action_report_delivery")._render_qweb_html(
             self.order_out_picking.ids
         )
