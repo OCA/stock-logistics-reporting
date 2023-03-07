@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
 import AbstractAction from "web.AbstractAction";
-import core from "web.core";
 import ReportWidget from "web.Widget";
+import core from "web.core";
 
 export const report_backend = AbstractAction.extend({
     hasControlPanel: true,
