@@ -46,11 +46,11 @@ class TestValuationLocation(
             }
         )
         action = wizard.with_context(company_owned=True).open_at_date()
-        qty_svl_prev = self.product.with_context(action["context"]).quantity_svl
+        qty_svl_prev = self.product.with_context(**action["context"]).quantity_svl
         move = self._create_stock_move(location_dest_id=self.test_stock_loc, qty=60)
         wizard["inventory_datetime"] = move.stock_valuation_layer_ids.create_date
         action = wizard.with_context(company_owned=True).open_at_date()
-        product = self.product.with_context(action["context"])
+        product = self.product.with_context(**action["context"])
         self.assertEqual(product.quantity_svl - qty_svl_prev, 60)
 
     def test_stock_location_valuation_without_location_id(self):
@@ -58,14 +58,14 @@ class TestValuationLocation(
             {"include_child_locations": True, "inventory_datetime": datetime.today()}
         )
         action = wizard.with_context(company_owned=True, valuation=True).open_at_date()
-        qty_svl_prev = self.product.with_context(action["context"]).quantity_svl
+        qty_svl_prev = self.product.with_context(**action["context"]).quantity_svl
         self._create_stock_move(location_dest_id=self.test_stock_loc, qty=50)
         move = self._create_stock_move(
             location_dest_id=self.child_test_stock_loc, qty=10
         )
         wizard["inventory_datetime"] = move.stock_valuation_layer_ids.create_date
         action = wizard.with_context(company_owned=True).open_at_date()
-        product = self.product.with_context(action["context"])
+        product = self.product.with_context(**action["context"])
         self.assertEqual(product.quantity_svl - qty_svl_prev, 60)
 
     def test_stock_location_valuation_with_svl(self):
