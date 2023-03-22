@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo-addon-stock_card_report>=15.0dev,<15.1dev',
         'odoo-addon-stock_move_value_report>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_report_custom_description>=15.0dev,<15.1dev',
+        'odoo-addon-stock_picking_report_product_sticker>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_report_undelivered_product>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_report_valued>=15.0dev,<15.1dev',
         'odoo-addon-stock_picking_report_valued_sale_mrp>=15.0dev,<15.1dev',
