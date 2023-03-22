@@ -19,9 +19,9 @@ Stock Picking Report - Product Sticker
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-15-0/stock-logistics-reporting-15-0-stock_picking_report_product_sticker
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/stock-logistics-reporting&target_branch=15.0
-    :alt: Try me on Runboat
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/151/15.0
+    :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
@@ -42,10 +42,11 @@ Usage
 =====
 
 To use this module, you need to:
+
 #. You must go to the Picking Type that you want to show the Product Stickers
-and activate the option to *Show Stickers on Pickings of this type*.
+   and activate the option to *Show Stickers on Pickings of this type*.
 #. You can also enable or disable showing Stickers on each Picking by hand if you wish.
-Regardless if your Picking Type has Show Stickers enabled or not.
+   Regardless if your Picking Type has Show Stickers enabled or not.
 
 Bug Tracker
 ===========
