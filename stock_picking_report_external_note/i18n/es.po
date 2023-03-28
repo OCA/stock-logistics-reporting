@@ -20,25 +20,25 @@ msgstr ""
 #. module: stock_picking_report_external_note
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_external_note.view_picking_form
 msgid "Add an external note that will be printed on the Delivery Slip report"
-msgstr "Añade una nota externa que será impresa en el informe de Albarán de entrega"
+msgstr ""
+"Añade una nota externa que será impresa en el informe de Albarán de entrega"
 
 #. module: stock_picking_report_external_note
 #: model:ir.model.fields,field_description:stock_picking_report_external_note.field_stock_picking__external_note
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_external_note.view_picking_form
 msgid "External Note"
 msgstr "Nota externa"
 
 #. module: stock_picking_report_external_note
 #: model:ir.model.fields,help:stock_picking_report_external_note.field_stock_picking__external_note
 msgid "External note to be printed in external reports like Delivery Slip"
-msgstr "Nota externa que será impresa en los informes externos como el Albarán de entrega"
-
-#. module: stock_picking_report_external_note
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_external_note.view_picking_form
-msgid "Note"
-msgstr "Nota"
+msgstr ""
+"Nota externa que será impresa en los informes externos como el Albarán de "
+"entrega"
 
 #. module: stock_picking_report_external_note
 #: model:ir.model,name:stock_picking_report_external_note.model_stock_picking
 msgid "Transfer"
 msgstr "Albarán"
+
+#~ msgid "Note"
+#~ msgstr "Nota"
