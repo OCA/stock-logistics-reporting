@@ -31,6 +31,7 @@ addon | version | maintainers | summary
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 15.0.1.0.0 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.5.0 |  | Adding Valued Picking on Delivery Slip report
 [stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 15.0.1.0.0 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Allow to summarize the picking related with the selled kits
+[stock_quantity_history_location](stock_quantity_history_location/) | 15.0.1.0.0 |  | Provides stock quantity by location on past date
 [stock_report_quantity_by_location](stock_report_quantity_by_location/) | 15.0.1.0.0 |  | Stock Report Quantity By Location
 
 [//]: # (end addons)
