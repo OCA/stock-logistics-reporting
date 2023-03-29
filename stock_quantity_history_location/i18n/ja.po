@@ -17,24 +17,23 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: stock_quantity_history_location
-#: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__display_name
-msgid "Display Name"
-msgstr "表示名"
-
-#. module: stock_quantity_history_location
-#: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__id
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_quantity_history_location
 #: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__include_child_locations
-msgid "Include child locations"
-msgstr "子ロケーションを含める"
+msgid "Include Child Locations"
+msgstr ""
 
 #. module: stock_quantity_history_location
-#: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history____last_update
-msgid "Last Modified on"
-msgstr "最終更新日"
+#. openerp-web
+#: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
+#, python-format
+msgid "Inventory at Date"
+msgstr ""
+
+#. module: stock_quantity_history_location
+#. openerp-web
+#: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
+#, python-format
+msgid "Inventory at Date & Location"
+msgstr ""
 
 #. module: stock_quantity_history_location
 #: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__location_id
@@ -45,3 +44,15 @@ msgstr "ロケーション"
 #: model:ir.model,name:stock_quantity_history_location.model_stock_quantity_history
 msgid "Stock Quantity History"
 msgstr "在庫数量履歴"
+
+#~ msgid "Display Name"
+#~ msgstr "表示名"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Include child locations"
+#~ msgstr "子ロケーションを含める"
+
+#~ msgid "Last Modified on"
+#~ msgstr "最終更新日"
