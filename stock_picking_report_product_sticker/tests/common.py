@@ -5,6 +5,8 @@ from odoo.tests import tagged
 
 from odoo.addons.product_sticker.tests.common import ProductStickerCommon
 
+from ..models.stock_picking_type import REPORT_STICKER_POSITIONS
+
 
 @tagged("post_install", "-at_install")
 class ProductStickerStockCommon(ProductStickerCommon):
@@ -12,7 +14,7 @@ class ProductStickerStockCommon(ProductStickerCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.picking_type_out.show_product_stickers = True
+        cls.picking_type_out.show_product_stickers = REPORT_STICKER_POSITIONS[0][0]
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
 

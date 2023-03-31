@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='show_operations']" position="after">
-                <field name="show_product_stickers" widget="boolean_toggle" />
+                <field name="show_product_stickers" />
             </xpath>
         </field>
     </record>

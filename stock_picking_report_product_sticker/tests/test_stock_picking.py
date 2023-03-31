@@ -11,8 +11,10 @@ class TestStickersOnPickings(ProductStickerStockCommon):
         picking = self._create_picking(
             self.picking_type_out, [target_product, target_product]
         )
-        self.assertTrue(
-            picking.show_product_stickers, "Picking type should show stickers"
+        self.assertEqual(
+            picking.show_product_stickers,
+            self.picking_type_out.show_product_stickers,
+            "Picking type should show stickers",
         )
         self.assertEqual(
             picking.sticker_ids,

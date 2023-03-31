@@ -3,15 +3,18 @@
 
 from odoo import api, fields, models
 
+from .stock_picking_type import REPORT_STICKER_POSITIONS
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    show_product_stickers = fields.Boolean(
-        help="Show Product Stickers on pickings of this type.",
+    show_product_stickers = fields.Selection(
+        selection=REPORT_STICKER_POSITIONS,
         compute="_compute_show_product_stickers",
         store=True,
         readonly=False,
+        help="Show Product Stickers on pickings of this type.",
     )
     sticker_ids = fields.Many2many(
         comodel_name="product.sticker",
@@ -20,7 +23,7 @@ class StockPicking(models.Model):
         store=False,
     )
 
-    @api.depends("picking_type_id.show_product_stickers")
+    @api.depends("picking_type_id")
     def _compute_show_product_stickers(self):
         for picking in self:
             picking.show_product_stickers = (
