@@ -7,58 +7,60 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-31 10:48+0000\n"
-"PO-Revision-Date: 2023-03-31 10:48+0000\n"
+"PO-Revision-Date: 2023-03-31 12:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields.selection,name:stock_picking_report_product_sticker.selection__stock_picking__show_product_stickers__bottom_left
 #: model:ir.model.fields.selection,name:stock_picking_report_product_sticker.selection__stock_picking_type__show_product_stickers__bottom_left
 msgid "Bottom (left)"
-msgstr ""
+msgstr "Abajo (izquierda)"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model,name:stock_picking_report_product_sticker.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo de albarán"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields,help:stock_picking_report_product_sticker.field_stock_picking_type__show_product_stickers
 msgid "Position of the stickers inside the report."
-msgstr ""
+msgstr "Posición de las pegatinas de producto dentro del informe."
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.ui.menu,name:stock_picking_report_product_sticker.menu_stock_picking_report_product_sticker
 msgid "Product Stickers"
-msgstr ""
+msgstr "Pegatinas de producto"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields,field_description:stock_picking_report_product_sticker.field_stock_picking__show_product_stickers
 #: model:ir.model.fields,field_description:stock_picking_report_product_sticker.field_stock_picking_type__show_product_stickers
 msgid "Show Product Stickers"
-msgstr ""
+msgstr "Mostrar pegatinas de productos"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields,help:stock_picking_report_product_sticker.field_stock_picking__show_product_stickers
 msgid "Show Product Stickers on pickings of this type."
-msgstr ""
+msgstr "Mostrar Pegatinas de productos en los albaranes de este tipo."
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields,field_description:stock_picking_report_product_sticker.field_stock_picking__sticker_ids
 msgid "Stickers"
-msgstr ""
+msgstr "Pegatinas"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model.fields.selection,name:stock_picking_report_product_sticker.selection__stock_picking__show_product_stickers__top_right
 #: model:ir.model.fields.selection,name:stock_picking_report_product_sticker.selection__stock_picking_type__show_product_stickers__top_right
 msgid "Top (right)"
-msgstr ""
+msgstr "Arriba (derecha)"
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.model,name:stock_picking_report_product_sticker.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Albarán"

@@ -18,6 +18,6 @@
         "report/report_deliveryslip.xml",
         "data/menus.xml",
     ],
-    "maintainer": ["Shide"],
+    "maintainers": ["Shide"],
     "installable": True,
 }
