@@ -44,8 +44,8 @@ Usage
 To use this module, you need to:
 
 #. You must go to the Picking Type that you want to show the Product Stickers
-   and activate the option to *Show Stickers on Pickings of this type*.
-#. You can also enable or disable showing Stickers on each Picking by hand if you wish.
+   and choose the desired position of the stickers on the field *Show Product Stickers*.
+#. You can also change the position or disable it on each Picking by hand if you wish.
    Regardless if your Picking Type has Show Stickers enabled or not.
 
 Bug Tracker
@@ -83,6 +83,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-Shide| image:: https://github.com/Shide.png?size=40px
+    :target: https://github.com/Shide
+    :alt: Shide
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-Shide| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/15.0/stock_picking_report_product_sticker>`_ project on GitHub.
 
