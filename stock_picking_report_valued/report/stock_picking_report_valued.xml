@@ -11,14 +11,20 @@
         >
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <t t-if="o.state != 'done'">
-                    <th class="text-right"><strong>Qty Reserved</strong></th>
+                    <th name="th_qty_reserved" class="text-right"><strong
+                        >Qty Reserved</strong></th>
                 </t>
-                <th class="text-right"><strong>Unit Price</strong></th>
-                <th class="text-right" groups="product.group_discount_per_so_line">
+                <th name="th_unit_price" class="text-right"><strong
+                    >Unit Price</strong></th>
+                <th
+                    name="th_discount"
+                    class="text-right"
+                    groups="product.group_discount_per_so_line"
+                >
                     <strong>Discount</strong>
                 </th>
-                <th class="text-right"><strong>Subtotal</strong></th>
-                <th class="text-right"><strong>Taxes</strong></th>
+                <th name="th_subtotal" class="text-right"><strong>Subtotal</strong></th>
+                <th name="th_taxes" class="text-right"><strong>Taxes</strong></th>
             </t>
         </xpath>
         <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
@@ -66,20 +72,23 @@
                 <table class="table table-sm mt32">
                     <thead>
                         <tr>
-                            <th class="text-right"><strong>Untaxed Amount</strong></th>
-                            <th class="text-right"><strong>Taxes</strong></th>
-                            <th class="text-right"><strong>Total</strong></th>
+                            <th name="th_untaxed_amt" class="text-right"><strong
+                                >Untaxed Amount</strong></th>
+                            <th name="th_taxes_amt" class="text-right"><strong
+                                >Taxes</strong></th>
+                            <th name="th_total" class="text-right"><strong
+                                >Total</strong></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-right">
+                            <td name="td_untaxed_amt" class="text-right">
                                 <span t-field="o.amount_untaxed" />
                             </td>
-                            <td class="text-right">
+                            <td name="td_taxes_amt" class="text-right">
                                 <span t-field="o.amount_tax" />
                             </td>
-                            <td class="text-right">
+                            <td name="td_total" class="text-right">
                                 <span t-field="o.amount_total" />
                             </td>
                         </tr>
@@ -95,24 +104,30 @@
     >
         <xpath expr="//td[@name='move_line_lot_qty_done']" position="after">
             <t t-if="move_line.picking_id.state != 'done'">
-                    <td class="text-right">
+                    <td name="td_qty_reserved" class="text-right">
                         <span t-field="move_line.product_uom_qty" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
                 <t t-elif="move_line.picking_id.state == 'done'">
-                    <td class="text-center">
+                    <td name="td_qty_done" class="text-center">
                         <span t-field="move_line.qty_done" />
                         <span t-field="move_line.product_uom_id" /></td>
                 </t>
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
-                <td class="text-right"><span t-field="move_line.sale_price_unit" /></td>
-                <td class="text-right" groups="product.group_discount_per_so_line">
+                <td name="td_unit_price" class="text-right"><span
+                        t-field="move_line.sale_price_unit"
+                    /></td>
+                <td
+                    name="td_discount"
+                    class="text-right"
+                    groups="product.group_discount_per_so_line"
+                >
                     <span t-field="move_line.sale_discount" />
                 </td>
-                <td class="text-right"><span
+                <td name="th_subtotal" class="text-right"><span
                         t-field="move_line.sale_price_subtotal"
                     /></td>
-                <td class="text-right"><span
+                <td name="th_taxes" class="text-right"><span
                         t-field="move_line.sale_tax_description"
                     /></td>
             </t>
