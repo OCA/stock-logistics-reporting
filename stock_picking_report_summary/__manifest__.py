@@ -5,10 +5,10 @@
 {
     "name": "Stock Picking Report Summary",
     "summary": "Stock Picking Report Summary",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.1.0",
     "author": "Grap, "
               "Odoo Community Association (OCA)",
-    "maintainers": ["quentinDupont"],
+    "maintainers": ["quentinDupont", "legalsylvain"],
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse Management",
     "license": "AGPL-3",
