@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [stock_picking_comment_template](stock_picking_comment_template/) | 12.0.1.0.0 |  | Comments texts templates on Picking documents
 [stock_picking_product_label](stock_picking_product_label/) | 12.0.1.0.0 |  | Print Product Labels in a Stock Picking
 [stock_picking_report_custom_description](stock_picking_report_custom_description/) | 12.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Show moves description in picking reports
-[stock_picking_report_summary](stock_picking_report_summary/) | 12.0.1.0.0 | [![quentinDupont](https://github.com/quentinDupont.png?size=30px)](https://github.com/quentinDupont) [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Stock Picking Report Summary
+[stock_picking_report_summary](stock_picking_report_summary/) | 12.0.1.1.0 | [![quentinDupont](https://github.com/quentinDupont.png?size=30px)](https://github.com/quentinDupont) [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Stock Picking Report Summary
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 12.0.1.0.1 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 12.0.1.0.2 |  | Adding Valued Picking on Delivery Slip report
 [stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 12.0.1.0.3 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Allow to summarize the picking related with the selled kits
