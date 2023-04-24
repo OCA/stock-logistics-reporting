@@ -100,10 +100,13 @@ promote its widespread use.
 .. |maintainer-quentinDupont| image:: https://github.com/quentinDupont.png?size=40px
     :target: https://github.com/quentinDupont
     :alt: quentinDupont
+.. |maintainer-legalsylvain| image:: https://github.com/legalsylvain.png?size=40px
+    :target: https://github.com/legalsylvain
+    :alt: legalsylvain
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-quentinDupont| 
+|maintainer-quentinDupont| |maintainer-legalsylvain| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/12.0/stock_picking_report_summary>`_ project on GitHub.
 
