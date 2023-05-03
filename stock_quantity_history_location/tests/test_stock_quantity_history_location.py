@@ -31,7 +31,7 @@ class TestStockQuantityHistoryLocation(TestCommon):
         )
         cls._create_stock_move(cls, location_dest_id=cls.child_test_stock_loc, qty=100)
 
-    def test_wizard_past_date(self):
+    def test_01_wizard_past_date(self):
         wizard = self.env["stock.quantity.history"].create(
             {
                 "location_id": self.test_stock_loc.id,
@@ -50,7 +50,7 @@ class TestStockQuantityHistoryLocation(TestCommon):
             0.0,
         )
 
-    def test_wizard_current(self):
+    def test_02_wizard_current(self):
         wizard = self.env["stock.quantity.history"].create(
             {"location_id": self.test_stock_loc.id, "include_child_locations": False}
         )
