@@ -36,7 +36,7 @@ class StockPicking(models.Model):
         """
         for pick in self:
             amount_untaxed = amount_tax = 0.0
-            for line in pick.move_line_ids:
+            for line in pick.move_line_ids.filtered(lambda ln: ln.state != "cancel"):
                 amount_untaxed += line.sale_price_subtotal
                 amount_tax += line.sale_price_tax
             pick.update(
