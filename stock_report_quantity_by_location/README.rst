@@ -14,7 +14,7 @@ Stock Report Quantity By Location
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/15.0/stock_report_quantity_by_location
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_report_quantity_by_location
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-15-0/stock-logistics-reporting-15-0-stock_report_quantity_by_location
@@ -61,6 +61,8 @@ Contributors
  * Ecosoft (http://ecosoft.co.th)
    * Kranokporn Thongdoung <kranokpornt@ecosoft.co.th>
 
+* Dhara Solanki <dhara.solanki@initos.com>
+
 Maintainers
 ~~~~~~~~~~~
 
@@ -74,6 +76,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/15.0/stock_report_quantity_by_location>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_report_quantity_by_location>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
