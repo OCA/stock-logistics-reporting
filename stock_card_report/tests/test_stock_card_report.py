@@ -5,12 +5,13 @@ import logging
 import time
 from datetime import date
 
-from odoo.tests import common
+from odoo.tests import common, tagged
 from odoo.tools import test_reports
 
 _logger = logging.getLogger(__name__)
 
 
+@tagged("post_install", "-at_install")
 class TestStockCard(common.TransactionCase):
     def setUp(self):
         super().setUp()
@@ -124,6 +125,7 @@ class TestStockCard(common.TransactionCase):
         }
 
 
+@tagged("post_install", "-at_install")
 class TestStockCardReport(common.TransactionCase):
     def setUp(self):
         super().setUp()
