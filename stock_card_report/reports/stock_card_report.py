@@ -107,9 +107,9 @@ class StockCardReport(models.TransientModel):
         report = self.browse(self._context.get("active_id"))
         if report:
             rcontext["o"] = report
-            result["html"] = self.env.ref(
-                "stock_card_report.report_stock_card_report_html"
-            )._render(rcontext)
+            result["html"] = self.env["ir.qweb"]._render(
+                "stock_card_report.report_stock_card_report_html", rcontext
+            )
         return result
 
     @api.model
