@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,14 +19,14 @@ msgid "Include Child Locations"
 msgstr ""
 
 #. module: stock_quantity_history_location
-#. openerp-web
+#. odoo-javascript
 #: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
 #, python-format
 msgid "Inventory at Date"
 msgstr ""
 
 #. module: stock_quantity_history_location
-#. openerp-web
+#. odoo-javascript
 #: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
 #, python-format
 msgid "Inventory at Date & Location"
