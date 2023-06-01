@@ -99,9 +99,9 @@ class ReportStockCardReportXlsx(models.AbstractModel):
         }
 
         ws_params = {
-            "ws_name": product.name,
+            "ws_name": product.display_name,
             "generate_ws_method": "_stock_card_report",
-            "title": "Stock Card - {}".format(product.name),
+            "title": "Stock Card - {}".format(product.display_name),
             "wanted_list_filter": [k for k in sorted(filter_template.keys())],
             "col_specs_filter": filter_template,
             "wanted_list_initial": [k for k in sorted(initial_template.keys())],
