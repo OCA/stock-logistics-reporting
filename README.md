@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [stock_move_value_report](stock_move_value_report/) | 15.0.1.0.0 |  | Stock Move Cost Value Report
 [stock_picking_report_custom_description](stock_picking_report_custom_description/) | 15.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Show moves description in picking reports
 [stock_picking_report_external_note](stock_picking_report_external_note/) | 15.0.0.1.1 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) | Adds a note in Stock Picking shown on external reports like Delivery Slip
+[stock_picking_report_internal_delivery_address](stock_picking_report_internal_delivery_address/) | 15.0.1.0.0 |  | Show delivery address when picking type is internal
 [stock_picking_report_product_sticker](stock_picking_report_product_sticker/) | 15.0.1.0.2 | [![Shide](https://github.com/Shide.png?size=30px)](https://github.com/Shide) | Stock Picking Report - Product Sticker
 [stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 15.0.1.0.0 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.6.1 |  | Adding Valued Picking on Delivery Slip report
