@@ -31,15 +31,23 @@ class StockAverageDailySale(models.Model):
         selection=ABC_SELECTION, required=True, readonly=True, index=True
     )
     average_daily_sales_count = fields.Float(
-        required=True, digits="Product Unit of Measure"
+        required=True,
+        digits="Product Unit of Measure",
+        help="How much deliveries on average for this product on the period. "
+        "The spikes are excluded from the average computation.",
     )
     average_qty_by_sale = fields.Float(
-        required=True, digits="Product Unit of Measure", help="Average Daily Sales Qty"
+        required=True,
+        digits="Product Unit of Measure",
+        help="The quantity "
+        "delivered on average for one delivery of this product on the period. "
+        "The spikes are excluded from the average computation.",
     )
     average_daily_qty = fields.Float(
         digits="Product Unit of Measure",
         required=True,
-        help="The average daily qty sold",
+        help="The quantity delivered on average on one day for this product on "
+        "the period. The spikes are excluded from the average computation.",
     )
     config_id = fields.Many2one(
         string="Stock Average Daily Sale Configuration",
@@ -54,27 +62,23 @@ class StockAverageDailySale(models.Model):
         store=True,
         index=True,
     )
-    nbr_sales = fields.Integer(string="Number of Sales", required=True)
+    nbr_sales = fields.Integer(
+        string="Number of Sales",
+        required=True,
+        help="The total amount of deliveries for this product over the complete period",
+    )
     product_id = fields.Many2one(
         comodel_name="product.product", string="Product", required=True, index=True
     )
     safety = fields.Float(
         required=True,
-        help="daily standard deviation * safety factor * sqrt(nbr days into period "
-        "without saturday and sunday",
+        help="Safety stock to cover the variability of the quantity delivered "
+        "each day. Formula: daily standard deviation * safety factor * sqrt(nbr days in the period)",
     )
-    safety_bin_min_qty = fields.Float(
+    recommended_qty = fields.Float(
         required=True,
         digits="Product Unit of Measure",
-        help="Minimal safety qty into a bin location computed as: "
-        "average daily qty * number days in stock * safety",
-    )
-    safety_bin_min_qty_old = fields.Float(
-        required=True,
-        digits="Product Unit of Measure",
-        help="Minimal value for the safety qty. Computed as: "
-        "number days in stock * GREATEST(average daily sales count, 1) * "
-        "(average qty by sale + (stddev * safety factor))",
+        help="Minimal recommended quantity in stock. Formula: average daily qty * number days in stock + safety",
     )
     sale_ok = fields.Boolean(
         string="Can be Sold",
@@ -292,7 +296,7 @@ class StockAverageDailySale(models.Model):
                         GREATEST(
                             (cfg.number_days_qty_in_stock * average_qty_by_sale * average_daily_sales_count) + (ds.daily_standard_deviation * cfg.safety_factor * sqrt(nrb_days_without_sat_sun)),
                             (cfg.number_days_qty_in_stock *  average_qty_by_sale)
-                        ) as safety_bin_min_qty
+                        ) as recommended_qty
                     FROM averages t
                     JOIN daily_standard_deviation ds on ds.id= t.id
                     JOIN stock_average_daily_sale_config cfg on cfg.id = t.config_id
