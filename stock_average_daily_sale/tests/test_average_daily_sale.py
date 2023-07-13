@@ -55,6 +55,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                     "nbr_sales": 1.0,
                     "average_qty_by_sale": 10.0,
                     "qty_in_stock": 40.0,
+                    "recommended_qty": 20.0,
                     "warehouse_id": self.warehouse_0.id,
                 }
             ],
@@ -69,6 +70,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                     "nbr_sales": 1.0,
                     "average_qty_by_sale": 12.0,
                     "qty_in_stock": 48.0,
+                    "recommended_qty": 24.0,
                     "warehouse_id": self.warehouse_0.id,
                 }
             ],
@@ -133,6 +135,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                 }
             ],
         )
+        self.assertAlmostEqual(20.67, avg_product_1.recommended_qty, places=2)
         self.assertAlmostEqual(10.33, avg_product_1.average_qty_by_sale, places=2)
 
         avg_product_2 = self.env["stock.average.daily.sale"].search(

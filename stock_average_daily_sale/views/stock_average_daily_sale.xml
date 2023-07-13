@@ -50,7 +50,7 @@
                 <field name="standard_deviation" />
                 <field name="daily_standard_deviation" />
                 <field name="safety" />
-                <field name="safety_bin_min_qty" />
+                <field name="recommended_qty" />
                 <field name="nbr_sales" />
                 <field name="qty_in_stock" />
                 <field name="date_from" />
