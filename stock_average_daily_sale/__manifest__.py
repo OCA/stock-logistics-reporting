@@ -15,7 +15,6 @@
         "product_abc_classification",
         "product_abc_classification_sale_stock",
         "product_route_mto",
-        "stock_location_zone",
     ],
     "data": [
         "security/stock_average_daily_sale_config.xml",

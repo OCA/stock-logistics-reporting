@@ -26,7 +26,6 @@ class CommonAverageSaleTest:
         cls.location_zone = cls.location_obj.create(
             {
                 "name": "Zone Location",
-                "is_zone": True,
                 "location_id": cls.warehouse_0.lot_stock_id.id,
             }
         )
