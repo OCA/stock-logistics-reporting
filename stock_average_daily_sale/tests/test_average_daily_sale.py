@@ -26,6 +26,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
     def test_average_sale(self):
         # By default, products have abc_storage == 'b'
         # So, the averages should correspond to 'b' one
+
         move_1_date = Date.to_string(self.now - relativedelta(weeks=11))
         with freeze_time(move_1_date):
             move = self._create_move(self.product_1, self.location_bin, 10.0)
@@ -180,3 +181,23 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
             [("product_id", "=", self.product_2.id)]
         )
         self.assertFalse(avg_product_2)
+
+    def test_view(self):
+        # Check no exception is raised if materialized view is not loaded
+        with self.assertLogs(
+            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale"
+        ) as log:
+            result = self.env["stock.average.daily.sale"].search_read(
+                [("product_id", "=", self.product_1.id)]
+            )
+            self.assertFalse(result)
+            self.assertIn("The materialized view has not been populated", log.output[0])
+
+    def test_view_refreshed(self):
+        self._refresh()
+        with self.assertNoLogs(
+            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale"
+        ):
+            self.env["stock.average.daily.sale"].search_read(
+                [("product_id", "=", self.product_1.id)]
+            )
