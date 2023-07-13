@@ -54,7 +54,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                     "nbr_sales": 1.0,
                     "average_qty_by_sale": 10.0,
                     "qty_in_stock": 40.0,
-                    "zone_location_id": self.location_zone.id,
+                    "warehouse_id": self.warehouse_0.id,
                 }
             ],
         )
@@ -68,7 +68,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                     "nbr_sales": 1.0,
                     "average_qty_by_sale": 12.0,
                     "qty_in_stock": 48.0,
-                    "zone_location_id": self.location_zone.id,
+                    "warehouse_id": self.warehouse_0.id,
                 }
             ],
         )
@@ -128,7 +128,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                 {
                     "nbr_sales": 3.0,
                     "qty_in_stock": 19.0,
-                    "zone_location_id": self.location_zone.id,
+                    "warehouse_id": self.warehouse_0.id,
                 }
             ],
         )
@@ -144,7 +144,7 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
                     "nbr_sales": 2.0,
                     "average_qty_by_sale": 8.0,
                     "qty_in_stock": 44.0,
-                    "zone_location_id": self.location_zone.id,
+                    "warehouse_id": self.warehouse_0.id,
                 }
             ],
         )
