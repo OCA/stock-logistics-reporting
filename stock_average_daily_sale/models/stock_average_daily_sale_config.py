@@ -32,12 +32,6 @@ class StockAverageDailySaleConfig(models.Model):
         ),
         readonly=True,
     )
-    stock_location_kind = fields.Selection(
-        selection=lambda self: self.env["stock.location"]
-        ._fields["location_kind"]
-        .selection,
-        default="zone",
-    )
     period_name = fields.Selection(
         string="Period analyzed unit",
         selection=[

@@ -87,9 +87,6 @@ class StockAverageDailySale(models.Model):
         string="Daily Qty Standard Deviation", required=True
     )
     warehouse_id = fields.Many2one(comodel_name="stock.warehouse", required=True)
-    zone_location_id = fields.Many2one(
-        string="Location Zone", comodel_name="stock.location", index=True
-    )
     qty_in_stock = fields.Float(
         string="Quantity in stock",
         digits="Product Unit of Measure",
@@ -187,7 +184,6 @@ class StockAverageDailySale(models.Model):
                         sm.product_id,
                         sm.product_uom_qty,
                         sl_src.warehouse_id,
-                        sl_src.zone_location_id,
                         (avg(product_uom_qty) OVER pid
                             - (stddev_samp(product_uom_qty) OVER pid * cfg.standard_deviation_exclude_factor)
                         )  as lower_bound,
@@ -220,7 +216,6 @@ class StockAverageDailySale(models.Model):
                         concat(warehouse_id, product_id)::integer as id,
                         product_id,
                         warehouse_id,
-                        zone_location_id,
                         (avg(product_uom_qty) FILTER
                             (WHERE product_uom_qty BETWEEN lower_bound AND upper_bound OR standard_deviation = 0)
                             )::numeric AS average_qty_by_sale,
@@ -235,7 +230,7 @@ class StockAverageDailySale(models.Model):
                         config_id,
                         nrb_days_without_sat_sun
                     FROM deliveries_last
-                    GROUP BY product_id, warehouse_id, zone_location_id, standard_deviation, nrb_days_without_sat_sun, date_from, date_to, config_id
+                    GROUP BY product_id, warehouse_id, standard_deviation, nrb_days_without_sat_sun, date_from, date_to, config_id
                 ),
                 -- Compute the stock by product in locations under stock
                 stock_qty AS (
@@ -277,7 +272,6 @@ class StockAverageDailySale(models.Model):
                         t.id,
                         t.product_id,
                         t.warehouse_id,
-                        t.zone_location_id,
                         average_qty_by_sale,
                         average_daily_sales_count,
                         average_qty_by_sale * average_daily_sales_count as average_daily_qty,
