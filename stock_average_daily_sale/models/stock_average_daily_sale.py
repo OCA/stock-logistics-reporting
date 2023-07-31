@@ -209,7 +209,6 @@ class StockAverageDailySale(models.Model):
                     WHERE
                         sl_src.usage in ('view', 'internal')
                         AND sl_dest.usage = 'customer'
-                        AND sm.priority > '0'
                         AND sm.date BETWEEN cfg.date_from AND cfg.date_to
                         AND sm.state = 'done'
                     WINDOW pid AS (PARTITION BY sm.product_id, sm.warehouse_id)
