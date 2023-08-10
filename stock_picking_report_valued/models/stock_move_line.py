@@ -20,7 +20,7 @@ class StockMoveLine(models.Model):
     sale_tax_id = fields.Many2many(
         related="sale_line.tax_id", readonly=True, string="Sale Tax"
     )
-    sale_price_unit = fields.Float(
+    sale_price_unit = fields.Monetary(
         compute="_compute_sale_order_line_fields",
         compute_sudo=True,
     )

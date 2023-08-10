@@ -4,16 +4,15 @@
     <template id="valued_report_picking" inherit_id="stock.report_delivery_document">
         <xpath expr="//div[hasclass('page')]" position="before">
             <t t-set="is_outgoing" t-value="o.picking_type_code == 'outgoing'" />
+            <!-- Allows customization -->
+            <t t-set="is_valued" t-value="o.valued" />
+            <t
+                t-set="can_display_valued_info"
+                t-value="is_outgoing and is_valued and o.sale_id and o.move_line_ids"
+            />
         </xpath>
-        <xpath
-            expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]/thead/tr"
-            position="inside"
-        >
-            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
-                <t t-if="o.state != 'done'">
-                    <th name="th_qty_reserved" class="text-right"><strong
-                        >Qty Reserved</strong></th>
-                </t>
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr" position="inside">
+            <t t-if="can_display_valued_info">
                 <th name="th_unit_price" class="text-right"><strong
                     >Unit Price</strong></th>
                 <th
@@ -30,7 +29,7 @@
         <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
             <attribute
                 name="t-if"
-                add="and (not is_outgoing or not (o.valued and o.sale_id and o.move_line_ids))"
+                add="and not can_display_valued_info"
                 separator=" "
             />
         </xpath>
@@ -38,37 +37,22 @@
             expr="//t[@t-foreach='packages']//t[@t-if='has_serial_number']"
             position="attributes"
         >
-            <attribute
-                name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
-            />
+            <attribute name="t-if" add="or can_display_valued_info" separator=" " />
         </xpath>
         <xpath
             expr="//t[@name='no_package_move_lines']//t[@t-if='has_serial_number']"
             position="attributes"
         >
-            <attribute
-                name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
-            />
+            <attribute name="t-if" add="or can_display_valued_info" separator=" " />
         </xpath>
         <xpath
             expr="//table[@name='stock_move_line_table']/tbody/t[@t-else='']//t[@t-if='has_serial_number']"
             position="attributes"
         >
-            <attribute
-                name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
-            />
+            <attribute name="t-if" add="or can_display_valued_info" separator=" " />
         </xpath>
-        <xpath
-            expr="//table[@t-if=&quot;o.move_line_ids and o.state==&apos;done&apos;&quot;]"
-            position="after"
-        >
-            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
+        <xpath expr="//table[@name='stock_move_line_table']" position="after">
+            <t t-if="o.move_line_ids and o.state=='done' and can_display_valued_info">
                 <table class="table table-sm mt32">
                     <thead>
                         <tr>
@@ -103,17 +87,7 @@
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
     >
         <xpath expr="//td[@name='move_line_lot_qty_done']" position="after">
-            <t t-if="move_line.picking_id.state != 'done'">
-                    <td name="td_qty_reserved" class="text-right">
-                        <span t-field="move_line.product_uom_qty" />
-                        <span t-field="move_line.product_uom_id" /></td>
-                </t>
-                <t t-elif="move_line.picking_id.state == 'done'">
-                    <td name="td_qty_done" class="text-center">
-                        <span t-field="move_line.qty_done" />
-                        <span t-field="move_line.product_uom_id" /></td>
-                </t>
-            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
+            <t t-if="can_display_valued_info">
                 <td name="td_unit_price" class="text-right"><span
                         t-field="move_line.sale_price_unit"
                     /></td>
@@ -131,13 +105,6 @@
                         t-field="move_line.sale_tax_description"
                     /></td>
             </t>
-        </xpath>
-        <xpath expr="//td[@name='move_line_lot_qty_done']" position="attributes">
-            <attribute
-                name="t-if"
-                add="not (o.valued or o.sale_id or o.move_line_ids or is_outgoing)"
-                separator=" "
-            />
         </xpath>
     </template>
 
