@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="valued_report_picking_inherit_delivery"
+        inherit_id="stock_picking_report_valued.valued_report_picking"
+    >
+
+        <xpath
+            expr="//th/strong[contains(text(),'Taxes')][1]/parent::th"
+            position="after"
+        >
+            <th t-if="has_hs_code"><strong>HS Code</strong></th>
+        </xpath>
+
+    </template>
+
+    <template
+        id="valued_report_picking_inherit_delivery2"
+        inherit_id="delivery.report_delivery_document2"
+    >
+
+        <xpath
+            expr="//table[@name='stock_move_line_table']/thead/tr/th/strong[contains(text(),'HS Code')]/parent::th"
+            position="replace"
+        >
+        </xpath>
+
+    </template>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line_inherit_delivery2"
+        inherit_id="delivery.stock_report_delivery_has_serial_move_line_inherit_delivery"
+    >
+
+        <xpath expr="//td[@t-if='has_hs_code']" position="replace">
+        </xpath>
+
+        <xpath
+            expr="//span[@t-field='move_line.sale_tax_description']/parent::td"
+            position="after"
+        >
+            <td t-if="has_hs_code"><span t-field="move_line.product_id.hs_code" /></td>
+        </xpath>
+
+    </template>
+
+</odoo>
