@@ -20,14 +20,14 @@ msgstr ""
 
 #. module: stock_quantity_history_location
 #. odoo-javascript
-#: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
+#: code:addons/stock_quantity_history_location/static/src/components/inventory_report/inventory_report.xml:0
 #, python-format
 msgid "Inventory at Date"
 msgstr ""
 
 #. module: stock_quantity_history_location
 #. odoo-javascript
-#: code:addons/stock_quantity_history_location/static/src/xml/inventory_report.xml:0
+#: code:addons/stock_quantity_history_location/static/src/components/inventory_report/inventory_report.xml:0
 #, python-format
 msgid "Inventory at Date & Location"
 msgstr ""
