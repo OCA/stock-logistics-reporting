@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class StockQuantityHistory(models.TransientModel):
@@ -17,6 +18,7 @@ class StockQuantityHistory(models.TransientModel):
     def open_at_date(self):
         action = super().open_at_date()
         ctx = action["context"]
+        ctx = safe_eval(ctx) if isinstance(ctx, str) else ctx
         if self.location_id:
             ctx["location"] = self.location_id.id
             ctx["compute_child"] = self.include_child_locations
