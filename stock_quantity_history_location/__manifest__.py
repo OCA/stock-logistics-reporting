@@ -5,21 +5,22 @@
 {
     "name": "Stock Quantity History Location",
     "summary": "Provides stock quantity by location on past date",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "maintainers": [
         "luisg123v",
+        "rolandojduartem",
     ],
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": ["stock"],
     "data": ["wizards/stock_quantity_history.xml"],
     "assets": {
         "web.assets_backend": [
-            "stock_quantity_history_location/static/src/js/inventory_report.js",
-        ],
-        "web.assets_qweb": [
-            "stock_quantity_history_location/static/src/xml/inventory_report.xml",
+            "stock_quantity_history_location/static/src/components"
+            "/inventory_report/inventory_report.esm.js",
+            "stock_quantity_history_location/static/src/components/"
+            "inventory_report/inventory_report.xml",
         ],
     },
 }
