@@ -85,10 +85,13 @@ promote its widespread use.
 .. |maintainer-luisg123v| image:: https://github.com/luisg123v.png?size=40px
     :target: https://github.com/luisg123v
     :alt: luisg123v
+.. |maintainer-rolandojduartem| image:: https://github.com/rolandojduartem.png?size=40px
+    :target: https://github.com/rolandojduartem
+    :alt: rolandojduartem
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-luisg123v| 
+|maintainer-luisg123v| |maintainer-rolandojduartem| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_quantity_history_location>`_ project on GitHub.
 
