@@ -83,9 +83,19 @@ class StockAverageDailySaleDemo(models.TransientModel):
                 _("You cannot call the _action_create_data() on production database.")
             )
             return
-        product = self.env.ref("product.product_product_25")
+        product = self.env["product.product"].create(
+            {
+                "name": "Product Test 1",
+                "type": "product",
+            }
+        )
         self._create_movement(product)
-        product = self.env.ref("product.product_product_27")
+        product = self.env["product.product"].create(
+            {
+                "name": "Product Test 2",
+                "type": "product",
+            }
+        )
         self._create_movement(product)
 
         self.env["stock.average.daily.sale"].refresh_view()
