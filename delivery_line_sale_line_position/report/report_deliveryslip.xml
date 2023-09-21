@@ -5,7 +5,7 @@
         <xpath expr="//table[@name='stock_move_table']/thead" position="before">
             <t
                 t-set="has_line_position"
-                t-value="any(o.move_lines.filtered(lambda x: x.position_sale_line and x.product_uom_qty))"
+                t-value="any(o.move_ids.filtered(lambda x: x.position_sale_line and x.product_uom_qty))"
             />
         </xpath>
         <xpath expr="//table[@name='stock_move_table']/thead//th[1]" position="before">
