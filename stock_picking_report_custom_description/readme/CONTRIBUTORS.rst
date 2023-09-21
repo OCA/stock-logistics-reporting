@@ -4,3 +4,4 @@
   * Sergio Teruel
   * Ernesto Tejeda
   * Pilar Vargas
+  * Carolina Fernandez
