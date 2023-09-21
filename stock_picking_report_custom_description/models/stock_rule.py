@@ -31,5 +31,6 @@ class StockRule(models.Model):
         )
         if values.get("sale_line_id"):
             line = self.env["sale.order.line"].browse(values["sale_line_id"])
+            res["description_picking"] = line.name
             res["name"] = line.name
         return res
