@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,13 +14,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_report_custom_description
-#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_delivery_description
-msgid "Delivery Slip (Description)"
-msgstr ""
-
-#. module: stock_picking_report_custom_description
-#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_picking_description
-msgid "Picking Operations (Description)"
+#: model:ir.model,name:stock_picking_report_custom_description.model_sale_order_line
+msgid "Sales Order Line"
 msgstr ""
 
 #. module: stock_picking_report_custom_description
