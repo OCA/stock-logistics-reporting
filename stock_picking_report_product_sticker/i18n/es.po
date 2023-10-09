@@ -24,14 +24,14 @@ msgid "Bottom (left)"
 msgstr "Abajo (izquierda)"
 
 #. module: stock_picking_report_product_sticker
+#: model:ir.model.fields,help:stock_picking_report_product_sticker.field_stock_picking_type__show_product_stickers
+msgid "Display Product Stickers on chosen position inside the report."
+msgstr ""
+
+#. module: stock_picking_report_product_sticker
 #: model:ir.model,name:stock_picking_report_product_sticker.model_stock_picking_type
 msgid "Picking Type"
 msgstr "Tipo de albarán"
-
-#. module: stock_picking_report_product_sticker
-#: model:ir.model.fields,help:stock_picking_report_product_sticker.field_stock_picking_type__show_product_stickers
-msgid "Position of the stickers inside the report."
-msgstr "Posición de las pegatinas de producto dentro del informe."
 
 #. module: stock_picking_report_product_sticker
 #: model:ir.ui.menu,name:stock_picking_report_product_sticker.menu_stock_picking_report_product_sticker
@@ -64,3 +64,6 @@ msgstr "Arriba (derecha)"
 #: model:ir.model,name:stock_picking_report_product_sticker.model_stock_picking
 msgid "Transfer"
 msgstr "Albarán"
+
+#~ msgid "Position of the stickers inside the report."
+#~ msgstr "Posición de las pegatinas de producto dentro del informe."
