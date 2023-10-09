@@ -60,12 +60,14 @@ msgstr "Mostrar todas las líneas de productos no enviados en el albarán"
 #. module: stock_picking_report_undelivered_product
 #: selection:res.company,undelivered_product_slip_report_method:0
 msgid "Display only completely undelivered product lines"
-msgstr "Mostrar solo líneas de productos completamente no enviados en el albarán"
+msgstr ""
+"Mostrar solo líneas de productos completamente no enviados en el albarán"
 
 #. module: stock_picking_report_undelivered_product
 #: selection:res.company,undelivered_product_slip_report_method:0
 msgid "Display only partially undelivered product lines"
-msgstr "Mostrar solo lineas de productos parcialmente no enviados en el albarán"
+msgstr ""
+"Mostrar solo lineas de productos parcialmente no enviados en el albarán"
 
 #. module: stock_picking_report_undelivered_product
 #: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_product__display_undelivered_in_picking
