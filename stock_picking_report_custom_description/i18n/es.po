@@ -27,6 +27,11 @@ msgstr "Vale de entrega (descripción)"
 msgid "Picking Operations (Description)"
 msgstr "Operaciones de picking (descripción)"
 
+#. module: stock_picking_report_custom_description
+#: model:ir.model,name:stock_picking_report_custom_description.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
 #~ msgid "<small>Description</small>"
 #~ msgstr "<small>Descripción</small>"
 
