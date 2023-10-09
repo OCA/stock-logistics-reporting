@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_picking_comment_template
+# 	* stock_picking_comment_template
 #
 msgid ""
 msgstr ""
@@ -59,7 +59,10 @@ msgstr ""
 
 #. module: stock_picking_comment_template
 #: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
-msgid "The comments will be displayed on the printed document. You can load a predefined template, write your own text or load a template and then modify it only for this document."
+msgid ""
+"The comments will be displayed on the printed document. You can load a "
+"predefined template, write your own text or load a template and then modify "
+"it only for this document."
 msgstr ""
 "Diese Textbausteine werden auf Dokumentbelegen gedruckt. Es kann eine "
 "bereits existierende Vorlage geladen, ein neuer eigenständiger Text "
