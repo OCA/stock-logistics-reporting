@@ -125,15 +125,29 @@ msgid "Product UoM"
 msgstr "UdM de Producto"
 
 #. module: stock_report_quantity_by_location
-#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__quantity
-msgid "Quantity"
-msgstr "Cantidad"
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__quantity_on_hand
+msgid "Qty On Hand"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__quantity_reserved
+msgid "Qty Reserved"
+msgstr ""
+
+#. module: stock_report_quantity_by_location
+#: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__quantity_unreserved
+msgid "Qty Unreserved"
+msgstr ""
 
 #. module: stock_report_quantity_by_location
 #: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location_prepare__with_quantity
-#: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_search_view
 msgid "Quantity > 0"
 msgstr "Cantidad > 0"
+
+#. module: stock_report_quantity_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_search_view
+msgid "Quantity On Hand > 0"
+msgstr ""
 
 #. module: stock_report_quantity_by_location
 #: model_terms:ir.ui.view,arch_db:stock_report_quantity_by_location.stock_report_quantity_by_location_prepare_form_view
@@ -185,3 +199,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_report_quantity_by_location.field_stock_report_quantity_by_location__wiz_id
 msgid "Wiz"
 msgstr ""
+
+#~ msgid "Quantity"
+#~ msgstr "Cantidad"
