@@ -18,14 +18,20 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 
 #. module: stock_picking_report_custom_description
-#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_delivery_description
-msgid "Delivery Slip (Description)"
-msgstr "Vale de entrega (descripción)"
+#: model:ir.model,name:stock_picking_report_custom_description.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
 
 #. module: stock_picking_report_custom_description
-#: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_picking_description
-msgid "Picking Operations (Description)"
-msgstr "Operaciones de picking (descripción)"
+#: model:ir.model,name:stock_picking_report_custom_description.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#~ msgid "Delivery Slip (Description)"
+#~ msgstr "Vale de entrega (descripción)"
+
+#~ msgid "Picking Operations (Description)"
+#~ msgstr "Operaciones de picking (descripción)"
 
 #~ msgid "<small>Description</small>"
 #~ msgstr "<small>Descripción</small>"
