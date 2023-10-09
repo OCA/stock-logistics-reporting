@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* stock_move_value_report
+# 	* stock_move_value_report
 #
 msgid ""
 msgstr ""
