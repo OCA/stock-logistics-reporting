@@ -31,30 +31,30 @@ class TestStockAccountValuationReport(TransactionCase):
         self.stock_location_customer_id = self.ref("stock.stock_location_customers")
         self.stock_location_supplier_id = self.ref("stock.stock_location_suppliers")
         # Account types
-        expense_type = self.env.ref("account.data_account_type_expenses")
-        equity_type = self.env.ref("account.data_account_type_equity")
-        asset_type = self.env.ref("account.data_account_type_fixed_assets")
+        expense_type = "expense"
+        equity_type = "equity"
+        asset_type = "asset_current"
         # Create account for Goods Received Not Invoiced
         name = "Goods Received Not Invoiced"
         code = "grni"
-        acc_type = equity_type
-        self.account_grni = self._create_account(acc_type, name, code, self.company)
+        account_type = equity_type
+        self.account_grni = self._create_account(account_type, name, code, self.company)
         # Create account for Cost of Goods Sold
         name = "Cost of Goods Sold"
         code = "cogs"
-        acc_type = expense_type
-        self.account_cogs = self._create_account(acc_type, name, code, self.company)
+        account_type = expense_type
+        self.account_cogs = self._create_account(account_type, name, code, self.company)
         # Create account for Goods Delivered Not Invoiced
         name = "Goods Delivered Not Invoiced"
         code = "gdni"
-        acc_type = expense_type
-        self.account_gdni = self._create_account(acc_type, name, code, self.company)
+        account_type = expense_type
+        self.account_gdni = self._create_account(account_type, name, code, self.company)
         # Create account for Inventory
         name = "Inventory"
         code = "inventory"
-        acc_type = asset_type
+        account_type = asset_type
         self.account_inventory = self._create_account(
-            acc_type, name, code, self.company
+            account_type, name, code, self.company
         )
 
         self.stock_journal = self.env["account.journal"].create(
@@ -93,13 +93,13 @@ class TestStockAccountValuationReport(TransactionCase):
         )
         return user
 
-    def _create_account(self, acc_type, name, code, company):
+    def _create_account(self, account_type, name, code, company):
         """Create an account."""
         account = self.account_model.create(
             {
                 "name": name,
                 "code": code,
-                "user_type_id": acc_type.id,
+                "account_type": account_type,
                 "company_id": company.id,
             }
         )
@@ -146,7 +146,7 @@ class TestStockAccountValuationReport(TransactionCase):
                 "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_id,
                 "location_dest_id": self.stock_location_customer_id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -173,7 +173,7 @@ class TestStockAccountValuationReport(TransactionCase):
                 "picking_type_id": self.stock_picking_type_out.id,
                 "location_id": self.stock_location_supplier_id,
                 "location_dest_id": self.stock_location_customer_id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -200,7 +200,7 @@ class TestStockAccountValuationReport(TransactionCase):
                 "picking_type_id": self.stock_picking_type_in.id,
                 "location_id": self.stock_location_supplier_id,
                 "location_dest_id": self.stock_location_id,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -223,15 +223,15 @@ class TestStockAccountValuationReport(TransactionCase):
     def _do_picking(self, picking, date, qty):
         """Do picking with only one move on the given date."""
         picking.write({"date": date})
-        picking.move_lines.write({"date": date})
+        picking.move_ids.write({"date": date})
         picking.action_confirm()
         picking.action_assign()
-        picking.move_lines.quantity_done = qty
+        picking.move_ids.quantity_done = qty
         picking.button_validate()
         # hacking the create_date of the layer in order to test
         self.env.cr.execute(
             """UPDATE stock_valuation_layer SET create_date = %s WHERE id in %s""",
-            (date, tuple(picking.move_lines.stock_valuation_layer_ids.ids)),
+            (date, tuple(picking.move_ids.stock_valuation_layer_ids.ids)),
         )
         return True
 
@@ -251,7 +251,7 @@ class TestStockAccountValuationReport(TransactionCase):
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 10.0)
-        move = in_picking.move_lines
+        move = in_picking.move_ids
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(layer.remaining_value, 10.0)
         # The accounting value and the stock value match
@@ -267,7 +267,7 @@ class TestStockAccountValuationReport(TransactionCase):
         self.assertEqual(layer.remaining_qty, 0.0)
         self.assertEqual(layer.remaining_value, 0.0)
         # The layer out took that out
-        move = out_picking.move_lines
+        move = out_picking.move_ids
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(layer.value, -10.0)
         # The report shows the material is gone
@@ -296,7 +296,7 @@ class TestStockAccountValuationReport(TransactionCase):
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 0.0)
         # There are two a stock valuation layers associated to this product
-        move = dropship_picking.move_lines
+        move = dropship_picking.move_ids
         layers = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(len(layers), 2)
         in_layer = layers.filtered(lambda l: l.quantity > 0)
@@ -325,7 +325,7 @@ class TestStockAccountValuationReport(TransactionCase):
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 10.0)
-        move = in_picking.move_lines
+        move = in_picking.move_ids
         layer = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(layer.remaining_value, 10.0)
         # Receive more
@@ -344,7 +344,7 @@ class TestStockAccountValuationReport(TransactionCase):
         inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 50.0)
-        move2 = in_picking2.move_lines
+        move2 = in_picking2.move_ids
         layer = self.layer_model.search([("stock_move_id", "=", move2.id)])
         self.assertEqual(layer.remaining_value, 40.0)
         # Now we check the report reflects the same
