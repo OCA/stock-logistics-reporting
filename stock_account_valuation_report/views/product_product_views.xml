@@ -21,6 +21,7 @@
                     name="action_view_valuation_layers"
                     type="object"
                     icon="fa-info-circle"
+                    title="View Valuation Layers"
                     attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
                 />
                 <field
@@ -38,6 +39,7 @@
                     name="action_view_amls"
                     type="object"
                     icon="fa-info-circle"
+                    title="View Journal Items"
                     attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
                 />
                 <field name="qty_discrepancy" sum="Qty Discrepancy" />
