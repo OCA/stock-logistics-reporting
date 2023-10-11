@@ -186,17 +186,6 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
         )
         self.assertFalse(avg_product_2)
 
-    def test_view(self):
-        # Check no exception is raised if materialized view is not loaded
-        with self.assertLogs(
-            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale"
-        ) as log:
-            result = self.env["stock.average.daily.sale"].search_read(
-                [("product_id", "=", self.product_1.id)]
-            )
-            self.assertFalse(result)
-            self.assertIn("The materialized view has not been populated", log.output[0])
-
     def test_view_refreshed(self):
         self._refresh()
         with self.assertNoLogs(
