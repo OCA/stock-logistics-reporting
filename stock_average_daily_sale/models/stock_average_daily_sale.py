@@ -214,7 +214,8 @@ class StockAverageDailySale(models.Model):
 
                 averages AS(
                     SELECT
-                        concat(warehouse_id, product_id)::integer as id,
+                        row_number() over (order by product_id) as id,
+                        concat(warehouse_id, product_id)::integer as window_id,
                         product_id,
                         warehouse_id,
                         (avg(product_uom_qty) FILTER
@@ -295,7 +296,7 @@ class StockAverageDailySale(models.Model):
                             (cfg.number_days_qty_in_stock *  average_qty_by_sale)
                         ) as recommended_qty
                     FROM averages t
-                    JOIN daily_standard_deviation ds on ds.id= t.id
+                    JOIN daily_standard_deviation ds on ds.id= t.window_id
                     JOIN stock_average_daily_sale_config cfg on cfg.id = t.config_id
                     JOIN stock_qty sqty on sqty.pp_id = t.product_id AND t.warehouse_id = sqty.warehouse_id
                     JOIN product_product pp on pp.id = t.product_id
