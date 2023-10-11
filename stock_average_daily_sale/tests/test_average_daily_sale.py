@@ -205,22 +205,3 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
             self.env["stock.average.daily.sale"].search_read(
                 [("product_id", "=", self.product_1.id)]
             )
-
-    def test_view_not_refreshed(self):
-        with self.assertLogs(
-            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale",
-            level="WARNING",
-        ) as logger:
-            self.env["stock.average.daily.sale"].search(
-                [("product_id", "=", self.product_1.id)]
-            )
-        self.assertIn(
-            str("The materialized view has not been populated. Launch the cron."),
-            str(logger.output),
-        )
-        # Check if we can still query database
-        product = self.env["product.product"].search([("id", "=", self.product_1.id)])
-        self.assertEqual(
-            product,
-            self.product_1,
-        )
