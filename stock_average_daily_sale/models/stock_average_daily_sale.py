@@ -7,6 +7,7 @@ from psycopg2.errors import ObjectNotInPrerequisiteState
 from psycopg2.extensions import AsIs
 
 from odoo import _, api, fields, models, registry
+from odoo.tools import config
 
 from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
     ABC_SELECTION,
@@ -118,7 +119,7 @@ class StockAverageDailySale(models.Model):
     # pylint: disable=redefined-outer-name
     @api.model
     def search(self, domain, offset=0, limit=None, order=None, count=False):
-        if not self._check_view():
+        if not config["test_enable"] and not self._check_view():
             return self.browse()
         return super().search(
             domain=domain, offset=offset, limit=limit, order=order, count=count
