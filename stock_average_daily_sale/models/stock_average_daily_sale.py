@@ -6,7 +6,7 @@ import logging
 from psycopg2.errors import ObjectNotInPrerequisiteState
 from psycopg2.extensions import AsIs
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, registry
 
 from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
     ABC_SELECTION,
@@ -101,8 +101,9 @@ class StockAverageDailySale(models.Model):
     @api.model
     def _check_view(self):
         try:
-            with self.env.cr.savepoint():
-                self.env.cr.execute("SELECT COUNT(1) FROM %s", (AsIs(self._table),))
+            cr = registry(self._cr.dbname).cursor()
+            new_self = self.with_env(self.env(cr=cr))  # TDE FIXME
+            new_self.env.cr.execute("SELECT COUNT(1) FROM %s", (AsIs(self._table),))
             return True
         except ObjectNotInPrerequisiteState:
             _logger.warning(
@@ -111,6 +112,8 @@ class StockAverageDailySale(models.Model):
             return False
         except Exception as e:
             raise e
+        finally:
+            new_self.env.cr.close()
 
     # pylint: disable=redefined-outer-name
     @api.model

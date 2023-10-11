@@ -218,3 +218,9 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
             str("The materialized view has not been populated. Launch the cron."),
             str(logger.output),
         )
+        # Check if we can still query database
+        product = self.env["product.product"].search([("id", "=", self.product_1.id)])
+        self.assertEqual(
+            product,
+            self.product_1,
+        )
