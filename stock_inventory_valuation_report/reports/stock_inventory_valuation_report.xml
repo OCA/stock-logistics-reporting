@@ -1,4 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
+    <record id="action_stock_inventory_valuation_report_html" model="ir.actions.client">
+        <field name="name">Inventory Valuation Report</field>
+        <field name="tag">stock_inventory_valuation_report_backend</field>
+        <field
+            name="context"
+            eval="{'active_model': 'report.stock.inventory.valuation.report'}"
+        />
+    </record>
+
+    <record id="action_stock_inventory_valuation_report_pdf" model="ir.actions.report">
+        <field name="name">Stock Inventory Valuation Report PDF</field>
+        <field name="model">report.stock.inventory.valuation.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf</field>
+        <field
+            name="report_file"
+        >stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf</field>
+        <field
+            name="print_report_name"
+        >'Inventory Valuation Report - [%s]' % object.inventory_datetime</field>
+        <field
+            name="binding_model_id"
+            ref="model_report_stock_inventory_valuation_report"
+        />
+        <field name="binding_type">report</field>
+        <field
+            name="paperformat_id"
+            ref="stock_inventory_valuation_report.paperformat_inventory_valuation_report"
+        />
+    </record>
+
+    <record id="action_stock_inventory_valuation_report_xlsx" model="ir.actions.report">
+        <field name="name">Stock Inventory Valuation Report XLSX</field>
+        <field name="model">report.stock.inventory.valuation.report</field>
+        <field name="report_type">xlsx</field>
+        <field
+            name="report_name"
+        >s_i_v_r.report_stock_inventory_valuation_report_xlsx</field>
+        <field name="report_file">Inventory Valuation Report</field>
+        <field
+            name="binding_model_id"
+            ref="model_report_stock_inventory_valuation_report"
+        />
+        <field name="binding_type">report</field>
+        <field name="attachment_use">False</field>
+    </record>
+
 
     <template
         id="assets_backend"
@@ -120,7 +171,7 @@
             </div>
             <div class="act_as_row">
                 <div class="act_as_cell">
-                    <span t-esc="o.date.strftime('%Y-%m-%d')" />
+                    <span t-esc="o.inventory_datetime.strftime('%Y-%m-%d')" />
                 </div>
                 <div class="act_as_cell">
                     <span t-field='o.company_id.name' />
