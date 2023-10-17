@@ -10,12 +10,13 @@
     "author": "Ecosoft,Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": [
-        "stock_account",
+        "stock_account_valuation_report",
         "report_xlsx_helper",
     ],
     "data": [
         "data/paper_format.xml",
         "data/report_data.xml",
+        "security/ir.model.access.csv",
         "reports/stock_inventory_valuation_report.xml",
         "wizard/stock_quantity_history_view.xml",
     ],

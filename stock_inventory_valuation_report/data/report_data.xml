@@ -9,25 +9,49 @@
         />
     </record>
 
-    <report
-        string="Stock Inventory Valuation Report PDF"
-        id="action_stock_inventory_valuation_report_pdf"
-        model="report.stock.inventory.valuation.report"
-        name="stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf"
-        file="stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf"
-        report_type="qweb-pdf"
-        print_report_name="'Inventory Valuation Report - [%s]' % object.date"
-        paperformat="stock_inventory_valuation_report.paperformat_inventory_valuation_report"
-    />
 
-    <report
-        string="Stock Inventory Valuation Report XLSX"
-        id="action_stock_inventory_valuation_report_xlsx"
-        model="report.stock.inventory.valuation.report"
-        name="s_i_v_r.report_stock_inventory_valuation_report_xlsx"
-        file="Inventory Valuation Report"
-        report_type="xlsx"
-        attachment_use="False"
-    />
+    <record id="action_stock_inventory_valuation_report_pdf" model="ir.actions.report">
+            <field name="name">Stock Inventory Valuation Report PDF</field>
+            <field name="model">report.stock.inventory.valuation.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field
+            name="report_name"
+        >stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf</field>
+            <field
+            name="report_file"
+        >stock_inventory_valuation_report.report_stock_inventory_valuation_report_pdf</field>
+            <field
+            name="print_report_name"
+        >'Inventory Valuation Report - [%s]' % object.date</field>
+            <field
+            name="attachment"
+        >(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field
+            name="binding_model_id"
+            ref="model_report_stock_inventory_valuation_report"
+        />
+            <field name="binding_type">report</field>
+            <field
+            name="paperformat_id"
+            ref="stock_inventory_valuation_report.paperformat_inventory_valuation_report"
+        />
+        </record>
+
+    <record id="action_stock_inventory_valuation_report_xlsx" model="ir.actions.report">
+            <field name="name">Stock Inventory Valuation Report XLSX</field>
+            <field name="model">report.stock.inventory.valuation.report</field>
+            <field name="report_type">xlsx</field>
+            <field
+            name="report_name"
+        >s_i_v_r.report_stock_inventory_valuation_report_xlsx</field>
+            <field name="report_file">Inventory Valuation Report</field>
+            <field
+            name="binding_model_id"
+            ref="model_report_stock_inventory_valuation_report"
+        />
+            <field name="binding_type">report</field>
+            <field name="attachment_use">False</field>
+        </record>
+
 
 </odoo>

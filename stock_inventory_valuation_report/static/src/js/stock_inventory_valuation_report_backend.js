@@ -4,17 +4,18 @@ odoo.define(
         "use strict";
 
         var core = require("web.core");
-        var Widget = require("web.Widget");
-        var ControlPanelMixin = require("web.ControlPanelMixin");
+        var AbstractAction = require("web.AbstractAction");
         var ReportWidget = require("web.Widget");
 
-        var report_backend = Widget.extend(ControlPanelMixin, {
+        var report_backend = AbstractAction.extend({
+            hasControlPanel: true,
             // Stores all the parameters of the action.
             events: {
                 "click .o_stock_inventory_valuation_report_print": "print",
                 "click .o_stock_inventory_valuation_report_export": "export",
             },
             init: function (parent, action) {
+                this._super.apply(this, arguments);
                 this.actionManager = parent;
                 this.given_context = {};
                 this.odoo_context = action.context;
@@ -26,17 +27,19 @@ odoo.define(
                     action.context.active_id || action.params.active_id;
                 this.given_context.model = action.context.active_model || false;
                 this.given_context.ttype = action.context.ttype || false;
-                return this._super.apply(this, arguments);
             },
             willStart: function () {
-                return $.when(this.get_html());
+                return Promise.all([
+                    this._super.apply(this, arguments),
+                    this.get_html(),
+                ]);
             },
             set_html: function () {
                 var self = this;
-                var def = $.when();
+                var def = Promise.resolve();
                 if (!this.report_widget) {
                     this.report_widget = new ReportWidget(this, this.given_context);
-                    def = this.report_widget.appendTo(this.$el);
+                    def = this.report_widget.appendTo(this.$(".o_content"));
                 }
                 def.then(function () {
                     self.report_widget.$el.html(self.html);
@@ -59,7 +62,7 @@ odoo.define(
                 }).then(function (result) {
                     self.html = result.html;
                     defs.push(self.update_cp());
-                    return $.when.apply($, defs);
+                    return Promise.all(defs);
                 });
             },
             // Updates the control panel and render the elements that have yet
@@ -100,7 +103,7 @@ odoo.define(
                 });
             },
             canBeRemoved: function () {
-                return $.when();
+                return Promise.resolve();
             },
         });
 

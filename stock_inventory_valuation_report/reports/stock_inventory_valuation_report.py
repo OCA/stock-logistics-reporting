@@ -44,7 +44,6 @@ class StockInventoryValuationReport(models.TransientModel):
         help="Use compute fields, so there is nothing store in database",
     )
 
-    @api.multi
     def _compute_results(self):
         self.ensure_one()
         if not self.compute_at_date:
@@ -52,44 +51,43 @@ class StockInventoryValuationReport(models.TransientModel):
         products = (
             self.env["product.product"]
             .with_context(
-                dict(to_date=self.date, company_owned=True, create=False, edit=False)
+                to_date=self.date, company_owned=True, create=False, edit=False
             )
-            .search([("type", "=", "product"), ("qty_available", "!=", 0)])
-        )
-        ReportLine = self.env["stock.inventory.valuation.view"]
-        for product in products:
-            standard_price = product.standard_price
-            if self.date:
-                standard_price = product.get_history_price(
-                    self.env.user.company_id.id, date=self.date
-                )
-            line = {
-                "name": product.name,
-                "reference": product.default_code,
-                "barcode": product.barcode,
-                "qty_at_date": product.qty_at_date,
-                "uom_id": product.uom_id,
-                "currency_id": product.currency_id,
-                "cost_currency_id": product.cost_currency_id,
-                "standard_price": standard_price,
-                "stock_value": product.qty_at_date * standard_price,
-                "cost_method": product.cost_method,
-            }
-            if product.qty_at_date != 0:
+            .search([("type", "=", "product")])
+            # 'quantity_svl' we can't use compute field for search
+        ).filtered(lambda pp: pp.quantity_svl != 0)
+        if products:
+            ReportLine = self.env["stock.inventory.valuation.view"]
+            for product in products:
+                line = {
+                    "name": product.name,
+                    "reference": product.default_code,
+                    "barcode": product.barcode,
+                    "qty_at_date": product.quantity_svl,
+                    "uom_id": product.uom_id,
+                    "currency_id": product.currency_id,
+                    "cost_currency_id": product.cost_currency_id,
+                    "standard_price": product.standard_price,
+                    "stock_value": product.value_svl,
+                    "cost_method": product.cost_method,
+                }
                 self.results += ReportLine.new(line)
+        else:
+            self.results = []
 
-    @api.multi
     def print_report(self, report_type="qweb"):
         self.ensure_one()
         action = (
             report_type == "xlsx"
             and self.env.ref(
                 "stock_inventory_valuation_report."
-                "action_stock_inventory_valuation_report_xlsx"
+                "action_stock_inventory_valuation_report_xlsx",
+                raise_if_not_found=False,
             )
             or self.env.ref(
                 "stock_inventory_valuation_report."
-                "action_stock_inventory_valuation_report_pdf"
+                "action_stock_inventory_valuation_report_pdf",
+                raise_if_not_found=False,
             )
         )
         return action.report_action(self, config=False)
@@ -103,7 +101,7 @@ class StockInventoryValuationReport(models.TransientModel):
             result["html"] = self.env.ref(
                 "stock_inventory_valuation_report."
                 "report_stock_inventory_valuation_report_html"
-            ).render(rcontext)
+            )._render(rcontext)
         return result
 
     @api.model

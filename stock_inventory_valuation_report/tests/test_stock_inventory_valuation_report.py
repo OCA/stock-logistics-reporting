@@ -2,19 +2,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import datetime
-import logging
-
-from dateutil.relativedelta import relativedelta
 
 from odoo.tests import common
 from odoo.tools import test_reports
 
-_logger = logging.getLogger(__name__)
 
-
-class TestStockInventoryValuation(common.TransactionCase):
-    def setUp(cls):
-        super(TestStockInventoryValuation, cls).setUp()
+class TestStockInventoryValuation(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         cls.model = cls._getReportModel()
 
@@ -60,41 +57,50 @@ class TestStockInventoryValuation(common.TransactionCase):
         self.report.print_report("qweb")
         self.report.print_report("xlsx")
 
-    def _getReportModel(self):
-        return self.env["report.stock.inventory.valuation.report"]
+    @classmethod
+    def _getReportModel(cls):
+        return cls.env["report.stock.inventory.valuation.report"]
 
-    def _getQwebReportName(self):
+    @classmethod
+    def _getQwebReportName(cls):
         return (
             "stock_inventory_valuation_report."
             "report_stock_inventory_valuation_report_pdf"
         )
 
-    def _getXlsxReportName(self):
+    @classmethod
+    def _getXlsxReportName(cls):
         return "s_i_v_r.report_stock_inventory_valuation_report_xlsx"
 
-    def _getXlsxReportActionName(self):
+    @classmethod
+    def _getXlsxReportActionName(cls):
         return (
             "stock_inventory_valuation_report."
             "action_stock_inventory_valuation_report_xlsx"
         )
 
-    def _getReportTitle(self):
+    @classmethod
+    def _getReportTitle(cls):
         return "Inventory Valuation Report"
 
-    def _getBaseFilters(self):
+    @classmethod
+    def _getBaseFilters(cls):
         return {
-            "company_id": self.env.user.company_id.id,
-            "compute_at_date": 0,
+            "company_id": cls.env.user.company_id.id,
+            "compute_at_date": "0",
             "date": datetime.datetime.now(),
         }
 
 
-class TestStockInventoryValuationReport(common.TransactionCase):
-    def setUp(self):
-        super(TestStockInventoryValuationReport, self).setUp()
-        self.company_id = self.env.ref("base.main_company")
-        self.compute_at_date = 0
-        self.date = datetime.datetime.now()
+class TestStockInventoryValuationReport(common.SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+
+        cls.company_id = cls.env.ref("base.main_company")
+        cls.compute_at_date = "0"
+        cls.date = datetime.datetime.now()
 
     def test_get_report_html(self):
         report = self.env["report.stock.inventory.valuation.report"].create(
@@ -110,8 +116,8 @@ class TestStockInventoryValuationReport(common.TransactionCase):
     def test_wizard(self):
         wizard = self.env["stock.quantity.history"].create(
             {
-                "compute_at_date": 0,
-                "date": datetime.datetime.now(),
+                "compute_at_date": "0",
+                "inventory_datetime": datetime.datetime.now(),
             }
         )
         wizard._export("qweb-pdf")
@@ -128,56 +134,66 @@ class TestStockInventoryValuationReport(common.TransactionCase):
             {
                 "name": "test valuation report date",
                 "type": "product",
+                "company_id": self.company_id.id,
                 "categ_id": self.env.ref("product.product_category_all").id,
             }
         )
+
         stock_location_id = self.ref("stock.stock_location_stock")
         partner_id = self.ref("base.res_partner_4")
-        product_qty = 100
-        date_with_stock = datetime.datetime.now() + relativedelta(days=-1)
+        product_qty = 50.000
+        date_with_stock = datetime.datetime.now()
 
-        # Receive the product
-        receipt = self.env["stock.picking"].create(
+        # Create location:
+        self.location_1 = self.env.ref("stock.stock_location_stock")
+        self.location_2 = self.env.ref("stock.stock_location_customers")
+
+        # Create operation type:
+        operation_type = self.env.ref("stock.picking_type_in")
+
+        # Create stock picking:
+        picking = self.env["stock.picking"].create(
             {
-                "location_id": self.ref("stock.stock_location_suppliers"),
-                "location_dest_id": stock_location_id,
-                "partner_id": partner_id,
-                "picking_type_id": self.ref("stock.picking_type_in"),
-                "move_lines": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Receive product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": product_qty,
-                            "quantity_done": product_qty,
-                        },
-                    )
-                ],
+                "location_id": self.location_2.id,
+                "location_dest_id": self.location_1.id,
+                "picking_type_id": operation_type.id,
+                "company_id": self.company_id.id,
             }
         )
-        receipt.action_confirm()
-        receipt.action_done()
-        receipt.move_lines.date = date_with_stock
-        self.assertEqual(
-            product.with_context(to_date=date_with_stock).qty_available, product_qty
+        self.env["stock.move"].create(
+            {
+                "name": product.name,
+                "product_id": product.id,
+                "product_uom_qty": 50.000,
+                "product_uom": product.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": self.location_2.id,
+                "location_dest_id": self.location_1.id,
+            }
         )
-        self.assertEqual(product.qty_available, product_qty)
+        picking.action_confirm()
+        picking.move_ids_without_package.quantity_done = 50.000
+        picking.button_validate()
+        self.assertEqual(
+            product.with_context(to_date=date_with_stock).quantity_svl, product_qty
+        )
+        self.assertEqual(product.quantity_svl, product_qty)
 
         # Report should have a line with the product and its quantity
-        report = self.env["report.stock.inventory.valuation.report"].create(
-            {
-                "company_id": self.company_id.id,
-                "compute_at_date": 0,
-            }
-        )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
-        self.assertEqual(len(product_row), 1)
-        self.assertEqual(product_row.qty_at_date, product_qty)
+        report_form = common.Form(self.env["report.stock.inventory.valuation.report"])
+        report_form.company_id = self.company_id
+        report_form.compute_at_date = "0"
+        report = report_form.save()
 
         # Delivery the product
+        product2 = self.env["product.product"].create(
+            {
+                "name": "test valuation report date2",
+                "type": "product",
+                "company_id": self.company_id.id,
+                "categ_id": self.env.ref("product.product_category_all").id,
+            }
+        )
         delivery = self.env["stock.picking"].create(
             {
                 "location_id": stock_location_id,
@@ -190,31 +206,31 @@ class TestStockInventoryValuationReport(common.TransactionCase):
                         0,
                         {
                             "name": "Deliver product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": product_qty,
-                            "quantity_done": product_qty,
+                            "product_id": product2.id,
+                            "product_uom": product2.uom_id.id,
+                            "product_uom_qty": 5,
+                            "quantity_done": 5,
                         },
                     )
                 ],
             }
         )
         delivery.action_confirm()
-        delivery.action_done()
+        delivery.button_validate()
         self.assertEqual(
-            product.with_context(to_date=date_with_stock).qty_available, product_qty
+            product2.with_context(to_date=date_with_stock).quantity_svl, -5
         )
-        self.assertEqual(product.qty_available, 0)
+        self.assertEqual(product2.quantity_svl, -5)
 
         # Report should not have a line with the product
         # because it is not available
         report = self.env["report.stock.inventory.valuation.report"].create(
             {
                 "company_id": self.company_id.id,
-                "compute_at_date": 0,
+                "compute_at_date": "0",
             }
         )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
+        product_row = report.results.filtered(lambda r: r.name == product2.name)
         self.assertFalse(product_row)
 
         # Report computed specifying the date
@@ -222,10 +238,53 @@ class TestStockInventoryValuationReport(common.TransactionCase):
         report = self.env["report.stock.inventory.valuation.report"].create(
             {
                 "company_id": self.company_id.id,
-                "compute_at_date": 1,
+                "compute_at_date": "1",
                 "date": date_with_stock,
             }
         )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
+        report._compute_results()
+        product_row = report.results.filtered(lambda r: r.name == product2.name)
         self.assertEqual(len(product_row), 1)
-        self.assertEqual(product_row.qty_at_date, product_qty)
+        self.assertEqual(product_row.qty_at_date, -5)
+
+    def test_open_table(self):
+        """Test retrieving of inventory valuation, when it based on date
+        and with different context"""
+
+        # check created action, when inventory valuation depends on date
+        quantity_history = self.env["stock.quantity.history"].create(
+            {
+                "compute_at_date": "1",
+                "inventory_datetime": datetime.datetime.now(),
+            }
+        )
+        quantity_action_with_date = quantity_history.open_table()
+        self.assertEqual(
+            quantity_action_with_date["type"],
+            "ir.actions.act_window",
+            "type must be 'ir.actions.act_window'",
+        )
+        self.assertEqual(
+            quantity_action_with_date["res_model"],
+            "product.product",
+            "res_model must be 'product.product'",
+        )
+        self.assertEqual(
+            quantity_action_with_date["domain"],
+            "[('type', '=', 'product')]",
+            "Bad domain name",
+        )
+
+        # check created action, when inventory valuation does not depend on date
+        quantity_history.update({"compute_at_date": "0"})
+        quantity_action_no_date = quantity_history.open_table()
+        self.assertEqual(
+            quantity_action_no_date["type"],
+            "ir.actions.server",
+            "type must be 'ir.actions.server'",
+        )
+        self.assertEqual(
+            quantity_action_no_date["model_name"],
+            "stock.quant",
+            "model_name must be 'stock.quant'",
+        )
