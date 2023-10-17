@@ -14,8 +14,8 @@
         "report_xlsx_helper",
     ],
     "data": [
-        "data/paper_format.xml",
-        "data/report_data.xml",
+        "data/paperformat_data.xml",
+        "security/ir.model.access.csv",
         "reports/stock_inventory_valuation_report.xml",
         "wizard/stock_quantity_history_view.xml",
     ],
