@@ -8,19 +8,4 @@ class StockPikcingBatch(models.Model):
     _inherit = "stock.picking.batch"
 
     def get_out_pickings(self):
-        for rec in self:
-            # TO BE Modified Later
-            # if (
-            # rec.picking_type_id.warehouse_id
-            # and rec.picking_type_id.warehouse_id.delivery_steps != "pick_ship"
-            #             ):
-            #                 raise UserError(
-            #                         _(
-            #                             "This report is only available for "
-            #                    "warehouses configured with 2-steps delivery"
-            #                         )
-            #                     )
-            out_pickings = (
-                rec.mapped("move_ids").mapped("move_dest_ids").mapped("picking_id")
-            )
-        return out_pickings
+        return self.mapped("move_ids.move_dest_ids.picking_id")
