@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Batch Report",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Open Source Integrators, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "summary": "Stock Picking Batch Report",
