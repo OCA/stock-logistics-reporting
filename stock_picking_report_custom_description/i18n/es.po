@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-04 15:34+0000\n"
-"PO-Revision-Date: 2019-12-04 16:35+0100\n"
-"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
+"PO-Revision-Date: 2023-10-28 16:00+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_picking_report_custom_description
 #: model:ir.actions.report,name:stock_picking_report_custom_description.action_report_delivery_description
@@ -30,7 +30,7 @@ msgstr "Operaciones de picking (descripción)"
 #. module: stock_picking_report_custom_description
 #: model:ir.model,name:stock_picking_report_custom_description.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regla de Existencias"
 
 #~ msgid "<small>Description</small>"
 #~ msgstr "<small>Descripción</small>"
