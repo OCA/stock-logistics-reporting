@@ -10,6 +10,16 @@ class TestStockPickingValued(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestStockPickingValued, cls).setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         company = cls.env.user.company_id
         cls.tax = cls.env["account.tax"].create(
             {
