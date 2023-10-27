@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-12 11:38+0000\n"
+"PO-Revision-Date: 2023-10-29 08:31+0000\n"
 "Last-Translator: sofien-moalla <s.moalla@cadrinsitu.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -128,7 +128,7 @@ msgstr "Montant HT"
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_users__valued_picking
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__valued
 msgid "Valued Picking"
-msgstr "Valorisation"
+msgstr "BL Valorisé"
 
 #. module: stock_picking_report_valued
 #: model:ir.model.fields,help:stock_picking_report_valued.field_res_partner__valued_picking
