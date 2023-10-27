@@ -62,7 +62,7 @@ class StockMoveLine(models.Model):
 
         total_lines = len(aggregated_move_lines)
         # Manage positionning and itemization
-        pos = list(aggregated_move_lines.keys()).index(line_key)
+        pos = list(aggregated_move_lines.keys()).index(line_key) if line_key in aggregated_move_lines else 0
         items = list(aggregated_move_lines.items())
         previous_record = self.previous_line_id
         while previous_record:
