@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <!-- ==================================== -->
+        <!-- Edit table[@name='stock_move_table'] -->
+        <!-- ==================================== -->
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/t[@t-set='lines']"
+            position="attributes"
+        >
+            <attribute
+                name="t-value"
+            >o.move_lines.inject_sections_and_notes()</attribute>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_table']/tbody/tr" position="attributes">
+            <attribute name="t-att-class">move.get_section_or_note_class()</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr/td[1]"
+            position="attributes"
+        >
+            <attribute name="t-if">not move.is_section_or_note()</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr/td[2]"
+            position="attributes"
+        >
+            <attribute name="t-if">not move.is_section_or_note()</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr/td[3]"
+            position="attributes"
+        >
+            <attribute name="t-if">not move.is_section_or_note()</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr/td[1]"
+            position="before"
+        >
+            <t t-if="move.is_section_or_note()">
+                <td colspan="99">
+                    <span t-field="move.name" t-options="{'widget': 'text'}" />
+                </td>
+            </t>
+        </xpath>
+
+        <!-- ========================================= -->
+        <!-- Edit table[@name='stock_move_line_table'] -->
+        <!-- ========================================= -->
+        <xpath
+            expr="//t[@name='has_packages']/t[@t-set='packages']"
+            position="attributes"
+        >
+            <attribute
+                name="t-value"
+            >o.move_line_ids.inject_sections_and_notes().mapped('result_package_id')</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-foreach='packages']/t[@t-if='has_serial_number']/tr"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-class"
+            >move_line.get_section_or_note_class()</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='move_lines']" position="attributes">
+            <attribute
+                name="t-value"
+            >o.move_line_ids.inject_sections_and_notes()</attribute>
+        </xpath>
+        <xpath expr="//tr[@t-foreach='move_lines']" position="attributes">
+            <attribute
+                name="t-att-class"
+            >move_line.get_section_or_note_class()</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_line_table']/tbody/t[@t-else='']/t[@t-if='has_serial_number']/tr"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >o.move_line_ids.inject_sections_and_notes()</attribute>
+            <attribute
+                name="t-att-class"
+            >move_line.get_section_or_note_class()</attribute>
+        </xpath>
+
+    </template>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+
+        <xpath expr="//td[1]" position="attributes">
+            <attribute name="t-if">not move_line.is_section_or_note()</attribute>
+        </xpath>
+        <xpath expr="//t[@name='move_line_lot']/td" position="attributes">
+            <attribute name="t-if">not move_line.is_section_or_note()</attribute>
+        </xpath>
+        <xpath expr="//td[2]" position="attributes">
+            <attribute name="t-if">not move_line.is_section_or_note()</attribute>
+        </xpath>
+        <xpath expr="//td[2]" position="after">
+            <t t-if="move_line.is_section_or_note()">
+                <td colspan="99">
+                    <span t-field="move_line.name" t-options="{'widget': 'text'}" />
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+
+        <xpath expr="//tr" position="attributes">
+            <attribute
+                name="t-att-class"
+            >aggregated_lines[line]['display_class'] if 'display_class' in aggregated_lines[line] else ''</attribute>
+        </xpath>
+        <xpath expr="//td[1]" position="attributes">
+            <attribute
+                name="t-if"
+            >'display_type' not in aggregated_lines[line]</attribute>
+        </xpath>
+        <xpath expr="//td[2]" position="attributes">
+            <attribute
+                name="t-if"
+            >'display_type' not in aggregated_lines[line]</attribute>
+        </xpath>
+        <xpath expr="//td[3]" position="attributes">
+            <attribute
+                name="t-if"
+            >'display_type' not in aggregated_lines[line]</attribute>
+        </xpath>
+        <xpath expr="//tr" position="inside">
+            <t
+                t-if="'display_type' in aggregated_lines[line] and aggregated_lines[line]['display_type']"
+            >
+                <td colspan="99">
+                    <span
+                        t-esc="aggregated_lines[line]['name']"
+                        t-options="{'widget': 'text'}"
+                    />
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+
+</odoo>
