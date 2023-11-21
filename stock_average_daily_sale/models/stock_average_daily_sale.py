@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
+from contextlib import closing
 
 from psycopg2.errors import ObjectNotInPrerequisiteState
 from psycopg2.extensions import AsIs
@@ -99,22 +100,34 @@ class StockAverageDailySale(models.Model):
         required=True,
     )
 
+    @classmethod
+    def _check_materialize_view_populated(cls, cr):
+        """
+        Check if the materialized view is populated
+
+        :param cr: database cursor
+        :return: True if the materialized view is populated, False otherwise
+        """
+        cr.execute(
+            "SELECT ispopulated FROM pg_matviews WHERE matviewname = %s;",
+            (cls._table,),
+        )
+        records = cr.fetchone()
+        return records and records[0]
+
     @api.model
     def _check_view(self):
-        try:
-            cr = registry(self._cr.dbname).cursor()
-            new_self = self.with_env(self.env(cr=cr))  # TDE FIXME
-            new_self.env.cr.execute("SELECT COUNT(1) FROM %s", (AsIs(self._table),))
-            return True
-        except ObjectNotInPrerequisiteState:
-            _logger.warning(
-                _("The materialized view has not been populated. Launch the cron.")
-            )
-            return False
-        except Exception as e:
-            raise e
-        finally:
-            new_self.env.cr.close()
+        cr = registry(self._cr.dbname).cursor()
+        with closing(cr):
+            try:
+                return self._check_materialize_view_populated(cr)
+            except ObjectNotInPrerequisiteState:
+                _logger.warning(
+                    _("The materialized view has not been populated. Launch the cron.")
+                )
+                return False
+            except Exception as e:
+                raise e
 
     # pylint: disable=redefined-outer-name
     @api.model
@@ -141,7 +154,16 @@ class StockAverageDailySale(models.Model):
 
     @api.model
     def refresh_view(self):
-        self.env.cr.execute("refresh materialized view %s", (AsIs(self._table),))
+        concurrently = ""
+        if self._check_materialize_view_populated(self.env.cr):
+            concurrently = "CONCURRENTLY"
+        self.env.cr.execute(
+            "refresh materialized view %s %s",
+            (
+                AsIs(concurrently),
+                AsIs(self._table),
+            ),
+        )
         self.set_refresh_date()
 
     def _create_materialized_view(self):
