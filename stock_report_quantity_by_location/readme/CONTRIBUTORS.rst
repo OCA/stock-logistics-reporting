@@ -4,3 +4,6 @@
 
  * Ecosoft (http://ecosoft.co.th)
    * Kranokporn Thongdoung <kranokpornt@ecosoft.co.th>
+
+ * FactorLibre (http://factorlibre.com)
+   * Hugo Córdoba <hugo.cordoba@factorlibre.com>

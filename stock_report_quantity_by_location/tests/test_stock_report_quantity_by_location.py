@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class TestStockReportQuantityByLocation(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockReportQuantityByLocation, cls).setUpClass()
+        super().setUpClass()
         cls.stock_loc = cls.env.ref("stock.stock_location_stock")
 
     def test_wizard(self):
