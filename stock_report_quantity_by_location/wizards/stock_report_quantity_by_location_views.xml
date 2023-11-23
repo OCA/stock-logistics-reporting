@@ -79,7 +79,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
         </field>
     </record>
 
-     <record id="stock_report_quantity_by_location_search_view" model="ir.ui.view">
+    <record id="stock_report_quantity_by_location_search_view" model="ir.ui.view">
         <field name="name">Stock Report Quantity By Location Search</field>
         <field name="model">stock.report.quantity.by.location</field>
         <field name="arch" type="xml">
