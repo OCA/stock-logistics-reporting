@@ -175,7 +175,8 @@ msgid "Stock Report Quantity By Location Prepare"
 msgstr "Preparar Informe de inventario por ubicación"
 
 #. module: stock_report_quantity_by_location
-#: code:addons/stock_report_quantity_by_location/wizards/stock_report_quantity_by_location.py:0
+#. odoo-python
+#: code:addons/stock_report_quantity_by_location/wizards/stock_report_quantity_by_location_prepare.py:0
 #, python-format
 msgid "Stock Report by Location"
 msgstr "Informe de inventario por ubicación"
