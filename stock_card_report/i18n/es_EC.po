@@ -32,6 +32,11 @@ msgid "<span class=\"fa fa-print\"/>Print"
 msgstr "Imprimir"
 
 #. module: stock_card_report
+#: model_terms:ir.ui.view,arch_db:stock_card_report.internal_layout
+msgid "<span class=\"page\"/>/<span class=\"topage\"/>"
+msgstr ""
+
+#. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Balance"
 msgstr "Saldo"
@@ -75,7 +80,6 @@ msgstr "Fecha hasta"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__display_name
-#: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report_report_stock_card_report_xlsx__display_name
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__display_name
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__display_name
 msgid "Display Name"
@@ -98,7 +102,6 @@ msgstr "Exportar XLSX"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__id
-#: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report_report_stock_card_report_xlsx__id
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__id
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__id
 msgid "ID"
@@ -121,7 +124,6 @@ msgstr "Es inicial"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report____last_update
-#: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report_report_stock_card_report_xlsx____last_update
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard____last_update
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view____last_update
 msgid "Last Modified on"
