@@ -6,140 +6,143 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-12-11 14:33+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: stock_card_report
 #: model:ir.actions.report,print_report_name:stock_card_report.action_stock_card_report_pdf
 msgid "'Stock Card Report - [%s]' % (object.location_id.complete_name)"
 msgstr ""
+"'Resoconto tagliandi magazzino - [%s]' % (object.location_id.complete_name)"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_buttons
 msgid "<span class=\"fa fa-download\"/>Export"
-msgstr ""
+msgstr "<span class=\"fa fa-download\"/>Esporta"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_buttons
 msgid "<span class=\"fa fa-print\"/>Print"
-msgstr ""
+msgstr "<span class=\"fa fa-print\"/>Stampa"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.internal_layout
 msgid "<span class=\"page\"/>/<span class=\"topage\"/>"
-msgstr ""
+msgstr "<span class=\"page\"/>/<span class=\"topage\"/>"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__create_uid
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__create_uid
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__create_date
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__create_date
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__date
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__date_from
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_filters
 msgid "Date From"
-msgstr ""
+msgstr "Dalla data"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__date_to
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_filters
 msgid "Date To"
-msgstr ""
+msgstr "Alla data"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__display_name
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__display_name
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_to
 msgid "End Date"
-msgstr ""
+msgstr "Data fine"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "Export PDF"
-msgstr ""
+msgstr "Esporta PDF"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "Export XLSX"
-msgstr ""
+msgstr "Esporta XLSX"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__id
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__id
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "In"
-msgstr ""
+msgstr "Ingresso"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_base
 msgid "Initial"
-msgstr ""
+msgstr "Iniziale"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__is_initial
 msgid "Is Initial"
-msgstr ""
+msgstr "È iniziale"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report____last_update
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard____last_update
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__write_uid
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__write_uid
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__write_date
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__write_date
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__location_id
@@ -147,133 +150,133 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__location_id
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_filters
 msgid "Location"
-msgstr ""
+msgstr "Ubicazione"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__location_dest_id
 msgid "Location Dest"
-msgstr ""
+msgstr "Ubicazione destinazione"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Out"
-msgstr ""
+msgstr "Uscita"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_range_id
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__picking_id
 msgid "Picking"
-msgstr ""
+msgstr "Prelievo"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__product_ids
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_id
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_in
 msgid "Product In"
-msgstr ""
+msgstr "Prodotto ingresso"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_out
 msgid "Product Out"
-msgstr ""
+msgstr "Prodotto uscita"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_qty
 msgid "Product Qty"
-msgstr ""
+msgstr "Q.tà prodotto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_uom
 msgid "Product Uom"
-msgstr ""
+msgstr "UdM prodotto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_uom_qty
 msgid "Product Uom Qty"
-msgstr ""
+msgstr "Q.tà UdM prodotto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__product_ids
 msgid "Products"
-msgstr ""
+msgstr "Prodotti"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__reference
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_report_stock_card_report__results
 msgid "Results"
-msgstr ""
+msgstr "Risultati"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_from
 msgid "Start Date"
-msgstr ""
+msgstr "Data inizio"
 
 #. module: stock_card_report
 #: model:ir.actions.act_window,name:stock_card_report.stock_card_report_action
 #: model:ir.ui.menu,name:stock_card_report.stock_card_report_menu
 msgid "Stock Card"
-msgstr ""
+msgstr "Tagliando magazzino"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_base
 msgid "Stock Card -"
-msgstr ""
+msgstr "Tagliando magazzino -"
 
 #. module: stock_card_report
 #: model:ir.actions.report,name:stock_card_report.action_stock_card_report_pdf
 msgid "Stock Card PDF"
-msgstr ""
+msgstr "PDF tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.actions.client,name:stock_card_report.action_report_stock_card_report_html
 #: model:ir.model,name:stock_card_report.model_report_stock_card_report
 msgid "Stock Card Report"
-msgstr ""
+msgstr "Resoconto tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.model,name:stock_card_report.model_stock_card_report_wizard
 msgid "Stock Card Report Wizard"
-msgstr ""
+msgstr "Procedura guidata resoconto tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.model,name:stock_card_report.model_report_stock_card_report_report_stock_card_report_xlsx
 msgid "Stock Card Report XLSX"
-msgstr ""
+msgstr "Resoconto XLSX tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.model,name:stock_card_report.model_stock_card_view
 msgid "Stock Card View"
-msgstr ""
+msgstr "Vista tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.actions.report,name:stock_card_report.action_stock_card_report_xlsx
 msgid "Stock Card XLSX"
-msgstr ""
+msgstr "XLSX tagliando magazzino"
 
 #. module: stock_card_report
 #: model:ir.model.fields,help:stock_card_report.field_report_stock_card_report__results
 msgid "Use compute fields, so there is nothing store in database"
-msgstr ""
+msgstr "Usa campi calcolati, così non viene conservato nulla nel database"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "View"
-msgstr ""
+msgstr "Vista"
 
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.stock_card_report_wizard_form
 msgid "or"
-msgstr ""
+msgstr "o"
