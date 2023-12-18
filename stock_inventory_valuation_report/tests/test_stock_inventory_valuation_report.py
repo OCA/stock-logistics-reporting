@@ -116,7 +116,6 @@ class TestStockInventoryValuationReport(common.SavepointCase):
     def test_wizard(self):
         wizard = self.env["stock.quantity.history"].create(
             {
-                "compute_at_date": "0",
                 "inventory_datetime": datetime.datetime.now(),
             }
         )
@@ -254,11 +253,10 @@ class TestStockInventoryValuationReport(common.SavepointCase):
         # check created action, when inventory valuation depends on date
         quantity_history = self.env["stock.quantity.history"].create(
             {
-                "compute_at_date": "1",
                 "inventory_datetime": datetime.datetime.now(),
             }
         )
-        quantity_action_with_date = quantity_history.open_table()
+        quantity_action_with_date = quantity_history.open_at_date()
         self.assertEqual(
             quantity_action_with_date["type"],
             "ir.actions.act_window",
@@ -273,18 +271,4 @@ class TestStockInventoryValuationReport(common.SavepointCase):
             quantity_action_with_date["domain"],
             "[('type', '=', 'product')]",
             "Bad domain name",
-        )
-
-        # check created action, when inventory valuation does not depend on date
-        quantity_history.update({"compute_at_date": "0"})
-        quantity_action_no_date = quantity_history.open_table()
-        self.assertEqual(
-            quantity_action_no_date["type"],
-            "ir.actions.server",
-            "type must be 'ir.actions.server'",
-        )
-        self.assertEqual(
-            quantity_action_no_date["model_name"],
-            "stock.quant",
-            "model_name must be 'stock.quant'",
         )

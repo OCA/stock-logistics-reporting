@@ -24,9 +24,6 @@
             name="print_report_name"
         >'Inventory Valuation Report - [%s]' % object.date</field>
             <field
-            name="attachment"
-        >(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
-            <field
             name="binding_model_id"
             ref="model_report_stock_inventory_valuation_report"
         />

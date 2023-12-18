@@ -6,16 +6,12 @@
             <form string="Choose your date">
                 <group>
                     <group>
-                        <field name="compute_at_date" widget="radio" />
-                        <field
-                            name="inventory_datetime"
-                            attrs="{'invisible': [('compute_at_date', '=', '0')]}"
-                        />
+                        <field name="inventory_datetime" />
                     </group>
                 </group>
                 <footer>
                     <button
-                        name="open_table"
+                        name="open_at_date"
                         string="Retrieve the inventory valuation"
                         type="object"
                         class="btn-primary"
