@@ -24,11 +24,6 @@ msgstr "<strong>Discount</strong>"
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
-msgid "<strong>Qty Reserved</strong>"
-msgstr "<strong>Cant Rezervată</strong>"
-
-#. module: stock_picking_report_valued
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
@@ -137,6 +132,9 @@ msgstr "Transfer preţuit"
 #: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
 msgid "You can select which partners have valued pickings"
 msgstr "Puteţi selecta partenerii cu transferuri preţuite"
+
+#~ msgid "<strong>Qty Reserved</strong>"
+#~ msgstr "<strong>Cant Rezervată</strong>"
 
 #~ msgid "Sale price unit"
 #~ msgstr "Preţ unitar"

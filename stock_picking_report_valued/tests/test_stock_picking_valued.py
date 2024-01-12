@@ -9,7 +9,7 @@ from odoo.tests import common
 class TestStockPickingValued(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingValued, cls).setUpClass()
+        super().setUpClass()
         company = cls.env.user.company_id
         cls.tax = cls.env["account.tax"].create(
             {
@@ -136,7 +136,7 @@ class TestStockPickingValued(common.TransactionCase):
         self.assertTrue(len(self.sale_order.picking_ids))
         for picking in self.sale_order.picking_ids:
             picking.action_assign()
-            picking.move_line_ids.qty_done = 2.0
+            picking.move_line_ids.quantity = 2.0
             self.assertEqual(picking.amount_untaxed, 200.0)
             self.assertEqual(picking.amount_tax, 30.0)
             self.assertEqual(picking.amount_total, 230.0)
