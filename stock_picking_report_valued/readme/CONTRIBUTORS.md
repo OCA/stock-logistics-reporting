@@ -14,3 +14,5 @@
   - Aritz Olea \<<ao@landoo.es>\>
 - [Studio73](https://www.studio73.es):
   - Miguel Gandia \<<miguel@studio73.es>\>
+- [Trobz](https://trobz.com):
+  - Nguyen Minh Chien \<<chien@trobz.com>\>

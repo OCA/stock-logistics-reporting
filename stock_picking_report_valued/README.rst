@@ -41,7 +41,8 @@ valued with reserved quantity.
 Configuration
 =============
 
-1. Go to *Customers > (select one of your choice) > Sales & Purchases*.
+1. Go to *Sales > Orders > Customers > (select one of your choice) >
+   Sales & Purchases*.
 2. Set *Valued picking* field on.
 
 Usage
@@ -59,6 +60,13 @@ Known issues / Roadmap
 ======================
 
 -  If the picking is not reserved, values aren't computed.
+
+Changelog
+=========
+
+This module includes the features from the module
+*stock_picking_report_valued_delivery*:
+https://github.com/OCA/stock-logistics-reporting/pull/285
 
 Bug Tracker
 ===========
@@ -106,6 +114,10 @@ Contributors
 -  `Studio73 <https://www.studio73.es>`__:
 
    -  Miguel Gandia <miguel@studio73.es>
+
+-  `Trobz <https://trobz.com>`__:
+
+   -  Nguyen Minh Chien <chien@trobz.com>
 
 Maintainers
 -----------
