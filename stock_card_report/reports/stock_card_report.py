@@ -21,15 +21,11 @@ class StockCardView(models.TransientModel):
     product_in = fields.Float()
     product_out = fields.Float()
     picking_id = fields.Many2one(comodel_name="stock.picking")
-
-    def name_get(self):
-        result = []
+    
+    @api.depends('reference','picking_id.origin')
+    def _compute_display_name(self):
         for rec in self:
-            name = rec.reference
-            if rec.picking_id.origin:
-                name = f"{name} ({rec.picking_id.origin})"
-            result.append((rec.id, name))
-        return result
+            rec.display_name = f"{rec.reference} ({rec.picking_id.origin})" if rec.picking_id.origin else rec.reference
 
 
 class StockCardReport(models.TransientModel):
