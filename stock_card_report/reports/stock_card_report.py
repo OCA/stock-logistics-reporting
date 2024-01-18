@@ -27,7 +27,7 @@ class StockCardView(models.TransientModel):
         for rec in self:
             name = rec.reference
             if rec.picking_id.origin:
-                name = "{} ({})".format(name, rec.picking_id.origin)
+                name = f"{name} ({rec.picking_id.origin})"
             result.append((rec.id, name))
         return result
 
