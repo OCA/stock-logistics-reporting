@@ -154,7 +154,9 @@ class ReportStockCardReportXlsx(models.AbstractModel):
         )
         ws.freeze_panes(row_pos, 0)
         balance = objects._get_initial(
-            objects.results.filtered(lambda l: l.product_id == product and l.is_initial)
+            objects.results.filtered(
+                lambda line: line.product_id == product and line.is_initial
+            )
         )
         row_pos = self._write_line(
             ws,
@@ -166,7 +168,7 @@ class ReportStockCardReportXlsx(models.AbstractModel):
             wanted_list="wanted_list_initial",
         )
         product_lines = objects.results.filtered(
-            lambda l: l.product_id == product and not l.is_initial
+            lambda line: line.product_id == product and not line.is_initial
         )
         for line in product_lines:
             balance += line.product_in - line.product_out
