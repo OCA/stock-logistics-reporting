@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-name="report_stock_card_html">
+    <t t-call="report_buttons" />
+    <div class="stock_card_reports_page" style="overflow: scroll;height: 100%;" />
+  </t>
+  <t t-name="report_buttons">
+    <div class="button_row">
+      <button
+        class="o_stock_card_reports_print btn btn-sm oe_button"
+        t-on-click="() => this.onClickPrint()">
+        <span class="fa fa-print" />
+        Print
+      </button>
+      <button
+        class="o_stock_card_reports_export btn btn-sm oe_button"
+        t-on-click="() => this.onClickExport()">
+        <span class="fa fa-download" />
+        Export
+      </button>
+    </div>
+  </t>
+</templates>
