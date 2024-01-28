@@ -7,14 +7,16 @@
   <t t-name="report_buttons">
     <div class="button_row">
       <button
-        class="o_stock_card_reports_print btn btn-sm oe_button"
-        t-on-click="() => this.onClickPrint()">
+                class="o_stock_card_reports_print btn btn-sm oe_button"
+                t-on-click="() => this.onClickPrint()"
+            >
         <span class="fa fa-print" />
         Print
       </button>
       <button
-        class="o_stock_card_reports_export btn btn-sm oe_button"
-        t-on-click="() => this.onClickExport()">
+                class="o_stock_card_reports_export btn btn-sm oe_button"
+                t-on-click="() => this.onClickExport()"
+            >
         <span class="fa fa-download" />
         Export
       </button>
