@@ -6,8 +6,7 @@
     "name": "Stock Picking Report Summary",
     "summary": "Stock Picking Report Summary",
     "version": "12.0.1.1.0",
-    "author": "Grap, "
-              "Odoo Community Association (OCA)",
+    "author": "Grap, " "Odoo Community Association (OCA)",
     "maintainers": ["quentinDupont", "legalsylvain"],
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse Management",
@@ -15,12 +14,12 @@
     "depends": [
         "stock",
     ],
-    'data': [
-        'reports/report_paperformat.xml',
-        'reports/report_print_picking_summary.xml',
-        'reports/report_print_picking_summary_template.xml',
-        'views/view_picking_summary_wizard.xml',
-        'views/action.xml',
+    "data": [
+        "reports/report_paperformat.xml",
+        "reports/report_print_picking_summary.xml",
+        "reports/report_print_picking_summary_template.xml",
+        "views/view_picking_summary_wizard.xml",
+        "views/action.xml",
     ],
     "installable": True,
 }
