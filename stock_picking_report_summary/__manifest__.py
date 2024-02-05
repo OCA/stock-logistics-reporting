@@ -5,7 +5,7 @@
 {
     "name": "Stock Picking Report Summary",
     "summary": "Stock Picking Report Summary",
-    "version": "12.0.1.1.0",
+    "version": "16.0.1.0.0",
     "author": "Grap, " "Odoo Community Association (OCA)",
     "maintainers": ["quentinDupont", "legalsylvain"],
     "website": "https://github.com/OCA/stock-logistics-reporting",
