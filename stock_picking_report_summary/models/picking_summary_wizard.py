@@ -4,7 +4,6 @@
 
 from odoo import api, fields, models
 
-from odoo.addons import decimal_precision as dp
 
 
 class PickingSummaryWizard(models.TransientModel):
@@ -30,7 +29,7 @@ class PickingSummaryWizard(models.TransientModel):
 
     standard_price_total = fields.Float(
         compute="_compute_standard_price_total",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
     )
 
     picking_line_ids = fields.One2many(
@@ -104,7 +103,6 @@ class PickingSummaryWizard(models.TransientModel):
         return res
 
     # Compute Section
-    @api.multi
     def _compute_standard_price_total(self):
         self.ensure_one()
         self.standard_price_total = sum(

@@ -9,7 +9,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="action_picking_summary" model="ir.actions.act_window">
       <field name="name">Print Picking Summary (PDF)</field>
       <field name="res_model">picking.summary.wizard</field>
-      <field name="view_type">form</field>
       <field name="view_mode">form</field>
       <field name="target">new</field>
       <field name="binding_model_id" ref="stock.model_stock_picking" />
