@@ -75,7 +75,9 @@ class StockInventoryValuationReport(models.TransientModel):
         if products:
             for product in products:
                 vals = {
-                    "name": product.name,
+                    "name": product.with_context(
+                        display_default_code=False
+                    ).display_name,
                     "reference": product.default_code,
                     "barcode": product.barcode,
                     "qty_at_date": product.quantity_svl,
