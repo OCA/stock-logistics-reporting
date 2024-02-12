@@ -189,6 +189,7 @@
                 <div class="act_as_cell">Name</div>
                 <div class="act_as_cell">Barcode</div>
                 <div class="act_as_cell">Quantity</div>
+                <div class="act_as_cell">UoM</div>
                 <div class="act_as_cell">Cost</div>
                 <div class="act_as_cell">Value</div>
             </div>
@@ -213,6 +214,9 @@
             </div>
             <div class="act_as_cell right">
                 <t t-esc="'{0:,.3f}'.format(line.qty_at_date)" />
+            </div>
+            <div class="act_as_cell left">
+                <t t-esc="line.uom_id.name" />
             </div>
             <div class="act_as_cell amount">
                 <t
