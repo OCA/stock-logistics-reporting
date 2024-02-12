@@ -62,7 +62,16 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "width": 18,
             },
-            "6_standard_price": {
+            "6_uom": {
+                "header": {
+                    "value": "UoM",
+                },
+                "data": {
+                    "value": self._render("uom"),
+                },
+                "width": 11,
+            },
+            "7_standard_price": {
                 "header": {
                     "value": "Cost",
                 },
@@ -72,7 +81,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "width": 18,
             },
-            "7_stock_value": {
+            "8_stock_value": {
                 "header": {
                     "value": "Value",
                 },
@@ -149,6 +158,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                         "reference": line.reference or "",
                         "barcode": line.barcode or "",
                         "qty_at_date": line.qty_at_date or 0.000,
+                        "uom": line.uom_id.name or "",
                         "standard_price": line.standard_price or 0.00,
                         "stock_value": line.stock_value or 0.00,
                     },
