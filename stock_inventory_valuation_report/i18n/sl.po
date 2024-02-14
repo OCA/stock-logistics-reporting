@@ -1,0 +1,232 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_inventory_valuation_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2020-08-13 19:59+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.10\n"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_buttons
+msgid "<span class=\"fa fa-download\"/>Export"
+msgstr "<span class=\"fa fa-download\"/>Izvoz"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_buttons
+msgid "<span class=\"fa fa-print\"/>Print"
+msgstr "<span class=\"fa fa-print\"/>Natisni"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__barcode
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Barcode"
+msgstr "Črtna koda"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__company_id
+msgid "Company"
+msgstr "Družba"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__compute_at_date
+msgid "Compute At Date"
+msgstr "Obdelaj na datum"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Cost"
+msgstr "Lastna cena"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__cost_currency_id
+msgid "Cost Currency"
+msgstr "Valuta lastne cene"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__cost_method
+msgid "Cost Method"
+msgstr "Metoda vrednotenja"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__create_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__create_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__create_uid
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__create_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__create_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__create_date
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__currency_id
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__date
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Date"
+msgstr "Datum"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__display_name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__display_name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__display_name
+msgid "Display Name"
+msgstr "Prikazani naziv"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "Export PDF"
+msgstr "Izvoz v PDF"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "Export XLSX"
+msgstr "Izvoz v XLSX"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__id
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__id
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.client,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_html
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_base
+msgid "Inventory Valuation Report"
+msgstr "Poročilo o vrednotenju zalog"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx____last_update
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report____last_update
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view____last_update
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__write_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__write_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__write_uid
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__write_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__write_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__write_date
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__name
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Name"
+msgstr "Naziv"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Partner"
+msgstr "Partner"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__qty_at_date
+msgid "Qty At Date"
+msgstr "Kol na datum"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Quantity"
+msgstr "Količina"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__reference
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Reference"
+msgstr "Sklic"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__results
+msgid "Results"
+msgstr "Rezultati"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__standard_price
+msgid "Standard Price"
+msgstr "Standardna cena"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_report_stock_inventory_valuation_report
+msgid "Stock Inventory Valuation Report"
+msgstr "Poročilo o vrednotenju zalog"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.report,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_pdf
+msgid "Stock Inventory Valuation Report PDF"
+msgstr "Poročilo o vrednotenju zalog PDF"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.report,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_xlsx
+msgid "Stock Inventory Valuation Report XLSX"
+msgstr "Poročilo o vrednotenju zalog XLSX"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_stock_inventory_valuation_view
+msgid "Stock Inventory Valuation View"
+msgstr "Prikaz vrednotenja zalog"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_stock_quantity_history
+msgid "Stock Quantity History"
+msgstr "Zgodovina količin zalog"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__stock_value
+msgid "Stock Value"
+msgstr "Vrednost zaloge"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Tax ID"
+msgstr "Davčna ID"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__uom_id
+msgid "Uom"
+msgstr "EM"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,help:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__results
+msgid "Use compute fields, so there is nothing store in database"
+msgstr ""
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Value"
+msgstr "Vrednost"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "View report"
+msgstr "Prikaz poročila"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx
+msgid "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
+msgstr "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
