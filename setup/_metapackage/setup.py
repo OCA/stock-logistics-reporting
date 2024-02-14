@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo14-addon-stock_account_valuation_report',
         'odoo14-addon-stock_card_report',
         'odoo14-addon-stock_inventory_valuation_pivot',
+        'odoo14-addon-stock_inventory_valuation_report',
         'odoo14-addon-stock_picking_comment_template',
         'odoo14-addon-stock_picking_group_by_partner_by_carrier_sale_line_position',
         'odoo14-addon-stock_picking_report_custom_description',
