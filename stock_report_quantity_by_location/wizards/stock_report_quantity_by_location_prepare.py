@@ -78,4 +78,4 @@ class StockReportByLocationPrepare(models.TransientModel):
                             "default_code": product.default_code,
                         }
                     )
-        self.env["stock.report.quantity.by.location"].create(vals_list)
+        return self.env["stock.report.quantity.by.location"].create(vals_list)

@@ -7,3 +7,7 @@
 
  * FactorLibre (http://factorlibre.com)
    * Hugo Córdoba <hugo.cordoba@factorlibre.com>
+
+* `PyTech srl <https://pytech.it>`_:
+
+  * Sebastiano Picchi <sebastiano.picchi@pytech.it>
