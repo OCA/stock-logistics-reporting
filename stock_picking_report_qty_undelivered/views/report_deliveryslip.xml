@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0) -->
+<odoo>
+    <template
+        id="report_delivery_document_qty_not_done"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//t[@t-if='o.backorder_ids and backorders']" position="after">
+            <t t-if="o.picking_type_id.summary_qty_undelivered">
+                <t
+                    t-set="cancel_moves"
+                    t-value="o.move_ids.filtered(lambda x: x.state == 'cancel' and x.product_uom_qty)"
+                />
+                <t t-if="cancel_moves">
+                    <p class="mt-5">
+                        <span>Summary of undelivered quantities:</span>
+                    </p>
+                    <table
+                        class="table table-sm"
+                        name="stock_moves_cancel_table"
+                        style="table-layout: fixed;"
+                    >
+                        <thead>
+                            <tr>
+                                <th name="th_uq_product">
+                                    <strong>Product</strong>
+                                </th>
+                                <th name="th_uq_quantity" class="text-center">
+                                    <strong>Quantity</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="cancel_moves" t-as="move">
+                                <tr>
+                                    <td class="w-auto">
+                                        <span t-field="move.product_id" />
+                                        <p
+                                            t-if="move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
+                                        >
+                                            <span t-field="move.description_picking" />
+                                        </p>
+                                    </td>
+                                    <td class="text-center w-auto">
+                                        <span t-field="move.product_uom_qty" />
+                                        <span t-field="move.product_uom" />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

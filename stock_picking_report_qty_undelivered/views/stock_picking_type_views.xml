@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0) -->
+<odoo>
+    <record id="view_picking_type_form_inherit_qty_not_done" model="ir.ui.view">
+        <field name="name">Stock Picking Type Qty Not Done</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_backorder']/.." position="inside">
+                <field name="summary_qty_undelivered" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
