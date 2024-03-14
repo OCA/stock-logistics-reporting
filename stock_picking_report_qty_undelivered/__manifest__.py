@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Report Undelivered Quantity",
     "summary": "Print a summary of the undelivered quantity",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-reporting",
