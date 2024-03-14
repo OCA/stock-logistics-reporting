@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+@author: Quentin DUPONT (quentin.dupont@grap.coop)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="view_picking_summary_wizard_form" model="ir.ui.view">
+        <field name="model">picking.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group colspan="4">
+                    <group string="General informations">
+                        <field name="picking_line_qty" />
+                    </group>
+                    <group string="For Summary" colspan="4">
+                        <field name="print_summary" />
+                        <field
+                            name="print_prices"
+                            attrs="{'invisible': [('print_summary', '=', False)]}"
+                        />
+                    </group>
+                    <group string="For Pickings details" colspan="4">
+                        <field name="print_details" />
+                        <field
+                            name="print_unit_in_list"
+                            attrs="{'invisible': [('print_details', '=', False)]}"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="%(report_picking_summary)d"
+                        string="Print PDF"
+                        type="action"
+                        icon="fa-print"
+                        class="oe_highlight"
+                    />
+                    <button icon="fa-ban" special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_picking_summary" model="ir.actions.act_window">
+      <field name="name">Picking Summary</field>
+      <field name="res_model">picking.summary.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+      <field name="binding_model_id" ref="stock.model_stock_picking" />
+      <field name="binding_type">report</field>
+    </record>
+
+</odoo>
