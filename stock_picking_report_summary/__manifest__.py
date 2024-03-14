@@ -15,11 +15,10 @@
         "stock",
     ],
     "data": [
-        "reports/report_paperformat.xml",
+        "security/ir.model.access.csv",
         "reports/report_print_picking_summary.xml",
         "reports/report_print_picking_summary_template.xml",
-        "views/view_picking_summary_wizard.xml",
-        "views/action.xml",
+        "wizards/view_picking_summary_wizard.xml",
     ],
     "installable": True,
 }

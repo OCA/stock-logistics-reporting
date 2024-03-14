@@ -11,23 +11,30 @@ class TestModule(TransactionCase):
         self.PickingReportWizard = self.env["picking.summary.wizard"]
         self.StockPicking = self.env["stock.picking"]
         self.outPickingType = self.env.ref("stock.picking_type_out")
+        self.ir_actions_report = self.env["ir.actions.report"]
+        self.report_name = "stock_picking_report_summary.report_picking_summary"
 
-    def _test_wizard(self, pickings):
-        wizard = self.PickingReportWizard.with_context(
-            active_model="stock.picking",
-            active_ids=pickings.ids,
-        ).create({})
-
-        custom_note = "La Rabia Del Pueblo - Keny Arkana"
-        pickings[0].note = custom_note
-        report = self.env.ref("stock_picking_report_summary.report_picking_summary")
-        res = str(report.render_qweb_html(wizard.ids)[0])
-        self.assertIn(custom_note, res)
-
-    def test_wizard(self):
+    def test_01_wizard(self):
         pickings = self.StockPicking.search(
             [
                 ("picking_type_id", "=", self.outPickingType.id),
             ]
         )
-        self._test_wizard(pickings)
+
+        wizard = self.PickingReportWizard.with_context(
+            active_model="stock.picking",
+            active_ids=pickings.ids,
+        ).create({})
+
+        # Test fields Compute
+        sum_th = sum(wizard.mapped("product_line_ids.standard_price_total"))
+        wizard._compute_standard_price_total()
+        self.assertEqual(sum_th, wizard.standard_price_total)
+
+        # Test PDF render
+        custom_note = "La Rabia Del Pueblo - Keny Arkana"
+        pickings[0].note = custom_note
+        res = str(
+            self.ir_actions_report._render_qweb_html(self.report_name, wizard.ids)[0]
+        )
+        self.assertIn(custom_note, res)
