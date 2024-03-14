@@ -2,8 +2,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
-
+from odoo import fields, models
 
 
 class PickingSummaryWizard(models.TransientModel):
@@ -11,13 +10,11 @@ class PickingSummaryWizard(models.TransientModel):
     _description = "Picking Summary Wizard"
 
     # Columns Section
-    print_summary = fields.Boolean(string="Print Summary", default=True)
+    print_summary = fields.Boolean(default=True)
 
-    print_detail = fields.Boolean(string="Print Detail", default=True)
+    print_details = fields.Boolean(string="Print Picking Details", default=True)
 
-    print_unity_in_list = fields.Boolean(
-        string="Print Unit in Pickings List", default=True
-    )
+    print_unit_in_list = fields.Boolean(string="Print Units", default=True)
 
     print_prices = fields.Boolean(string="Print Standard Prices", default=False)
 
@@ -71,7 +68,7 @@ class PickingSummaryWizard(models.TransientModel):
         picking_ids = self.env.context.get("active_ids", [])
         # move.product_qty is real quantity with referent uom
         for picking in picking_obj.browse(picking_ids):
-            for move in picking.move_lines:
+            for move in picking.move_ids:
                 if move.product_id.id not in product_lines.keys():
                     product_lines[move.product_id.id] = {
                         "name": move.product_id.name,
