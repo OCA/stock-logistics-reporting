@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_average_daily_sale_config_tree_view">
+        <field
+            name="name"
+        >stock.average.daily.sale.config.tree (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale.config</field>
+        <field name="arch" type="xml">
+            <tree editable="top" create="false" delete="false">
+                <field name="abc_classification_level" />
+                <field name="period_value" />
+                <field name="period_name" />
+                <field name="number_days_qty_in_stock" />
+                <field name="standard_deviation_exclude_factor" />
+                <field name="safety_factor" />
+                <field name="warehouse_id" />
+            </tree>
+        </field>
+    </record>
+    <record
+        model="ir.actions.act_window"
+        id="stock_average_daily_sale_config_act_window"
+    >
+        <field name="name">Average daily sales computation parameters</field>
+        <field name="res_model">stock.average.daily.sale.config</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <record model="ir.ui.menu" id="stock_average_daily_sale_config_menu">
+        <field name="name">Average daily sales computation parameters</field>
+        <field name="parent_id" ref="stock.menu_product_in_config_stock" />
+        <field name="action" ref="stock_average_daily_sale_config_act_window" />
+        <field name="sequence" eval="99" />
+    </record>
+</odoo>
