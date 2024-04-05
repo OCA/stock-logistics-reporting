@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Foodles (http://www.foodles.co).
+     @author Pierre Verkest <pierreverkest84@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_snapshot_search">
+        <field name="name">stock.quant.history.snapshot.search</field>
+        <field name="model">stock.quant.history.snapshot</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="state" />
+                <filter
+                    string="Stock date"
+                    name="inventory_date"
+                    date="inventory_date"
+                    default_period="this_month"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_state"
+                        string="Status"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter
+                        name="group_by_date"
+                        string="Inventory date"
+                        context="{'group_by':'inventory_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_snapshot_list">
+        <field name="name">stock.quant.history.snapshot.list</field>
+        <field name="model">stock.quant.history.snapshot</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="inventory_date" />
+                <field name="state" />
+                <field name="generated_date" optional="show" />
+                <field name="previous_snapshot_id" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_snapshot_form">
+        <field name="name">stock.quant.history.snapshot.form</field>
+        <field name="model">stock.quant.history.snapshot</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_generate_stock_quant_history"
+                        class="oe_highlight"
+                        states="draft"
+                        string="Generate"
+                        type="object"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_related_stock_quant_history_tree_view"
+                            type="object"
+                            attrs="{'invisible':[('state', 'not in', ['generated'])]}"
+                            icon="fa-history"
+                        >
+                            <!-- go to stock_quant_history_ids tree view -->
+                            <!-- add stock valuation -->
+                            <span>History details</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="inventory_date" widget="datetime" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="metadata">
+                            <field name="generated_date" />
+                            <field name="previous_snapshot_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_quant_history_snapshot" model="ir.actions.act_window">
+        <field name="name">Stock snapshot</field>
+        <field name="res_model">stock.quant.history.snapshot</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_stock_quant_history_snapshot_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_nocreate">
+                Create your first snapshot!
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_action_stock_history"
+        parent="stock.menu_warehouse_report"
+        name="Stock history"
+        sequence="5"
+    />
+    <menuitem
+        id="menu_action_stock_quant_history_snapshot"
+        parent="menu_action_stock_history"
+        name="Snapshot"
+        action="action_stock_quant_history_snapshot"
+        sequence="10"
+    />
+
+    <record
+        id="action_multi_related_stock_quant_history_tree_view"
+        model="ir.actions.server"
+    >
+        <field name="name">Compare stocks</field>
+        <field
+            name="model_id"
+            ref="stock_quant_history.model_stock_quant_history_snapshot"
+        />
+        <field
+            name="binding_model_id"
+            ref="stock_quant_history.model_stock_quant_history_snapshot"
+        />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_related_stock_quant_history_tree_view()
+        </field>
+    </record>
+
+</odoo>

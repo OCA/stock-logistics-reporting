@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Foodles (http://www.foodles.co).
+     @author Pierre Verkest <pierreverkest84@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_search">
+        <field name="name">stock.quant.history.search</field>
+        <field name="model">stock.quant.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" />
+                <field
+                    name="location_id"
+                    string="Location and sub-locations of"
+                    operator="child_of"
+                />
+                <field name="company_id" />
+                <field name="lot_id" />
+                <filter
+                    string="Stock date"
+                    name="inventory_date"
+                    date="inventory_date"
+                    default_period="this_month"
+                />
+
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_snapshot_id"
+                        string="Snapshot"
+                        context="{'group_by':'snapshot_id'}"
+                    />
+                    <filter
+                        name="group_by_date"
+                        string="Inventory date"
+                        context="{'group_by':'inventory_date'}"
+                    />
+                    <filter
+                        name="group_by_product_id"
+                        string="Product"
+                        context="{'group_by':'product_id'}"
+                    />
+                    <filter
+                        name="group_by_lot_id"
+                        string="Lot"
+                        context="{'group_by':'lot_id'}"
+                    />
+                    <filter
+                        name="group_by_location_id"
+                        string="Location"
+                        context="{'group_by':'location_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_list">
+        <field name="name">stock.quant.history.list</field>
+        <field name="model">stock.quant.history</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="snapshot_id" optional="hide" />
+                <field name="inventory_date" optional="show" />
+                <field name="product_tmpl_id" optional="hide" />
+                <field name="product_id" optional="show" />
+                <field name="product_uom_id" optional="hide" />
+                <field name="lot_id" optional="show" />
+                <field name="location_id" optional="show" />
+                <field name="company_id" optional="hide" />
+                <field name="quantity" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_history_pivot">
+        <field name="name">stock.quant.history.pivot</field>
+        <field name="model">stock.quant.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock quants" sample="1">
+                <field name="product_id" type="row" />
+                <field name="location_id" type="row" />
+                <field name="snapshot_id" type="col" />
+                <field name="quantity" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_stock_quant_history" model="ir.actions.act_window">
+        <field name="name">Stock snapshot</field>
+        <field name="res_model">stock.quant.history</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_stock_quant_history_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_nocreate">
+                Generate stock quant history from stock quant history snapshot before!
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_action_stock_quant_history"
+        parent="menu_action_stock_history"
+        name="Stock history"
+        action="action_stock_quant_history"
+        sequence="10"
+    />
+
+</odoo>
