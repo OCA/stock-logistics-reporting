@@ -8,5 +8,6 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     position_sale_line = fields.Char(
-        related="sale_line_id.position_formatted", string="Position"
+        related="sale_line_id.position_formatted",
+        string="Position",
     )
