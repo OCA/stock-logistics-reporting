@@ -26,12 +26,6 @@ msgstr "<strong>Popust</strong>"
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
-#, fuzzy
-msgid "<strong>Qty Reserved</strong>"
-msgstr "<strong>Jed.cijena</strong>"
-
-#. module: stock_picking_report_valued
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
 msgid "<strong>Subtotal</strong>"
 msgstr "<strong>Subtotal</strong>"
 
@@ -141,6 +135,10 @@ msgstr ""
 #: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
 msgid "You can select which partners have valued pickings"
 msgstr ""
+
+#, fuzzy
+#~ msgid "<strong>Qty Reserved</strong>"
+#~ msgstr "<strong>Jed.cijena</strong>"
 
 #~ msgid "Sale price unit"
 #~ msgstr "Prodajna cijena"
