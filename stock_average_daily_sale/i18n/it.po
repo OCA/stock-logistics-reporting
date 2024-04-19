@@ -1,0 +1,346 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_average_daily_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__abc_classification_level
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__abc_classification_level
+msgid "Abc Classification Level"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model,name:stock_average_daily_sale.model_abc_classification_profile
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__abc_classification_profile_id
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__abc_classification_profile_id
+msgid "Abc Classification Profile"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__qty_in_stock
+msgid "All stock locations, reserved product included"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
+msgid "Average Daily Qty"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.abc_classification_profile_form_view
+msgid "Average Daily Sale"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_abc_classification_profile__stock_average_daily_sale_config_ids
+msgid "Average Daily Sale Configurations"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_warehouse__average_daily_sale_root_location_id
+msgid "Average Daily Sale Root Location"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model,name:stock_average_daily_sale.model_stock_average_daily_sale
+msgid "Average Daily Sale for Products"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.actions.act_window,name:stock_average_daily_sale.stock_average_daily_sale_act_window
+#: model:ir.ui.menu,name:stock_average_daily_sale.stock_average_daily_sale_menu
+msgid "Average Daily Sales"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_sales_count
+msgid "Average Daily Sales Count"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_qty_by_sale
+msgid "Average Qty By Sale"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.view_warehouse
+msgid "Average Sales"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.actions.act_window,name:stock_average_daily_sale.stock_average_daily_sale_config_act_window
+#: model:ir.model,name:stock_average_daily_sale.model_stock_average_daily_sale_config
+#: model:ir.ui.menu,name:stock_average_daily_sale.stock_average_daily_sale_config_menu
+msgid "Average daily sales computation parameters"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__sale_ok
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Can be Sold"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__create_uid
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__create_date
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__daily_standard_deviation
+msgid "Daily Qty Standard Deviation"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields.selection,name:stock_average_daily_sale.selection__stock_average_daily_sale_config__period_name__day
+msgid "Days"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__display_name
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__display_name
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__date_from
+msgid "From"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Group by..."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_sales_count
+msgid ""
+"How much deliveries on average for this product on the period. The spikes "
+"are excluded from the average computation."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__id
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__id
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale____last_update
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config____last_update
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__write_uid
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__write_date
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__recommended_qty
+msgid ""
+"Minimal recommended quantity in stock. Formula: average daily qty * number "
+"days in stock + safety"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields.selection,name:stock_average_daily_sale.selection__stock_average_daily_sale_config__period_name__month
+msgid "Months"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.actions.act_window,help:stock_average_daily_sale.stock_average_daily_sale_act_window
+msgid ""
+"No data found.\n"
+"\n"
+"                You maybe need to launch the cron to refresh the average daily sale data."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Normal product"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__nbr_sales
+msgid "Number of Sales"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__number_days_qty_in_stock
+msgid "Number of days of quantities in stock"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__is_mto
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "On Order"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__period_name
+msgid "Period analyzed unit"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__period_value
+msgid "Period analyzed value"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__standard_deviation
+msgid "Qty Standard Deviation"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__qty_in_stock
+msgid "Quantity in stock"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__recommended_qty
+msgid "Recommended Qty"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.actions.server,name:stock_average_daily_sale.refresh_materialized_view_ir_actions_server
+#: model:ir.cron,cron_name:stock_average_daily_sale.refresh_materialized_view
+msgid "Refresh average daily sales materialized view"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__safety
+msgid "Safety"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__safety_factor
+msgid "Safety Factor"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__safety
+msgid ""
+"Safety stock to cover the variability of the quantity delivered each day. "
+"Formula: daily standard deviation * safety factor * sqrt(nbr days in the "
+"period)"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Search Average Daily Sale"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__sale_ok
+msgid "Specify if the product can be selected in a sales order line."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__standard_deviation_exclude_factor
+msgid "Standard Deviation Exclude Factor"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__config_id
+msgid "Stock Average Daily Sale Configuration"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#. odoo-python
+#: code:addons/stock_average_daily_sale/models/stock_average_daily_sale.py:0
+#, python-format
+msgid "The materialized view has not been populated. Launch the cron."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_qty_by_sale
+msgid ""
+"The quantity delivered on average for one delivery of this product on the "
+"period. The spikes are excluded from the average computation."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
+msgid ""
+"The quantity delivered on average on one day for this product on the period."
+" The spikes are excluded from the average computation."
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__nbr_sales
+msgid ""
+"The total amount of deliveries for this product over the complete period"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_warehouse__average_daily_sale_root_location_id
+msgid "This is the root location for daily sale average stock computations"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__date_to
+msgid "To"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model,name:stock_average_daily_sale.model_stock_warehouse
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__warehouse_id
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__warehouse_id
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields.selection,name:stock_average_daily_sale.selection__stock_average_daily_sale_config__period_name__week
+msgid "Weeks"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model,name:stock_average_daily_sale.model_stock_average_daily_sale_demo
+msgid "Wizard to populate demo data with past moves for Average Daily Sale"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields.selection,name:stock_average_daily_sale.selection__stock_average_daily_sale_config__period_name__year
+msgid "Years"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#. odoo-python
+#: code:addons/stock_average_daily_sale/wizards/stock_average_daily_sale_demo.py:0
+#, python-format
+msgid "You cannot call the _action_create_data() on production database."
+msgstr ""
