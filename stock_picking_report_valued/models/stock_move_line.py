@@ -87,7 +87,7 @@ class StockMoveLine(models.Model):
             line.update(
                 {
                     "sale_tax_description": ", ".join(
-                        t.name or t.description for t in line.sale_tax_id
+                        t.description or t.name for t in line.sale_tax_id
                     ),
                     "sale_price_subtotal": valued_line.price_subtotal,
                     "sale_price_tax": valued_line.price_tax,
