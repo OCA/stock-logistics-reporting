@@ -78,6 +78,10 @@ Contributors
    -  Pilar Vargas
    -  Carolina Fernandez
 
+-  `Binhex <https://binhex.cloud//com>`__:
+
+   -  David Luis Mora <d.luis@binhex.cloud>
+
 Maintainers
 -----------
 
