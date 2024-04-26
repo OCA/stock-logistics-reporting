@@ -5,6 +5,9 @@ import logging
 import time
 from datetime import date
 
+import pytz
+
+from odoo import fields
 from odoo.tests import common, tagged
 from odoo.tools import test_reports
 
@@ -13,64 +16,65 @@ _logger = logging.getLogger(__name__)
 
 @tagged("post_install", "-at_install")
 class TestStockCard(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
         # Create uom:
-        uom_id = self.ref("uom.product_uom_unit")
+        uom_id = cls.env.ref("uom.product_uom_unit")
 
         # Create products:
-        self.product_A = self.env["product.product"].create(
+        cls.product_A = cls.env["product.product"].create(
             {
                 "name": "Product A",
                 "type": "product",
-                "uom_id": uom_id,
-                "uom_po_id": uom_id,
+                "uom_id": uom_id.id,
+                "uom_po_id": uom_id.id,
             }
         )
 
         # Create location:
-        self.location_1 = self.env.ref("stock.stock_location_stock")
-        self.location_2 = self.env.ref("stock.stock_location_customers")
+        cls.location_1 = cls.env.ref("stock.stock_location_stock")
+        cls.location_2 = cls.env.ref("stock.stock_location_customers")
 
         # Create operation type:
-        operation_type = self.env.ref("stock.picking_type_in")
+        operation_type = cls.env.ref("stock.picking_type_in")
 
         # Create stock picking:
-        picking = self.env["stock.picking"].create(
+        picking = cls.env["stock.picking"].create(
             {
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
                 "picking_type_id": operation_type.id,
             }
         )
-        self.env["stock.move"].create(
+        cls.env["stock.move"].create(
             {
-                "name": self.product_A.name,
-                "product_id": self.product_A.id,
+                "name": cls.product_A.name,
+                "product_id": cls.product_A.id,
                 "product_uom_qty": 50.000,
-                "product_uom": self.product_A.uom_id.id,
+                "product_uom": cls.product_A.uom_id.id,
                 "picking_id": picking.id,
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
             }
         )
         picking.action_confirm()
         picking.move_ids_without_package.quantity_done = 50.000
         picking.button_validate()
 
-        self.model = self._getReportModel()
+        cls.model = cls._getReportModel(cls)
 
-        self.qweb_report_name = self._getQwebReportName()
-        self.xlsx_report_name = self._getXlsxReportName()
-        self.xlsx_action_name = self._getXlsxReportActionName()
+        cls.qweb_report_name = cls._getQwebReportName(cls)
+        cls.xlsx_report_name = cls._getXlsxReportName(cls)
+        cls.xlsx_action_name = cls._getXlsxReportActionName(cls)
 
-        self.report_title = self._getReportTitle()
+        cls.report_title = cls._getReportTitle(cls)
 
-        self.base_filters = self._getBaseFilters()
+        cls.base_filters = cls._getBaseFilters(cls)
 
-        self.report = self.model.create(self.base_filters)
-        self.report._compute_results()
+        cls.report = cls.model.create(cls.base_filters)
+        cls.report._compute_results()
 
     def test_html(self):
         test_reports.try_report(
@@ -127,81 +131,84 @@ class TestStockCard(common.TransactionCase):
 
 @tagged("post_install", "-at_install")
 class TestStockCardReport(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
         # Create uom:
-        uom_id = self.ref("uom.product_uom_unit")
+        uom_id = cls.env.ref("uom.product_uom_unit")
 
         # Create products:
-        self.product_A = self.env["product.product"].create(
+        cls.product_A = cls.env["product.product"].create(
             {
                 "name": "Product A",
                 "type": "product",
-                "uom_id": uom_id,
-                "uom_po_id": uom_id,
+                "uom_id": uom_id.id,
+                "uom_po_id": uom_id.id,
             }
         )
-        self.product_B = self.env["product.product"].create(
+        cls.product_B = cls.env["product.product"].create(
             {
                 "name": "Product B",
                 "type": "product",
-                "uom_id": uom_id,
-                "uom_po_id": uom_id,
+                "uom_id": uom_id.id,
+                "uom_po_id": uom_id.id,
             }
         )
 
         # Create location:
-        self.location_1 = self.env.ref("stock.stock_location_stock")
-        self.location_2 = self.env.ref("stock.stock_location_customers")
+        cls.location_1 = cls.env.ref("stock.stock_location_stock")
+        cls.location_2 = cls.env.ref("stock.stock_location_customers")
 
         # Create operation type:
-        operation_type = self.env.ref("stock.picking_type_in")
+        operation_type = cls.env.ref("stock.picking_type_in")
+
+        cls.datetime_now = fields.Datetime.now()
 
         # Create stock picking:
-        picking_1 = self.env["stock.picking"].create(
+        cls.picking_1 = cls.env["stock.picking"].create(
             {
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
                 "picking_type_id": operation_type.id,
             }
         )
-        self.env["stock.move"].create(
+        cls.env["stock.move"].create(
             {
-                "name": self.product_A.name,
-                "product_id": self.product_A.id,
+                "name": cls.product_A.name,
+                "product_id": cls.product_A.id,
                 "product_uom_qty": 50.000,
-                "product_uom": self.product_A.uom_id.id,
-                "picking_id": picking_1.id,
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "product_uom": cls.product_A.uom_id.id,
+                "picking_id": cls.picking_1.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
             }
         )
-        picking_1.action_confirm()
-        picking_1.move_ids_without_package.quantity_done = 50.000
-        picking_1.button_validate()
+        cls.picking_1.action_confirm()
+        cls.picking_1.move_ids_without_package.quantity_done = 50.000
+        cls.picking_1.button_validate()
 
-        picking_2 = self.env["stock.picking"].create(
+        cls.picking_2 = cls.env["stock.picking"].create(
             {
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
                 "picking_type_id": operation_type.id,
             }
         )
-        self.env["stock.move"].create(
+        cls.env["stock.move"].create(
             {
-                "name": self.product_B.name,
-                "product_id": self.product_B.id,
+                "name": cls.product_B.name,
+                "product_id": cls.product_B.id,
                 "product_uom_qty": 100.000,
-                "product_uom": self.product_B.uom_id.id,
-                "picking_id": picking_2.id,
-                "location_id": self.location_2.id,
-                "location_dest_id": self.location_1.id,
+                "product_uom": cls.product_B.uom_id.id,
+                "picking_id": cls.picking_2.id,
+                "location_id": cls.location_2.id,
+                "location_dest_id": cls.location_1.id,
             }
         )
-        picking_2.action_confirm()
-        picking_2.move_ids_without_package.quantity_done = 100.000
-        picking_2.button_validate()
+        cls.picking_2.action_confirm()
+        cls.picking_2.move_ids_without_package.quantity_done = 100.000
+        cls.picking_2.button_validate()
 
     def test_reports(self):
         report = self.env["report.stock.card.report"].create(
@@ -211,6 +218,20 @@ class TestStockCardReport(common.TransactionCase):
             }
         )
         report._compute_results()
+        # Check the date in 'stock.move' because
+        # standard odoo keep the datetime without timezone
+        self.assertEqual(
+            self.picking_1.move_ids_without_package.date, self.datetime_now
+        )
+        user_timezone = pytz.timezone(self.env.user.tz)
+        picking_date_user_tz = self.picking_1.move_ids_without_package.date.astimezone(
+            user_timezone
+        ).replace(tzinfo=None)
+
+        # Date in report should be in user timezone
+        for res in report.results:
+            self.assertEqual(res.date, picking_date_user_tz)
+
         report.print_report("qweb")
         report.print_report("xlsx")
 
