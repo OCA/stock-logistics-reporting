@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo13-addon-stock_inventory_valuation_pivot',
         'odoo13-addon-stock_inventory_valuation_show_remaining',
         'odoo13-addon-stock_inventory_valuation_unit_cost',
+        'odoo13-addon-stock_move_delay_report',
         'odoo13-addon-stock_move_value_report',
         'odoo13-addon-stock_picking_group_by_partner_by_carrier_sale_line_position',
         'odoo13-addon-stock_picking_report_custom_description',
