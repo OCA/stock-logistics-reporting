@@ -77,6 +77,9 @@ class StockMoveLine(models.Model):
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
                 valued_line = line.sale_line.new(sol_vals)
                 valued_line.product_uom_qty = quantity
+                # When a new line is created, sometimes the discount is computed to zero
+                # even if the field is originally non-zero.
+                valued_line.discount = line.sale_line.discount
             if different_qty:
                 # Force original price unit to avoid pricelist recomputed (not needed)
                 valued_line.price_unit = line.sale_line.price_unit
