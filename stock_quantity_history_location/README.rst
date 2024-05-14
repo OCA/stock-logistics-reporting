@@ -39,7 +39,14 @@ report by location, for a past date or for current date.
 Usage
 =====
 
--  Go to: *Inventory / Reporting / Inventory or Inventory Valuation*
+First, you need to activate Storage Locations. To do so, go to Inventory
+/ Configuration / Settings / Warehouse and activate it.
+
+To use this module, go to:
+
+-  *Inventory / Reporting / Locations*
+
+-  Select Inventory at Date & Location
 
 -  Filter by location
 
