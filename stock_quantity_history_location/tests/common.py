@@ -22,7 +22,8 @@ class TestCommon(TransactionCase):
         )
         move._action_confirm()
         move._action_assign()
-        move_line = move.move_line_ids[0]
-        move_line.qty_done = qty
+        for move_line in move.move_line_ids:
+            move_line.quantity = qty
+            move_line.picked = True
         move._action_done()
         return move
