@@ -1,0 +1,28 @@
+<odoo>
+
+    <record id="view_stock_quant_tree_editable_expiry" model="ir.ui.view">
+        <field name="name">stock.quant.inherit.form</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//button[@name='action_inventory_at_date']"
+                position="attributes"
+            >
+                <attribute name="groups">!stock.group_stock_multi_locations</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_inventory_at_date']" position="after">
+                <button
+                    name="action_inventory_at_date"
+                    string="Inventory at Date &amp; Location"
+                    type="object"
+                    groups="stock.group_stock_multi_locations"
+                    invisible="((context.get('inventory_mode') and not context.get('inventory_report_mode')) or context.get('no_at_date'))"
+                    class="btn-primary ms-1"
+                    display="always"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

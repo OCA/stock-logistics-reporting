@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="view_stock_quantity_history_location" model="ir.ui.view">
@@ -10,7 +9,7 @@
                 <field name="location_id" groups="stock.group_stock_multi_locations" />
                 <field
                     name="include_child_locations"
-                    attrs="{'invisible': [('location_id', '=', False)]}"
+                    invisible="not location_id"
                     groups="stock.group_stock_multi_locations"
                 />
             </field>

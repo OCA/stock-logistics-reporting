@@ -1,4 +1,4 @@
-- Go to: *Inventory / Reporting / Inventory or Inventory Valuation*
+- Go to: *Inventory / Reporting / Locations*
 
 - Filter by location
 

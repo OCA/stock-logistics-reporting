@@ -39,7 +39,7 @@ report by location, for a past date or for current date.
 Usage
 =====
 
--  Go to: *Inventory / Reporting / Inventory or Inventory Valuation*
+-  Go to: *Inventory / Reporting / Locations*
 
 -  Filter by location
 
