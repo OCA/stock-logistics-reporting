@@ -1,0 +1,23 @@
+# Copyright 2024 Moduon Team S.L.
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
+
+{
+    "name": "Stock Picking Report Salesperson",
+    "summary": "Salesperson info in Stock Picking reports",
+    "version": "16.0.1.0.1",
+    "development_status": "Alpha",
+    "category": "Inventory/Inventory",
+    "website": "https://github.com/OCA/stock-logistics-reporting",
+    "author": "Moduon, Odoo Community Association (OCA)",
+    "maintainers": ["Shide"],
+    "license": "LGPL-3",
+    "application": False,
+    "installable": True,
+    "depends": [
+        "sale_stock",
+    ],
+    "data": [
+        "report/report_deliveryslip.xml",
+        "report/report_stockpicking_operations.xml",
+    ],
+}
