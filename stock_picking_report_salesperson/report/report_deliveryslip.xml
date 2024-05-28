@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@name='div_origin']/.." position="inside">
+            <div
+                t-if="o.picking_type_id.code == 'outgoing' and o.sale_id.user_id"
+                class="col-auto"
+                name="div_salesperson"
+            >
+                <strong>Salesperson:</strong>
+                <p t-field="o.sale_id.user_id.name" />
+            </div>
+        </xpath>
+    </template>
+</odoo>
