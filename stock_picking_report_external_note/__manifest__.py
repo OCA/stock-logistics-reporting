@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Report External Note",
     "summary": "Adds a note in Stock Picking shown on external reports like Delivery Slip",
-    "version": "15.0.0.1.1",
+    "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-reporting",
