@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="style">
+        <style type="text/css">
+.table-compressed {
+    margin-bottom: 0px;
+}
+.table-compressed > tbody > tr > td {
+    border-top: 0px;
+    padding: 0px;
+}
+.table-compressed > tbody > tr > td {
+    padding: 3px;
+}
+h3 {
+    margin-top: 10px;
+}
+        </style>
+    </template>
+
+    <template id="table_head_customer_info">
+        <tr class="table-borderless">
+            <td t-att-colspan="customer_th_with or 3">
+                <t t-out="header_contents" />
+            </td>
+        </tr>
+    </template>
+
+    <template
+        id="report_delivery_hidden_head_document"
+        inherit_id="stock.report_delivery_document"
+        priority="999"
+    >
+        <xpath expr="//table[@name='stock_move_table']" position="before">
+            <t t-set="header_contents">
+                <t t-call="web.address_layout" />
+            </t>
+        </xpath>
+        <xpath
+            expr="//t[@t-set='header_contents']/t[@t-call='web.address_layout']"
+            position="inside"
+        >
+            <xpath expr="//t[@t-set='address']" position='move' />
+            <xpath expr="//t[@t-set='information_block']" position='move' />
+        </xpath>
+        <xpath
+            expr="//t[@t-set='header_contents']/t[@t-call='web.address_layout']"
+            position="after"
+        >
+            <xpath expr="//div[hasclass('page')]/h2" position='move' />
+            <xpath expr="//div[@name='div_origin']/.." position='move' />
+        </xpath>
+        <xpath expr="//table[@name='stock_move_table']/thead/tr" position="before">
+            <t t-call="stock_picking_report_header_repeater.table_head_customer_info">
+                <t t-set="customer_th_with" t-value="3" />
+            </t>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr" position="before">
+            <t t-call="stock_picking_report_header_repeater.table_head_customer_info">
+                <t t-set="customer_th_with" t-value="3" />
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
