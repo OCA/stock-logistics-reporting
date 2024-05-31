@@ -3,7 +3,8 @@
 
 {
     "name": "Stock Picking Report External Note",
-    "summary": "Adds a note in Stock Picking shown on external reports like Delivery Slip",
+    "summary": """Adds a note in Stock Picking shown on external reports like
+    Delivery Slip""",
     "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
@@ -13,11 +14,6 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "stock",
-    ],
-    "data": [
-        "report/report_deliveryslip.xml",
-        "views/stock_picking_views.xml",
-    ],
+    "depends": ["stock"],
+    "data": ["report/report_deliveryslip.xml", "views/stock_picking_views.xml"],
 }
