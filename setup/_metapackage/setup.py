@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo-addon-stock_average_daily_sale>=16.0dev,<16.1dev',
         'odoo-addon-stock_card_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_custom_description>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_report_external_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_incoming_delivery_address>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_internal_delivery_address>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_qty_undelivered>=16.0dev,<16.1dev',
