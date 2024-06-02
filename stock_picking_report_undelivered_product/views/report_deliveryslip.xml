@@ -9,7 +9,7 @@
             >
                 <t
                     t-set="undelivered_moves"
-                    t-value="o.mapped('move_lines').filtered(lambda l: l.quantity_done == 0.0 and l.state == 'cancel' and l.product_id.display_undelivered_in_picking)"
+                    t-value="o.mapped('move_ids').filtered(lambda l: l.quantity_done == 0.0 and l.state == 'cancel' and l.product_id.display_undelivered_in_picking)"
                 />
             </t>
             <t
@@ -17,7 +17,7 @@
             >
                 <t
                     t-set="undelivered_moves"
-                    t-value="o.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and l.splitted_stock_move_orig_id)"
+                    t-value="o.mapped('move_ids').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and l.splitted_stock_move_orig_id)"
                 />
             </t>
             <t
@@ -25,7 +25,7 @@
             >
                 <t
                     t-set="undelivered_moves"
-                    t-value="o.mapped('move_lines').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and not l.splitted_stock_move_orig_id)"
+                    t-value="o.mapped('move_ids').filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and not l.splitted_stock_move_orig_id)"
                 />
             </t>
             <table

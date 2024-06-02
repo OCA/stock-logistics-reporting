@@ -55,6 +55,10 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
                 "quantity": 2000,
             }
         )
+        self.action_report_model = self.env["ir.actions.report"]
+        self.report_deliveryslip = self.action_report_model._get_report_from_name(
+            "stock.report_deliveryslip"
+        )
 
     def _create_picking(self, partner):
         picking_form = Form(self.StockPicking)
@@ -85,10 +89,8 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertIn("undelivered_product", str(res[0]))
 
@@ -98,26 +100,22 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertNotIn("undelivered_product", str(res[0]))
 
     def test_no_displayed_product(self):
         picking = self._create_picking(self.partner_display)
-        picking.move_lines.filtered(
+        picking.move_ids.filtered(
             lambda l: l.product_id == self.product_display
         ).unlink()
         picking.action_confirm()
         picking.action_assign()
         picking.move_line_ids.qty_done = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertNotIn("undelivered_product", str(res[0]))
 
@@ -161,19 +159,15 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
 
         # Empty setting method field
         picking.company_id.undelivered_product_slip_report_method = False
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertIn("test02", str(res[0]))
 
         # Print all undelivered lines, partial and completely lines
         picking.company_id.undelivered_product_slip_report_method = "all"
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertIn("test02", str(res[0]))
 
@@ -181,10 +175,8 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.company_id.undelivered_product_slip_report_method = (
             "partially_undelivered"
         )
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertNotIn("test02", str(res[0]))
 
@@ -192,9 +184,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.company_id.undelivered_product_slip_report_method = (
             "completely_undelivered"
         )
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.action_report_model._render_qweb_html(
+            self.report_deliveryslip, picking.ids
         )
         self.assertNotIn("partially_undelivered_line", str(res[0]))
