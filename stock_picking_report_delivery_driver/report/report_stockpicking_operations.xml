@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_shipping2" inherit_id="delivery.report_shipping2">
+        <xpath expr="//p[@t-field='o.carrier_id']/.." position="attributes">
+            <attribute
+                name="t-if"
+            >o.picking_type_id.code == 'outgoing' and (o.carrier_id or o.driver_id)</attribute>
+        </xpath>
+        <xpath expr="//p[@t-field='o.carrier_id']" position="attributes">
+            <attribute name="t-if">o.carrier_id</attribute>
+            <attribute name="class">mb-0</attribute>
+        </xpath>
+        <xpath expr="//p[@t-field='o.carrier_id']" position="after">
+            <p t-if="o.driver_id">
+                <span t-if="o.carrier_id">(</span><span
+                    t-field="o.driver_id.name"
+                /><span t-if="o.carrier_id">)</span>
+            </p>
+        </xpath>
+    </template>
+</odoo>
