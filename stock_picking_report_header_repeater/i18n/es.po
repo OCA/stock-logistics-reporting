@@ -17,7 +17,5 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#. module: stock_picking_report_header_repeater
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_header_repeater.table_head_customer_info
-msgid "<span><strong>Customer Address:</strong></span>"
-msgstr "<span><strong>Dirección del cliente:</strong></span>"
+#~ msgid "<span><strong>Customer Address:</strong></span>"
+#~ msgstr "<span><strong>Dirección del cliente:</strong></span>"
