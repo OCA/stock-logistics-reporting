@@ -18,22 +18,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="text-start">
-                                    <span t-field="scrap.location_id.name" />
-                                </td>
-                                <td t-if="scrap.origin" class="text-center">
-                                    <span t-field="scrap.origin" />
-                                </td>
-                                <td class="text-center">
-                                    <span t-field="scrap.state" />
-                                </td>
-                                <td name="td_sched_date" class="text-center">
-                                    <span
-                                        t-esc="scrap.move_id and scrap.move_id.date"
-                                    />
-                                </td>
-                            </tr>
+                            <t t-foreach="scrap.move_ids" t-as="move">
+                                <tr>
+                                    <td class="text-start">
+                                        <span
+                                            t-field="move.scrap_id.location_id.name"
+                                        />
+                                    </td>
+                                    <td t-if="move.scrap_id.origin" class="text-center">
+                                        <span t-field="scrap.origin" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="move.scrap_id.state" />
+                                    </td>
+                                    <td name="td_sched_date" class="text-center">
+                                        <span t-esc="move.date" />
+                                    </td>
+                                </tr>
+                            </t>
                         </tbody>
                     </table>
                     <br />
@@ -41,7 +43,7 @@
                     <t t-call="stock_move_value_report.stock_move_lines_value">
                         <t
                             t-set="move_lines"
-                            t-value="scrap.mapped('move_id.move_line_ids')"
+                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
                         />
                         <t t-set="currency_id" t-value="res_company.currency_id" />
                     </t>
@@ -49,7 +51,7 @@
                     <t t-call="stock_move_value_report.stock_move_lines_value_total">
                         <t
                             t-set="move_lines"
-                            t-value="scrap.mapped('move_id.move_line_ids')"
+                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
                         />
                         <t t-set="currency_id" t-value="res_company.currency_id" />
                     </t>
