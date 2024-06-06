@@ -10,31 +10,31 @@
             />
             <thead>
                 <tr>
-                    <th name="th_product">
+                    <th name="th_product" class="text-start">
                         <strong>Product</strong>
                     </th>
-                    <th name="th_lot" t-if="has_serial_number">
+                    <th name="th_lot" t-if="has_serial_number" class="text-center">
                         Lot/Serial Number
                     </th>
                     <th name="th_qty" class="text-center">
                         <strong>Quantity</strong>
                     </th>
-                    <th name="th_value" class="text-right">
+                    <th name="th_value" class="text-end">
                         <strong>Value</strong>
                     </th>
-                    <th name="th_value_sbtl" class="text-right">
+                    <th name="th_value_sbtl" class="text-end">
                         <strong>Subtotal</strong>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr t-foreach="move_lines" t-as="move_line">
-                    <td>
+                    <td class="text-start">
                         <span t-field="move_line.product_id" />
                         <span t-field="move_line.product_id.sudo().description" />
                     </td>
                     <t t-if="has_serial_number">
-                        <td>
+                        <td class="text-center">
                             <table width="100%">
                                 <tr>
                                     <td>
@@ -44,8 +44,8 @@
                                         </t>
                                     </td>
                                     <td name="lot_qty">
-                                        <t t-if="move_line.product_qty">
-                                            <span t-field="move_line.product_qty" />
+                                        <t t-if="move_line.reserved_qty">
+                                            <span t-field="move_line.reserved_qty" />
                                         </t>
                                     </td>
                                 </tr>
@@ -56,7 +56,7 @@
                         <span t-field="move_line.qty_done" />
                         <span t-field="move_line.product_uom_id" />
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         <t
                             t-set="valuation_layers"
                             t-value="move_line.move_id.stock_valuation_layer_ids"
@@ -70,7 +70,7 @@
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                         />
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         <span
                             t-esc="cost * move_line.qty_done"
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
@@ -91,7 +91,7 @@
                     >
                         <tr class="border-black">
                             <td><strong>Total</strong></td>
-                            <td class="text-right">
+                            <td class="text-end">
                                 <t t-set="total" t-value="0" />
                                 <t t-foreach="move_lines" t-as="move_line">
                                     <t
@@ -213,7 +213,7 @@
                                 <tr class="border-black">
                                     <td><strong
                                         >Total operations value balance</strong></td>
-                                    <td class="text-right">
+                                    <td class="text-end">
                                         <strong
                                             t-esc="sum([x.move_id.price_unit * x.qty_done for x in move_lines_ids])"
                                             t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
