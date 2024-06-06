@@ -8,16 +8,16 @@
                     <div class="row">
                         <div class="col-6">
                             <div
-                                t-if="picking.move_lines and picking.move_lines[0].partner_id and picking.move_lines[0].partner_id.id != picking.partner_id.id"
+                                t-if="picking.move_ids and picking.move_ids[0].partner_id and picking.move_ids[0].partner_id.id != picking.partner_id.id"
                             >
                                 <span><strong>Delivery Address:</strong></span>
                                 <div
-                                    t-field="picking.move_lines[0].partner_id"
+                                    t-field="picking.move_ids[0].partner_id"
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                                 />
                             </div>
                             <div
-                                t-if="picking.picking_type_id.code != 'internal' and (not picking.move_lines or not picking.move_lines[0].partner_id) and picking.picking_type_id.warehouse_id.partner_id"
+                                t-if="picking.picking_type_id.code != 'internal' and (not picking.move_ids or not picking.move_ids[0].partner_id) and picking.picking_type_id.warehouse_id.partner_id"
                             >
                                 <span><strong>Warehouse Address:</strong></span>
                                 <div
@@ -61,26 +61,27 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th t-if="picking.origin"><strong
+                                <th class="text-start" t-if="picking.origin"><strong
                                     >Order (Origin)</strong></th>
-                                <th><strong>State</strong></th>
-                                <th><strong>Commitment Date</strong></th>
-                                <th name="td_sched_date_h"><strong
+                                <th class="text-center"><strong>State</strong></th>
+                                <th class="text-center"><strong
+                                    >Commitment Date</strong></th>
+                                <th name="td_sched_date_h" class="text-center"><strong
                                     >Scheduled Date</strong></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td t-if="picking.origin">
+                                <td t-if="picking.origin" class="text-start">
                                     <span t-field="picking.origin" />
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span t-field="picking.state" />
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span t-field="picking.date" />
                                 </td>
-                                <td name="td_sched_date">
+                                <td class="text-center" name="td_sched_date">
                                     <span t-field="picking.scheduled_date" />
                                 </td>
                             </tr>

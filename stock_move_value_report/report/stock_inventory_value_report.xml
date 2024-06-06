@@ -12,21 +12,21 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th><strong>Location</strong></th>
-                                <th><strong>State</strong></th>
-                                <th><strong>Date</strong></th>
+                                <th class="text-start"><strong>Location</strong></th>
+                                <th class="text-center"><strong>State</strong></th>
+                                <th class="text-center"><strong>Date</strong></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr t-foreach="inventory.location_ids" t-as="location">
-                                <td>
+                                <td class="text-start">
                                     <span t-field="location.name" />
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span t-field="inventory.state" />
                                 </td>
 
-                                <td name="td_date">
+                                <td class="text-center" name="td_date">
                                     <span t-field="inventory.date" />
                                 </td>
                             </tr>
