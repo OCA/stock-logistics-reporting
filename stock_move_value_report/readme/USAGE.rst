@@ -17,7 +17,7 @@ Then:
 Or, you can either go to:
 
 - *Inventory > Reporting > Stock Moves*, or
-- *Inventory > Reporting > Product Moves*
+- *Inventory > Reporting > Moves History*
 
 Then:
 #. Select records to print.

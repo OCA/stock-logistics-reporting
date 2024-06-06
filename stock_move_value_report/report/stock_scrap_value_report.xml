@@ -10,25 +10,25 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th><strong>Location</strong></th>
-                                <th t-if="scrap.origin"><strong
+                                <th class="text-center"><strong>Location</strong></th>
+                                <th t-if="scrap.origin" class="text-center"><strong
                                     >Source Document</strong></th>
-                                <th><strong>State</strong></th>
-                                <th><strong>Date</strong></th>
+                                <th class="text-center"><strong>State</strong></th>
+                                <th class="text-center"><strong>Date</strong></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
+                                <td class="text-start">
                                     <span t-field="scrap.location_id.name" />
                                 </td>
-                                <td t-if="scrap.origin">
+                                <td t-if="scrap.origin" class="text-center">
                                     <span t-field="scrap.origin" />
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span t-field="scrap.state" />
                                 </td>
-                                <td name="td_sched_date">
+                                <td name="td_sched_date" class="text-center">
                                     <span
                                         t-esc="scrap.move_id and scrap.move_id.date"
                                     />
