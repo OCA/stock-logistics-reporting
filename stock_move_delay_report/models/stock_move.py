@@ -24,9 +24,9 @@ class StockMove(models.Model):
     @api.depends("state")
     def _compute_date_delay(self):
         for rec in self:
-            if rec.state == "done" and rec.date_expected:
-                rec.date_delay = (rec.date - rec.date_expected).days
-            elif not rec.date_expected:
+            if rec.state == "done" and rec.date_deadline:
+                rec.date_delay = (rec.date - rec.date_deadline).days
+            elif not rec.date_deadline:
                 rec.date_delay = 0
             else:
                 rec.date_delay = None
