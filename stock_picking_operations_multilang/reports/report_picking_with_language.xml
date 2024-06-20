@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_picking_with_language">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="lang" t-value="o._get_picking_operations_lang()" />
+            <t t-call="stock.report_picking" t-lang="lang" />
+        </t>
+    </template>
+</odoo>
