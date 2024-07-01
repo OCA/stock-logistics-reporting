@@ -24,17 +24,16 @@ class ProductStickerStockCommon(ProductStickerCommon):
                 "picking_type_id": picking_type.id,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.supplier_location.id,
-                "move_lines": [
+                "move_line_ids": [
                     (
                         0,
                         0,
                         {
-                            "name": product.name,
                             "product_id": product.id,
-                            "product_uom": product.uom_id.id,
+                            "product_uom_id": product.uom_id.id,
                             "location_id": self.stock_location.id,
                             "location_dest_id": self.supplier_location.id,
-                            "product_uom_qty": 1,
+                            "qty_done": 1,
                         },
                     )
                     for product in products

@@ -30,13 +30,13 @@ class StockPicking(models.Model):
                 picking.picking_type_id.show_product_stickers
             )
 
-    @api.depends("show_product_stickers", "move_lines.product_id")
+    @api.depends("show_product_stickers", "move_line_ids.product_id")
     def _compute_sticker_ids(self):
         self.sticker_ids = False
         for picking in self:
             if not picking.show_product_stickers:
                 continue
-            products = picking.move_lines.product_id
+            products = picking.move_line_ids.product_id
             stickers = products.get_product_stickers()
             if stickers:
                 picking.sticker_ids = stickers
