@@ -4,11 +4,11 @@
         <xpath expr="//div[@name='div_origin']/.." position="inside">
             <div
                 t-if="o.picking_type_id.code == 'outgoing' and o.sale_id.user_id"
-                class="col-auto"
+                class="col-auto col-3 mw-100 mb-2"
                 name="div_salesperson"
             >
                 <strong>Salesperson:</strong>
-                <p t-field="o.sale_id.user_id.name" />
+                <p t-field="o.sale_id.user_id.name" class="m-0" />
             </div>
         </xpath>
     </template>
