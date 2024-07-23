@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-delivery_line_sale_line_position>=16.0dev,<16.1dev',
+        'odoo-addon-stock_account_valuation_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_average_daily_sale>=16.0dev,<16.1dev',
         'odoo-addon-stock_card_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_batch_report>=16.0dev,<16.1dev',
