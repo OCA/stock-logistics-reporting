@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+picking_summary_wizard,picking_summary_wizard,stock_picking_report_summary.model_picking_summary_wizard,stock.group_stock_user,1,1,1,0
+picking_summary_wizard_product,picking_summary_wizard_product,stock_picking_report_summary.model_picking_summary_wizard_product,stock.group_stock_user,1,1,1,0
+picking_summary_wizard_picking,picking_summary_wizard_picking,stock_picking_report_summary.model_picking_summary_wizard_picking,stock.group_stock_user,1,1,1,0
