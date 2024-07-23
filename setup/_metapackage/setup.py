@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_report_internal_delivery_address>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_qty_undelivered>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_salesperson>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_report_summary>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_valued>=16.0dev,<16.1dev',
         'odoo-addon-stock_quantity_history_location>=16.0dev,<16.1dev',
         'odoo-addon-stock_report_quantity_by_location>=16.0dev,<16.1dev',
