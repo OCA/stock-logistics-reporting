@@ -1,6 +1,8 @@
 # Copyright 2019 Ecosoft Co., Ltd. (http://ecosoft.co.th)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import pytz
+
 from odoo import api, fields, models
 
 
@@ -85,7 +87,12 @@ class StockCardReport(models.TransientModel):
         )
         stock_card_results = self._cr.dictfetchall()
         ReportLine = self.env["stock.card.view"]
-        self.results = [ReportLine.new(line).id for line in stock_card_results]
+        user_timezone = pytz.timezone(self.env.user.tz)
+        new_results = []
+        for line in stock_card_results:
+            line["date"] = line["date"].astimezone(user_timezone).replace(tzinfo=None)
+            new_results.append(ReportLine.new(line).id)
+        self.results = new_results
 
     def _get_initial(self, product_line):
         product_input_qty = sum(product_line.mapped("product_in"))
