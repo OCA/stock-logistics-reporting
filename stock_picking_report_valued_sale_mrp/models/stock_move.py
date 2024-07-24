@@ -22,7 +22,10 @@ class StockMove(models.Model):
             sale_line.move_ids.filtered(
                 lambda x: x.product_id == self.product_id
                 and not x.origin_returned_move_id
-                and (x.state != "cancel" or (x.state == "cancel" and x.backorder_id))
+                and (
+                    x.state != "cancel"
+                    or (x.state == "cancel" and x.picking_id.backorder_id)
+                )
             ).mapped("product_uom_qty")
         )
         return component_demand / sale_line.product_uom_qty
