@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 16.0.1.1.0 |  | Adds the sale line position to the delivery report lines
 [stock_account_valuation_report](stock_account_valuation_report/) | 16.0.1.0.0 |  | Improves logic of the Inventory Valuation Report
 [stock_average_daily_sale](stock_average_daily_sale/) | 16.0.1.0.0 |  | Allows to gather delivered products average on daily basis
-[stock_card_report](stock_card_report/) | 16.0.1.0.0 |  | Add stock card report on Inventory Reporting.
+[stock_card_report](stock_card_report/) | 16.0.1.0.1 |  | Add stock card report on Inventory Reporting.
 [stock_picking_batch_report](stock_picking_batch_report/) | 16.0.1.0.0 |  | Stock Picking Batch Report
 [stock_picking_operations_multilang](stock_picking_operations_multilang/) | 16.0.1.0.0 |  | Stock Picking Operations Multilang
 [stock_picking_report_custom_description](stock_picking_report_custom_description/) | 16.0.1.0.0 | [![carlosdauden](https://github.com/carlosdauden.png?size=30px)](https://github.com/carlosdauden) | Show moves description in picking reports
