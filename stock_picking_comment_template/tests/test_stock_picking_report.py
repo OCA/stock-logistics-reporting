@@ -5,55 +5,53 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockPickingReport(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.base_comment_model = self.env["base.comment.template"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.ref("base.main_company")
+        cls.base_comment_model = cls.env["base.comment.template"]
         # Create comment related to sale model
-        self.picking_obj = self.env.ref("stock.model_stock_picking")
-        self.before_comment = self._create_comment(self.picking_obj, "before_lines")
-        self.after_comment = self._create_comment(self.picking_obj, "after_lines")
+        cls.picking_obj = cls.env.ref("stock.model_stock_picking")
+        cls.before_comment = cls._create_comment(cls, "before_lines")
+        cls.after_comment = cls._create_comment(cls, "after_lines")
         # Create partner
-        self.partner = self.env["res.partner"].create({"name": "Partner Test"})
-        self.partner.base_comment_template_ids = [
-            (4, self.before_comment.id),
-            (4, self.after_comment.id),
+        cls.partner = cls.env["res.partner"].create({"name": "Partner Test"})
+        cls.partner.base_comment_template_ids = [
+            (4, cls.before_comment.id),
+            (4, cls.after_comment.id),
         ]
-        self.picking_model = self.env["stock.picking"]
-        self.picking = self.picking_model.create(
+        cls.picking_model = cls.env["stock.picking"]
+        cls.picking = cls.picking_model.create(
             {
-                "partner_id": self.partner.id,
-                "location_id": self.ref("stock.stock_location_stock"),
-                "location_dest_id": self.ref("stock.stock_location_customers"),
-                "picking_type_id": self.ref("stock.picking_type_out"),
+                "partner_id": cls.partner.id,
+                "location_id": cls.env.ref("stock.stock_location_stock").id,
+                "location_dest_id": cls.env.ref("stock.stock_location_customers").id,
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
             }
         )
 
-    def _create_comment(self, model, position):
+    def _create_comment(self, position):
         return self.base_comment_model.create(
             {
                 "name": "Comment " + position,
                 "company_id": self.company.id,
                 "position": position,
                 "text": "Text " + position,
-                "model_ids": [(6, 0, model.ids)],
+                "models": "stock.picking",
+                "model_ids": [(6, 0, self.picking_obj.ids)],
             }
         )
 
     def test_comments_in_deliveryslip(self):
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(self.picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", self.picking.ids
         )
         self.assertRegex(str(res[0]), self.before_comment.text)
         self.assertRegex(str(res[0]), self.after_comment.text)
 
     def test_comments_in_report_picking(self):
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_picking")
-            ._render_qweb_html(self.picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_picking", self.picking.ids
         )
         self.assertRegex(str(res[0]), self.before_comment.text)
         self.assertRegex(str(res[0]), self.after_comment.text)
