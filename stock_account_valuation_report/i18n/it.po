@@ -1,0 +1,216 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_account_valuation_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-07-31 15:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Accounting Qty"
+msgstr "Q.tà contabilità"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__account_qty_at_date
+msgid "Accounting Quantity"
+msgstr "Quantità contabilità"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Accounting Valuation"
+msgstr "Valutazione contabilità"
+
+#. module: stock_account_valuation_report
+#. odoo-python
+#: code:addons/stock_account_valuation_report/models/product_product.py:0
+#, python-format
+msgid "Accounting Valuation at date"
+msgstr "Valutazione contabilità alla data"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__account_value
+msgid "Accounting Value"
+msgstr "Valore contabilità"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,help:stock_account_valuation_report.field_stock_valuation_history__inventory_datetime
+msgid "Choose a date to get the valuation at that date"
+msgstr "Scegliere una data per ottenere la valutazione a quella data"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
+msgid "Choose your date"
+msgstr "Scegliere la propria data"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
+msgid "Confirm"
+msgstr "Conferma"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.actions.act_window,help:stock_account_valuation_report.product_valuation_action
+msgid "Create a product to see its name and valuation."
+msgstr "Creare un prodotto per vedere il suo nome e valutazione."
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_account_valuation_report
+#: model:ir.actions.act_window,name:stock_account_valuation_report.history_valuation_action
+#: model:ir.actions.act_window,name:stock_account_valuation_report.product_valuation_action
+#: model:ir.ui.menu,name:stock_account_valuation_report.menu_dual_valuation
+msgid "Dual Inventory Valuation"
+msgstr "Valutazione inventario duale"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__inventory_datetime
+msgid "Dual Valuation at Date"
+msgstr "Valutazione duale alla data"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__qty_at_date
+msgid "Inventory Quantity"
+msgstr "Quantità intentario"
+
+#. module: stock_account_valuation_report
+#. odoo-python
+#: code:addons/stock_account_valuation_report/models/product_product.py:0
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__valuation
+#, python-format
+msgid "Inventory Valuation"
+msgstr "Valutazione intentario"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_value
+msgid "Inventory Value"
+msgstr "Valore inventario"
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_account_move_line
+msgid "Journal Item"
+msgstr "Movimento contabile"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+msgid "Manual"
+msgstr "Manuale"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,help:stock_account_valuation_report.field_product_product__valuation
+msgid ""
+"Manual: The accounting entries to value the inventory are not posted automatically.\n"
+"        Automated: An accounting entry is automatically created to value the inventory when a product enters or leaves the company.\n"
+"        "
+msgstr ""
+"Manuale: le registrazioni contabili per la valorizzazione dell'inventario "
+"non sono inserite automaticamente.\n"
+"        Automatico: una registrazione contabile è creata automaticamente per "
+"valorizzare l'inventario quando un prodotto entra o esce dall'azienda.\n"
+"        "
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_account_move_line__product_id
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_product_product
+msgid "Product Variant"
+msgstr "Variante prodotto"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__qty_discrepancy
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Qty Discrepancy"
+msgstr "Differenza q.tà"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+msgid "Real time"
+msgstr "Tempo reale"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_fifo_real_time_aml_ids
+msgid "Stock Fifo Real Time Aml"
+msgstr "Aml tempo reale FIFO giacenza"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Stock Valuation"
+msgstr "Valutazione giacenza"
+
+#. module: stock_account_valuation_report
+#: model:ir.model,name:stock_account_valuation_report.model_stock_valuation_history
+msgid "Stock Valuation History"
+msgstr "Cronologia valutazione giacenza"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_valuation_layer_ids
+msgid "Stock Valuation Layer"
+msgstr "Livello valutazione magazzino"
+
+#. module: stock_account_valuation_report
+#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__valuation_discrepancy
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "Valuation Discrepancy"
+msgstr "Differenza valutazione"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "View Journal Items"
+msgstr "Visualizza registrazioni contabili"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
+msgid "View Valuation Layers"
+msgstr "Visualizza livelli valutazione"
