@@ -65,6 +65,11 @@ Contributors
 
    -  Fekete Mihai <feketemihai@nexterp.ro>
 
+-  `Sygel <http://www.sygel.es>`__:
+
+   -  Valentín Vinagre <valentin.vinagre@sygel.es>
+   -  Roger Sans <roger.sans@sygel.es>
+
 Do not contact contributors directly about support or help with
 technical issues.
 
