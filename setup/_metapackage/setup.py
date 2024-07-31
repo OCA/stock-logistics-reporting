@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_report_header_repeater>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_incoming_delivery_address>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_internal_delivery_address>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_report_product_sticker>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_qty_undelivered>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_salesperson>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_summary>=16.0dev,<16.1dev',
