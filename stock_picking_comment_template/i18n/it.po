@@ -6,35 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-08-04 21:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_comment_template
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template_ids
 msgid "Comment Template"
-msgstr ""
+msgstr "Modello commento"
 
 #. module: stock_picking_comment_template
 #: model_terms:ir.ui.view,arch_db:stock_picking_comment_template.stock_picking_form_add_comment
 msgid "Comments"
-msgstr ""
+msgstr "Commenti"
 
 #. module: stock_picking_comment_template
 #: model:ir.ui.menu,name:stock_picking_comment_template.menu_base_comment_template_picking
 msgid "Document Comments"
-msgstr ""
+msgstr "Commenti documento"
 
 #. module: stock_picking_comment_template
 #: model:ir.actions.act_window,name:stock_picking_comment_template.action_stock_picking_comment_template
 msgid "Stock Picking Comment Templates"
-msgstr ""
+msgstr "Modelli commento prelievo magazzino"
 
 #. module: stock_picking_comment_template
 #: model:ir.model,name:stock_picking_comment_template.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
