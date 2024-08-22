@@ -4,7 +4,7 @@
 # Copyright 2016-2022 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.tools import float_compare
 
 
@@ -15,7 +15,9 @@ class StockMoveLine(models.Model):
         related="move_id.sale_line_id", readonly=True, string="Related order line"
     )
     currency_id = fields.Many2one(
-        related="sale_line.currency_id", readonly=True, string="Sale Currency"
+        comodel_name="res.currency",
+        compute="_compute_sale_currency_id",
+        string="Sale Currency",
     )
     sale_tax_id = fields.Many2many(
         related="sale_line.tax_id", readonly=True, string="Sale Tax"
@@ -43,6 +45,15 @@ class StockMoveLine(models.Model):
     sale_price_total = fields.Monetary(
         compute="_compute_sale_order_line_fields", string="Total", compute_sudo=True
     )
+
+    @api.depends("sale_line", "company_id")
+    def _compute_sale_currency_id(self):
+        for line in self:
+            line.currency_id = (
+                line.sale_line.currency_id.id
+                if line.sale_line
+                else line.company_id.currency_id.id
+            )
 
     def _get_report_valued_quantity(self):
         return self.qty_done or self.reserved_qty
