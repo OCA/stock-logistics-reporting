@@ -189,7 +189,8 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
     def test_view_refreshed(self):
         self._refresh()
         with self.assertNoLogs(
-            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale"
+            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale",
+            level="DEBUG",
         ):
             self.env["stock.average.daily.sale"].search_read(
                 [("product_id", "=", self.product_1.id)]
