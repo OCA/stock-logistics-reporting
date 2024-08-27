@@ -32,6 +32,12 @@ class StockAverageDailySaleConfig(models.Model):
         ),
         readonly=True,
     )
+    exclude_weekends = fields.Boolean(
+        string="Exclude Weekends",
+        help="Set to True only if you do not expect any orders/deliveries during "
+        "the weekends. If set to True, stock moves done on weekends won't be "
+        "taken into account to calculate the average daily usage",
+    )
     period_name = fields.Selection(
         string="Period analyzed unit",
         selection=[
