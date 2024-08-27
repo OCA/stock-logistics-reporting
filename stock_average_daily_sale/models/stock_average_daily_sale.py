@@ -225,7 +225,7 @@ class StockAverageDailySale(models.Model):
                         JOIN cfg on cfg.abc_classification_level = coalesce(pt.abc_storage, 'c')
                     WHERE
                         sl_src.usage in ('view', 'internal')
-                        AND sl_dest.usage = 'customer'
+                        AND sl_dest.usage in ('customer', 'production')
                         AND sm.date BETWEEN cfg.date_from AND cfg.date_to
                         AND sm.state = 'done'
                     WINDOW pid AS (PARTITION BY sm.product_id, sm.warehouse_id)
