@@ -176,14 +176,16 @@ class StockAverageDailySale(models.Model):
                         NOW()::date - '1 day'::interval as date_to,
                         -- start of the analyzed period computed from the original cfg
                         (NOW() - (period_value::TEXT || ' ' || period_name::TEXT)::INTERVAL):: date as date_from,
-                        -- the number of business days between start and end computed by
-                        -- removing saturday and sunday
+                        -- the number of days between start and end computed by
+                        -- removing saturday and sunday if weekends should be excluded
                         (SELECT count(1) from (select EXTRACT(DOW FROM s.d::date) as dd
                             FROM generate_series(
                             (NOW() - (period_value::TEXT || ' ' || period_name::TEXT)::INTERVAL):: date ,
                             (NOW()- '1 day'::interval)::date,
                             '1 day') AS s(d)) t
-                            WHERE dd not in(0,6)) AS nrb_days_without_sat_sun
+                            WHERE exclude_weekends = False
+                                OR (exclude_weekends = True AND dd not in(0,6))
+                        ) AS nbr_days
                     FROM
                         stock_average_daily_sale_config
                 ),
@@ -209,9 +211,10 @@ class StockAverageDailySale(models.Model):
                             + ( stddev_samp(product_uom_qty) OVER pid * cfg.standard_deviation_exclude_factor)
                         ) as upper_bound,
                         coalesce ((stddev_samp(product_uom_qty) OVER pid), 0) as standard_deviation,
-                        cfg.nrb_days_without_sat_sun,
+                        cfg.nbr_days,
                         cfg.date_from,
                         cfg.date_to,
+                        cfg.exclude_weekends,
                         cfg.id as config_id,
                         sm.date
                     FROM stock_move sm
@@ -239,16 +242,16 @@ class StockAverageDailySale(models.Model):
                             )::numeric AS average_qty_by_sale,
                         (count(product_uom_qty) FILTER
                             (WHERE product_uom_qty BETWEEN lower_bound AND upper_bound OR standard_deviation = 0)
-                            / nrb_days_without_sat_sun::numeric) AS average_daily_sales_count,
+                            / nbr_days::numeric) AS average_daily_sales_count,
                         count(product_uom_qty) FILTER
                             (WHERE product_uom_qty BETWEEN lower_bound AND upper_bound OR standard_deviation = 0)::double precision as nbr_sales,
                         standard_deviation::numeric ,
                         date_from,
                         date_to,
                         config_id,
-                        nrb_days_without_sat_sun
+                        nbr_days
                     FROM deliveries_last
-                    GROUP BY product_id, warehouse_id, standard_deviation, nrb_days_without_sat_sun, date_from, date_to, config_id
+                    GROUP BY product_id, warehouse_id, standard_deviation, nbr_days, date_from, date_to, config_id
                 ),
                 -- Compute the stock by product in locations under stock
                 stock_qty AS (
@@ -262,7 +265,6 @@ class StockAverageDailySale(models.Model):
                         GROUP BY sq.product_id, sl.warehouse_id
                 ),
                 -- Compute the standard deviation of the average daily sales count
-                -- excluding saturday and sunday
                 daily_standard_deviation AS(
                     SELECT
                         id,
@@ -279,7 +281,7 @@ class StockAverageDailySale(models.Model):
                                     (WHERE product_uom_qty BETWEEN lower_bound AND upper_bound OR standard_deviation = 0)
                                 ) as daily_sales
                             FROM deliveries_last
-                            WHERE EXTRACT(DOW FROM date) <> '0' AND EXTRACT(DOW FROM date) <> '6'
+                            WHERE exclude_weekends = False OR (EXTRACT(DOW FROM date) <> '0' AND EXTRACT(DOW FROM date) <> '6')
                             GROUP BY product_id, warehouse_id, 1
                         ) as averages_daily group by id, product_id, warehouse_id
 
@@ -303,11 +305,11 @@ class StockAverageDailySale(models.Model):
                         is_mto,
                         sqty.qty_in_stock as qty_in_stock,
                         ds.daily_standard_deviation,
-                        ds.daily_standard_deviation * cfg.safety_factor * sqrt(nrb_days_without_sat_sun) as safety,
-                        (cfg.number_days_qty_in_stock * average_qty_by_sale * average_daily_sales_count) + (ds.daily_standard_deviation * cfg.safety_factor * sqrt(nrb_days_without_sat_sun)) as safety_bin_min_qty_new,
+                        ds.daily_standard_deviation * cfg.safety_factor * sqrt(nbr_days) as safety,
+                        (cfg.number_days_qty_in_stock * average_qty_by_sale * average_daily_sales_count) + (ds.daily_standard_deviation * cfg.safety_factor * sqrt(nbr_days)) as safety_bin_min_qty_new,
                         cfg.number_days_qty_in_stock * GREATEST(average_daily_sales_count, 1)  * (average_qty_by_sale + (standard_deviation * cfg.safety_factor)) as safety_bin_min_qty_old,
                         GREATEST(
-                            (cfg.number_days_qty_in_stock * average_qty_by_sale * average_daily_sales_count) + (ds.daily_standard_deviation * cfg.safety_factor * sqrt(nrb_days_without_sat_sun)),
+                            (cfg.number_days_qty_in_stock * average_qty_by_sale * average_daily_sales_count) + (ds.daily_standard_deviation * cfg.safety_factor * sqrt(nbr_days)),
                             (cfg.number_days_qty_in_stock *  average_qty_by_sale)
                         ) as recommended_qty
                     FROM averages t

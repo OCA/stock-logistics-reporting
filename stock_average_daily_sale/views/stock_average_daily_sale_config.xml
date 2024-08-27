@@ -10,6 +10,7 @@
         <field name="arch" type="xml">
             <tree editable="top" create="false" delete="false">
                 <field name="abc_classification_level" />
+                <field name="exclude_weekends" />
                 <field name="period_value" />
                 <field name="period_name" />
                 <field name="number_days_qty_in_stock" />
