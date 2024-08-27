@@ -13,6 +13,8 @@
         <field name="safety_factor">0.3</field>
         <field name="number_days_qty_in_stock">2</field>
         <field name="exclude_weekends">1</field>
+        <field name="warehouse_id" ref="stock.warehouse0" />
+        <field name="company_id" ref="base.main_company" />
     </record>
     <record
         model="stock.average.daily.sale.config"
@@ -25,6 +27,8 @@
         <field name="safety_factor">0.3</field>
         <field name="number_days_qty_in_stock">2</field>
         <field name="exclude_weekends">1</field>
+        <field name="warehouse_id" ref="stock.warehouse0" />
+        <field name="company_id" ref="base.main_company" />
     </record>
     <record
         model="stock.average.daily.sale.config"
@@ -37,5 +41,7 @@
         <field name="safety_factor">0.3</field>
         <field name="number_days_qty_in_stock">2</field>
         <field name="exclude_weekends">1</field>
+        <field name="warehouse_id" ref="stock.warehouse0" />
+        <field name="company_id" ref="base.main_company" />
     </record>
 </odoo>
