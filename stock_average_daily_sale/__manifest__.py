@@ -12,8 +12,6 @@
     "depends": [
         "sale",
         "stock_storage_type_putaway_abc",
-        "product_abc_classification",
-        "product_abc_classification_sale_stock",
         "product_route_mto",
     ],
     "data": [
@@ -22,7 +20,6 @@
         "security/stock_average_daily_sale_demo.xml",
         "views/stock_average_daily_sale_config.xml",
         "views/stock_average_daily_sale.xml",
-        "views/abc_classification_profile.xml",
         "views/stock_warehouse.xml",
         "data/ir_cron.xml",
     ],

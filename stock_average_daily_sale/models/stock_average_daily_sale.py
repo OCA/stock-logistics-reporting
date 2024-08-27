@@ -18,17 +18,11 @@ _logger = logging.getLogger(__name__)
 
 
 class StockAverageDailySale(models.Model):
-
     _name = "stock.average.daily.sale"
     _auto = False
     _order = "abc_classification_level ASC, product_id ASC"
     _description = "Average Daily Sale for Products"
 
-    abc_classification_profile_id = fields.Many2one(
-        comodel_name="abc.classification.profile",
-        required=True,
-        index=True,
-    )
     abc_classification_level = fields.Selection(
         selection=ABC_SELECTION, required=True, readonly=True, index=True
     )
@@ -305,7 +299,6 @@ class StockAverageDailySale(models.Model):
                         date_to,
                         config_id,
                         abc_classification_level,
-                        cfg.abc_classification_profile_id,
                         sale_ok,
                         is_mto,
                         sqty.qty_in_stock as qty_in_stock,
