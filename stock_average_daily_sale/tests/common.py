@@ -87,12 +87,13 @@ class CommonAverageSaleTest:
                 "product_id": product.id,
                 "name": product.name,
                 "location_id": origin_location.id,
+                "warehouse_id": origin_location.warehouse_id.id,
                 "location_dest_id": cls.customers.id,
                 "product_uom_qty": qty,
                 "priority": "1",
             }
         )
-        # TODO: Check why this is necessary - it's in materialzed view query
+        # TODO: Check why this is necessary - it's in materialized view query
         move.priority = "1"
         return move
 
