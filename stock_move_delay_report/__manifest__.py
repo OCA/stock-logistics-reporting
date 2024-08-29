@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
-    "depends": ["stock"],
+    "depends": ["stock", "stock_move_original_date"],
     "data": [
         "security/ir.model.access.csv",
         "security/report_security.xml",
