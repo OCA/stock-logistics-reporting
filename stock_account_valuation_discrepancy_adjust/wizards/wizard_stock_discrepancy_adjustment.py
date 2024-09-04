@@ -1,5 +1,5 @@
 # Copyright 2021 ForgeFlow S.L.
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -57,14 +57,9 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        values = super(WizardStockDiscrepancyAdjustment, self).default_get(
-            fields_list
-        )
+        values = super(WizardStockDiscrepancyAdjustment, self).default_get(fields_list)
         product_discrepancy_model = self.env["product.discrepancy"]
-        if (
-            self.env.context.get("active_model", False)
-            == "product.discrepancy"
-        ):
+        if self.env.context.get("active_model", False) == "product.discrepancy":
             records = product_discrepancy_model.browse(
                 self.env.context.get("active_ids")
             )
@@ -100,17 +95,12 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
                     "date": self.to_date,
                     "ref": _("Adjust for Stock Valuation Discrepancy"),
                 }
-                valuation_account = (
-                    product.product_tmpl_id._get_product_accounts()[
-                        "stock_valuation"
-                    ]
-                )
+                valuation_account = product.product_tmpl_id._get_product_accounts()[
+                    "stock_valuation"
+                ]
                 if not valuation_account:
                     raise UserError(
-                        _(
-                            "Product %s doesn't "
-                            "have stock valuation account assigned"
-                        )
+                        _("Product %s doesn't " "have stock valuation account assigned")
                         % (product.display_name)
                     )
                 move_data["line_ids"] = [

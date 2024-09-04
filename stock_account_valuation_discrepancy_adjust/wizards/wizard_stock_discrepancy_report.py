@@ -47,8 +47,7 @@ class WizardStockDiscrepancyReport(models.TransientModel):
                 }
             )
         action = self.env.ref(
-            "stock_account_valuation_discrepancy_adjust."
-            "product_discrepancy_action"
+            "stock_account_valuation_discrepancy_adjust." "product_discrepancy_action"
         ).read()[0]
         action["domain"] = [("id", "in", discrepancy_records.ids)]
         action["display_name"] = "%s (%s)" % (
