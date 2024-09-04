@@ -3,7 +3,7 @@
 
 {
     "name": "Account Valuation Discrepancy Adjust",
-    "version": "12.0.1.0.0",
+    "version": "16.0.1.0.0",
     "summary": "Implements Wizard for Adjust "
     "Discrepancies on Account Inventory Valuation",
     "category": "Warehouse Management",
@@ -13,9 +13,7 @@
     "depends": ["stock_account_valuation_report"],
     "data": [
         "security/ir.model.access.csv",
-        "wizards/wizard_stock_discrepancy_report_view.xml",
         "wizards/wizard_stock_discrepancy_adjustment_view.xml",
-        "views/product_discrepancy_view.xml",
     ],
     "demo": [],
     "installable": True,
