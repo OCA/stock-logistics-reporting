@@ -23,16 +23,8 @@ class ProductDiscrepancy(models.TransientModel):
     stock_value = fields.Float(string="Inventory Value", readonly=True)
     account_value = fields.Float(string="Accounting Value", readonly=True)
     qty_at_date = fields.Float(string="Inventory Quantity", readonly=True)
-    account_qty_at_date = fields.Float(
-        string="Accounting Quantity", readonly=True
-    )
-    valuation_discrepancy = fields.Float(
-        string="Valuation discrepancy", readonly=True
-    )
-    qty_discrepancy = fields.Float(
-        string="Quantity discrepancy", readonly=True
-    )
+    account_qty_at_date = fields.Float(string="Accounting Quantity", readonly=True)
+    valuation_discrepancy = fields.Float(string="Valuation discrepancy", readonly=True)
+    qty_discrepancy = fields.Float(string="Quantity discrepancy", readonly=True)
 
-    to_date_valuation = fields.Datetime(
-        string="To Date Valuation", readonly=True
-    )
+    to_date_valuation = fields.Datetime(string="To Date Valuation", readonly=True)
