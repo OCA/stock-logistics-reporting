@@ -4,9 +4,14 @@ from odoo.exceptions import UserError
 
 
 class WizardStockDiscrepancyAdjustment(models.TransientModel):
-
     _name = "wizard.stock.discrepancy.adjustment"
     _description = "Wizard Stock Discrepancy Adjustment"
+
+    product_selection_ids = fields.One2many(
+        comodel_name="wizard.stock.discrepancy.adjustment.line",
+        inverse_name="wizard_id",
+        string="Selected Products",
+    )
 
     def _get_default_stock_journal(self):
         return self.env["account.journal"].search(
@@ -17,6 +22,13 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
             limit=1,
         )
 
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        required=True,
+        readonly=True,
+        default=lambda self: self.env.company,
+    )
     journal_id = fields.Many2one(
         comodel_name="account.journal",
         string="Journal",
@@ -38,57 +50,34 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
     to_date = fields.Datetime(
         string="To date",
         required=False,
-        default=fields.Datetime.now(),
-    )
-    product_ids = fields.Many2many(
-        comodel_name="product.product",
-        relation="wizard_discrepancy_product_product_rel",
-        column1="wizard_id",
-        column2="product_id",
-        string="Product",
-    )
-    selected_product_ids = fields.Many2many(
-        comodel_name="product.product",
-        relation="wizard_discrepancy_selected_product_product_rel",
-        column1="wizard_id",
-        column2="product_id",
-        string="Product",
     )
 
     @api.model
     def default_get(self, fields_list):
-        values = super(WizardStockDiscrepancyAdjustment, self).default_get(fields_list)
-        product_discrepancy_model = self.env["product.discrepancy"]
-        if self.env.context.get("active_model", False) == "product.discrepancy":
-            records = product_discrepancy_model.browse(
-                self.env.context.get("active_ids")
-            )
-            values["selected_product_ids"] = records.mapped("product_id").ids
-            values["to_date"] = records.mapped("to_date_valuation")[0]
+        values = super().default_get(fields_list)
+        if self.env.context.get("active_model", False) != "product.product":
+            raise UserError(_("Bad context propagation"))
+        products = self.env["product.product"].browse(
+            self.env.context.get("active_ids")
+        )
+        values["product_selection_ids"] = [
+            (0, 0, {"product_id": product.id}) for product in products
+        ]
+        to_date = self.env.context.get("at_date", False)
+        if to_date:
+            values["to_date"] = to_date
+        else:
+            values["to_date"] = fields.Datetime.now()
         return values
-
-    @api.onchange(
-        "to_date",
-        "selected_product_ids",
-    )
-    def _onchange_at_date(self):
-        product_model = self.env["product.product"]
-        if self.selected_product_ids:
-            self.product_ids = self.selected_product_ids.ids or [(6, 0, [])]
-        elif self.to_date:
-            products = product_model.with_context(
-                to_date=self.to_date, target_move="posted"
-            ).search([("valuation_discrepancy", "!=", 0.0)])
-            self.product_ids = products.ids or [(6, 0, [])]
 
     def action_create_adjustment(self):
         move_model = self.env["account.move"]
         product_model = self.env["product.product"]
         moves_created = move_model.browse()
-        if self.product_ids or self.selected_product_ids:
+        if self.product_selection_ids:
             products_with_discrepancy = product_model.with_context(
                 to_date=self.to_date
-            ).browse(self.product_ids.ids or self.selected_product_ids.ids)
+            ).browse(self.product_selection_ids.mapped("product_id").ids)
             for product in products_with_discrepancy:
                 move_data = {
                     "journal_id": self.journal_id.id,
@@ -144,3 +133,28 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
             action["domain"] = [("id", "in", moves_created.ids)]
             return action
         return {"type": "ir.actions.act_window_close"}
+
+
+class WizardSelectedProduct(models.TransientModel):
+    _name = "wizard.stock.discrepancy.adjustment.line"
+    _description = "Selected Product for Wizard"
+
+    wizard_id = fields.Many2one(
+        comodel_name="wizard.stock.discrepancy.adjustment",
+        string="Wizard",
+        required=True,
+        ondelete="cascade",
+    )
+    product_id = fields.Many2one(
+        comodel_name="product.product",
+        string="Product",
+        required=True,
+    )
+    stock_value = fields.Float("Inventory Value", related="product_id.stock_value")
+    account_value = fields.Float("Accounting Value", related="product_id.account_value")
+    qty_at_date = fields.Float("Inventory Quantity", related="product_id.qty_at_date")
+    account_qty_at_date = fields.Float(
+        "Accounting Quantity", related="product_id.account_qty_at_date"
+    )
+    qty_discrepancy = fields.Float(related="product_id.qty_discrepancy")
+    valuation_discrepancy = fields.Float(related="product_id.valuation_discrepancy")
