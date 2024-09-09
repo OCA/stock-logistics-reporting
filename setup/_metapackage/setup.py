@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo-addon-stock_account_valuation_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_average_daily_sale>=16.0dev,<16.1dev',
         'odoo-addon-stock_card_report>=16.0dev,<16.1dev',
+        'odoo-addon-stock_move_value_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_batch_report>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_operations_multilang>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_report_custom_description>=16.0dev,<16.1dev',
