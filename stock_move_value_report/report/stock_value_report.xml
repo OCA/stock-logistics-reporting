@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="action_report_stock_move_line_value" model="ir.actions.report">
+        <field name="name">Operations Cost Value Report</field>
+        <field name="model">stock.move.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_move_value_report.report_stock_move_line_value</field>
+        <field
+            name="report_file"
+        >stock_move_value_report.report_stock_move_line_value</field>
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="binding_model_id" ref="stock.model_stock_move_line" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_stock_move_value" model="ir.actions.report">
+        <field name="name">Operations Cost Value Report</field>
+        <field name="model">stock.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_move_value_report.report_stock_move_value</field>
+        <field
+            name="report_file"
+        >stock_move_value_report.report_stock_move_value</field>
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="binding_model_id" ref="stock.model_stock_move" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_stock_picking_value" model="ir.actions.report">
+        <field name="name">Picking Operations Cost Value</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_move_value_report.report_stock_picking_value</field>
+        <field
+            name="report_file"
+        >stock_move_value_report.report_stock_picking_value</field>
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_stock_scrap_value" model="ir.actions.report">
+        <field name="name">Scrap Operations Cost Value</field>
+        <field name="model">stock.scrap</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_move_value_report.report_stock_scrap_value</field>
+        <field
+            name="report_file"
+        >stock_move_value_report.report_stock_scrap_value</field>
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="binding_model_id" ref="stock.model_stock_scrap" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
