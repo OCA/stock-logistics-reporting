@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-stock_picking_report_custom_description',
         'odoo14-addon-stock_picking_report_valued',
         'odoo14-addon-stock_quant_history',
+        'odoo14-addon-stock_quant_history_queued',
         'odoo14-addon-stock_quantity_history_location',
         'odoo14-addon-stock_report_quantity_by_location',
     ],
