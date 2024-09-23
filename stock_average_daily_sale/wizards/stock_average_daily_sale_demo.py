@@ -26,6 +26,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
                 "product_id": product.id,
                 "name": product.name,
                 "location_id": suppliers.id,
+                "warehouse_id": suppliers.warehouse_id.id,
                 "location_dest_id": customers.id,
                 "product_uom_qty": qty,
             }
@@ -41,6 +42,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
                 "product_id": product.id,
                 "name": product.name,
                 "location_id": origin_location.id,
+                "warehouse_id": origin_location.warehouse_id.id,
                 "location_dest_id": customers.id,
                 "product_uom_qty": qty,
                 "priority": "1",
