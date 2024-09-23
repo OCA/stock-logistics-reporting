@@ -14,6 +14,7 @@
         "stock_storage_type_putaway_abc",
         "product_abc_classification",
         "product_abc_classification_sale_stock",
+        "stock_location_warehouse",  # not needed in Odoo 16.0+
         "product_route_mto",
     ],
     "data": [
