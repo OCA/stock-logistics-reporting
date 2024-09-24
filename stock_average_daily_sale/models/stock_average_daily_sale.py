@@ -160,6 +160,7 @@ class StockAverageDailySale(models.Model):
         )
         self.set_refresh_date()
 
+    # flake8: noqa: B950
     def _create_materialized_view(self):
         self.env.cr.execute(
             "DROP MATERIALIZED VIEW IF EXISTS %s CASCADE", (AsIs(self._table),)
