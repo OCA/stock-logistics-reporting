@@ -12,6 +12,7 @@
     "depends": [
         "sale",
         "stock_storage_type_putaway_abc",
+        "stock_location_warehouse",  # not needed in Odoo 16.0+
         "product_route_mto",
     ],
     "data": [

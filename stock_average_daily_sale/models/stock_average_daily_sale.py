@@ -4,7 +4,6 @@
 import logging
 from contextlib import closing
 
-from psycopg2.errors import ObjectNotInPrerequisiteState
 from psycopg2.extensions import AsIs
 
 from odoo import _, api, fields, models, registry
@@ -113,23 +112,19 @@ class StockAverageDailySale(models.Model):
     def _check_view(self):
         cr = registry(self._cr.dbname).cursor()
         with closing(cr):
-            try:
-                return self._check_materialize_view_populated(cr)
-            except ObjectNotInPrerequisiteState:
+            if not self._check_materialize_view_populated(cr):
                 _logger.warning(
                     _("The materialized view has not been populated. Launch the cron.")
                 )
-                return False
-            except Exception as e:
-                raise e
+            return self._check_materialize_view_populated(cr)
 
     # pylint: disable=redefined-outer-name
     @api.model
-    def search(self, domain, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None, count=False):
         if not config["test_enable"] and not self._check_view():
             return self.browse()
         return super().search(
-            domain=domain, offset=offset, limit=limit, order=order, count=count
+            args=args, offset=offset, limit=limit, order=order, count=count
         )
 
     @api.model

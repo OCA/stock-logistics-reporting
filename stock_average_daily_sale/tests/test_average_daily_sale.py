@@ -1,16 +1,18 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import logging
+
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo.fields import Date
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 from .common import CommonAverageSaleTest
 
 
-class TestAverageSale(CommonAverageSaleTest, TransactionCase):
+class TestAverageSale(CommonAverageSaleTest, SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -188,10 +190,22 @@ class TestAverageSale(CommonAverageSaleTest, TransactionCase):
 
     def test_view_refreshed(self):
         self._refresh()
-        with self.assertNoLogs(
+        # In python < 3.10 there is no assertNoLogs method so we use assertLogs
+        # Create a dummy warning and check if that is the only one
+        with self.assertLogs(
             "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale",
             level="DEBUG",
-        ):
+        ) as cm:
+            logging.getLogger(
+                "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale"
+            ).info("Dummy warning")
             self.env["stock.average.daily.sale"].search_read(
                 [("product_id", "=", self.product_1.id)]
             )
+        # flake8: noqa: B950
+        self.assertEqual(
+            [
+                "INFO:odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale:Dummy warning"
+            ],
+            cm.output,
+        )

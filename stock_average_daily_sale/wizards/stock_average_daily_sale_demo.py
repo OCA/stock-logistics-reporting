@@ -29,6 +29,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
                 "warehouse_id": suppliers.warehouse_id.id,
                 "location_dest_id": customers.id,
                 "product_uom_qty": qty,
+                "product_uom": product.uom_id.id,
             }
         )
         move._action_confirm()
@@ -45,6 +46,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
                 "warehouse_id": origin_location.warehouse_id.id,
                 "location_dest_id": customers.id,
                 "product_uom_qty": qty,
+                "product_uom": product.uom_id.id,
                 "priority": "1",
             }
         )

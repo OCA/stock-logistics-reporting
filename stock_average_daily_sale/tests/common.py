@@ -7,7 +7,7 @@ class CommonAverageSaleTest:
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.inventory_obj = cls.env["stock.quant"].with_context(inventory_mode=True)
+        cls.inventory_obj = cls.env["stock.inventory"]
         cls.customers = cls.env.ref("stock.stock_location_customers")
         cls.location_obj = cls.env["stock.location"]
         cls.move_obj = cls.env["stock.move"]
@@ -50,20 +50,34 @@ class CommonAverageSaleTest:
 
     @classmethod
     def _create_inventory(cls):
-        cls.inventory_obj.create(
+        inventory = cls.env["stock.inventory"].create(
             {
-                "product_id": cls.product_1.id,
-                "inventory_quantity": 50.0,
-                "location_id": cls.location_bin.id,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": cls.product_1.id,
+                            "product_uom_id": cls.product_1.uom_id.id,
+                            "product_qty": 50,
+                            "location_id": cls.location_bin.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": cls.product_2.id,
+                            "product_uom_id": cls.product_2.uom_id.id,
+                            "product_qty": 60,
+                            "location_id": cls.location_bin_2.id,
+                        },
+                    ),
+                ]
             }
-        )._apply_inventory()
-        cls.inventory_obj.create(
-            {
-                "product_id": cls.product_2.id,
-                "inventory_quantity": 60.0,
-                "location_id": cls.location_bin_2.id,
-            }
-        )._apply_inventory()
+        )
+        inventory.action_start()
+        inventory.action_validate()
 
     @classmethod
     def _create_products(cls):
@@ -90,6 +104,7 @@ class CommonAverageSaleTest:
                 "warehouse_id": origin_location.warehouse_id.id,
                 "location_dest_id": cls.customers.id,
                 "product_uom_qty": qty,
+                "product_uom": product.uom_id.id,
                 "priority": "1",
             }
         )
@@ -100,5 +115,5 @@ class CommonAverageSaleTest:
     @classmethod
     def _refresh(cls):
         # Flush to allow materialized view to be correctly populated
-        cls.env.flush_all()
+        cls.env["stock.average.daily.sale"].flush()
         cls.env["stock.average.daily.sale"].refresh_view()

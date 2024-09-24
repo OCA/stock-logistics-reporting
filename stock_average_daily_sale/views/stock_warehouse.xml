@@ -10,7 +10,6 @@
         <field name="arch" type="xml">
             <xpath expr="//group[1]" position="after">
                 <group string="Average Sales" name="average_sale_reporting">
-                    <field name="lot_stock_id" invisible="1" />
                     <field
                         name="average_daily_sale_root_location_id"
                         attrs="{'required': [('lot_stock_id', '!=', False)]}"
