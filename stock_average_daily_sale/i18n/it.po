@@ -23,11 +23,12 @@ msgid "Abc Classification Level"
 msgstr "Livello classificazione ABC"
 
 #. module: stock_average_daily_sale
-#: model:ir.model,name:stock_average_daily_sale.model_abc_classification_profile
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__abc_classification_profile_id
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__abc_classification_profile_id
-msgid "Abc Classification Profile"
-msgstr "Profilo classificazione ABC"
+#. odoo-python
+#: code:addons/stock_average_daily_sale/models/stock_average_daily_sale_config.py:0
+#: model:ir.model.constraint,message:stock_average_daily_sale.constraint_stock_average_daily_sale_config_abc_classification_level_unique
+#, python-format
+msgid "Abc Classification Level must be unique per warehouse"
+msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__qty_in_stock
@@ -38,16 +39,6 @@ msgstr "Tutte le ubicazioni di magazzino, inclusi prodotti prenotati"
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
 msgid "Average Daily Qty"
 msgstr "Q.tà media giornaliera"
-
-#. module: stock_average_daily_sale
-#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.abc_classification_profile_form_view
-msgid "Average Daily Sale"
-msgstr "Vendita giornaliera media"
-
-#. module: stock_average_daily_sale
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_abc_classification_profile__stock_average_daily_sale_config_ids
-msgid "Average Daily Sale Configurations"
-msgstr "Configurazioni vendite giornaliere medie"
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_warehouse__average_daily_sale_root_location_id
@@ -84,6 +75,7 @@ msgstr "Vendite medie"
 #: model:ir.actions.act_window,name:stock_average_daily_sale.stock_average_daily_sale_config_act_window
 #: model:ir.model,name:stock_average_daily_sale.model_stock_average_daily_sale_config
 #: model:ir.ui.menu,name:stock_average_daily_sale.stock_average_daily_sale_config_menu
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_average_daily_sale_config_form_view
 msgid "Average daily sales computation parameters"
 msgstr "Parametri calcolo vendite giornaliere medie"
 
@@ -92,6 +84,11 @@ msgstr "Parametri calcolo vendite giornaliere medie"
 #: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
 msgid "Can be Sold"
 msgstr "Può essere venduto"
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__company_id
+msgid "Company"
+msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__create_uid
@@ -121,6 +118,11 @@ msgstr "Giorni"
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__exclude_weekends
+msgid "Exclude Weekends"
+msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__date_from
@@ -186,7 +188,8 @@ msgstr "Mesi"
 msgid ""
 "No data found.\n"
 "\n"
-"                You maybe need to launch the cron to refresh the average daily sale data."
+"                You maybe need to launch the cron to refresh the average "
+"daily sale data."
 msgstr ""
 "Nessun dato trovato.\n"
 "\n"
@@ -268,13 +271,21 @@ msgid ""
 "period)"
 msgstr ""
 "Giacenza di sicurezza per coprire la variabilità delle quantità consegnate "
-"ogni giorno. Formula: deviazionestandard giornaliera * fattore di sicurezza *"
-" radice(numero giornii nel periodo)"
+"ogni giorno. Formula: deviazionestandard giornaliera * fattore di sicurezza "
+"* radice(numero giornii nel periodo)"
 
 #. module: stock_average_daily_sale
 #: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
 msgid "Search Average Daily Sale"
 msgstr "Cerca vendita giornaliera media"
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale_config__exclude_weekends
+msgid ""
+"Set to True only if you do not expect any orders/deliveries during the "
+"weekends. If set to True, stock moves done on weekends won't be taken into "
+"account to calculate the average daily usage"
+msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__sale_ok
@@ -311,8 +322,8 @@ msgstr ""
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
 msgid ""
-"The quantity delivered on average on one day for this product on the period."
-" The spikes are excluded from the average computation."
+"The quantity delivered on average on one day for this product on the period. "
+"The spikes are excluded from the average computation."
 msgstr ""
 "La quantità consegnata mediamente in un giorno per questo prodotto nel "
 "periodo. Le eccezioni sono escluse dal calcolo della media."
@@ -368,3 +379,12 @@ msgid "You cannot call the _action_create_data() on production database."
 msgstr ""
 "Non si può chiamare l'azione _action_create_data() nel database di "
 "produzione."
+
+#~ msgid "Abc Classification Profile"
+#~ msgstr "Profilo classificazione ABC"
+
+#~ msgid "Average Daily Sale"
+#~ msgstr "Vendita giornaliera media"
+
+#~ msgid "Average Daily Sale Configurations"
+#~ msgstr "Configurazioni vendite giornaliere medie"
