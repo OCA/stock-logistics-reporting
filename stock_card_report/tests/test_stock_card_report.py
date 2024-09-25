@@ -6,8 +6,9 @@ import time
 from datetime import date
 
 import pytz
+from freezegun import freeze_time
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.tests import common, tagged
 from odoo.tools import test_reports
 
@@ -124,11 +125,12 @@ class TestStockCard(common.TransactionCase):
 
     def _getBaseFilters(self):
         return {
-            "product_ids": [(6, 0, [self.product_A.id])],
+            "product_ids": [Command.set([self.product_A.id])],
             "location_id": self.location_1.id,
         }
 
 
+@freeze_time("2022-02-01 00:00:00")
 @tagged("post_install", "-at_install")
 class TestStockCardReport(common.TransactionCase):
     @classmethod
@@ -213,7 +215,7 @@ class TestStockCardReport(common.TransactionCase):
     def test_reports(self):
         report = self.env["report.stock.card.report"].create(
             {
-                "product_ids": [(6, 0, [self.product_A.id, self.product_B.id])],
+                "product_ids": [Command.set([self.product_A.id, self.product_B.id])],
                 "location_id": self.location_1.id,
             }
         )
@@ -238,7 +240,7 @@ class TestStockCardReport(common.TransactionCase):
     def test_get_report_html(self):
         report = self.env["report.stock.card.report"].create(
             {
-                "product_ids": [(6, 0, [self.product_A.id, self.product_B.id])],
+                "product_ids": [Command.set([self.product_A.id, self.product_B.id])],
                 "location_id": self.location_1.id,
             }
         )
@@ -263,7 +265,7 @@ class TestStockCardReport(common.TransactionCase):
                 "date_range_id": dt.id,
                 "date_from": time.strftime("%Y-%m-28"),
                 "date_to": time.strftime("%Y-%m-01"),
-                "product_ids": [(6, 0, [self.product_A.id, self.product_B.id])],
+                "product_ids": [Command.set([self.product_A.id, self.product_B.id])],
                 "location_id": self.location_1.id,
             }
         )
