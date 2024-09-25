@@ -1,1 +1,3 @@
 freezegun
+
+odoo14-addon-stock_location_warehouse @ git+https://github.com/OCA/stock-logistics-warehouse.git@refs/pull/2162/head#subdirectory=setup/stock_location_warehouse
