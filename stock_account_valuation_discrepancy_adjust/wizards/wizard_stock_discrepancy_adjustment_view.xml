@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="wizard_stock_discrepancy_adjustment_view_form" model="ir.ui.view">
+        <field name="name">wizard_stock_discrepancy_adjustment_view_form</field>
+        <field name="model">wizard.stock.discrepancy.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="wizard_stock_discrepancy_adjustment_form">
+                <sheet>
+                    <group>
+                    <field name="to_date" readonly="1" />
+                        <field
+                            name="journal_id"
+                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
+                        />
+                        <field
+                            name="increase_account_id"
+                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
+                        />
+                        <field
+                            name="decrease_account_id"
+                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
+                        />
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Products with discrepancy">
+                            <field name="product_selection_ids" nolabel="1" edit="0">
+                                <tree edit="false" create="false">
+                                    <field name="product_id" />
+                                    <field name="qty_at_date" />
+                                    <field
+                                        name="stock_value"
+                                        sum="Stock Valuation"
+                                        widget="monetary"
+                                        options="{'currency_field': 'cost_currency_id'}"
+                                    />
+                                    <field
+                                        name="account_qty_at_date"
+                                        sum="Accounting Qty"
+                                    />
+                                    <field
+                                        name="account_value"
+                                        sum="Accounting Valuation"
+                                        widget="monetary"
+                                    />
+                                    <field
+                                        name="qty_discrepancy"
+                                        sum="Discrepancy Qty"
+                                    />
+                                    <field
+                                        name="valuation_discrepancy"
+                                        sum="Valuation Discrepancy"
+                                        widget="monetary"
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button
+                        name="action_create_adjustment"
+                        attrs="{'invisible': [('product_selection_ids', '=', [])]}"
+                        string="Make Adjustment"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        id="action_wizard_stock_discrepancy_adjustment_view_form"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Adjust Stock Valuation Account Discrepancies</field>
+        <field name="res_model">wizard.stock.discrepancy.adjustment</field>
+        <field name="binding_view_types">tree,form</field>
+        <field name="view_id" ref="wizard_stock_discrepancy_adjustment_view_form" />
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field
+            name="groups_id"
+            eval="[(6, 0, [ref('account.group_account_manager')])]"
+        />
+    </record>
+</odoo>

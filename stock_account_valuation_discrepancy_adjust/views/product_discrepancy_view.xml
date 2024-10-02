@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="product_discrepancy_view_tree" model="ir.ui.view">
+            <field name="name">product_discrepancy_view_tree</field>
+            <field name="model">product.discrepancy</field>
+            <field name="arch" type="xml">
+                <tree
+                    string="Product Discrepancies"
+                    delete="false"
+                    edit="false"
+                    create="false"
+                >
+                    <field name="product_id" />
+                    <field name="categ_id" />
+                    <field name="stock_value" />
+                    <field name="account_value" />
+                    <field name="qty_at_date" />
+                    <field name="account_qty_at_date" />
+                    <field name="valuation_discrepancy" />
+                    <field name="qty_discrepancy" />
+                    <field name="to_date_valuation" invisible="1" />
+                    <button
+                        name="%(action_wizard_stock_discrepancy_adjustment_view_form)d"
+                        type="action"
+                        icon="fa-compress"
+                        string="Adjust Discrepancy"
+                    />
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_discrepancy_view_search" model="ir.ui.view">
+            <field name="name">product_discrepancy_view_search</field>
+            <field name="model">product.discrepancy</field>
+            <field name="arch" type="xml">
+                <search string="Product Discrepancy">
+                    <field name="product_id" />
+                    <field name="categ_id" />
+                    <filter
+                        name="group_category"
+                        string="Category"
+                        domain="[]"
+                        context="{'group_by':'categ_id'}"
+                    />
+                </search>
+            </field>
+        </record>
+
+        <record id="product_discrepancy_action" model="ir.actions.act_window">
+            <field name="name">Product Discrepancy</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.discrepancy</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('id', '=', -1)]</field>
+        </record>
+
+
+    </data>
+</odoo>
