@@ -1,1 +1,3 @@
 from . import test_stock_report_quantity_by_location
+from . import test_stock_report_quantity_by_location_pdf
+from . import test_stock_report_quantity_by_location_report
