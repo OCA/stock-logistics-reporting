@@ -24,6 +24,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
                         type="object"
                         class="btn-primary"
                     />
+                     <button
+                        name="button_export_html"
+                        string="View report"
+                        type="object"
+                    />
+                       <button
+                        name="button_export_pdf"
+                        string="Export PDF"
+                        type="object"
+                    />
                     <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>

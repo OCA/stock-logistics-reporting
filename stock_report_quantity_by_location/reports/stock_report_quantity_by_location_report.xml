@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        id="action_stock_report_quantity_by_location_html"
+        model="ir.actions.client"
+    >
+        <field name="name">Stock Report Quantity By Location</field>
+        <field name="tag">stock_report_quantity_by_location_backend</field>
+        <field
+            name="context"
+            eval="{'active_model': 'report.stock.report.quantity.by.location.pdf'}"
+        />
+    </record>
+
+    <record id="action_stock_report_quantity_by_location_pdf" model="ir.actions.report">
+        <field name="name">Stock Report Quantity By Location PDF</field>
+        <field name="model">report.stock.report.quantity.by.location.pdf</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_report_quantity_by_location.report_stock_report_quantity_by_location_pdf</field>
+        <field
+            name="report_file"
+        >stock_report_quantity_by_location.report_stock_report_quantity_by_location_pdf</field>
+        <field
+            name="print_report_name"
+        >'Stock Report Quantity By Product and Location'</field>
+        <field
+            name="binding_model_id"
+            ref="model_report_stock_report_quantity_by_location_pdf"
+        />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+    </record>
+
+    <template id="report_buttons">
+        <div class="button_row" style="text-align: center">
+            <button
+                class="o_stock_report_quantity_by_location_print btn btn-sm oe_button"
+            >
+                <span class="fa fa-print" />
+Print</button>
+        </div>
+    </template>
+    <template id="report_stock_report_quantity_by_location_html">
+        <div class="o_stock_report_quantity_by_location_page">
+            <t t-call="stock_report_quantity_by_location.report_buttons" />
+            <t
+                t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_location_base"
+            />
+        </div>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_header_print"
+    >
+        <thead>
+            <th class="text-start">Product No.</th>
+            <th class="text-start">Location No.</th>
+            <th class="text-start">Product Name</th>
+            <th class="text-start">Quantity On Hand</th>
+            <th class="text-start">Quantity Reserved</th>
+            <th class="text-start">Quantity Unreserved</th>
+        </thead>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_product_lines_print"
+    >
+        <tr>
+            <td>
+                <span>
+                    <t t-esc="n" />
+                </span>
+            </td>
+            <td>
+                <span>
+                </span>
+            </td>
+            <td>
+                <span style="font-weight:bold">
+                    <t t-esc="line.name" />
+                </span>
+            </td>
+            <td>
+                <span style="font-weight:bold">
+                    <t t-esc="total_qty_on_hand" />
+                </span>
+            </td>
+            <td>
+                <span style="font-weight:bold">
+                    <t t-esc="total_qty_reserved" />
+                </span>
+            </td>
+            <td>
+                <span style="font-weight:bold">
+                    <t t-esc="total_qty_unreserved" />
+                </span>
+            </td>
+        </tr>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_print"
+    >
+        <tr>
+            <td>
+                <span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <t t-esc="m" />
+                </span>
+            </td>
+            <td>
+                <span>
+                    <t t-esc="line_location.loc_name" />
+                </span>
+            </td>
+            <td>
+                <span>
+                    <t t-esc="line_location.quantity_on_hand" />
+                </span>
+            </td>
+            <td>
+                <span>
+                    <t t-esc="line_location.quantity_reserved" />
+                </span>
+            </td>
+            <td>
+                <span>
+                    <t t-esc="line_location.quantity_unreserved" />
+                </span>
+            </td>
+        </tr>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_pdf"
+    >
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <h2>Stock Report Quantity By Location</h2>
+                    <br />
+                    <table class="table">
+                        <t
+                            t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_header_print"
+                        />
+                        <tbody>
+                            <tr t-foreach="docs" t-as="o">
+                                <t t-set="n" t-value="1" />
+                                <t t-set="total_qty_on_hand" t-value="0.00" />
+                                <t t-set="total_qty_reserved" t-value="0.00" />
+                                <t t-set="total_qty_unreserved" t-value="0.00" />
+                                <t t-set="m" t-value="1" />
+                                <t t-foreach="o.results" t-as="line">
+                                    <t
+                                        t-foreach="o.results_location"
+                                        t-as="line_location"
+                                    >
+                                        <t
+                                            t-if="line_location.product_name == line.name"
+                                        >
+                                            <t
+                                                t-set="total_qty_on_hand"
+                                                t-value="total_qty_on_hand+line_location.quantity_on_hand"
+                                            />
+                                            <t
+                                                t-set="total_qty_reserved"
+                                                t-value="total_qty_reserved+line_location.quantity_reserved"
+                                            />
+                                            <t
+                                                t-set="total_qty_unreserved"
+                                                t-value="total_qty_unreserved+line_location.quantity_unreserved"
+                                            />
+                                        </t>
+                                    </t>
+                                    <t
+                                        t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_product_lines_print"
+                                    />
+                                    <t t-set="m" t-value="1" />
+                                    <t
+                                        t-foreach="o.results_location"
+                                        t-as="line_location"
+                                    >
+                                        <t
+                                            t-if="line_location.product_name == line.name"
+                                        >
+                                            <t
+                                                t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_print"
+                                            />
+                                            <t t-set="m" t-value="m+1" />
+                                            <t
+                                                t-set="total_qty_on_hand"
+                                                t-value="0.00"
+                                            />
+                                            <t
+                                                t-set="total_qty_reserved"
+                                                t-value="0.00"
+                                            />
+                                            <t
+                                                t-set="total_qty_unreserved"
+                                                t-value="0.00"
+                                            />
+                                        </t>
+                                    </t>
+                                    <t t-set="n" t-value="n+1" />
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_base"
+    >
+        <div class="page">
+            <div class="row">
+                <t t-set="title">Stock Report Quantity By Location</t>
+                <h4 class="mt0" t-esc="title" style="text-align: center;" />
+            </div>
+            <!-- Display stock card table -->
+            <div class="act_as_table data_table mt4" style="width: 100%;">
+                <!-- Display header line-->
+                <t
+                    t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_header"
+                />
+                <!-- Display each lines -->
+                <t t-set="n" t-value="1" />
+                <t t-set="total_qty_on_hand" t-value="0.00" />
+                <t t-set="total_qty_reserved" t-value="0.00" />
+                <t t-set="total_qty_unreserved" t-value="0.00" />
+                <t t-set="m" t-value="1" />
+                <t t-foreach="o.results" t-as="line">
+                    <t t-foreach="o.results_location" t-as="line_location">
+                        <t t-if="line_location.product_name == line.name">
+                            <t
+                                t-set="total_qty_on_hand"
+                                t-value="total_qty_on_hand+line_location.quantity_on_hand"
+                            />
+                            <t
+                                t-set="total_qty_reserved"
+                                t-value="total_qty_reserved+line_location.quantity_reserved"
+                            />
+                            <t
+                                t-set="total_qty_unreserved"
+                                t-value="total_qty_unreserved+line_location.quantity_unreserved"
+                            />
+                        </t>
+                    </t>
+                    <t
+                        t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_product_lines"
+                    />
+                    <t t-set="m" t-value="1" />
+                    <t t-foreach="o.results_location" t-as="line_location">
+                        <t t-if="line_location.product_name == line.name">
+                            <t
+                                t-call="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines"
+                            />
+                            <t t-set="m" t-value="m+1" />
+                            <t t-set="total_qty_on_hand" t-value="0.00" />
+                            <t t-set="total_qty_reserved" t-value="0.00" />
+                            <t t-set="total_qty_unreserved" t-value="0.00" />
+                        </t>
+                    </t>
+                    <t t-set="n" t-value="n+1" />
+                </t>
+            </div>
+        </div>
+    </template>
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines_header"
+    >
+        <div class="act_as_thead">
+            <div class="act_as_row labels">
+                <div class="act_as_cell"># Product No.</div>
+                <div class="act_as_cell"># Location No.</div>
+                <div class="act_as_cell">Product</div>
+                <div class="act_as_cell">Quantity On Hand</div>
+                <div class="act_as_cell">Quantity Reserved</div>
+                <div class="act_as_cell">Quantity Unreserved</div>
+            </div>
+        </div>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_product_lines"
+    >
+        <div class="act_as_row lines">
+            <div
+                class="act_as_cell left"
+                style="width: 0px; padding: 0px; height: 25px;"
+            >
+                <t t-esc="n" />
+            </div>
+            <div class="act_as_cell left" style="width: 0px; padding: 0px;">
+            </div>
+            <div class="act_as_cell left" style="width: 50px;">
+                <t t-esc="line.name" />
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <strong>
+                    <t t-esc="total_qty_on_hand" />
+                </strong>
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <strong>
+                    <t t-esc="total_qty_reserved" />
+                </strong>
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <strong>
+                    <t t-esc="total_qty_unreserved" />
+                </strong>
+            </div>
+        </div>
+    </template>
+
+    <template
+        id="stock_report_quantity_by_location.report_stock_report_quantity_by_location_lines"
+    >
+        <div class="act_as_row lines">
+            <div class="act_as_cell left" style="width: 0px; padding: 2px;">
+            </div>
+            <div class="act_as_cell left" style="width: 0px; padding: 2px;">
+                <t t-esc="m" />
+            </div>
+            <div class="act_as_cell left" style="width: 25px; text-align: center">
+                <t t-esc="line_location.loc_name" />
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <t t-esc="line_location.quantity_on_hand" />
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <t t-esc="line_location.quantity_reserved" />
+            </div>
+            <div class="act_as_cell left" style="width: 25px;">
+                <t t-esc="line_location.quantity_unreserved" />
+            </div>
+        </div>
+    </template>
+
+</odoo>

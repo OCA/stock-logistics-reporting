@@ -12,6 +12,16 @@
     "data": [
         "wizards/stock_report_quantity_by_location_views.xml",
         "security/ir.model.access.csv",
+        "reports/stock_report_quantity_by_location_report.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "stock_report_quantity_by_location/static/src/js/"
+            "stock_report_quantity_by_location_backend.js",
+        ],
+        "web.assets_common": [
+            "stock_report_quantity_by_location/static/src/css/report.css",
+        ],
+    },
     "installable": True,
 }
