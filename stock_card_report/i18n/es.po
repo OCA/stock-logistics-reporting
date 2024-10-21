@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-09 21:33+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2024-10-21 17:06+0000\n"
+"Last-Translator: kikopeiro <francisco.peiro@factorlibre.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_card_report
 #: model:ir.actions.report,print_report_name:stock_card_report.action_stock_card_report_pdf
@@ -149,7 +149,7 @@ msgstr "Última Actualización el"
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__location_id
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_report_filters
 msgid "Location"
-msgstr "Localización"
+msgstr "Ubicación"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__location_dest_id
@@ -159,7 +159,7 @@ msgstr "Ubicación Destino"
 #. module: stock_card_report
 #: model_terms:ir.ui.view,arch_db:stock_card_report.report_stock_card_lines_header
 msgid "Out"
-msgstr "Fuera"
+msgstr "Salida"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_report_wizard__date_range_id
@@ -180,17 +180,17 @@ msgstr "Producto"
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_in
 msgid "Product In"
-msgstr "Producto En"
+msgstr "Entrada de producto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_out
 msgid "Product Out"
-msgstr "Producto Fuera"
+msgstr "Salida de producto"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_qty
 msgid "Product Qty"
-msgstr "Cantd de Producto"
+msgstr "Cantidad"
 
 #. module: stock_card_report
 #: model:ir.model.fields,field_description:stock_card_report.field_stock_card_view__product_uom
