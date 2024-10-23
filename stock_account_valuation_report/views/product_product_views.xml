@@ -79,16 +79,19 @@
                     name="real_valuation"
                     domain="[('valuation', '=', 'real_time')]"
                 />
+                <separator />
                 <filter
                     string="Manual"
                     name="manual_valuation"
                     domain="[('valuation', '=', 'manual_periodic')]"
                 />
+                <separator />
                 <filter
                     string="Qty Discrepancy"
                     name="qty_discrepancy_not_null"
                     domain="[('qty_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"
                 />
+                <separator />
                 <filter
                     string="Valuation Discrepancy"
                     name="valuation_discrepancy_not_null"
