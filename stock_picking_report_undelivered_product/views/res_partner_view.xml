@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_partner_stock_form">
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="stock.view_partner_stock_form" />
+        <field name="arch" type="xml">
+            <group name="inventory" position="inside">
+                <field name="display_undelivered_in_picking" />
+            </group>
+        </field>
+    </record>
+
+</odoo>
