@@ -1,6 +1,11 @@
 # Copyright 2019-21 ForgeFlow, S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import _, fields, models
+from odoo.tools.safe_eval import safe_eval
+
+_logger = logging.getLogger(__name__)
 
 
 class StockReportByLocationPrepare(models.TransientModel):
@@ -79,3 +84,41 @@ class StockReportByLocationPrepare(models.TransientModel):
                         }
                     )
         self.env["stock.report.quantity.by.location"].create(vals_list)
+
+    def button_export_html(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock_report_quantity_by_location.action_stock_report_quantity_by_location_html"
+        )
+        new_context = action.get("context", {})
+        if isinstance(new_context, str):
+            try:
+                new_context = safe_eval(new_context)
+            except (TypeError, SyntaxError, NameError, ValueError):
+                _logger.warning(
+                    _(
+                        "Failed context evaluation: %(context)s"
+                        % {"context": new_context}
+                    )
+                )
+                new_context = {}
+        model = self.env["report.stock.report.quantity.by.location.pdf"]
+        report = model.create(self._prepare_stock_quantity_by_location_report())
+        new_context.update(active_id=report.id, active_ids=report.ids)
+        action["context"] = new_context
+        return action
+
+    def button_export_pdf(self):
+        self.ensure_one()
+        model = self.env["report.stock.report.quantity.by.location.pdf"]
+        report = model.create(self._prepare_stock_quantity_by_location_report())
+        return report.print_report()
+
+    def _prepare_stock_quantity_by_location_report(self):
+        self.ensure_one()
+        vals = {
+            "with_quantity": self.with_quantity,
+        }
+        if self.location_ids:
+            vals["location_ids"] = self.location_ids
+        return vals
