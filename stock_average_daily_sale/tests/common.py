@@ -33,10 +33,18 @@ class CommonAverageSaleTest:
             {"name": "Area Location", "location_id": cls.location_zone.id}
         )
         cls.location_bin = cls.location_obj.create(
-            {"name": "Bin Location", "location_id": cls.location_area.id}
+            {
+                "name": "Bin Location",
+                "location_id": cls.location_area.id,
+                "usage": "internal",
+            }
         )
         cls.location_bin_2 = cls.location_obj.create(
-            {"name": "Bin Location 2", "location_id": cls.location_area.id}
+            {
+                "name": "Bin Location 2",
+                "location_id": cls.location_area.id,
+                "usage": "internal",
+            }
         )
         cls.scrap_location = cls.location_obj.create(
             {
@@ -95,14 +103,16 @@ class CommonAverageSaleTest:
         )
 
     @classmethod
-    def _create_move(cls, product, origin_location, qty):
+    def _create_move(cls, product, origin_location, qty, dest_location=None):
         move = cls.move_obj.create(
             {
                 "product_id": product.id,
                 "name": product.name,
                 "location_id": origin_location.id,
                 "warehouse_id": origin_location.warehouse_id.id,
-                "location_dest_id": cls.customers.id,
+                "location_dest_id": dest_location.id
+                if dest_location
+                else cls.customers.id,
                 "product_uom_qty": qty,
                 "product_uom": product.uom_id.id,
                 "priority": "1",

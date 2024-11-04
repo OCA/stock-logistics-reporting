@@ -227,6 +227,38 @@ class StockAverageDailySale(models.Model):
                         AND sm.warehouse_id = cfg.warehouse_id
                     WINDOW pid AS (PARTITION BY sm.product_id, sm.warehouse_id)
                 ),
+                returns_last AS (
+                    SELECT
+                        sm.product_id AS ret_product_id,
+                        sm.product_uom_qty AS ret_product_uom_qty,
+                        sl_src.warehouse_id AS ret_warehouse_id,
+                        (avg(product_uom_qty) OVER pid
+                            - (stddev_samp(product_uom_qty) OVER pid * cfg.standard_deviation_exclude_factor)
+                        ) AS ret_lower_bound,
+                        (avg(product_uom_qty) OVER pid
+                            + (stddev_samp(product_uom_qty) OVER pid * cfg.standard_deviation_exclude_factor)
+                        ) AS ret_upper_bound,
+                        coalesce ((stddev_samp(product_uom_qty) OVER pid), 0) AS ret_standard_deviation,
+                        cfg.nbr_days AS ret_nbr_days,
+                        cfg.date_from AS ret_date_from,
+                        cfg.date_to AS ret_date_to,
+                        cfg.exclude_weekends AS ret_exclude_weekends,
+                        cfg.id AS retconfig_id,
+                        sm.date AS ret_date
+                    FROM stock_move sm
+                        JOIN stock_location sl_src ON sm.location_id = sl_src.id
+                        JOIN stock_location sl_dest ON sm.location_dest_id = sl_dest.id
+                        JOIN product_product pp ON pp.id = sm.product_id
+                        JOIN product_template pt ON pp.product_tmpl_id = pt.id
+                        JOIN cfg ON cfg.abc_classification_level = coalesce(pt.abc_storage, 'c')
+                    WHERE
+                        sl_src.usage in ('inventory')
+                        AND sl_dest.usage in ('internal')
+                        AND sm.date BETWEEN cfg.date_from AND cfg.date_to
+                        AND sm.state = 'done'
+                        AND sm.warehouse_id = cfg.warehouse_id
+                    WINDOW pid AS (PARTITION BY sm.product_id, sm.warehouse_id)
+                ),
 
                 averages AS(
                     SELECT
@@ -234,7 +266,7 @@ class StockAverageDailySale(models.Model):
                         concat(warehouse_id, product_id)::integer as window_id,
                         product_id,
                         warehouse_id,
-                        (avg(product_uom_qty) FILTER
+                        (avg(product_uom_qty - COALESCE(ret_product_uom_qty, 0)) FILTER
                             (WHERE product_uom_qty BETWEEN lower_bound AND upper_bound OR standard_deviation = 0)
                             )::numeric AS average_qty_by_sale,
                         (count(product_uom_qty) FILTER
@@ -248,6 +280,7 @@ class StockAverageDailySale(models.Model):
                         config_id,
                         nbr_days
                     FROM deliveries_last
+                    LEFT JOIN returns_last ON deliveries_last.product_id = returns_last.ret_product_id
                     GROUP BY product_id, warehouse_id, standard_deviation, nbr_days, date_from, date_to, config_id
                 ),
                 -- Compute the stock by product in locations under stock
