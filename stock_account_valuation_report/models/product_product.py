@@ -48,7 +48,14 @@ class ProductProduct(models.Model):
 
     @api.model
     def _search_qty_discrepancy(self, operator, value):
-        products = self.env["product.product"].search([("type", "=", "product")])
+        products = self.env["product.product"].search(
+            [
+                ("type", "=", "product"),
+                "|",
+                ("active", "=", False),
+                ("active", "=", True),
+            ]
+        )
         pp_list = []
         for pp in products:
             if pp.qty_at_date != pp.account_qty_at_date:
@@ -57,7 +64,14 @@ class ProductProduct(models.Model):
 
     @api.model
     def _search_valuation_discrepancy(self, operator, value):
-        products = self.env["product.product"].search([("type", "=", "product")])
+        products = self.env["product.product"].search(
+            [
+                ("type", "=", "product"),
+                "|",
+                ("active", "=", False),
+                ("active", "=", True),
+            ]
+        )
         pp_list = []
         for pp in products:
             if pp.stock_value != pp.account_value:
