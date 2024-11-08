@@ -94,6 +94,12 @@
                     name="valuation_discrepancy_not_null"
                     domain="[('valuation_discrepancy', '!=', 0.0), ('valuation', '=', 'real_time')]"
                 />
+                <separator />
+                <filter
+                    string="Valuation Or Qty Discrepancy"
+                    name="valuation_or_qty_discrepancy_not_null"
+                    domain="[('valuation', '=', 'real_time'), '|', ('qty_discrepancy', '!=', 0.0), ('valuation_discrepancy', '!=', 0.0)]"
+                />
             </filter>
         </field>
     </record>

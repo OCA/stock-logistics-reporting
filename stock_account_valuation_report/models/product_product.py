@@ -49,7 +49,11 @@ class ProductProduct(models.Model):
 
     @api.model
     def _search_qty_discrepancy(self, operator, value):
-        products = self.env["product.product"].search([("type", "=", "product")])
+        products = self.with_context(active_test=False).search(
+            [
+                ("type", "=", "product"),
+            ]
+        )
         dp = self.env["decimal.precision"].precision_get("Product Price")
         products_with_discrepancy = products.filtered(
             lambda pp: float_compare(
@@ -61,7 +65,11 @@ class ProductProduct(models.Model):
 
     @api.model
     def _search_valuation_discrepancy(self, operator, value):
-        products = self.env["product.product"].search([("type", "=", "product")])
+        products = self.with_context(active_test=False).search(
+            [
+                ("type", "=", "product"),
+            ]
+        )
         dp = self.env.ref("product.decimal_discount").precision_get("Discount")
         products_with_discrepancy = products.filtered(
             lambda pp: float_compare(

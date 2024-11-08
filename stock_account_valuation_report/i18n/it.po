@@ -146,8 +146,10 @@ msgstr "Manuale"
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,help:stock_account_valuation_report.field_product_product__valuation
 msgid ""
-"Manual: The accounting entries to value the inventory are not posted automatically.\n"
-"        Automated: An accounting entry is automatically created to value the inventory when a product enters or leaves the company.\n"
+"Manual: The accounting entries to value the inventory are not posted "
+"automatically.\n"
+"        Automated: An accounting entry is automatically created to value the "
+"inventory when a product enters or leaves the company.\n"
 "        "
 msgstr ""
 "Manuale: le registrazioni contabili per la valorizzazione dell'inventario "
@@ -204,6 +206,11 @@ msgstr "Livello valutazione magazzino"
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "Valuation Discrepancy"
 msgstr "Differenza valutazione"
+
+#. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+msgid "Valuation Or Qty Discrepancy"
+msgstr ""
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2

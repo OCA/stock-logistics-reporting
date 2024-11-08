@@ -204,6 +204,11 @@ msgid "Valuation Discrepancy"
 msgstr ""
 
 #. module: stock_account_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
+msgid "Valuation Or Qty Discrepancy"
+msgstr ""
+
+#. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "View Journal Items"
 msgstr ""
