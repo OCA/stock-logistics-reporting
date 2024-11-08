@@ -20,6 +20,7 @@
                             name="decrease_account_id"
                             attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
                         />
+                        <field name="single_journal_entry" />
                     </group>
                     <notebook colspan="4">
                         <page string="Products with discrepancy">

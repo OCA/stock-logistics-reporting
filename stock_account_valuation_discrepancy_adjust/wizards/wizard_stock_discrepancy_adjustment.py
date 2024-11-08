@@ -1,6 +1,7 @@
 # Copyright 2021 ForgeFlow S.L.
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class WizardStockDiscrepancyAdjustment(models.TransientModel):
@@ -12,6 +13,7 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         inverse_name="wizard_id",
         string="Selected Products",
     )
+    single_journal_entry = fields.Boolean()
 
     def _get_default_stock_journal(self):
         return self.env["account.journal"].search(
@@ -74,25 +76,45 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         move_model = self.env["account.move"]
         product_model = self.env["product.product"]
         moves_created = move_model.browse()
+        move_data = {
+            "journal_id": self.journal_id.id,
+            "date": self.to_date,
+            "ref": _("Adjust for Stock Valuation Discrepancy"),
+            "line_ids": [],
+        }
+
         if self.product_selection_ids:
             products_with_discrepancy = product_model.with_context(
                 to_date=self.to_date
             ).browse(self.product_selection_ids.mapped("product_id").ids)
+
             for product in products_with_discrepancy:
-                move_data = {
-                    "journal_id": self.journal_id.id,
-                    "date": self.to_date,
-                    "ref": _("Adjust for Stock Valuation Discrepancy"),
-                }
                 valuation_account = product.product_tmpl_id._get_product_accounts()[
                     "stock_valuation"
                 ]
                 if not valuation_account:
                     raise UserError(
-                        _("Product %s doesn't " "have stock valuation account assigned")
-                        % (product.display_name)
+                        _("Product %s doesn't have stock valuation account assigned")
+                        % product.display_name
                     )
-                move_data["line_ids"] = [
+                # do not create move if no discrepancy
+                if (
+                    float_compare(
+                        product.qty_at_date,
+                        product.account_qty_at_date,
+                        precision_digits=product.uom_id.rounding,
+                    )
+                    == 0
+                    and float_compare(
+                        product.stock_value,
+                        product.account_value,
+                        precision_digits=product.uom_id.rounding,
+                    )
+                    == 0
+                ):
+                    continue
+                # Create debit and credit line data for this product
+                line_debit_credit = [
                     (
                         0,
                         0,
@@ -126,12 +148,31 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
                         },
                     ),
                 ]
+
+                # If single_journal_entry is True, append line items to move_data
+                if self.single_journal_entry:
+                    move_data["line_ids"].extend(line_debit_credit)
+                else:
+                    # Create individual move for each product
+                    move = move_model.create(
+                        {
+                            **move_data,
+                            "line_ids": line_debit_credit,
+                        }
+                    )
+                    move.action_post()
+                    moves_created |= move
+
+            # If single_journal_entry is True, create one move with all lines
+            if self.single_journal_entry:
                 move = move_model.create(move_data)
                 move.action_post()
                 moves_created |= move
+
             action = self.env.ref("account.action_move_journal_line").read()[0]
             action["domain"] = [("id", "in", moves_created.ids)]
             return action
+
         return {"type": "ir.actions.act_window_close"}
 
 
