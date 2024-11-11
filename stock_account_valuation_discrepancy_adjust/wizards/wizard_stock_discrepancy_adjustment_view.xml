@@ -8,59 +8,15 @@
                 <sheet>
                     <group>
                     <field name="to_date" readonly="1" />
-                        <field
-                            name="journal_id"
-                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
-                        />
-                        <field
-                            name="increase_account_id"
-                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
-                        />
-                        <field
-                            name="decrease_account_id"
-                            attrs="{'invisible': [('product_selection_ids', '=', [])], 'required': [('product_selection_ids', '!=', [])]}"
-                        />
+                        <field name="journal_id" />
+                        <field name="increase_account_id" />
+                        <field name="decrease_account_id" />
                         <field name="single_journal_entry" />
                     </group>
-                    <notebook colspan="4">
-                        <page string="Products with discrepancy">
-                            <field name="product_selection_ids" nolabel="1" edit="0">
-                                <tree edit="false" create="false">
-                                    <field name="product_id" />
-                                    <field name="qty_at_date" />
-                                    <field
-                                        name="stock_value"
-                                        sum="Stock Valuation"
-                                        widget="monetary"
-                                        options="{'currency_field': 'cost_currency_id'}"
-                                    />
-                                    <field
-                                        name="account_qty_at_date"
-                                        sum="Accounting Qty"
-                                    />
-                                    <field
-                                        name="account_value"
-                                        sum="Accounting Valuation"
-                                        widget="monetary"
-                                    />
-                                    <field
-                                        name="qty_discrepancy"
-                                        sum="Discrepancy Qty"
-                                    />
-                                    <field
-                                        name="valuation_discrepancy"
-                                        sum="Valuation Discrepancy"
-                                        widget="monetary"
-                                    />
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
                 <footer>
                     <button
                         name="action_create_adjustment"
-                        attrs="{'invisible': [('product_selection_ids', '=', [])]}"
                         string="Make Adjustment"
                         type="object"
                         class="btn-primary"

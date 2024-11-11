@@ -83,13 +83,13 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-ChrisOForgeFlow| image:: https://github.com/ChrisOForgeFlow.png?size=40px
-    :target: https://github.com/ChrisOForgeFlow
-    :alt: ChrisOForgeFlow
+.. |maintainer-AaronHForgeFlow| image:: https://github.com/AaronHForgeFlow.png?size=40px
+    :target: https://github.com/AaronHForgeFlow
+    :alt: AaronHForgeFlow
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-ChrisOForgeFlow| 
+|maintainer-AaronHForgeFlow| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_account_valuation_discrepancy_adjust>`_ project on GitHub.
 
