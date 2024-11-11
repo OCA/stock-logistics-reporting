@@ -15,8 +15,7 @@
         "security/ir.model.access.csv",
         "wizards/wizard_stock_discrepancy_adjustment_view.xml",
     ],
-    "demo": [],
     "installable": True,
     "development_status": "Alpha",
-    "maintainers": ["ChrisOForgeFlow"],
+    "maintainers": ["AaronHForgeFlow"],
 }
