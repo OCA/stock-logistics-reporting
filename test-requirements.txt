@@ -1,0 +1,5 @@
+openupgradelib
+odoo-addon-stock-location-children @ git+https://github.com/OCA/stock-logistics-warehouse@refs/pull/2190/head#subdirectory=setup/stock_location_children
+odoo-addon-stock-location-fill-state @ git+https://github.com/OCA/stock-logistics-warehouse@refs/pull/2188/head#subdirectory=setup/stock_location_fill_state
+odoo-addon-stock-location-pending-move @ git+https://github.com/OCA/stock-logistics-warehouse@refs/pull/2200/head#subdirectory=setup/stock_location_pending_move
+odoo-addon-web-widget-progressbar-gradient @ git+https://github.com/OCA/web@refs/pull/2989/head#subdirectory=setup/web_widget_progressbar_gradient
