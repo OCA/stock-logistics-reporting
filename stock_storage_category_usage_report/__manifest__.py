@@ -14,7 +14,7 @@
         "stock",
         "stock_location_children",
         "stock_location_occupancy",
-        "web_widget_progressbar_color",
+        "web_widget_progressbar_gradient",
     ],
     "data": [
         "views/stock_storage_category.xml",

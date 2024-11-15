@@ -9,7 +9,11 @@
         <field name="arch" type="xml">
             <xpath expr="//label[@for='max_weight']/parent::group" position="after">
                 <group name="usage_report">
-                    <field name="occupation_rate" widget="progressbar_cFolor" />
+                    <field
+                        name="occupation_rate"
+                        widget="progressbar_gradient"
+                        options="{'inverse': true}"
+                    />
                 </group>
             </xpath>
         </field>
@@ -22,7 +26,8 @@
             <field name="allow_new_product" position="after">
                 <field
                     name="occupation_rate"
-                    widget="progressbar_color"
+                    widget="progressbar_gradient"
+                    options="{'inverse': true}"
                     optional="hide"
                 />
             </field>
@@ -37,7 +42,11 @@
                 <field name="name" />
                 <field name="void_location_count" />
                 <field name="occupied_location_count" />
-                <field name="occupation_rate" widget="progressbar_color" />
+                <field
+                    name="occupation_rate"
+                    widget="progressbar_gradient"
+                    options="{'inverse': true}"
+                />
             </tree>
         </field>
     </record>
