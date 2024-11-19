@@ -30,12 +30,18 @@ class StockStorageCategory(models.Model):
         compute="_compute_empty_location_ids",
     )
 
+    def _get_locations_for_usage_report(self):
+        # Return all storage locations and their children that
+        # are not views.
+        self.ensure_one()
+        return (self.location_ids | self.location_ids.children_ids).filtered(
+            lambda location: location.usage != "view"
+        )
+
     @api.depends("location_ids.children_ids")
     def _compute_empty_location_ids(self):
         for category in self:
-            all_locations = (
-                category.location_ids | category.location_ids.children_ids
-            ).filtered(lambda location: location.usage != "view")
+            all_locations = category._get_locations_for_usage_report()
             # Empty locations are locations empty and being emptied
             # (move qty is done but not yet validated).
             # We don't take into account filled and being filled moves.
