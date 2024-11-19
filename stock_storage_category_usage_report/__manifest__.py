@@ -13,7 +13,7 @@
     "depends": [
         "stock",
         "stock_location_children",
-        "stock_location_occupancy",
+        "stock_location_fill_state",
         "web_widget_progressbar_gradient",
     ],
     "data": [

@@ -119,23 +119,33 @@ class TestUsageReport(BaseCommon):
 
     @classmethod
     def _update_quantity(cls, product, location, quantity):
-        cls.env["stock.quant"].with_context(inventory_mode=True).create(
-            {"product_id": product.id, "location_id": location.id, "quantity": quantity}
-        )._apply_inventory()
+        quants = (
+            cls.env["stock.quant"]
+            .with_context(inventory_mode=True)
+            .create(
+                {
+                    "product_id": product.id,
+                    "location_id": location.id,
+                    "inventory_quantity": quantity,
+                }
+            )
+        )
+        quants._apply_inventory()
+        return quants
 
     def test_usage_report(self):
-        self.assertEqual((self.large_shelf_2), self.storage_large.void_location_ids)
-        self.assertEqual(1, self.storage_large.void_location_count)
-        self.assertAlmostEqual(self.storage_large.occupation_rate, 66.67, places=2)
+        self.assertEqual((self.large_shelf_2), self.storage_large.empty_location_ids)
+        self.assertEqual(1, self.storage_large.empty_location_count)
+        self.assertAlmostEqual(self.storage_large.fill_rate, 66.67, places=2)
         self.assertEqual(
             (self.medium_shelf_2 | self.medium_shelf_3),
-            self.storage_medium.void_location_ids,
+            self.storage_medium.empty_location_ids,
         )
-        self.assertEqual(2, self.storage_medium.void_location_count)
+        self.assertEqual(2, self.storage_medium.empty_location_count)
         self.storage_medium_void = self.storage_category.create(
             {
                 "name": "Medium Storage Void",
             }
         )
         self.medium_shelf_3.storage_category_id = self.storage_medium_void
-        self.assertEqual(self.storage_medium_void.occupation_rate, 0.0)
+        self.assertEqual(self.storage_medium_void.fill_rate, 0.0)
