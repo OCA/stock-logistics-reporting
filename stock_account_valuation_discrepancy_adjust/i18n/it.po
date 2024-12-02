@@ -1,0 +1,183 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_account_valuation_discrepancy_adjust
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__account_qty_at_date
+msgid "Accounting Quantity"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__account_value
+msgid "Accounting Value"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.actions.act_window,name:stock_account_valuation_discrepancy_adjust.action_wizard_stock_discrepancy_adjustment_view_form
+msgid "Adjust Stock Valuation Account Discrepancies"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#. odoo-python
+#: code:addons/stock_account_valuation_discrepancy_adjust/wizards/wizard_stock_discrepancy_adjustment.py:0
+#, python-format
+msgid "Adjust for Stock Valuation Discrepancy"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#. odoo-python
+#: code:addons/stock_account_valuation_discrepancy_adjust/wizards/wizard_stock_discrepancy_adjustment.py:0
+#, python-format
+msgid "Bad context propagation"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_discrepancy_adjust.wizard_stock_discrepancy_adjustment_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__create_uid
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__create_date
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__decrease_account_id
+msgid "Decrease account"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__display_name
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__id
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__increase_account_id
+msgid "Increase account"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__qty_at_date
+msgid "Inventory Quantity"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__stock_value
+msgid "Inventory Value"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment____last_update
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__write_uid
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__write_date
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_discrepancy_adjust.wizard_stock_discrepancy_adjustment_view_form
+msgid "Make Adjustment"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#. odoo-python
+#: code:addons/stock_account_valuation_discrepancy_adjust/wizards/wizard_stock_discrepancy_adjustment.py:0
+#, python-format
+msgid "Product %s doesn't have stock valuation account assigned"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__qty_discrepancy
+msgid "Qty Discrepancy"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model,name:stock_account_valuation_discrepancy_adjust.model_wizard_stock_discrepancy_adjustment_line
+msgid "Selected Product for Wizard"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__product_selection_ids
+msgid "Selected Products"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__single_journal_entry
+msgid "Single Journal Entry"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment__to_date
+msgid "To date"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__valuation_discrepancy
+msgid "Valuation Discrepancy"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model.fields,field_description:stock_account_valuation_discrepancy_adjust.field_wizard_stock_discrepancy_adjustment_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model:ir.model,name:stock_account_valuation_discrepancy_adjust.model_wizard_stock_discrepancy_adjustment
+msgid "Wizard Stock Discrepancy Adjustment"
+msgstr ""
+
+#. module: stock_account_valuation_discrepancy_adjust
+#: model_terms:ir.ui.view,arch_db:stock_account_valuation_discrepancy_adjust.wizard_stock_discrepancy_adjustment_view_form
+msgid "wizard_stock_discrepancy_adjustment_form"
+msgstr ""
