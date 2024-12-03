@@ -11,13 +11,16 @@ class TestStockPickingReportCustomDescription(common.TransactionCase):
         super().setUpClass()
         cls.customer = cls.env["res.partner"].create({"name": "Test customer"})
         cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "type": "product"}
+            {
+                "name": "Test product",
+                "type": "product",
+                "description_sale": "Custom description",
+            }
         )
         order_form = common.Form(cls.env["sale.order"])
         order_form.partner_id = cls.customer
         with order_form.order_line.new() as line_form:
             line_form.product_id = cls.product
-            line_form.name = "Custom description"
         cls.order = order_form.save()
 
     def test_so_custom_description_transfer_to_picking(self):
