@@ -24,7 +24,7 @@
     >
         <!-- show only one row for kit products -->
         <xpath expr="//tr[@t-foreach='package_move_lines']" position="before">
-            <t t-if="can_display_valued_info">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <t
                     t-set="package_move_lines"
                     t-value="package_move_lines.filtered(lambda l: not l.phantom_product_id or l.phantom_line)"
@@ -32,7 +32,7 @@
             </t>
         </xpath>
         <xpath expr="//tr[@t-foreach='move_lines']" position="before">
-            <t t-if="can_display_valued_info">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <t
                     t-set="move_lines"
                     t-value="move_lines.filtered(lambda l: not l.phantom_product_id or l.phantom_line)"
@@ -44,7 +44,7 @@
         </xpath>
         <xpath expr="//tr[@t-foreach='has_no_packages_move_lines']" position="before">
             <t t-set="has_no_packages_move_lines" t-value="o.move_line_ids" />
-            <t t-if="can_display_valued_info">
+            <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <t
                     t-set="has_no_packages_move_lines"
                     t-value="has_no_packages_move_lines.filtered(lambda l: not l.phantom_product_id or l.phantom_line)"
@@ -59,7 +59,7 @@
         <xpath expr="//td[1]" position="before">
             <t
                 t-set="can_display_phantom"
-                t-value="can_display_valued_info and move_line.phantom_line"
+                t-value="is_outgoing and o.valued and o.sale_id and o.move_line_ids and move_line.phantom_line"
             />
         </xpath>
         <!-- Show valued fields in a special way for the rows corresponding to kits -->
@@ -68,16 +68,6 @@
         </xpath>
         <xpath expr="//span[@t-field='move_line.product_id']" position="before">
             <span t-field="move_line.sale_line.product_id" t-if="can_display_phantom" />
-        </xpath>
-        <xpath
-            expr="//t[@t-value='move_line.move_id.description_picking']"
-            position="attributes"
-        >
-            <attribute
-                name="t-value"
-                add="if not can_display_phantom else move_line.sale_line.product_id.sudo()._get_description(o.picking_type_id)"
-                separator=" "
-            />
         </xpath>
         <xpath expr="//td[@name='move_line_lot_qty_done']" position="attributes">
             <attribute name="t-if">not can_display_phantom</attribute>
