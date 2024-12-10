@@ -63,13 +63,13 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         cls.order_out_picking = cls.sale_order_3.picking_ids
 
     def test_01_picking_confirmed(self):
-        for line in self.order_out_picking.move_lines:
+        for line in self.order_out_picking.move_ids:
             line.quantity_done = line.product_uom_qty
         self.order_out_picking.button_validate()
         self.assertAlmostEqual(self.order_out_picking.amount_untaxed, 149.5)
         self.assertAlmostEqual(self.order_out_picking.amount_tax, 14.95)
         self.assertAlmostEqual(self.order_out_picking.amount_total, 164.45)
         # Run the report to detect hidden errors
-        self.env.ref("stock.action_report_delivery")._render_qweb_html(
-            self.order_out_picking.ids
+        self.env["ir.actions.report"]._render_qweb_html(
+            self.env.ref("stock.action_report_delivery"), self.order_out_picking.ids
         )
