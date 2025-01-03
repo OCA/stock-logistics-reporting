@@ -160,13 +160,13 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
                             "line_ids": line_debit_credit,
                         }
                     )
-                    move.action_post()
+                    move._post(soft=False)
                     moves_created |= move
 
             # If single_journal_entry is True, create one move with all lines
             if self.single_journal_entry:
                 move = move_model.create(move_data)
-                move.action_post()
+                move._post(soft=False)
                 moves_created |= move
 
             action = self.env.ref("account.action_move_journal_line").read()[0]

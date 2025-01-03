@@ -32,9 +32,9 @@ class TestStockAccountValuationDiscrepancy(TransactionCase):
             {"name": "Stock journal", "type": "general", "code": "STK00"}
         )
 
-        expense_type = "expense"
-        equity_type = "equity"
-        asset_type = "asset_current"
+        expense_type = self.env.ref("account.data_account_type_expenses")
+        equity_type = self.env.ref("account.data_account_type_equity")
+        asset_type = self.env.ref("account.data_account_type_current_assets")
 
         # Create account for Goods Received Not Invoiced
         name = "Goods Received Not Invoiced"
@@ -79,7 +79,7 @@ class TestStockAccountValuationDiscrepancy(TransactionCase):
             {
                 "name": name,
                 "code": code,
-                "account_type": acc_type,
+                "user_type_id": acc_type.id,
                 "company_id": company.id,
             }
         )

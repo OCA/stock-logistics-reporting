@@ -3,7 +3,7 @@
 
 {
     "name": "Account Valuation Discrepancy Adjust",
-    "version": "16.0.1.0.0",
+    "version": "15.0.1.0.0",
     "summary": "Implements Wizard for Adjust "
     "Discrepancies on Account Inventory Valuation",
     "category": "Warehouse Management",
