@@ -7,7 +7,7 @@
 {
     "name": "Stock Picking Report Custom Description",
     "summary": "Show moves description in picking reports",
-    "version": "16.0.1.0.2",
+    "version": "17.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Tecnativa, Odoo Community Association (OCA)",
