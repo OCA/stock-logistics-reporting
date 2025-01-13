@@ -65,11 +65,6 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         values["product_selection_ids"] = [
             (0, 0, {"product_id": product.id}) for product in products
         ]
-        to_date = self.env.context.get("at_date", False)
-        if to_date:
-            values["to_date"] = to_date
-        else:
-            values["to_date"] = fields.Datetime.now()
         return values
 
     def action_create_adjustment(self):
