@@ -7,7 +7,7 @@
             <form string="wizard_stock_discrepancy_adjustment_form">
                 <sheet>
                     <group>
-                    <field name="to_date" readonly="1" />
+                        <field name="to_date" />
                         <field name="journal_id" />
                         <field name="increase_account_id" />
                         <field name="decrease_account_id" />

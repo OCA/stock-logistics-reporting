@@ -3,6 +3,8 @@
 
 import time
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import fields
 from odoo.tests.common import TransactionCase
 
@@ -188,9 +190,39 @@ class TestStockAccountValuationDiscrepancy(TransactionCase):
                     "increase_account_id": self.account_cogs.id,
                     "decrease_account_id": self.account_cogs.id,
                     "journal_id": self.journal.id,
+                    "to_date": fields.Date.today(),
                 }
             )
         )
         wiz.with_context(no_delay=True).action_create_adjustment()
         self.product_fifo_1._compute_inventory_value()
         self.assertEqual(self.product_fifo_1.valuation_discrepancy, 0.0)
+
+    def test_02_manual_adjustment_past_date(self):
+        """Test the journal entry creation on a past date"""
+        past_date = fields.Date.to_string(
+            fields.Date.from_string(fields.Date.today()) - relativedelta(days=30)
+        )
+        self.product_fifo_1._compute_inventory_value()
+        wiz = (
+            self.env["wizard.stock.discrepancy.adjustment"]
+            .with_context(
+                active_model="product.product",
+                active_ids=[self.product_fifo_1.id],
+                active_id=self.product_fifo_1.id,
+            )
+            .create(
+                {
+                    "increase_account_id": self.account_cogs.id,
+                    "decrease_account_id": self.account_cogs.id,
+                    "journal_id": self.journal.id,
+                    "to_date": past_date,
+                }
+            )
+        )
+        action = wiz.with_context(no_delay=True).action_create_adjustment()
+        # Check that the journal entries were created with the correct past date
+        moves = self.account_move_model.search(action["domain"])
+        self.assertTrue(moves)
+        for move in moves:
+            self.assertEqual(move.date, fields.Date.from_string(past_date))
