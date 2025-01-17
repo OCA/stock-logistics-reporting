@@ -27,8 +27,8 @@
         <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
             <attribute
                 name="t-if"
-                add="and (not is_outgoing or not (o.valued and o.sale_id and o.move_line_ids))"
-                separator=" "
+                add="(not is_outgoing or not (o.valued and o.sale_id and o.move_line_ids))"
+                separator="and"
             />
         </xpath>
         <xpath expr="//th[@name='th_sml_qty_ordered']" position="after">
@@ -40,8 +40,8 @@
         >
             <attribute
                 name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
+                add="(o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
+                separator="or"
             />
         </xpath>
         <xpath
@@ -50,8 +50,8 @@
         >
             <attribute
                 name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
+                add="(o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
+                separator="or"
             />
         </xpath>
         <xpath
@@ -60,13 +60,13 @@
         >
             <attribute
                 name="t-if"
-                add="or (o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
-                separator=" "
+                add="(o.valued and o.sale_id and o.move_line_ids and is_outgoing)"
+                separator="or"
             />
         </xpath>
         <xpath expr="//table[@name='stock_move_line_table']" position="after">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
-                <table class="table table-sm mt32">
+                <table class="table table-borderless mt32">
                     <thead>
                         <tr>
                             <th class="text-end">

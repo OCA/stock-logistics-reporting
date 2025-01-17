@@ -8,6 +8,7 @@
   - Luis M. Ontalba
   - Ernesto Tejeda
   - Sergio Teruel
+  - Carlos Roca
 - [GreenIce](https://www.greenice.com):
   - Fernando La Chica \<<fernandolachica@gmail.com>\>
 - [Landoo](https://www.landoo.es):
