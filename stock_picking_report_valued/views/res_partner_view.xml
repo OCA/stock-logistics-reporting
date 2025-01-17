@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record model="ir.ui.view" id="view_partner_valued_picking">
         <field name="name">Partner view (Valued picking)</field>
         <field name="model">res.partner</field>
@@ -14,5 +13,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

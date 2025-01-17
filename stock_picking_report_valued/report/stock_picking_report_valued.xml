@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template
         id="valued_report_picking"
         inherit_id="stock.report_delivery_document"
@@ -11,12 +10,18 @@
         </xpath>
         <xpath expr="//table[@name='stock_move_line_table']/thead/tr" position="inside">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
-                <th class="text-end"><strong>Unit Price</strong></th>
+                <th class="text-end">
+                    <strong>Unit Price</strong>
+                </th>
                 <th class="text-end" groups="product.group_discount_per_so_line">
                     <strong>Discount</strong>
                 </th>
-                <th class="text-end"><strong>Subtotal</strong></th>
-                <th class="text-end"><strong>Taxes</strong></th>
+                <th class="text-end">
+                    <strong>Subtotal</strong>
+                </th>
+                <th class="text-end">
+                    <strong>Taxes</strong>
+                </th>
             </t>
         </xpath>
         <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
@@ -64,9 +69,15 @@
                 <table class="table table-sm mt32">
                     <thead>
                         <tr>
-                            <th class="text-end"><strong>Untaxed Amount</strong></th>
-                            <th class="text-end"><strong>Taxes</strong></th>
-                            <th class="text-end"><strong>Total</strong></th>
+                            <th class="text-end">
+                                <strong>Untaxed Amount</strong>
+                            </th>
+                            <th class="text-end">
+                                <strong>Taxes</strong>
+                            </th>
+                            <th class="text-end">
+                                <strong>Total</strong>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,18 +105,19 @@
     >
         <xpath expr="." position="inside">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
-                <td class="text-end"><span t-field="move_line.sale_price_unit" /></td>
+                <td class="text-end">
+                    <span t-field="move_line.sale_price_unit" />
+                </td>
                 <td class="text-end" groups="product.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
                 </td>
-                <td class="text-end"><span
-                        t-field="move_line.sale_price_subtotal"
-                    /></td>
-                <td class="text-end"><span
-                        t-field="move_line.sale_tax_description"
-                    /></td>
+                <td class="text-end">
+                    <span t-field="move_line.sale_price_subtotal" />
+                </td>
+                <td class="text-end">
+                    <span t-field="move_line.sale_tax_description" />
+                </td>
             </t>
         </xpath>
     </template>
-
 </odoo>
