@@ -10,10 +10,9 @@ from odoo import fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    valued = fields.Boolean(related="partner_id.valued_picking", readonly=True)
+    valued = fields.Boolean(related="partner_id.valued_picking")
     currency_id = fields.Many2one(
         related="sale_id.currency_id",
-        readonly=True,
         string="Currency",
         related_sudo=True,  # See explanation for sudo in compute method
     )
