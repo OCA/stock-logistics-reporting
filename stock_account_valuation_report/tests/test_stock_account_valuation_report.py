@@ -9,7 +9,7 @@ from odoo.tests.common import TransactionCase
 
 class TestStockAccountValuationReport(TransactionCase):
     def setUp(self):
-        super(TestStockAccountValuationReport, self).setUp()
+        super().setUp()
         # Get required Model
         self.product_model = self.env["product.product"]
         self.template_model = self.env["product.template"]
