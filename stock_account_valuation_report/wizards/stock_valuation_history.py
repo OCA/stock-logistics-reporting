@@ -19,7 +19,7 @@ class StockValuationHistory(models.TransientModel):
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "stock_account_valuation_report.product_valuation_action"
         )
-        domain = [("type", "=", "product")]
+        domain = [("is_storable", "=", True)]
         product_id = self.env.context.get("product_id", False)
         product_tmpl_id = self.env.context.get("product_tmpl_id", False)
         if product_id:

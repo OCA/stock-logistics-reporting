@@ -22,7 +22,7 @@
     <record id="history_valuation_action" model="ir.actions.act_window">
         <field name="name">Dual Inventory Valuation</field>
         <field name="res_model">stock.valuation.history</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_stock_valuation_history" />
     </record>
 

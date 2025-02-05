@@ -30,29 +30,11 @@ class ProductProduct(models.Model):
         compute="_compute_inventory_value",
         search="_search_qty_discrepancy",
     )
-    valuation = fields.Selection(
-        related="product_tmpl_id.valuation", search="_search_valuation"
-    )
-
-    @api.model
-    def _search_valuation(self, operator, value):
-        domain = [
-            "|",
-            ("categ_id.property_valuation", operator, value),
-            ("property_valuation", operator, value),
-        ]
-        products = self.env["product.product"].search(domain)
-        if value:
-            return [("id", "in", products.ids)]
-        else:
-            return [("id", "not in", products.ids)]
 
     @api.model
     def _search_qty_discrepancy(self, operator, value):
         products = self.with_context(active_test=False).search(
-            [
-                ("type", "=", "product"),
-            ]
+            [("is_storable", "=", True)],
         )
         dp = self.env["decimal.precision"].precision_get("Product Price")
         products_with_discrepancy = products.filtered(
@@ -66,9 +48,7 @@ class ProductProduct(models.Model):
     @api.model
     def _search_valuation_discrepancy(self, operator, value):
         products = self.with_context(active_test=False).search(
-            [
-                ("type", "=", "product"),
-            ]
+            [("is_storable", "=", True)],
         )
         dp = self.env.ref("product.decimal_discount").precision_get("Discount")
         products_with_discrepancy = products.filtered(
@@ -80,7 +60,7 @@ class ProductProduct(models.Model):
         return [("id", "in", products_with_discrepancy.ids)]
 
     def _compute_inventory_value(self):
-        self.env["account.move.line"].check_access_rights("read")
+        self.env["account.move.line"].check_access("read")
         to_date = self.env.context.get("at_date", False)
         accounting_values = {}
         layer_values = {}
@@ -180,13 +160,13 @@ class ProductProduct(models.Model):
 
     def action_view_amls(self):
         self.ensure_one()
-        tree_view_ref = self.env.ref("account.view_move_line_tree")
+        list_view_ref = self.env.ref("account.view_move_line_tree")
         form_view_ref = self.env.ref("account.view_move_line_form")
         action = {
             "name": _("Accounting Valuation at date"),
             "type": "ir.actions.act_window",
             "view_type": "form",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "context": self.env.context,
             "res_model": "account.move.line",
             "domain": [
@@ -196,28 +176,16 @@ class ProductProduct(models.Model):
                     self.stock_fifo_real_time_aml_ids.ids,
                 )
             ],
-            "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
+            "views": [(list_view_ref.id, "list"), (form_view_ref.id, "form")],
         }
         return action
 
     def action_view_valuation_layers(self):
-        self.ensure_one()
-        tree_view_ref = self.env.ref("stock_account.stock_valuation_layer_tree")
-        form_view_ref = self.env.ref("stock_account.stock_valuation_layer_form")
-        action = {
-            "name": _("Inventory Valuation"),
-            "type": "ir.actions.act_window",
-            "view_type": "form",
-            "view_mode": "tree,form",
-            "context": self.env.context,
-            "res_model": "stock.valuation.layer",
-            "domain": [
-                (
-                    "id",
-                    "in",
-                    self.stock_valuation_layer_ids.ids,
-                )
-            ],
-            "views": [(tree_view_ref.id, "tree"), (form_view_ref.id, "form")],
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "stock_account.stock_valuation_layer_report_action"
+        )
+        action["domain"] = [
+            ("id", "in", self.stock_valuation_layer_ids.ids),
+        ]
+        action["context"] = {}
         return action

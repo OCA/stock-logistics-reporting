@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_stock_product_tree2" model="ir.ui.view">
-        <field name="name">product.stock.tree.2</field>
+        <field name="name">product.stock.list.2</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="display_name" />
                 <field name="qty_at_date" />
                 <field name="uom_id" groups="uom.group_uom" />
-                <field name="currency_id" invisible="1" />
-                <field name="cost_currency_id" invisible="1" />
-                <field name="valuation" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="cost_currency_id" column_invisible="1" />
+                <field name="valuation" column_invisible="1" />
                 <field
                     name="stock_value"
                     sum="Stock Valuation"
@@ -22,36 +22,36 @@
                     type="object"
                     icon="fa-info-circle"
                     title="View Valuation Layers"
-                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                    invisible="valuation != 'real_time'"
                 />
                 <field
                     name="account_qty_at_date"
                     sum="Accounting Qty"
-                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                    invisible="valuation != 'real_time'"
                 />
                 <field
                     name="account_value"
                     sum="Accounting Valuation"
                     widget="monetary"
-                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                    invisible="valuation != 'real_time'"
                 />
                 <button
                     name="action_view_amls"
                     type="object"
                     icon="fa-info-circle"
                     title="View Journal Items"
-                    attrs="{'invisible': [('valuation', '!=', 'real_time')]}"
+                    invisible="valuation != 'real_time'"
                 />
                 <field name="qty_discrepancy" sum="Qty Discrepancy" />
                 <field name="valuation_discrepancy" sum="Valuation Discrepancy" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="product_valuation_action" model="ir.actions.act_window">
         <field name="name">Dual Inventory Valuation</field>
         <field name="res_model">product.product</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_stock_product_tree2" />
         <field name="domain">[('type', '=', 'product')]</field>
         <field

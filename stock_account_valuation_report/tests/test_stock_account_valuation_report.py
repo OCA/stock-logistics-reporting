@@ -4,32 +4,38 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockAccountValuationReport(TransactionCase):
-    def setUp(self):
-        super().setUp()
+class TestStockAccountValuationReport(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # Get required Model
-        self.product_model = self.env["product.product"]
-        self.template_model = self.env["product.template"]
-        self.product_ctg_model = self.env["product.category"]
-        self.account_model = self.env["account.account"]
-        self.quant_model = self.env["stock.quant"]
-        self.layer_model = self.env["stock.valuation.layer"]
-        self.stock_location_model = self.env["stock.location"]
-        self.res_users_model = self.env["res.users"]
-        self.account_move_model = self.env["account.move"]
-        self.aml_model = self.env["account.move.line"]
-        self.journal_model = self.env["account.journal"]
+        cls.product_model = cls.env["product.product"]
+        cls.template_model = cls.env["product.template"]
+        cls.product_ctg_model = cls.env["product.category"]
+        cls.account_model = cls.env["account.account"]
+        cls.quant_model = cls.env["stock.quant"]
+        cls.layer_model = cls.env["stock.valuation.layer"]
+        cls.stock_location_model = cls.env["stock.location"]
+        cls.res_users_model = cls.env["res.users"]
+        cls.account_move_model = cls.env["account.move"]
+        cls.aml_model = cls.env["account.move.line"]
+        cls.journal_model = cls.env["account.journal"]
         # Get required Model data
-        self.product_uom = self.env.ref("uom.product_uom_unit")
-        self.company = self.env.ref("base.main_company")
-        self.stock_picking_type_out = self.env.ref("stock.picking_type_out")
-        self.stock_picking_type_in = self.env.ref("stock.picking_type_in")
-        self.stock_location_id = self.ref("stock.stock_location_stock")
-        self.stock_location_customer_id = self.ref("stock.stock_location_customers")
-        self.stock_location_supplier_id = self.ref("stock.stock_location_suppliers")
+        cls.product_uom = cls.env.ref("uom.product_uom_unit")
+        cls.company = cls.env.ref("base.main_company")
+        cls.stock_picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.stock_picking_type_in = cls.env.ref("stock.picking_type_in")
+        cls.stock_location_id = cls.env.ref("stock.stock_location_stock").id
+        cls.stock_location_customer_id = cls.env.ref(
+            "stock.stock_location_customers"
+        ).id
+        cls.stock_location_supplier_id = cls.env.ref(
+            "stock.stock_location_suppliers"
+        ).id
         # Account types
         expense_type = "expense"
         equity_type = "equity"
@@ -38,102 +44,88 @@ class TestStockAccountValuationReport(TransactionCase):
         name = "Goods Received Not Invoiced"
         code = "grni"
         account_type = equity_type
-        self.account_grni = self._create_account(account_type, name, code, self.company)
+        cls.account_grni = cls._create_account(account_type, name, code, cls.company)
         # Create account for Cost of Goods Sold
         name = "Cost of Goods Sold"
         code = "cogs"
         account_type = expense_type
-        self.account_cogs = self._create_account(account_type, name, code, self.company)
+        cls.account_cogs = cls._create_account(account_type, name, code, cls.company)
         # Create account for Goods Delivered Not Invoiced
         name = "Goods Delivered Not Invoiced"
         code = "gdni"
         account_type = expense_type
-        self.account_gdni = self._create_account(account_type, name, code, self.company)
+        cls.account_gdni = cls._create_account(account_type, name, code, cls.company)
         # Create account for Inventory
         name = "Inventory"
         code = "inventory"
         account_type = asset_type
-        self.account_inventory = self._create_account(
-            account_type, name, code, self.company
+        cls.account_inventory = cls._create_account(
+            account_type, name, code, cls.company
         )
 
-        self.stock_journal = self.env["account.journal"].create(
+        cls.stock_journal = cls.env["account.journal"].create(
             {"name": "Stock journal", "type": "general", "code": "STK00"}
         )
         # Create product category
-        self.product_ctg = self._create_product_category()
+        cls.product_ctg = cls._create_product_category()
 
         # Create partners
-        self.supplier = self.env["res.partner"].create({"name": "Test supplier"})
-        self.customer = self.env["res.partner"].create({"name": "Test customer"})
+        cls.supplier = cls.env["res.partner"].create({"name": "Test supplier"})
+        cls.customer = cls.env["res.partner"].create({"name": "Test customer"})
 
         # Create a Product with real cost
         standard_price = 10.0
         list_price = 20.0
-        self.product = self._create_product(standard_price, False, list_price)
+        cls.product = cls._create_product(standard_price, False, list_price)
 
         # Create a vendor
-        self.vendor_partner = self.env["res.partner"].create(
-            {"name": "dropship vendor"}
-        )
+        cls.vendor_partner = cls.env["res.partner"].create({"name": "dropship vendor"})
 
-    def _create_user(self, login, groups, company):
-        """Create a user."""
-        group_ids = [group.id for group in groups]
-        user = self.res_users_model.with_context(no_reset_password=True).create(
-            {
-                "name": "Test User",
-                "login": login,
-                "password": "demo",
-                "email": "test@yourcompany.com",
-                "company_id": company.id,
-                "company_ids": [(4, company.id)],
-                "groups_id": [(6, 0, group_ids)],
-            }
-        )
-        return user
-
-    def _create_account(self, account_type, name, code, company):
+    @classmethod
+    def _create_account(cls, account_type, name, code, company):
         """Create an account."""
-        account = self.account_model.create(
+        account = cls.account_model.create(
             {
                 "name": name,
                 "code": code,
                 "account_type": account_type,
-                "company_id": company.id,
+                "company_ids": [fields.Command.link(company.id)],
             }
         )
         return account
 
-    def _create_product_category(self):
-        product_ctg = self.product_ctg_model.create(
+    @classmethod
+    def _create_product_category(cls):
+        product_ctg = cls.product_ctg_model.create(
             {
                 "name": "test_product_ctg",
-                "property_stock_valuation_account_id": self.account_inventory.id,
-                "property_stock_account_input_categ_id": self.account_grni.id,
-                "property_account_expense_categ_id": self.account_cogs.id,
-                "property_stock_account_output_categ_id": self.account_gdni.id,
+                "property_stock_valuation_account_id": cls.account_inventory.id,
+                "property_stock_account_input_categ_id": cls.account_grni.id,
+                "property_account_expense_categ_id": cls.account_cogs.id,
+                "property_stock_account_output_categ_id": cls.account_gdni.id,
                 "property_valuation": "real_time",
                 "property_cost_method": "fifo",
-                "property_stock_journal": self.stock_journal.id,
+                "property_stock_journal": cls.stock_journal.id,
             }
         )
         return product_ctg
 
-    def _create_product(self, standard_price, template, list_price):
+    @classmethod
+    def _create_product(cls, standard_price, template, list_price):
         """Create a Product variant."""
         if not template:
-            template = self.template_model.create(
+            template = cls.template_model.create(
                 {
                     "name": "test_product",
-                    "categ_id": self.product_ctg.id,
-                    "type": "product",
+                    "categ_id": cls.product_ctg.id,
+                    "is_storable": True,
+                    "type": "consu",
                     "standard_price": standard_price,
                     "valuation": "real_time",
                 }
             )
             return template.product_variant_ids[0]
-        product = self.product_model.create(
+        product = cls.product_model.create(
             {"product_tmpl_id": template.id, "list_price": list_price}
         )
         return product
@@ -192,7 +184,7 @@ class TestStockAccountValuationReport(TransactionCase):
         )
 
     def _create_receipt(self, product, qty, move_dest_id=False, price_unit=10.0):
-        move_dest_id = [(4, move_dest_id)] if move_dest_id else False
+        move_dest_id = [fields.Command.link(move_dest_id)] if move_dest_id else False
         return self.env["stock.picking"].create(
             {
                 "name": self.stock_picking_type_in.sequence_id._next(),
@@ -226,7 +218,7 @@ class TestStockAccountValuationReport(TransactionCase):
         picking.move_ids.write({"date": date})
         picking.action_confirm()
         picking.action_assign()
-        picking.move_ids.quantity_done = qty
+        picking.move_ids.quantity = qty
         picking.button_validate()
         # hacking the create_date of the layer in order to test
         self.env.cr.execute(
@@ -248,7 +240,7 @@ class TestStockAccountValuationReport(TransactionCase):
 
         # Inventory is 10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda li: li.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 10.0)
         move = in_picking.move_ids
@@ -260,6 +252,12 @@ class TestStockAccountValuationReport(TransactionCase):
         # The qty also match
         self.assertEqual(self.product.qty_at_date, 1.0)
         self.assertEqual(self.product.account_qty_at_date, 1.0)
+        # Layer can be opened from the product
+        action = self.product.action_view_valuation_layers()
+        self.assertEqual(
+            self.env[action["res_model"]].search(action["domain"]),
+            layer,
+        )
         # Create an out picking
         out_picking = self._create_delivery(self.product, 1)
         self._do_picking(out_picking, fields.Datetime.now(), 1.0)
@@ -292,14 +290,14 @@ class TestStockAccountValuationReport(TransactionCase):
         # GDNI         10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
         # Inventory is 0
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda li: li.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 0.0)
         # There are two a stock valuation layers associated to this product
         move = dropship_picking.move_ids
         layers = self.layer_model.search([("stock_move_id", "=", move.id)])
         self.assertEqual(len(layers), 2)
-        in_layer = layers.filtered(lambda l: l.quantity > 0)
+        in_layer = layers.filtered(lambda li: li.quantity > 0)
         # Check that the layer created for the outgoing move
         self.assertEqual(in_layer.remaining_qty, 0.0)
         self.assertEqual(in_layer.remaining_value, 0.0)
@@ -322,7 +320,7 @@ class TestStockAccountValuationReport(TransactionCase):
 
         # Inventory is 10
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda li: li.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 10.0)
         move = in_picking.move_ids
@@ -341,7 +339,7 @@ class TestStockAccountValuationReport(TransactionCase):
 
         # Inventory is 50
         aml = self.aml_model.search([("product_id", "=", self.product.id)])
-        inv_aml = aml.filtered(lambda l: l.account_id == self.account_inventory)
+        inv_aml = aml.filtered(lambda li: li.account_id == self.account_inventory)
         balance_inv = sum(inv_aml.mapped("balance"))
         self.assertEqual(balance_inv, 50.0)
         move2 = in_picking2.move_ids
