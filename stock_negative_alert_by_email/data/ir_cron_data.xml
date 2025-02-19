@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="ir_cron_action_negative_stock" model="ir.cron">
+            <field name="name">Action Negative Stock</field>
+            <field name="user_id" ref="base.user_admin" />
+            <field name="interval_type">hours</field>
+            <field name="interval_number">24</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="stock.model_stock_move" />
+            <field name="code">model.action_negative_stock()</field>
+        </record>
+
+    </data>
+</odoo>

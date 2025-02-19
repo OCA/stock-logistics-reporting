@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_config_settings_form_inherit_view" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.view</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//h2[@id='schedule_info']" position="before">
+                <h2>Email Negative Stock</h2>
+                <div
+                    class="row mt16 o_settings_container"
+                    name="email_negative_stock_setting_container"
+                >
+                    <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="negative_stock_mail_from"
+                    >
+                        <div class="o_setting_right_pane">
+                            <label for="negative_stock_mail_from" />
+                            <br />
+                            <field name="negative_stock_mail_from" />
+                        </div>
+                    </div>
+                    <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="negative_stock_mail_to"
+                    >
+                        <div class="o_setting_right_pane">
+                            <label for="negative_stock_mail_to" />
+                            <br />
+                            <field name="negative_stock_mail_to" />
+                        </div>
+                    </div>
+                    <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="negative_stock_interval"
+                    >
+                        <div class="o_setting_right_pane">
+                            <label for="negative_stock_interval_number" />
+                            <div class="text-muted">
+                                Set 'interval_number' and 'interval_type' for write negative stock mail
+                            </div>
+                            <field name="negative_stock_interval_number" />
+                            <field name="negative_stock_interval_type" />
+                        </div>
+                    </div>
+                    <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="negative_stock_quantity_type"
+                    >
+                        <div class="o_setting_right_pane">
+                            <label for="negative_stock_quantity_type" />
+                            <br />
+                            <field name="negative_stock_quantity_type" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
