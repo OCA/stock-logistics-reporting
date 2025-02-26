@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!-- # Copyright 2024 Bernat Obrador
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+    <record id="view_move_pivot_inherit" model="ir.ui.view">
+    <field name="name">stock.move.pivot.inherit</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="stock.view_move_pivot" />
+        <field name="arch" type="xml">
+            <xpath expr="//pivot" position="inside">
+                <field
+                    name="product_total_price"
+                    type="measure"
+                    sum="total_price"
+                    string="Total Price"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
