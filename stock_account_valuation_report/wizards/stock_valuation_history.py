@@ -8,6 +8,7 @@ from odoo.tools.safe_eval import safe_eval
 class StockValuationHistory(models.TransientModel):
     _name = "stock.valuation.history"
     _description = "Stock Valuation History"
+    _rec_name = "inventory_datetime"
 
     inventory_datetime = fields.Datetime(
         "Dual Valuation at Date",
