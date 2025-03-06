@@ -36,12 +36,12 @@ class ProductProduct(models.Model):
         products = self.with_context(active_test=False).search(
             [("is_storable", "=", True)],
         )
-        dp = self.env["decimal.precision"].precision_get("Product Price")
         products_with_discrepancy = products.filtered(
             lambda pp: float_compare(
-                pp.qty_at_date, pp.account_qty_at_date, precision_digits=dp
+                pp.qty_at_date,
+                pp.account_qty_at_date,
+                precision_rounding=pp.uom_id.rounding,
             )
-            != 0
         )
         return [("id", "in", products_with_discrepancy.ids)]
 
@@ -50,12 +50,10 @@ class ProductProduct(models.Model):
         products = self.with_context(active_test=False).search(
             [("is_storable", "=", True)],
         )
-        dp = self.env.ref("product.decimal_discount").precision_get("Discount")
         products_with_discrepancy = products.filtered(
-            lambda pp: float_compare(
-                pp.stock_value, pp.account_value, precision_digits=dp
+            lambda pp: self.env.company.currency_id.compare_amounts(
+                pp.stock_value, pp.account_value
             )
-            != 0
         )
         return [("id", "in", products_with_discrepancy.ids)]
 
