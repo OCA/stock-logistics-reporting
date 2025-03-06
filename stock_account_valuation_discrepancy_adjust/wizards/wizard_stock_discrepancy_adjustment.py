@@ -1,7 +1,6 @@
 # Copyright 2021 ForgeFlow S.L.
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_compare
 
 
 class WizardStockDiscrepancyAdjustment(models.TransientModel):
@@ -19,7 +18,7 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         return self.env["account.journal"].search(
             [
                 ("type", "=", "general"),
-                ("company_id", "=", self.env.user.company_id.id),
+                ("company_id", "=", self.env.company.id),
             ],
             limit=1,
         )
@@ -29,6 +28,7 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         string="Company",
         required=True,
         readonly=True,
+        change_default=True,
         default=lambda self: self.env.company,
     )
     journal_id = fields.Many2one(
@@ -65,23 +65,113 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         values["product_selection_ids"] = [
             (0, 0, {"product_id": product.id}) for product in products
         ]
-        to_date = self.env.context.get("at_date", False)
-        if to_date:
-            values["to_date"] = to_date
-        else:
-            values["to_date"] = fields.Datetime.now()
+        values["to_date"] = self.env.context.get("at_date", fields.Datetime.now())
         return values
+
+    def _prepare_product_vals(self, product):
+        """Prepare the product line values for the valuation discrepancy.
+
+        Args:
+            product: The product.product record
+
+        Returns:
+            list: A list containing the line values for the product side of the entry
+        """
+        valuation_account = product.product_tmpl_id._get_product_accounts()[
+            "stock_valuation"
+        ]
+        if not valuation_account:
+            raise UserError(
+                _("Product %s doesn't have stock valuation account assigned")
+                % product.display_name
+            )
+        return [
+            (
+                0,
+                0,
+                {
+                    "account_id": valuation_account.id,
+                    "product_id": product.id,
+                    "quantity": product.qty_discrepancy,
+                    "credit": product.valuation_discrepancy < 0
+                    and abs(product.valuation_discrepancy)
+                    or 0.0,
+                    "debit": product.valuation_discrepancy > 0
+                    and product.valuation_discrepancy
+                    or 0.0,
+                },
+            )
+        ]
+
+    def _prepare_counterpart_vals(self, product):
+        """Prepare the counterpart line values for the valuation discrepancy.
+
+        Args:
+            product: The product.product record
+
+        Returns:
+            list: A list containing the line values for the counterpart side of the entry
+        """
+        return [
+            (
+                0,
+                0,
+                {
+                    "account_id": product.valuation_discrepancy < 0
+                    and self.increase_account_id.id
+                    or self.decrease_account_id.id,
+                    "product_id": product.id,
+                    "quantity": product.qty_discrepancy,
+                    "credit": product.valuation_discrepancy > 0
+                    and product.valuation_discrepancy
+                    or 0.0,
+                    "debit": product.valuation_discrepancy < 0
+                    and abs(product.valuation_discrepancy)
+                    or 0.0,
+                },
+            )
+        ]
+
+    def _prepare_debit_credit_lines(self, product):
+        """Prepare the debit and credit lines for a product's valuation discrepancy.
+
+        Args:
+            product: The product.product record
+
+        Returns:
+            list: A list of dicts containing the line data
+        """
+        return self._prepare_product_vals(product) + self._prepare_counterpart_vals(
+            product
+        )
+
+    def _prepare_single_move_vals(self):
+        """Prepare the move values for the adjustment entry for single journal entry.
+
+        Returns:
+            dict: The values for creating the adjustment move
+        """
+        return {
+            "journal_id": self.journal_id.id,
+            "date": fields.Date.context_today(self, self.to_date),
+            "ref": _("Adjust for Stock Valuation Discrepancy"),
+            "line_ids": [],
+        }
+
+    def _prepare_product_move_vals(self):
+        """Prepare the move values for the adjustment entry for product journal entry.
+
+        Returns:
+            dict: The values for creating the adjustment move
+        """
+        return self._prepare_single_move_vals()
 
     def action_create_adjustment(self):
         move_model = self.env["account.move"]
         product_model = self.env["product.product"]
         moves_created = move_model.browse()
-        move_data = {
-            "journal_id": self.journal_id.id,
-            "date": self.to_date,
-            "ref": _("Adjust for Stock Valuation Discrepancy"),
-            "line_ids": [],
-        }
+        if self.single_journal_entry:
+            move_data = self._prepare_single_move_vals()
 
         if self.product_selection_ids:
             products_with_discrepancy = product_model.with_context(
@@ -89,75 +179,19 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
             ).browse(self.product_selection_ids.mapped("product_id").ids)
 
             for product in products_with_discrepancy:
-                valuation_account = product.product_tmpl_id._get_product_accounts()[
-                    "stock_valuation"
-                ]
-                if not valuation_account:
-                    raise UserError(
-                        _("Product %s doesn't have stock valuation account assigned")
-                        % product.display_name
-                    )
-                # do not create move if no discrepancy
-                if (
-                    float_compare(
-                        product.qty_at_date,
-                        product.account_qty_at_date,
-                        precision_digits=product.uom_id.rounding,
-                    )
-                    == 0
-                    and float_compare(
-                        product.stock_value,
-                        product.account_value,
-                        precision_digits=product.uom_id.rounding,
-                    )
-                    == 0
-                ):
+                if not product._adjustment_needed():
                     continue
-                # Create debit and credit line data for this product
-                line_debit_credit = [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": valuation_account.id,
-                            "product_id": product.id,
-                            "quantity": product.qty_discrepancy,
-                            "credit": product.valuation_discrepancy < 0
-                            and abs(product.valuation_discrepancy)
-                            or 0.0,
-                            "debit": product.valuation_discrepancy > 0
-                            and product.valuation_discrepancy
-                            or 0.0,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": product.valuation_discrepancy < 0
-                            and self.increase_account_id.id
-                            or self.decrease_account_id.id,
-                            "product_id": product.id,
-                            "quantity": product.qty_discrepancy,
-                            "credit": product.valuation_discrepancy > 0
-                            and product.valuation_discrepancy
-                            or 0.0,
-                            "debit": product.valuation_discrepancy < 0
-                            and abs(product.valuation_discrepancy)
-                            or 0.0,
-                        },
-                    ),
-                ]
+                account_move_lines = self._prepare_debit_credit_lines(product)
 
                 # If single_journal_entry is True, append line items to move_data
                 if self.single_journal_entry:
-                    move_data["line_ids"].extend(line_debit_credit)
+                    move_data["line_ids"].extend(account_move_lines)
                 else:
                     # Create individual move for each product
                     move = move_model.create(
                         {
-                            **move_data,
-                            "line_ids": line_debit_credit,
+                            **self._prepare_product_move_vals(),
+                            "line_ids": account_move_lines,
                         }
                     )
                     move.action_post()
