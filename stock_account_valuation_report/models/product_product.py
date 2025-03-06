@@ -54,7 +54,7 @@ class ProductProduct(models.Model):
                 ("type", "=", "product"),
             ]
         )
-        dp = self.env["decimal.precision"].precision_get("Product Price")
+        dp = self.env.ref("product.decimal_product_uom").digits
         products_with_discrepancy = products.filtered(
             lambda pp: float_compare(
                 pp.qty_at_date, pp.account_qty_at_date, precision_digits=dp
@@ -70,10 +70,10 @@ class ProductProduct(models.Model):
                 ("type", "=", "product"),
             ]
         )
-        dp = self.env.ref("product.decimal_discount").precision_get("Discount")
+        dp = self.env.company.currency_id.rounding
         products_with_discrepancy = products.filtered(
             lambda pp: float_compare(
-                pp.stock_value, pp.account_value, precision_digits=dp
+                pp.stock_value, pp.account_value, precision_rounding=dp
             )
             != 0
         )
