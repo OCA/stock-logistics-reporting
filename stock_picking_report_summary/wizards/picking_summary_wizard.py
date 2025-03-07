@@ -2,7 +2,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import Command, fields, models
 
 
 class PickingSummaryWizard(models.TransientModel):
@@ -51,9 +51,7 @@ class PickingSummaryWizard(models.TransientModel):
         picking_ids = self._context.get("active_ids", [])
         for picking in picking_obj.browse(picking_ids):
             res.append(
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "picking_id": picking.id,
                     },
@@ -88,9 +86,7 @@ class PickingSummaryWizard(models.TransientModel):
         )
         for product_id, name_qty in product_lines_sorted:
             res.append(
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "product_id": product_id,
                         "quantity_total": name_qty["qty"],

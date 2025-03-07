@@ -17,16 +17,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     </group>
                     <group string="For Summary" colspan="4">
                         <field name="print_summary" />
-                        <field
-                            name="print_prices"
-                            attrs="{'invisible': [('print_summary', '=', False)]}"
-                        />
+                        <field name="print_prices" invisible="not print_summary" />
                     </group>
                     <group string="For Pickings details" colspan="4">
                         <field name="print_details" />
                         <field
                             name="print_unit_in_list"
-                            attrs="{'invisible': [('print_details', '=', False)]}"
+                            invisible="not print_details"
                         />
                     </group>
                 </group>
