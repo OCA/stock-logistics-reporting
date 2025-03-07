@@ -1,0 +1,3 @@
+- Quentin DUPONT (<quentin.dupont@grap.coop>)
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia

@@ -2,17 +2,18 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestModule(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.PickingReportWizard = self.env["picking.summary.wizard"]
-        self.StockPicking = self.env["stock.picking"]
-        self.outPickingType = self.env.ref("stock.picking_type_out")
-        self.ir_actions_report = self.env["ir.actions.report"]
-        self.report_name = "stock_picking_report_summary.report_picking_summary"
+class TestModule(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.PickingReportWizard = cls.env["picking.summary.wizard"]
+        cls.StockPicking = cls.env["stock.picking"]
+        cls.outPickingType = cls.env.ref("stock.picking_type_out")
+        cls.ir_actions_report = cls.env["ir.actions.report"]
+        cls.report_name = "stock_picking_report_summary.report_picking_summary"
 
     def test_01_wizard(self):
         pickings = self.StockPicking.search(
