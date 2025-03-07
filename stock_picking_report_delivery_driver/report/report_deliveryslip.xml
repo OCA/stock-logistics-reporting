@@ -2,7 +2,7 @@
 <odoo>
     <template
         id="report_delivery_document2"
-        inherit_id="delivery.report_delivery_document2"
+        inherit_id="stock_delivery.report_delivery_document2"
     >
         <xpath expr="//p[@t-field='o.carrier_id']/.." position="attributes">
             <attribute
