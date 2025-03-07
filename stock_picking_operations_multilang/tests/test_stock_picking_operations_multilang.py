@@ -1,10 +1,10 @@
 # Copyright 2024 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestPickingOperationsLanguage(TransactionCase):
+class TestPickingOperationsLanguage(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -51,3 +51,16 @@ class TestPickingOperationsLanguage(TransactionCase):
         self.warehouse.warehouse_language = "en_US"
         report_result = self.report._render_qweb_pdf(self.report.id, [self.picking.id])
         self.assertIn('lang="en-US"', str(report_result[0]))
+
+    def test_active_lang_count(self):
+        """Test computation of active_lang_count"""
+        self.assertGreater(self.warehouse.active_lang_count, 0)
+
+        # Simulate change in warehouse_language
+        self.warehouse.warehouse_language = "ja_JP"
+        self.warehouse._compute_active_lang_count()
+
+        # Ensure the computed count remains correct
+        self.assertEqual(
+            self.warehouse.active_lang_count, len(self.env["res.lang"].get_installed())
+        )

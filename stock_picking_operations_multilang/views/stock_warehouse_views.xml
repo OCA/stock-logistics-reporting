@@ -8,7 +8,8 @@
                 <field name="picking_operation_language_option" />
                 <field
                     name="warehouse_language"
-                    attrs="{'invisible': ['|', ('active_lang_count', '&lt;=', 1), ('picking_operation_language_option', '!=', 'warehouse')], 'required': [('picking_operation_language_option', '=', 'warehouse')]}"
+                    invisible="active_lang_count &lt; 1 or picking_operation_language_option != 'warehouse'"
+                    required="picking_operation_language_option == 'warehouse'"
                 />
                 <field name="active_lang_count" invisible="1" />
             </xpath>
