@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="style">
         <style type="text/css">
 .table-compressed {
@@ -62,5 +61,4 @@ h3 {
             </t>
         </xpath>
     </template>
-
 </odoo>
