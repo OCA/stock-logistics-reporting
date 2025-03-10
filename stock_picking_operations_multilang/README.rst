@@ -17,18 +17,19 @@ Stock Picking Operations Multilang
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_picking_operations_multilang
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_picking_operations_multilang
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-16-0/stock-logistics-reporting-16-0-stock_picking_operations_multilang
+    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-18-0/stock-logistics-reporting-18-0-stock_picking_operations_multilang
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows printing the Picking Operations report in the partner's or warehouse's language, configurable at the warehouse level. 
+This module allows printing the Picking Operations report in the
+partner's or warehouse's language, configurable at the warehouse level.
 
 **Table of contents**
 
@@ -38,23 +39,32 @@ This module allows printing the Picking Operations report in the partner's or wa
 Use Cases / Context
 ===================
 
-When a company operates internationally, employees from different countries may encounter language barriers.
-For instance, a warehouse manager who only understands his native language might face difficulties
-if the Picking Operations report is in a different language. This module addresses such scenarios
-by enabling the customization of the Picking Operations report language, ensuring it matches
-the language preferences of the warehouse manager or the partner.
+When a company operates internationally, employees from different
+countries may encounter language barriers. For instance, a warehouse
+manager who only understands his native language might face difficulties
+if the Picking Operations report is in a different language. This module
+addresses such scenarios by enabling the customization of the Picking
+Operations report language, ensuring it matches the language preferences
+of the warehouse manager or the partner.
 
 Configuration
 =============
 
 To set up a specific language for Picking Operations:
 
-* Go to Inventory > Configuration > Warehouses.
-* Select the warehouse for which you want to set up the language for the Picking Operations report.
-* Choose the Picking Operation Language option. There are two options:
-    * Partner: It will use the language of the partner for the picking. If there is no partner for the picking, it will use the standard behavior of Odoo.
-    * Warehouse: If you select this option, you must fill in the Warehouse Language field, and this will be applied to Picking Operations.
-    * If left blank, it will use the standard behavior of Odoo.
+- Go to Inventory > Configuration > Warehouses.
+
+- Select the warehouse for which you want to set up the language for the
+  Picking Operations report.
+
+- Choose the Picking Operation Language option. There are two options:
+
+  - Partner: It will use the language of the partner for the picking. If
+    there is no partner for the picking, it will use the standard
+    behavior of Odoo.
+  - Warehouse: If you select this option, you must fill in the Warehouse
+    Language field, and this will be applied to Picking Operations.
+  - If left blank, it will use the standard behavior of Odoo.
 
 Bug Tracker
 ===========
@@ -62,7 +72,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-reporting/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_picking_operations_multilang%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_picking_operations_multilang%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -70,12 +80,12 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Quartile
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -87,6 +97,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_picking_operations_multilang>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_picking_operations_multilang>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
