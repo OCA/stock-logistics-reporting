@@ -2,10 +2,12 @@
 # Copyright 2023 Tecnativa - Carolina Fernandez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPickingReportCustomDescription(common.TransactionCase):
+class TestStockPickingReportCustomDescription(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -13,11 +15,11 @@ class TestStockPickingReportCustomDescription(common.TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test product",
-                "type": "product",
+                "type": "consu",
                 "description_sale": "Custom description",
             }
         )
-        order_form = common.Form(cls.env["sale.order"])
+        order_form = Form(cls.env["sale.order"])
         order_form.partner_id = cls.customer
         with order_form.order_line.new() as line_form:
             line_form.product_id = cls.product
