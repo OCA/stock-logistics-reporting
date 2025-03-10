@@ -3,7 +3,7 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
 <odoo>
     <template
-        id="report_delivery_sticker_document"
+        id="report_external_note_delivery_document"
         inherit_id="stock.report_delivery_document"
     >
         <xpath expr="//div[hasclass('page')]" position="inside">
