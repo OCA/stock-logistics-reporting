@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="report_stock_inventory_value_document">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
                     <h1 class="mt0 float-left">Inventory <t
-                            t-esc="inventory.name"
-                        /></h1>
+                        t-esc="inventory.name"
+                    /></h1>
                     <div class="clearfix" />
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th class="text-start"><strong>Location</strong></th>
-                                <th class="text-center"><strong>State</strong></th>
-                                <th class="text-center"><strong>Date</strong></th>
+                                <th class="text-start">
+                                    <strong>Location</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>State</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Date</strong>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +62,7 @@
                     </t>
                 </div>
             </t>
-         </t>
+        </t>
     </template>
 
     <template id="report_stock_inventory_value">
@@ -65,5 +70,4 @@
             <t t-call="stock_move_value_report.report_stock_inventory_value_document" />
         </t>
     </template>
-
 </odoo>

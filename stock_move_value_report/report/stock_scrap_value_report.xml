@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="report_stock_scrap_value_document">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
@@ -10,11 +9,18 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th class="text-center"><strong>Location</strong></th>
-                                <th t-if="scrap.origin" class="text-center"><strong
-                                    >Source Document</strong></th>
-                                <th class="text-center"><strong>State</strong></th>
-                                <th class="text-center"><strong>Date</strong></th>
+                                <th class="text-center">
+                                    <strong>Location</strong>
+                                </th>
+                                <th t-if="scrap.origin" class="text-center">
+                                    <strong>Source Document</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>State</strong>
+                                </th>
+                                <th class="text-center">
+                                    <strong>Date</strong>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +63,7 @@
                     </t>
                 </div>
             </t>
-         </t>
+        </t>
     </template>
 
     <template id="report_stock_scrap_value">
@@ -65,5 +71,4 @@
             <t t-call="stock_move_value_report.report_stock_scrap_value_document" />
         </t>
     </template>
-
 </odoo>
