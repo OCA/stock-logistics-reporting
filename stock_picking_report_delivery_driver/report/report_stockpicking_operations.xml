@@ -11,9 +11,9 @@
         </xpath>
         <xpath expr="//p[@t-field='o.carrier_id']" position="after">
             <p t-if="o.driver_id">
-                <span t-if="o.carrier_id">(</span><span
-                    t-field="o.driver_id.name"
-                /><span t-if="o.carrier_id">)</span>
+                <span t-if="o.carrier_id">(</span>
+                <span t-field="o.driver_id.name" />
+                <span t-if="o.carrier_id">)</span>
             </p>
         </xpath>
     </template>
