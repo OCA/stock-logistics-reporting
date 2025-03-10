@@ -7,8 +7,14 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def _is_to_external_location(self):
+    def should_print_delivery_address(self):
         self.ensure_one()
-        return (
-            super()._is_to_external_location() or self.picking_type_code == "internal"
-        )
+        if (
+            self.move_ids
+            and (self.move_ids[0].partner_id or self.partner_id)
+            and (
+                self._is_to_external_location() or self.picking_type_code == "internal"
+            )
+        ):
+            return True
+        return super().should_print_delivery_address()
