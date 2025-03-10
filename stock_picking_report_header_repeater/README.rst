@@ -62,6 +62,10 @@ Contributors
   - Sergio Teruel
   - Carlos Roca
 
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+
+  - Bhavesh Heliconia
+
 Maintainers
 -----------
 
