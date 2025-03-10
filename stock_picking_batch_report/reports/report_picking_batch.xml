@@ -36,22 +36,35 @@
                             <span t-field="o.user_id" />
                         </div>
                         <br />
-                        <table class="table table-condensed">
+                        <table class="table table-borderless">
                             <thead>
                                 <tr>
-                                    <th width="27%">Location</th>
-                                    <th>Product</th>
-                                    <th t-if="has_serial_number" width="15%">
+                                    <th width="27%" class="text-center">
+                                        <strong>Location</strong>
+                                    </th>
+                                    <th class="text-center">
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th
+                                        t-if="has_serial_number"
+                                        width="15%"
+                                        class="text-center"
+                                    >
                                         <strong>Lot/Serial Number</strong>
                                     </th>
-                                    <th>Quantity</th>
-                                    <th width="23%">Transfer</th>
+                                    <th class="text-center">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th width="23%" class="text-center">
+                                        <strong>Transfer</strong>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr t-foreach="move_line_ids" t-as="move_operation">
                                     <td>
                                         <span
+                                            class="ps-2"
                                             t-esc="move_operation.mapped('location_id').display_name"
                                         />
                                     </td>
