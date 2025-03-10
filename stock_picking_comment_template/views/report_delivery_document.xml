@@ -4,20 +4,20 @@
         id="report_delivery_document_comments"
         inherit_id="stock.report_delivery_document"
     >
-        <xpath expr="//table[hasclass('table-sm')]" position="before">
+        <xpath expr="//table[@name='stock_move_table']" position="before">
             <t
                 t-foreach="o.comment_template_ids.filtered(lambda x: x.position == 'before_lines')"
                 t-as="comment_template_top"
             >
-                <div t-raw="o.render_comment(comment_template_top)" />
+                <div t-out="o.render_comment(comment_template_top)" />
             </t>
         </xpath>
-        <xpath expr="//div[hasclass('page')]" position="inside">
+        <xpath expr="//t[@t-call='web.external_layout']" position="after">
             <t
                 t-foreach="o.comment_template_ids.filtered(lambda x: x.position == 'after_lines')"
                 t-as="comment_template_bottom"
             >
-                <div t-raw="o.render_comment(comment_template_bottom)" />
+                <div t-out="o.render_comment(comment_template_bottom)" />
             </t>
         </xpath>
     </template>

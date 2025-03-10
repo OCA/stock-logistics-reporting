@@ -8,5 +8,8 @@
   - Valentín Vinagre \<<valentin.vinagre@sygel.es>\>
   - Roger Sans \<<roger.sans@sygel.es>\>
 
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
+
 Do not contact contributors directly about support or help with
 technical issues.
