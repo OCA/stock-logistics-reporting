@@ -4,7 +4,7 @@
 {
     "name": "Delivery Line Sale Line Position",
     "summary": "Adds the sale line position to the delivery report lines",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Delivery",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
