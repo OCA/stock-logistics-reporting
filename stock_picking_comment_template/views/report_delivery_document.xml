@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template
         id="report_delivery_document_comments"
         inherit_id="stock.report_delivery_document"
@@ -22,5 +21,4 @@
             </t>
         </xpath>
     </template>
-
 </odoo>

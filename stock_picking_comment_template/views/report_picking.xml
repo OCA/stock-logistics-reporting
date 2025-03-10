@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="report_picking_document_comments" inherit_id="stock.report_picking">
         <xpath expr="//table[hasclass('table-sm')]" position="before">
             <t
@@ -19,5 +18,4 @@
             </t>
         </xpath>
     </template>
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record model="ir.actions.act_window" id="action_stock_picking_comment_template">
         <field name="name">Stock Picking Comment Templates</field>
         <field name="type">ir.actions.act_window</field>
@@ -22,5 +21,4 @@
         action="stock_picking_comment_template.action_stock_picking_comment_template"
         parent="stock.menu_stock_config_settings"
     />
-
 </odoo>
