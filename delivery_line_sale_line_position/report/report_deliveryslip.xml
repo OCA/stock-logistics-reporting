@@ -9,7 +9,9 @@
             />
         </xpath>
         <xpath expr="//table[@name='stock_move_table']/thead//th[1]" position="before">
-            <th t-if="has_line_position" name="th_sm_pos"><strong>Pos</strong></th>
+            <th t-if="has_line_position" name="th_sm_pos">
+                <strong>Pos</strong>
+            </th>
         </xpath>
         <xpath expr="//table[@name='stock_move_table']/tbody//td[1]" position="before">
             <td t-if="has_line_position" name="td_sm_pos">
@@ -27,8 +29,9 @@
             expr="//table[@name='stock_move_line_table']/thead//th[1]"
             position="before"
         >
-            <th t-if="has_line_position and has_serial_number" name="th_sml_pos"><strong
-                >Pos</strong></th>
+            <th t-if="has_line_position and has_serial_number" name="th_sml_pos">
+                <strong>Pos</strong>
+            </th>
         </xpath>
         <!--
             NOTE: The rows are rendered by other templates.
@@ -48,5 +51,4 @@
             </td>
         </xpath>
     </template>
-
 </odoo>
