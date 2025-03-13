@@ -82,7 +82,7 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
         ]
         if not valuation_account:
             raise UserError(
-                _("Product %s doesn't have stock valuation account assigned")
+                self.env._("Product %s doesn't have stock valuation account assigned")
                 % product.display_name
             )
         return [
@@ -110,7 +110,8 @@ class WizardStockDiscrepancyAdjustment(models.TransientModel):
             product: The product.product record
 
         Returns:
-            list: A list containing the line values for the counterpart side of the entry
+            list: A list containing the line values
+            for the counterpart side of the entry
         """
         return [
             (

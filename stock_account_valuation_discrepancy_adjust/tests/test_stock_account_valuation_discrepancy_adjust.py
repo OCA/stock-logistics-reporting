@@ -80,7 +80,7 @@ class TestStockAccountValuationDiscrepancy(TransactionCase):
                 "name": name,
                 "code": code,
                 "account_type": acc_type,
-                "company_id": company.id,
+                "company_ids": [(6, 0, [company.id])],
             }
         )
         return account
@@ -107,9 +107,10 @@ class TestStockAccountValuationDiscrepancy(TransactionCase):
                 {
                     "name": "test_product",
                     "categ_id": self.product_ctg.id,
-                    "type": "product",
+                    "type": "consu",
                     "standard_price": standard_price,
                     "valuation": "real_time",
+                    "is_storable": True,
                 }
             )
             return template.product_variant_ids[0]

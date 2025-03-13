@@ -19,7 +19,7 @@ class ProductProduct(models.Model):
         qty_compare = float_compare(
             self.qty_at_date,
             self.account_qty_at_date,
-            precision_digits=self.uom_id.rounding,
+            precision_rounding=self.uom_id.rounding,
         )
         value_compare = float_compare(
             self.stock_value,

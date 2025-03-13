@@ -7,7 +7,6 @@
             <form string="wizard_stock_discrepancy_adjustment_form">
                 <sheet>
                     <group>
-                        <field name="company_id" invisible="1" />
                         <field name="to_date" readonly="1" />
                         <field name="journal_id" />
                         <field name="increase_account_id" />
@@ -34,7 +33,7 @@
     >
         <field name="name">Adjust Stock Valuation Account Discrepancies</field>
         <field name="res_model">wizard.stock.discrepancy.adjustment</field>
-        <field name="binding_view_types">tree,form</field>
+        <field name="binding_view_types">list,form</field>
         <field name="view_id" ref="wizard_stock_discrepancy_adjustment_view_form" />
         <field name="target">new</field>
         <field name="binding_model_id" ref="product.model_product_product" />
