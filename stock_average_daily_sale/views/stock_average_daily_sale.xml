@@ -44,18 +44,18 @@
             <tree create="false" delete="false">
                 <field name="product_id" />
                 <field name="abc_classification_level" />
+                <field name="warehouse_id" />
+                <field name="qty_in_stock" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="nbr_sales" />
                 <field name="average_qty_by_sale" />
                 <field name="average_daily_sales_count" />
                 <field name="average_daily_qty" />
                 <field name="standard_deviation" />
                 <field name="daily_standard_deviation" />
-                <field name="safety" />
                 <field name="recommended_qty" />
-                <field name="nbr_sales" />
-                <field name="qty_in_stock" />
-                <field name="date_from" />
-                <field name="date_to" />
-                <field name="warehouse_id" />
+                <field name="safety" />
             </tree>
         </field>
     </record>
