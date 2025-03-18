@@ -42,20 +42,20 @@
         <field name="model">stock.average.daily.sale</field>
         <field name="arch" type="xml">
             <tree create="false" delete="false">
-                <field name="product_id" />
-                <field name="abc_classification_level" />
-                <field name="warehouse_id" />
-                <field name="qty_in_stock" />
-                <field name="date_from" />
-                <field name="date_to" />
-                <field name="nbr_sales" />
-                <field name="average_qty_by_sale" />
-                <field name="average_daily_sales_count" />
-                <field name="average_daily_qty" />
-                <field name="standard_deviation" />
-                <field name="daily_standard_deviation" />
-                <field name="recommended_qty" />
-                <field name="safety" />
+                <field name="product_id" optional="show" />
+                <field name="abc_classification_level" optional="show" />
+                <field name="warehouse_id" optional="show" />
+                <field name="qty_in_stock" optional="show" />
+                <field name="date_from" optional="show" />
+                <field name="date_to" optional="show" />
+                <field name="nbr_sales" optional="show" />
+                <field name="average_qty_by_sale" optional="show" />
+                <field name="average_daily_sales_count" optional="show" />
+                <field name="average_daily_qty" optional="show" />
+                <field name="standard_deviation" optional="show" />
+                <field name="daily_standard_deviation" optional="show" />
+                <field name="recommended_qty" optional="show" />
+                <field name="safety" optional="show" />
             </tree>
         </field>
     </record>
