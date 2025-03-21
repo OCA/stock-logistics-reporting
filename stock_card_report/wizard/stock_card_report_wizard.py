@@ -12,11 +12,17 @@ class StockCardReportWizard(models.TransientModel):
     date_range_id = fields.Many2one(comodel_name="date.range", string="Period")
     date_from = fields.Date(string="Start Date")
     date_to = fields.Date(string="End Date")
-    location_id = fields.Many2one(
-        comodel_name="stock.location", string="Location", required=True
-    )
+    location_ids = fields.Many2many(comodel_name="stock.location", string="Location")
     product_ids = fields.Many2many(
-        comodel_name="product.product", string="Products", required=True
+        comodel_name="product.product",
+        string="Products",
+    )
+    card_types = fields.Selection(
+        selection=[
+            ("detail", "Detail"),
+            ("summary", "Summary"),
+        ],
+        default="detail",
     )
 
     @api.onchange("date_range_id")
@@ -45,16 +51,31 @@ class StockCardReportWizard(models.TransientModel):
 
     def button_export_xlsx(self):
         self.ensure_one()
-        report_type = "xlsx"
+        report_type = "xlsx" if self.card_types == "detail" else "summary_xlsx"
         return self._export(report_type)
+
+    def _get_product_ids(self):
+        self.ensure_one()
+        if not self.product_ids:
+            return self.env["product.product"].search([]).ids
+        else:
+            return self.product_ids.ids
+
+    def _get_location_ids(self):
+        self.ensure_one()
+        if not self.location_ids:
+            return self.env["stock.location"].search([]).ids
+        else:
+            return self.location_ids.ids
 
     def _prepare_stock_card_report(self):
         self.ensure_one()
         return {
             "date_from": self.date_from,
             "date_to": self.date_to or fields.Date.context_today(self),
-            "product_ids": [(6, 0, self.product_ids.ids)],
-            "location_id": self.location_id.id,
+            "product_ids": [(6, 0, self._get_product_ids())],
+            "location_ids": [(6, 0, self._get_location_ids())],
+            "card_types": self.card_types,
         }
 
     def _export(self, report_type):

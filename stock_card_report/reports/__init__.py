@@ -3,3 +3,4 @@
 
 from . import stock_card_report
 from . import stock_card_report_xlsx
+from . import stock_card_summary_report_xlsx

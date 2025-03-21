@@ -13,7 +13,8 @@
                     </group>
                     <group>
                         <field name="product_ids" widget="many2many_tags" />
-                        <field name="location_id" />
+                        <field name="location_ids" widget="many2many_tags" />
+                        <field name="card_types" widget="radio" />
                     </group>
                 </group>
                 <footer>

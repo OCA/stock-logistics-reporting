@@ -89,12 +89,30 @@ export const report_backend = AbstractAction.extend({
         var self = this;
         this._rpc({
             model: this.given_context.model,
-            method: "print_report",
-            args: [this.given_context.active_id, "xlsx"],
-            context: self.odoo_context,
-        }).then(function (result) {
-            self.do_action(result);
-        });
+            method: "search_read",
+            args: [[["id", "=", this.given_context.active_id]]],
+            kwargs: {fields: ["card_types"]},
+        })
+            .then(function (records) {
+                if (records.length > 0) {
+                    const card_type = records[0].card_types;
+                    const report_type =
+                        card_type === "detail" ? "xlsx" : "summary_xlsx";
+                    return self._rpc({
+                        model: self.given_context.model,
+                        method: "print_report",
+                        args: [self.given_context.active_id, report_type],
+                        context: self.odoo_context,
+                    });
+                }
+                throw new Error("No records found.");
+            })
+            .then(function (result) {
+                self.do_action(result);
+            })
+            .catch(function (error) {
+                console.error("Error:", error);
+            });
     },
     canBeRemoved: function () {
         return Promise.resolve();

@@ -13,9 +13,9 @@ from odoo.addons.report_xlsx_helper.report.report_xlsx_format import (
 _logger = logging.getLogger(__name__)
 
 
-class ReportStockCardReportXlsx(models.AbstractModel):
-    _name = "report.stock_card_report.report_stock_card_report_xlsx"
-    _description = "Stock Card Report XLSX"
+class ReportStockCardSummaryReportXlsx(models.AbstractModel):
+    _name = "report.stock_card_report.report_stock_card_summary_report_xlsx"
+    _description = "Stock Card Summary Report XLSX"
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, objects):
@@ -65,19 +65,19 @@ class ReportStockCardReportXlsx(models.AbstractModel):
             },
         }
         stock_card_template = {
-            "1_date": {
-                "header": {"value": "Date"},
+            "1_product": {
+                "header": {"value": "Product"},
                 "data": {
-                    "value": self._render("date"),
+                    "value": self._render("product"),
                     "format": FORMATS["format_tcell_date_left"],
                 },
                 "width": 25,
             },
-            "2_reference": {
-                "header": {"value": "Reference"},
+            "2_initial": {
+                "header": {"value": "Initial"},
                 "data": {
-                    "value": self._render("reference"),
-                    "format": FORMATS["format_tcell_left"],
+                    "value": self._render("initial"),
+                    "format": FORMATS["format_tcell_amount_right"],
                 },
                 "width": 25,
             },
@@ -143,54 +143,34 @@ class ReportStockCardReportXlsx(models.AbstractModel):
             col_specs="col_specs_filter",
             wanted_list="wanted_list_filter",
         )
+        ws.freeze_panes(row_pos, 0)
+        row_pos += 1
+        row_pos = self._write_line(
+            ws,
+            row_pos,
+            ws_params,
+            col_specs_section="header",
+            default_format=FORMATS["format_theader_blue_center"],
+            col_specs="col_specs",
+        )
+        # Stock Card Table
         for product in objects.product_ids:
-            row_pos += 1
-            row_pos = self._write_ws_title(
-                ws, row_pos, {"title": "Stock Card - {}".format(product.name)}
-            )
-            # Stock Card Table
-            row_pos = self._write_line(
-                ws,
-                row_pos,
-                ws_params,
-                col_specs_section="header",
-                default_format=FORMATS["format_theader_blue_center"],
-            )
-            ws.freeze_panes(row_pos, 0)
-            balance = objects._get_initial(
-                objects.results.filtered(
-                    lambda l: l.product_id == product
-                    and l.is_initial
-                    and l.parent_location_id == location
-                )
-            )
+            product_vals = objects._get_product_vals(product, location)
+            initial = product_vals["initial"]
+            product_in = product_vals["product_in"]
+            product_out = product_vals["product_out"]
+            balance = product_vals["balance"]
             row_pos = self._write_line(
                 ws,
                 row_pos,
                 ws_params,
                 col_specs_section="data",
-                render_space={"balance": balance},
-                col_specs="col_specs_initial",
-                wanted_list="wanted_list_initial",
+                render_space={
+                    "product": product.name or "",
+                    "initial": initial or 0,
+                    "input": product_in or 0,
+                    "output": product_out or 0,
+                    "balance": balance or 0,
+                },
+                default_format=FORMATS["format_tcell_amount_right"],
             )
-            product_lines = objects.results.filtered(
-                lambda l: l.product_id == product
-                and not l.is_initial
-                and l.parent_location_id == location
-            )
-            for line in product_lines:
-                balance += line.product_in - line.product_out
-                row_pos = self._write_line(
-                    ws,
-                    row_pos,
-                    ws_params,
-                    col_specs_section="data",
-                    render_space={
-                        "date": line.date or "",
-                        "reference": line.display_name or "",
-                        "input": line.product_in or 0,
-                        "output": line.product_out or 0,
-                        "balance": balance,
-                    },
-                    default_format=FORMATS["format_tcell_amount_right"],
-                )

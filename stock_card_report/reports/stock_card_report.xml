@@ -51,47 +51,26 @@
     </template>
 
     <template id="stock_card_report.report_stock_card_report_base">
-        <t t-foreach="o.product_ids" t-as="product">
+        <t t-foreach="o.location_ids" t-as="location">
             <div class="page">
                 <div class="row">
-                    <t t-set="title">Stock Card - <t t-out="product.name" /></t>
-                    <h4 class="mt0" t-out="title" style="text-align: center;" />
+                    <t t-set="title">Location - <t t-out="location.complete_name" /></t>
+                    <h2
+                        class="mt0"
+                        t-out="title"
+                        style="text-align: center; width: 100%;"
+                    />
                 </div>
+                <t t-set="stock_card" t-value="o.card_types" />
                 <!-- Display filters -->
                 <t t-call="stock_card_report.report_stock_card_report_filters" />
-                <!-- Display stock card table -->
-                <div class="act_as_table data_table mt4" style="width: 100%;">
-                    <!-- Display header line-->
-                    <t t-call="stock_card_report.report_stock_card_lines_header" />
-                    <!-- Display initial lines -->
-                    <t
-                        t-set="initial"
-                        t-value="o._get_initial(o.results.filtered(lambda l: l.product_id == product and l.is_initial))"
-                    />
-                    <div class="act_as_row lines">
-                        <div class="act_as_cell" />
-                        <div class="act_as_cell">
-                            Initial
-                        </div>
-                        <div class="act_as_cell" />
-                        <div class="act_as_cell" />
-                        <div class="act_as_cell right">
-                            <t t-out="'{0:,.3f}'.format(initial)" />
-                        </div>
-                    </div>
-                    <!-- Display each lines -->
-                    <t t-set="product_balance" t-value="initial" />
-                    <t
-                        t-foreach="o.results.filtered(lambda l: l.product_id == product and not l.is_initial)"
-                        t-as="product_line"
-                    >
-                        <t
-                            t-set="product_balance"
-                            t-value="product_balance + product_line.product_in - product_line.product_out"
-                        />
-                        <t t-call="stock_card_report.report_stock_card_lines" />
-                    </t>
-                </div>
+                <t t-if="stock_card == 'detail'">
+                    <t t-call="stock_card_report.report_stock_card_detail" />
+                </t>
+                <t t-else="">
+                    <t t-call="stock_card_report.report_stock_card_summary" />
+                </t>
+                <hr />
                 <p style="page-break-before:always;" />
             </div>
         </t>
@@ -112,7 +91,7 @@
                     <span t-field="o.date_to" />
                 </div>
                 <div class="act_as_cell">
-                    <span t-field="o.location_id" />
+                    <span t-out="location.complete_name" />
                 </div>
             </div>
         </div>
@@ -150,4 +129,98 @@
         </div>
    </template>
 
+
+    <template id="stock_card_report.report_stock_card_detail">
+        <t t-foreach="o.product_ids" t-as="product">
+            <div class="row">
+                <t t-set="title">Stock Card - <t t-out="product.name" /></t>
+                <h4 class="mt4" t-out="title" style="text-align: center;" />
+            </div>
+            <div class="act_as_table data_table mt4" style="width: 100%;">
+                <!-- Display header line-->
+                <t t-call="stock_card_report.report_stock_card_lines_header" />
+                <!-- Display initial lines -->
+                <t
+                    t-set="initial"
+                    t-value="o._get_initial(o.results.filtered(lambda l: l.product_id == product and l.is_initial and l.parent_location_id == location))"
+                />
+                <div class="act_as_row lines">
+                    <div class="act_as_cell" />
+                    <div class="act_as_cell">
+                        Initial
+                    </div>
+                    <div class="act_as_cell" />
+                    <div class="act_as_cell" />
+                    <div class="act_as_cell right">
+                        <t t-out="'{0:,.3f}'.format(initial)" />
+                    </div>
+                </div>
+                <!-- Display each lines -->
+                <t t-set="product_balance" t-value="initial" />
+                <t
+                    t-foreach="o.results.filtered(lambda l: l.product_id == product and not l.is_initial and l.parent_location_id == location)"
+                    t-as="product_line"
+                >
+                    <t
+                        t-set="product_balance"
+                        t-value="product_balance + product_line.product_in - product_line.product_out"
+                    />
+                    <t t-call="stock_card_report.report_stock_card_lines" />
+                </t>
+            </div>
+        </t>
+   </template>
+
+   <template id="stock_card_report.report_stock_card_summary_lines_header">
+        <div class="act_as_thead">
+            <div class="act_as_row labels">
+                <div class="act_as_cell">Product</div>
+                <div class="act_as_cell">Initial</div>
+                <div class="act_as_cell">In</div>
+                <div class="act_as_cell">Out</div>
+                <div class="act_as_cell">Balance</div>
+            </div>
+        </div>
+    </template>
+
+    <template id="stock_card_report.report_stock_card_summary_lines">
+        <div class="act_as_row lines">
+            <div class="act_as_cell left">
+                <t t-out="product.name" />
+            </div>
+            <div class="act_as_cell right">
+                <t t-out="'{0:,.3f}'.format(initial)" />
+            </div>
+            <div class="act_as_cell right">
+                <t t-out="'{0:,.3f}'.format(product_in)" />
+            </div>
+            <div class="act_as_cell right">
+                <t t-out="'{0:,.3f}'.format(product_out)" />
+            </div>
+            <div class="act_as_cell right">
+                <t t-out="'{0:,.3f}'.format(product_balance)" />
+            </div>
+        </div>
+   </template>
+
+    <template id="stock_card_report.report_stock_card_summary">
+        <div class="act_as_table data_table mt4" style="width: 100%;">
+            <!-- Display header line-->
+            <t t-call="stock_card_report.report_stock_card_summary_lines_header" />
+            <t t-foreach="o.product_ids" t-as="product">
+                <t
+                    t-set="product_vals"
+                    t-value="o._get_product_vals(product, location)"
+                />
+                <t t-set="initial" t-value="product_vals['initial']" />
+                <t t-set="product_in" t-value="product_vals['product_in']" />
+                <t t-set="product_out" t-value="product_vals['product_out']" />
+                <t
+                    t-set="product_balance"
+                    t-value="product_vals['balance'] + initial"
+                />
+                <t t-call="stock_card_report.report_stock_card_summary_lines" />
+            </t>
+        </div>
+    </template>
 </odoo>
