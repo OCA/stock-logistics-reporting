@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,6 @@ msgstr ""
 #. module: stock_account_valuation_report
 #. odoo-python
 #: code:addons/stock_account_valuation_report/models/product_product.py:0
-#, python-format
 msgid "Accounting Valuation at date"
 msgstr ""
 
@@ -103,14 +102,6 @@ msgid "Inventory Quantity"
 msgstr ""
 
 #. module: stock_account_valuation_report
-#. odoo-python
-#: code:addons/stock_account_valuation_report/models/product_product.py:0
-#: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__valuation
-#, python-format
-msgid "Inventory Valuation"
-msgstr ""
-
-#. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__stock_value
 msgid "Inventory Value"
 msgstr ""
@@ -118,11 +109,6 @@ msgstr ""
 #. module: stock_account_valuation_report
 #: model:ir.model,name:stock_account_valuation_report.model_account_move_line
 msgid "Journal Item"
-msgstr ""
-
-#. module: stock_account_valuation_report
-#: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_account_valuation_report
@@ -138,14 +124,6 @@ msgstr ""
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
 msgid "Manual"
-msgstr ""
-
-#. module: stock_account_valuation_report
-#: model:ir.model.fields,help:stock_account_valuation_report.field_product_product__valuation
-msgid ""
-"Manual: The accounting entries to value the inventory are not posted automatically.\n"
-"        Automated: An accounting entry is automatically created to value the inventory when a product enters or leaves the company.\n"
-"        "
 msgstr ""
 
 #. module: stock_account_valuation_report
