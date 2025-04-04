@@ -1,8 +1,14 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
-class CommonAverageSaleTest:
+from odoo.fields import Datetime
+from odoo.tests.common import TransactionCase
+
+
+class CommonAverageSaleTest(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -19,66 +25,53 @@ class CommonAverageSaleTest:
         )
         # Create the following structure:
         # [Stock]
-        # (...)
         # # [Zone Location]
-        # # # [Area Location]
-        # # # # [Bin Location]
+        # # # [Bin Location]
         cls.location_zone = cls.location_obj.create(
             {
                 "name": "Zone Location",
                 "location_id": cls.warehouse_0.lot_stock_id.id,
             }
         )
-        cls.location_area = cls.location_obj.create(
-            {"name": "Area Location", "location_id": cls.location_zone.id}
-        )
         cls.location_bin = cls.location_obj.create(
-            {"name": "Bin Location", "location_id": cls.location_area.id}
+            {"name": "Bin Location", "location_id": cls.location_zone.id}
         )
-        cls.location_bin_2 = cls.location_obj.create(
-            {"name": "Bin Location 2", "location_id": cls.location_area.id}
-        )
-        cls.scrap_location = cls.location_obj.create(
-            {
-                "name": "Scrap Location",
-                "usage": "inventory",
-            }
-        )
-        cls.stock_location = cls.env.ref("stock.warehouse0").lot_stock_id
 
-        cls._create_products()
-
-    @classmethod
-    def _create_inventory(cls):
-        cls.inventory_obj.create(
-            {
-                "product_id": cls.product_1.id,
-                "inventory_quantity": 50.0,
-                "location_id": cls.location_bin.id,
-            }
-        )._apply_inventory()
-        cls.inventory_obj.create(
-            {
-                "product_id": cls.product_2.id,
-                "inventory_quantity": 60.0,
-                "location_id": cls.location_bin_2.id,
-            }
-        )._apply_inventory()
-
-    @classmethod
-    def _create_products(cls):
-        cls.product_1 = cls.env["product.product"].create(
+        cls.product = cls.env["product.product"].create(
             {
                 "name": "Product 1",
                 "type": "product",
             }
         )
-        cls.product_2 = cls.env["product.product"].create(
+
+        cls.cfg = cls.env["stock.average.daily.sale.config"].search(
+            [
+                ("warehouse_id", "=", cls.warehouse_0.id),
+                ("location_id", "=", cls.warehouse_0.lot_stock_id.id),
+                ("abc_classification_level", "=", cls.product.abc_storage),
+            ]
+        )
+        cls.cfg.update(
             {
-                "name": "Product 2",
-                "type": "product",
+                "period_value": 1,
+                "period_name": "week",
+                "exclude_weekends": False,
             }
         )
+        cls.cfg.location_id = cls.location_zone
+
+        cls.now = Datetime.now()
+        cls.inventory_date = Datetime.to_string(
+            cls.now - relativedelta(cls.now, weeks=30)
+        )
+        with freeze_time(cls.inventory_date):
+            cls.inventory_obj.create(
+                {
+                    "product_id": cls.product.id,
+                    "inventory_quantity": 50.0,
+                    "location_id": cls.location_bin.id,
+                }
+            )._apply_inventory()
 
     @classmethod
     def _create_move(cls, product, origin_location, qty):
@@ -87,15 +80,19 @@ class CommonAverageSaleTest:
                 "product_id": product.id,
                 "name": product.name,
                 "location_id": origin_location.id,
-                "warehouse_id": origin_location.warehouse_id.id,
                 "location_dest_id": cls.customers.id,
                 "product_uom_qty": qty,
-                "priority": "1",
             }
         )
-        # TODO: Check why this is necessary - it's in materialized view query
-        move.priority = "1"
         return move
+
+    @classmethod
+    def _make_move(cls, product, origin_location, qty):
+        move = cls._create_move(product, origin_location, qty)
+        move._action_confirm()
+        move._action_assign()
+        move.quantity_done = move.product_uom_qty
+        move._action_done()
 
     @classmethod
     def _refresh(cls):

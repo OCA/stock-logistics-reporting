@@ -4,10 +4,11 @@
 {
     "name": "Stock Average Daily Sale",
     "summary": """
-        Allows to gather delivered products average on daily basis""",
-    "version": "16.0.1.1.0",
+        Allows to gather consumed products on daily basis""",
+    "version": "16.0.2.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
+    "maintainers": ["jbaudoux"],
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": [
         "sale",
@@ -20,7 +21,6 @@
         "security/stock_average_daily_sale_demo.xml",
         "views/stock_average_daily_sale_config.xml",
         "views/stock_average_daily_sale.xml",
-        "views/stock_warehouse.xml",
         "data/ir_cron.xml",
     ],
     "external_dependencies": {"python": ["freezegun"]},

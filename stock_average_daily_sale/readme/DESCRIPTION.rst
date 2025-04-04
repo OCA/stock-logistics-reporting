@@ -1,18 +1,25 @@
-This module allows to gather stock consumptions and build reporting for average daily
-sales (aka stock consumptions). Technically, this has been done through a
-materialized postgresql view in order to be as fast as possible (some other flow
-modules can depend on this).
+This module allows to gather stock consumptions and build reporting for average
+daily consumptions. Technically, this has been done through a materialized
+postgresql view in order to be as fast as possible (some other flow modules can
+depend on this).
 
-You can add several configurations depending on the window you want to analyze.
-So, you can define criteria to filter data:
+You can add several configurations depending on the location from which
+consumptions are counted.
 
-* The Warehouse
-* The product ABC classification
-* The location kind (Zone, Area, Bin)
-* The amount of time to look backward (in days or weeks or months or years)
+For each product ABC classification, you can define the computation horizon,
+i.e. the amount of time to look backward (in days or weeks or months or years).
 
-Moreover, you can define:
+You can exclude some days of the week like saturday and sunday from the
+computation. However, if moves occurs on those excluded days, they are still counted.
+If your warehouse is open usualy on week days, the averages will be on 5 days a
+week. If the warehouse had some activity during the week-end, this will be
+considered in the total and average as if it happened during weekdays.
 
-* A safety factor
-* A standard deviation exclusion factor
-* A different root location for analysis per Warehouse
+The report also provides a recommended quantity. That recommended quantity is the biggest between:
+- a coverage in days * the average daily consumption + a safety
+- a coverage in days * the average consumption
+
+The second part tries to better recommend a quantity for C products.
+The safety is computed as:
+daily standard deviation * sqrt(coverage) * a safety factor
+It is up to you to configure the safety factor.

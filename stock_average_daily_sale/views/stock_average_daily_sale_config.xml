@@ -9,13 +9,13 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="warehouse_id" />
+                <field name="location_id" />
                 <field name="company_id" />
                 <field name="abc_classification_level" />
                 <field name="exclude_weekends" />
                 <field name="period_value" />
                 <field name="period_name" />
                 <field name="number_days_qty_in_stock" />
-                <field name="standard_deviation_exclude_factor" />
                 <field name="safety_factor" />
             </tree>
         </field>
@@ -30,6 +30,7 @@
                     <group>
                         <group>
                             <field name="warehouse_id" />
+                            <field name="location_id" />
                             <field name="company_id" />
                             <field name="abc_classification_level" />
                             <field name="exclude_weekends" />
@@ -38,7 +39,6 @@
                             <field name="period_value" />
                             <field name="period_name" />
                             <field name="number_days_qty_in_stock" />
-                            <field name="standard_deviation_exclude_factor" />
                             <field name="safety_factor" />
                         </group>
                     </group>
