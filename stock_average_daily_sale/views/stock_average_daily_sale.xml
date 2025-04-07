@@ -9,8 +9,11 @@
         <field name="arch" type="xml">
             <search string="Search Average Daily Sale">
                 <field name="product_id" />
-                <field name="warehouse_id" />
-                <field name="location_id" />
+                <field
+                    name="warehouse_id"
+                    groups="stock.group_stock_multi_warehouses"
+                />
+                <field name="location_id" groups="stock.group_adv_location" />
                 <separator />
                 <filter
                     string="Can be Sold"
@@ -34,12 +37,14 @@
                         name="group_by_warehouse"
                         domain="[]"
                         context="{'group_by': 'warehouse_id'}"
+                        groups="stock.group_stock_multi_warehouses"
                     />
                     <filter
                         string="Location"
                         name="group_by_location"
                         domain="[]"
                         context="{'group_by': 'location_id'}"
+                        groups="stock.group_adv_location"
                     />
                 </group>
             </search>
@@ -50,16 +55,21 @@
         <field name="model">stock.average.daily.sale</field>
         <field name="arch" type="xml">
             <tree create="false" delete="false">
-                <field name="warehouse_id" />
-                <field name="location_id" />
+                <field
+                    name="warehouse_id"
+                    groups="stock.group_stock_multi_warehouses"
+                />
+                <field name="location_id" groups="stock.group_adv_location" />
                 <field name="product_id" />
-                <field name="abc_classification_level" />
-                <field name="nbr_sales" />
-                <field name="average_qty_by_sale" />
-                <field name="average_daily_sales_count" />
-                <field name="average_daily_qty" />
-                <field name="safety" />
-                <field name="recommended_qty" />
+                <field name="date_from" optional="hide" />
+                <field name="date_to" optional="hide" />
+                <field name="abc_classification_level" optional="show" />
+                <field name="nbr_sales" optional="show" />
+                <field name="average_qty_by_sale" optional="show" />
+                <field name="average_daily_sales_count" optional="show" />
+                <field name="average_daily_qty" optional="show" />
+                <field name="safety" optional="show" />
+                <field name="recommended_qty" optional="show" />
             </tree>
         </field>
     </record>
@@ -70,8 +80,11 @@
             <form create="false" delete="false">
                 <group>
                     <group>
-                        <field name="warehouse_id" />
-                        <field name="location_id" />
+                        <field
+                            name="warehouse_id"
+                            groups="stock.group_stock_multi_warehouses"
+                        />
+                        <field name="location_id" groups="stock.group_adv_location" />
                         <field name="product_id" />
                         <field name="abc_classification_level" />
                         <field name="sale_ok" />
