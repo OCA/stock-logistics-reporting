@@ -24,8 +24,8 @@ class StockQuantityHistory(models.TransientModel):
             ctx["compute_child"] = self.include_child_locations
             if ctx.get("company_owned", False):
                 ctx.pop("company_owned")
-            action[
-                "display_name"
-            ] = f"{self.location_id.complete_name} - {action['display_name']}"
+            action["display_name"] = (
+                f"{self.location_id.complete_name} - {action['display_name']}"
+            )
             action["context"] = ctx
         return action
