@@ -14,5 +14,5 @@
     ],
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": ["stock"],
-    "data": ["wizards/stock_quantity_history.xml"],
+    "data": ["views/product_views.xml", "wizards/stock_quantity_history.xml"],
 }

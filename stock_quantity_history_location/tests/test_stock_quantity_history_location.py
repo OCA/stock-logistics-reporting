@@ -2,9 +2,8 @@
 # Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from lxml import etree
 
-from odoo import Command, fields
+from odoo import fields
 
 from .common import TestCommon
 
@@ -66,29 +65,3 @@ class TestStockQuantityHistoryLocation(TestCommon):
         action = wizard.with_context().open_at_date()
         self.assertEqual(action["context"]["compute_child"], True)
         self.assertEqual(action["context"]["location"], self.test_stock_loc.id)
-
-    def test_03_get_stock_quant_list_view(self):
-        # 1. Get Stock Quant list view without the `group_stock_multi_locations` group
-        self.env.user.write(
-            {"groups_id": [Command.unlink(self.group_multi_locations.id)]}
-        )
-        views = [[False, "list"]]
-        sq_views = self.env["stock.quant"].get_views(views=views)
-        list_view = sq_views.get("views", {}).get("list", {})
-        arch = list_view.get("arch", "")
-        arch_tree = etree.XML(arch)
-        buttons = arch_tree.xpath('//button[@name="action_inventory_at_date"]')
-        for button in buttons:
-            self.assertEqual(button.get("string"), "Inventory at Date")
-        # 2. Now, with the group
-        self.env.user.write(
-            {"groups_id": [Command.link(self.group_multi_locations.id)]}
-        )
-        views = [[False, "list"]]
-        sq_views = self.env["stock.quant"].get_views(views=views)
-        list_view = sq_views.get("views", {}).get("list", {})
-        arch = list_view.get("arch", "")
-        arch_tree = etree.XML(arch)
-        buttons = arch_tree.xpath('//button[@name="action_inventory_at_date"]')
-        for button in buttons:
-            self.assertEqual(button.get("string"), "Inventory at Date & Location")

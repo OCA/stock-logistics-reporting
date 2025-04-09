@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="product_product_stock_tree">
+        <field name="name">product.product.stock.list</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree" />
+        <field name="priority" eval="100" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//header/button[@name='%(stock.action_inventory_at_date)d']"
+                position="replace"
+            >
+                <button
+                    name="%(stock.action_inventory_at_date)d"
+                    invisible="((context.get('inventory_mode') and not context.get('inventory_report_mode')) or context.get('no_at_date'))"
+                    string="Inventory at Date"
+                    type="action"
+                    class="btn-primary ms-1"
+                    display="always"
+                    groups="!stock.group_stock_multi_locations"
+                />
+                <button
+                    name="%(stock.action_inventory_at_date)d"
+                    invisible="((context.get('inventory_mode') and not context.get('inventory_report_mode')) or context.get('no_at_date'))"
+                    string="Inventory at Date &amp; Location"
+                    type="action"
+                    class="btn-primary ms-1"
+                    display="always"
+                    groups="stock.group_stock_multi_locations"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

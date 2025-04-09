@@ -83,6 +83,10 @@ Contributors
 
    -  Ernesto Tejeda
 
+-  `Sodexis <https://www.sodexis.com>`__ <dev@sodexis.com>
+
+   -  Sakthivel <sakthivel@sodexis.com>
+
 Maintainers
 -----------
 
