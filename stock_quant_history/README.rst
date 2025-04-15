@@ -17,26 +17,27 @@ Stock Quant History
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/14.0/stock_quant_history
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/17.0/stock_quant_history
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-14-0/stock-logistics-reporting-14-0-stock_quant_history
+    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-17-0/stock-logistics-reporting-17-0-stock_quant_history
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows regenerate stock.quant as it was for a given date.
 
-All stock quant history re-generated for a given date are called snapshot.
+All stock quant history re-generated for a given date are called
+snapshot.
 
-To generate the first snapshot this module assume all `stock.move.line`
+To generate the first snapshot this module assume all stock.move.line
 are present in the database.
 
-Next snapshot is computed based on the previous snapshot present in the database.
-
+Next snapshot is computed based on the previous snapshot present in the
+database.
 
 **Table of contents**
 
@@ -47,48 +48,48 @@ Usage
 =====
 
 Generate a new stock snapshot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
-* Go to:  *Inventory / Reporting / History / Stock snapshot*
-* choose the date you want to re-generate stock quants
-* click on Generate
+- Go to: *Inventory / Reporting / History / Stock snapshot*
+- choose the date you want to re-generate stock quants
+- click on Generate
 
 Consult stock quant for a given snapshot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
-* Go to:  *Inventory / Reporting / History / Stock snapshot*
-* select the existing snapshot to open the form view
-* click on smart button to display quants at that time
+- Go to: *Inventory / Reporting / History / Stock snapshot*
+- select the existing snapshot to open the form view
+- click on smart button to display quants at that time
 
 Compare stock over snapshots
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
-* Go to: *Inventory / Reporting / History / Stock snapshot*
-* In tree view select at least 2 snapshots
-* Click on *Action / Compare stocks*
-* You'll be redirected to the stock quant tree view for selected snapshots
+- Go to: *Inventory / Reporting / History / Stock snapshot*
+- In tree view select at least 2 snapshots
+- Click on *Action / Compare stocks*
+- You'll be redirected to the stock quant tree view for selected
+  snapshots
 
 or
 
-* Go to: *Inventory / Reporting / History / Stock quants*
-* use different filters / group and views to make your analysis
+- Go to: *Inventory / Reporting / History / Stock quants*
+- use different filters / group and views to make your analysis
 
 Known issues / Roadmap
 ======================
 
 Short terms
-~~~~~~~~~~~
+-----------
 
-* Add a companion module stock_quant_history_account
-  to make the glue between stock_quant_history and stock_account adding
-  the stock value
+- Add a companion module stock_quant_history_account to make the glue
+  between stock_quant_history and stock_account adding the stock value
 
 Long terms
-~~~~~~~~~~
+----------
 
-* Add filters (by locations, by product...) while generating
-  tight snapshots (not reused as based snapshot)
-* add owner and package fields
+- Add filters (by locations, by product...) while generating tight
+  snapshots (not reused as based snapshot)
+- add owner and package fields
 
 Bug Tracker
 ===========
@@ -96,7 +97,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-reporting/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -104,12 +105,12 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Pierre Verkest <pierreverkest84@gmail.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -129,6 +130,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-petrus-v| 
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/14.0/stock_quant_history>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/17.0/stock_quant_history>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
