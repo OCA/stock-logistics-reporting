@@ -137,8 +137,7 @@ class TestStockQuantHistory(SavepointCase):
         self.assertEqual(
             len(errors1) + len(errors2),
             0,
-            "Following diff detected:\n"
-            "\n".join(errors1)
+            "Following diff detected:\n" "\n".join(errors1)
             + "\n or/and \n "
             + "\n".join(errors2)
             + "\n\nOK records:\n"
@@ -226,7 +225,6 @@ class TestStockQuantHistory(SavepointCase):
         self.assertEqual(len(stock_history_1970.stock_quant_history_ids), 0)
 
     def test_round_decimal_using_uom_precision(self):
-
         with freeze_time("2023-01-01 10:00:00"):
             self._update_product_stock(10.001)
 
@@ -240,8 +238,9 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_10.action_generate_stock_quant_history()
         quant_history_10 = snapshot_10.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         # force wrong rounding for testing purpose adding float in python can be tricky
@@ -256,14 +255,14 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_20.action_generate_stock_quant_history()
         quant_history_20 = snapshot_20.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_20.quantity, 20)
 
     def test_next_quant_history_generation(self):
-
         with freeze_time("2023-01-01 10:00:00"):
             self._update_product_stock(10)
 
@@ -277,8 +276,9 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_10.action_generate_stock_quant_history()
         quant_history_10 = snapshot_10.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_10.quantity, 10)
@@ -290,8 +290,9 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_15.action_generate_stock_quant_history()
         quant_history_15 = snapshot_15.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_15.quantity, 10)
@@ -306,8 +307,9 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_20.action_generate_stock_quant_history()
         quant_history_20 = snapshot_20.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_20.quantity, 30)
@@ -353,8 +355,9 @@ class TestStockQuantHistory(SavepointCase):
         snapshot_10.action_generate_stock_quant_history()
         self.assertFalse(snapshot_10.previous_snapshot_id)
         quant_history_10 = snapshot_10.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_10.quantity, 10)
@@ -372,8 +375,9 @@ class TestStockQuantHistory(SavepointCase):
         snapshot_15.action_generate_stock_quant_history()
         self.assertEqual(snapshot_15.previous_snapshot_id, snapshot_10)
         quant_history_15 = snapshot_15.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertFalse(
@@ -388,8 +392,9 @@ class TestStockQuantHistory(SavepointCase):
         snapshot_20.action_generate_stock_quant_history()
         self.assertEqual(snapshot_20.previous_snapshot_id, snapshot_15)
         quant_history_20 = snapshot_20.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_20.quantity, 30)
@@ -403,9 +408,7 @@ class TestStockQuantHistory(SavepointCase):
         )
 
     def test_consu_product_are_ignored(self):
-
         with freeze_time("2023-01-01 09:00:00"):
-
             # Create stock picking with consumable
             picking = self.env["stock.picking"].create(
                 {
@@ -438,7 +441,6 @@ class TestStockQuantHistory(SavepointCase):
         self.assertFalse(snapshot_10.stock_quant_history_ids)
 
     def test_different_uom(self):
-
         with freeze_time("2023-01-01 10:00:00"):
             self._update_product_stock(10, uom=self.env.ref("uom.product_uom_dozen"))
 
@@ -449,8 +451,9 @@ class TestStockQuantHistory(SavepointCase):
         )
         snapshot_10.action_generate_stock_quant_history()
         quant_history_10 = snapshot_10.stock_quant_history_ids.filtered(
-            lambda quant_history, pdt=self.product, loc=self.location: quant_history.product_id
-            == pdt
+            lambda quant_history,
+            pdt=self.product,
+            loc=self.location: quant_history.product_id == pdt
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_10.quantity, 120)
