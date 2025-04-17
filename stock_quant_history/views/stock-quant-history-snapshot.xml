@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2024 Foodles (http://www.foodles.co).
-     @author Pierre Verkest <pierreverkest84@gmail.com>
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<?xml version='1.0' encoding='utf-8' ?>
 <odoo>
 
     <record model="ir.ui.view" id="view_stock_quant_history_snapshot_search">
@@ -51,10 +48,13 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!--TODO:
+                    Result from converting "states='draft'" attribute into an 'invisible' attribute
+                         Manually combine states condition into any 'invisible' overrides in inheriting views as well-->
                     <button
                         name="action_generate_stock_quant_history"
                         class="oe_highlight"
-                        states="draft"
+                        invisible="state not in ['draft']"
                         string="Generate"
                         type="object"
                     />
@@ -66,7 +66,7 @@
                             class="oe_stat_button"
                             name="action_related_stock_quant_history_tree_view"
                             type="object"
-                            attrs="{'invisible':[('state', 'not in', ['generated'])]}"
+                            invisible="state not in ['generated']"
                             icon="fa-history"
                         >
                             <!-- go to stock_quant_history_ids tree view -->
@@ -76,7 +76,11 @@
                     </div>
                     <div class="oe_title">
                         <h1>
-                            <field name="inventory_date" widget="datetime" />
+                            <field
+                                name="inventory_date"
+                                widget="datetime"
+                                readonly="state != 'draft'"
+                            />
                         </h1>
                     </div>
                     <group>
