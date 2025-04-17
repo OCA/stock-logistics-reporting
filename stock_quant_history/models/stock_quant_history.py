@@ -56,7 +56,7 @@ class StockQuantHistory(models.Model):
         check_company=True,
     )
     lot_id = fields.Many2one(
-        "stock.production.lot",
+        "stock.lot",
         "Lot/Serial Number",
         index=True,
         ondelete="restrict",
@@ -64,7 +64,6 @@ class StockQuantHistory(models.Model):
         check_company=True,
     )
     quantity = fields.Float(
-        "Quantity",
         help=(
             "Quantity of products in this quant, "
             "in the default unit of measure of the product"

@@ -4,10 +4,10 @@ from freezegun import freeze_time
 
 from odoo import fields
 from odoo.exceptions import AccessError
-from odoo.tests import SavepointCase, users
+from odoo.tests import TransactionCase, users
 
 
-class TestStockQuantHistory(SavepointCase):
+class TestStockQuantHistory(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -51,7 +51,7 @@ class TestStockQuantHistory(SavepointCase):
                 "tracking": "lot",
             }
         )
-        cls.lot = cls.env["stock.production.lot"].create(
+        cls.lot = cls.env["stock.lot"].create(
             {
                 "name": "lot test",
                 "product_id": cls.product.id,
@@ -65,34 +65,44 @@ class TestStockQuantHistory(SavepointCase):
             }
         )
 
-    def _update_product_stock(self, qty, lot=None, location=None, uom=None):
-        if lot is None:
-            lot = self.lot
-        if not location:
-            location = self.location
+    def _update_product_stock(self, qty, uom=None):
+        lot = self.lot
+        location = self.location
         if not uom:
             uom = self.product.uom_id
-        inventory = self.env["stock.inventory"].create(
+
+        qty_in_base_uom = uom._compute_quantity(qty, self.product.uom_id)
+
+        quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", location.id),
+                ("lot_id", "=", lot.id if lot else False),
+            ],
+            limit=1,
+        )
+
+        if not quant:
+            quant = (
+                self.env["stock.quant"]
+                .with_context(inventory_mode=True)
+                .create(
+                    {
+                        "product_id": self.product.id,
+                        "location_id": location.id,
+                        "lot_id": lot.id if lot else False,
+                        "inventory_quantity": qty_in_base_uom,
+                    }
+                )
+            )
+            quant.action_apply_inventory()
+            return
+
+        quant.with_context(inventory_mode=True).write(
             {
-                "name": "Test Inventory",
-                "product_ids": [(6, 0, self.product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": qty,
-                            "location_id": location.id,
-                            "product_id": self.product.id,
-                            "product_uom_id": uom.id,
-                            "prod_lot_id": lot.id,
-                        },
-                    )
-                ],
+                "inventory_quantity_auto_apply": qty_in_base_uom,
             }
         )
-        inventory.action_validate()
 
     @classmethod
     def quants_quantity_group_by(cls, recordset, key):
@@ -137,7 +147,7 @@ class TestStockQuantHistory(SavepointCase):
         self.assertEqual(
             len(errors1) + len(errors2),
             0,
-            "Following diff detected:\n" "\n".join(errors1)
+            "Following diff detected:\n\n".join(errors1)
             + "\n or/and \n "
             + "\n".join(errors2)
             + "\n\nOK records:\n"
@@ -429,7 +439,7 @@ class TestStockQuantHistory(SavepointCase):
                 }
             )
             picking.action_confirm()
-            picking.move_ids_without_package.quantity_done = 50.000
+            picking.move_ids_without_package.quantity = 50.000
             picking.button_validate()
 
         snapshot_10 = self.env["stock.quant.history.snapshot"].create(
@@ -457,3 +467,7 @@ class TestStockQuantHistory(SavepointCase):
             and quant_history.location_id == loc
         )
         self.assertEqual(quant_history_10.quantity, 120)
+
+    def test_default_name(self):
+        snapshot = self.env["stock.quant.history.snapshot"].new()
+        self.assertEqual(snapshot.name, "Snapshot")

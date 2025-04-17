@@ -4,6 +4,8 @@
 import logging
 from collections import defaultdict
 
+from pytz import timezone
+
 from odoo import _, api, fields, models, tools
 from odoo.osv.expression import AND
 
@@ -46,7 +48,6 @@ class StockQuantHistorySnapshot(models.Model):
         string="Inventory date",
         required=True,
         readonly=True,
-        states={"draft": [("readonly", False)]},
         help="The date used to create stock.quant.history as it was for the given date",
     )
     generated_date = fields.Datetime(
@@ -69,7 +70,16 @@ class StockQuantHistorySnapshot(models.Model):
         dt_format = lang.date_format + " " + lang.time_format
 
         for rec in self:
-            rec.name = _("Snapshot %s") % (rec.inventory_date.strftime(dt_format))
+            if not rec.inventory_date:
+                rec.name = _("Snapshot")
+                continue
+
+            user_tz = self.env.user.tz or "UTC"
+            user_timezone = timezone(user_tz)
+
+            local_inventory_date = rec.inventory_date.astimezone(user_timezone)
+
+            rec.name = _("Snapshot %s") % local_inventory_date.strftime(dt_format)
 
     def action_generate_stock_quant_history(self):
         for snapshot in self:
@@ -161,7 +171,7 @@ class StockQuantHistorySnapshot(models.Model):
                         (move_line.product_id, move_line.lot_id, move_line.location_id)
                     ].quantity
                     - move_line.product_uom_id._compute_quantity(
-                        move_line.qty_done, move_line.product_id.uom_id
+                        move_line.quantity, move_line.product_id.uom_id
                     ),
                     precision_rounding=move_line.product_id.uom_id.rounding,
                 )
@@ -178,15 +188,14 @@ class StockQuantHistorySnapshot(models.Model):
                         )
                     ].quantity
                     + move_line.product_uom_id._compute_quantity(
-                        move_line.qty_done, move_line.product_id.uom_id
+                        move_line.quantity, move_line.product_id.uom_id
                     ),
                     precision_rounding=move_line.product_id.uom_id.rounding,
                 )
-
         # remove line with zero to save same disk space
         # avoid loop with direct SQL query
         _logger.info("Remove useless stock_quant_history with quantity == 0")
-        self.env["stock.quant.history"].flush()
+        self.env["stock.quant.history"]._flush()
         self.env.cr.execute(
             "DELETE FROM stock_quant_history where quantity = 0 and snapshot_id = %s",
             (self.id,),
