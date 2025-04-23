@@ -1,10 +1,10 @@
 from odoo import fields
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from odoo.addons.queue_job.tests.common import trap_jobs
 
 
-class TestStockQuantHistoryQueued(SavepointCase):
+class TestStockQuantHistoryQueued(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
