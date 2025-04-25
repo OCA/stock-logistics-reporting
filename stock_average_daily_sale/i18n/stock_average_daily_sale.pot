@@ -15,6 +15,10 @@ msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__abc_classification_level
+msgid "ABC"
+msgstr ""
+
+#. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__abc_classification_level
 msgid "Abc Classification Level"
 msgstr ""
@@ -24,22 +28,17 @@ msgstr ""
 #: code:addons/stock_average_daily_sale/models/stock_average_daily_sale_config.py:0
 #: model:ir.model.constraint,message:stock_average_daily_sale.constraint_stock_average_daily_sale_config_abc_classification_level_unique
 #, python-format
-msgid "Abc Classification Level must be unique per warehouse"
+msgid "Abc Classification Level must be unique per location"
 msgstr ""
 
 #. module: stock_average_daily_sale
-#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__qty_in_stock
-msgid "All stock locations, reserved product included"
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__active
+msgid "Active"
 msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
 msgid "Average Daily Qty"
-msgstr ""
-
-#. module: stock_average_daily_sale
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_warehouse__average_daily_sale_root_location_id
-msgid "Average Daily Sale Root Location"
 msgstr ""
 
 #. module: stock_average_daily_sale
@@ -61,11 +60,6 @@ msgstr ""
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__average_qty_by_sale
 msgid "Average Qty By Sale"
-msgstr ""
-
-#. module: stock_average_daily_sale
-#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.view_warehouse
-msgid "Average Sales"
 msgstr ""
 
 #. module: stock_average_daily_sale
@@ -133,9 +127,7 @@ msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_sales_count
-msgid ""
-"How much deliveries on average for this product on the period. The spikes "
-"are excluded from the average computation."
+msgid "How much deliveries on average for this product on the period."
 msgstr ""
 
 #. module: stock_average_daily_sale
@@ -162,6 +154,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__write_date
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_demo__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__location_id
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__location_id
+#: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
+msgid "Location"
+msgstr ""
+
+#. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__max_daily_qty
+msgid "Max Daily Qty"
 msgstr ""
 
 #. module: stock_average_daily_sale
@@ -221,16 +225,6 @@ msgid "Product"
 msgstr ""
 
 #. module: stock_average_daily_sale
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__standard_deviation
-msgid "Qty Standard Deviation"
-msgstr ""
-
-#. module: stock_average_daily_sale
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__qty_in_stock
-msgid "Quantity in stock"
-msgstr ""
-
-#. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__recommended_qty
 msgid "Recommended Qty"
 msgstr ""
@@ -278,11 +272,6 @@ msgid "Specify if the product can be selected in a sales order line."
 msgstr ""
 
 #. module: stock_average_daily_sale
-#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__standard_deviation_exclude_factor
-msgid "Standard Deviation Exclude Factor"
-msgstr ""
-
-#. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__config_id
 msgid "Stock Average Daily Sale Configuration"
 msgstr ""
@@ -295,17 +284,21 @@ msgid "The materialized view has not been populated. Launch the cron."
 msgstr ""
 
 #. module: stock_average_daily_sale
+#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__max_daily_qty
+msgid "The max quantity delivered on one day for this product on the period."
+msgstr ""
+
+#. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_qty_by_sale
 msgid ""
 "The quantity delivered on average for one delivery of this product on the "
-"period. The spikes are excluded from the average computation."
+"period."
 msgstr ""
 
 #. module: stock_average_daily_sale
 #: model:ir.model.fields,help:stock_average_daily_sale.field_stock_average_daily_sale__average_daily_qty
 msgid ""
 "The quantity delivered on average on one day for this product on the period."
-" The spikes are excluded from the average computation."
 msgstr ""
 
 #. module: stock_average_daily_sale
@@ -315,17 +308,11 @@ msgid ""
 msgstr ""
 
 #. module: stock_average_daily_sale
-#: model:ir.model.fields,help:stock_average_daily_sale.field_stock_warehouse__average_daily_sale_root_location_id
-msgid "This is the root location for daily sale average stock computations"
-msgstr ""
-
-#. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__date_to
 msgid "To"
 msgstr ""
 
 #. module: stock_average_daily_sale
-#: model:ir.model,name:stock_average_daily_sale.model_stock_warehouse
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__warehouse_id
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__warehouse_id
 #: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
