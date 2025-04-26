@@ -4,11 +4,12 @@
 {
     "name": "Picking Comments",
     "summary": "Comments texts templates on Picking documents",
-    "version": "14.0.1.1.0",
+    "version": "16.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "C2i Change 2 improve," "Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    "maintainers": ["cubells"],
     "depends": ["stock", "base_comment_template"],
     "data": [
         "views/base_comment_template_view.xml",

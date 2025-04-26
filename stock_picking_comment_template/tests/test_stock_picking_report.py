@@ -36,24 +36,21 @@ class TestStockPickingReport(TransactionCase):
                 "company_id": self.company.id,
                 "position": position,
                 "text": "Text " + position,
+                "models": "stock.picking",
                 "model_ids": [(6, 0, model.ids)],
             }
         )
 
     def test_comments_in_deliveryslip(self):
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(self.picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", self.picking.ids
         )
         self.assertRegex(str(res[0]), self.before_comment.text)
         self.assertRegex(str(res[0]), self.after_comment.text)
 
     def test_comments_in_report_picking(self):
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_picking")
-            ._render_qweb_html(self.picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_picking", self.picking.ids
         )
         self.assertRegex(str(res[0]), self.before_comment.text)
         self.assertRegex(str(res[0]), self.after_comment.text)
