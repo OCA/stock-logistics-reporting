@@ -1,6 +1,6 @@
 import logging
 
-from odoo import tools
+from odoo.tools import sql
 from odoo.tools.sql import column_exists
 
 _logger = logging.getLogger(__name__)
@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 def create_column_product_total_price(cr):
     if not column_exists(cr, "stock_move", "product_total_price"):
         _logger.info("Initializing column product_total_price on table stock_move")
-        tools.create_column(
+        sql.create_column(
             cr=cr,
             tablename="stock_move",
             columnname="product_total_price",

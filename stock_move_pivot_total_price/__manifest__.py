@@ -3,7 +3,7 @@
 {
     "name": "Stock Move Pivot Total Price",
     "summary": "Adds a total price UOM to the stock move pivot view",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Odoo Community Association (OCA), APSL-Nagarro",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Stock",

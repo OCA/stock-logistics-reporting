@@ -1,15 +1,15 @@
 from datetime import datetime
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPivotTotalPrice(TransactionCase):
+class TestStockPivotTotalPrice(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product", "list_price": 10.0}
+            {"name": "Test Product", "type": "consu", "list_price": 10.0}
         )
         cls.stock_location = cls.env["stock.location"].create(
             {"name": "Location 1", "usage": "internal"}
