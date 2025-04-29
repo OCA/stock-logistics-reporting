@@ -117,12 +117,6 @@ msgid "Inventory date"
 msgstr ""
 
 #. module: stock_quant_history
-#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history____last_update
-#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__write_uid
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__write_uid
 msgid "Last Updated by"
@@ -189,12 +183,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_quant_history
+#. odoo-python
+#: code:addons/stock_quant_history/models/stock_quant_history_snapshot.py:0
 #: model:ir.ui.menu,name:stock_quant_history.menu_action_stock_quant_history_snapshot
 #: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+#, python-format
 msgid "Snapshot"
 msgstr ""
 
 #. module: stock_quant_history
+#. odoo-python
 #: code:addons/stock_quant_history/models/stock_quant_history_snapshot.py:0
 #, python-format
 msgid "Snapshot %s"
