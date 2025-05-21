@@ -377,6 +377,8 @@ snapshot.</p>
 are present in the database.</p>
 <p>Next snapshot is computed based on the previous snapshot present in the
 database.</p>
+<p>Once a snapshot has been taken, every locked and done picking won’t be
+able to unlock to avoid incoherent stock history.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -384,17 +386,18 @@ database.</p>
 <li><a class="reference internal" href="#generate-a-new-stock-snapshot" id="toc-entry-2">Generate a new stock snapshot</a></li>
 <li><a class="reference internal" href="#consult-stock-quant-for-a-given-snapshot" id="toc-entry-3">Consult stock quant for a given snapshot</a></li>
 <li><a class="reference internal" href="#compare-stock-over-snapshots" id="toc-entry-4">Compare stock over snapshots</a></li>
+<li><a class="reference internal" href="#avoid-pickings-lock-automation-on-snapshot-creation" id="toc-entry-5">Avoid pickings lock automation on snapshot creation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-5">Known issues / Roadmap</a><ul>
-<li><a class="reference internal" href="#short-terms" id="toc-entry-6">Short terms</a></li>
-<li><a class="reference internal" href="#long-terms" id="toc-entry-7">Long terms</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-6">Known issues / Roadmap</a><ul>
+<li><a class="reference internal" href="#short-terms" id="toc-entry-7">Short terms</a></li>
+<li><a class="reference internal" href="#long-terms" id="toc-entry-8">Long terms</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-8">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-9">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-10">Authors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-11">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-9">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-10">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-11">Authors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-12">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -432,18 +435,25 @@ snapshots</li>
 <li>use different filters / group and views to make your analysis</li>
 </ul>
 </div>
+<div class="section" id="avoid-pickings-lock-automation-on-snapshot-creation">
+<h2><a class="toc-backref" href="#toc-entry-5">Avoid pickings lock automation on snapshot creation</a></h2>
+<ul class="simple">
+<li>Go to: <em>Inventory / Configuration / Settings</em></li>
+<li>Uncheck the option <em>Auto lock picking on snapshot</em></li>
+</ul>
+</div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#toc-entry-5">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-6">Known issues / Roadmap</a></h1>
 <div class="section" id="short-terms">
-<h2><a class="toc-backref" href="#toc-entry-6">Short terms</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-7">Short terms</a></h2>
 <ul class="simple">
 <li>Add a companion module stock_quant_history_account to make the glue
 between stock_quant_history and stock_account adding the stock value</li>
 </ul>
 </div>
 <div class="section" id="long-terms">
-<h2><a class="toc-backref" href="#toc-entry-7">Long terms</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-8">Long terms</a></h2>
 <ul class="simple">
 <li>Add filters (by locations, by product…) while generating tight
 snapshots (not reused as based snapshot)</li>
@@ -452,7 +462,7 @@ snapshots (not reused as based snapshot)</li>
 </div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-8">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-9">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -460,15 +470,17 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-9">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-10">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-10">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-11">Authors</a></h2>
 <ul class="simple">
 <li>Pierre Verkest &lt;<a class="reference external" href="mailto:pierreverkest84&#64;gmail.com">pierreverkest84&#64;gmail.com</a>&gt;</li>
+<li>Foodles</li>
+<li>Stéphane Mangin &lt;<a class="reference external" href="mailto:stephane.mangin&#64;foodles.com">stephane.mangin&#64;foodles.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-11">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-12">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
@@ -476,8 +488,8 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
-<p><a class="reference external image-reference" href="https://github.com/petrus-v"><img alt="petrus-v" src="https://github.com/petrus-v.png?size=40px" /></a></p>
+<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainers</a>:</p>
+<p><a class="reference external image-reference" href="https://github.com/petrus-v"><img alt="petrus-v" src="https://github.com/petrus-v.png?size=40px" /></a> <a class="reference external image-reference" href="https://github.com/StephaneMangin"><img alt="StephaneMangin" src="https://github.com/StephaneMangin.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/tree/17.0/stock_quant_history">OCA/stock-logistics-reporting</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>

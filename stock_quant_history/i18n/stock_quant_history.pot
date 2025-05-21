@@ -19,6 +19,13 @@ msgid "<span>History details</span>"
 msgstr ""
 
 #. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_res_company__stock_history_snapshot_auto_locks_picking
+#: model:ir.model.fields,field_description:stock_quant_history.field_res_config_settings__stock_history_snapshot_auto_locks_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.res_config_settings_view_form
+msgid "Auto lock picking on snapshot"
+msgstr ""
+
+#. module: stock_quant_history
 #: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__previous_snapshot_id
 msgid "Base snapshot used to generate this snapshot"
 msgstr ""
@@ -262,6 +269,24 @@ msgstr ""
 #. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__product_uom_id
 msgid "Unit of Measure"
+msgstr ""
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_res_company__stock_history_snapshot_auto_locks_picking
+#: model:ir.model.fields,help:stock_quant_history.field_res_config_settings__stock_history_snapshot_auto_locks_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.res_config_settings_view_form
+msgid ""
+"When a stock quant history snapshot is generated, automatically locks all "
+"done pickings that are related to the snapshot."
+msgstr ""
+
+#. module: stock_quant_history
+#. odoo-python
+#: code:addons/stock_quant_history/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot unlock '%(name)s' because it has related stock quant history:\n"
+" - %(snapshot_text)s"
 msgstr ""
 
 #. module: stock_quant_history

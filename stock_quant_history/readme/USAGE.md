@@ -22,3 +22,8 @@ or
 
 - Go to: *Inventory / Reporting / History / Stock quants*
 - use different filters / group and views to make your analysis
+
+## Avoid pickings lock automation on snapshot creation
+
+- Go to: *Inventory / Configuration / Settings*
+- Uncheck the option *Auto lock picking on snapshot*

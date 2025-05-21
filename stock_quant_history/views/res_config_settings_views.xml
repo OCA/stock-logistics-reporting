@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Foodles (http://www.foodles.co).
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">
+            Stock settings: auto lock picking on snapshot creation
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <setting id="warning_info" position="after">
+                <setting
+                    id="stock_history_snapshot"
+                    company_dependent="1"
+                    string="Auto lock picking on snapshot"
+                    help="When a stock quant history snapshot is generated, automatically locks all done pickings that are related to the snapshot."
+                >
+                    <field name="stock_history_snapshot_auto_locks_picking" />
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>

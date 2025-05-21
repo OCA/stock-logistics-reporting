@@ -4,15 +4,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-03 08:37+0000\n"
+"PO-Revision-Date: 2025-06-03 10:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.6\n"
 
 #. module: stock_quant_history
 #: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_form
@@ -20,9 +23,22 @@ msgid "<span>History details</span>"
 msgstr "<span>Stocks</span>"
 
 #. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_res_company__stock_history_snapshot_auto_locks_picking
+#: model:ir.model.fields,field_description:stock_quant_history.field_res_config_settings__stock_history_snapshot_auto_locks_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.res_config_settings_view_form
+msgid "Auto lock picking on snapshot"
+msgstr ""
+"Verrouillage automatique des préparations à la création d’un historique de stock"
+
+#. module: stock_quant_history
 #: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__previous_snapshot_id
 msgid "Base snapshot used to generate this snapshot"
 msgstr "Cliché de Stock de base utilisé pour la génération de ce cliché"
+
+#. module: stock_quant_history
+#: model:ir.model,name:stock_quant_history.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
 
 #. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__company_id
@@ -33,6 +49,11 @@ msgstr "Société"
 #: model:ir.actions.server,name:stock_quant_history.action_multi_related_stock_quant_history_tree_view
 msgid "Compare stocks"
 msgstr "Comparer les stocks des clichés sélectionnés"
+
+#. module: stock_quant_history
+#: model:ir.model,name:stock_quant_history.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
 
 #. module: stock_quant_history
 #: model_terms:ir.actions.act_window,help:stock_quant_history.action_stock_quant_history_snapshot
@@ -119,12 +140,6 @@ msgid "Inventory date"
 msgstr "Date du stock"
 
 #. module: stock_quant_history
-#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history____last_update
-#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__write_uid
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__write_uid
 msgid "Last Updated by"
@@ -156,7 +171,7 @@ msgstr "Emplacement et ses enfants"
 #. module: stock_quant_history
 #: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
 msgid "Lot"
-msgstr "Lot"
+msgstr ""
 
 #. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__lot_id
@@ -194,12 +209,16 @@ msgstr ""
 "l'article"
 
 #. module: stock_quant_history
+#. odoo-python
+#: code:addons/stock_quant_history/models/stock_quant_history_snapshot.py:0
 #: model:ir.ui.menu,name:stock_quant_history.menu_action_stock_quant_history_snapshot
 #: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+#, python-format
 msgid "Snapshot"
 msgstr "Cliché"
 
 #. module: stock_quant_history
+#. odoo-python
 #: code:addons/stock_quant_history/models/stock_quant_history_snapshot.py:0
 #, python-format
 msgid "Snapshot %s"
@@ -269,9 +288,36 @@ msgstr ""
 "l'était à cette date."
 
 #. module: stock_quant_history
+#: model:ir.model,name:stock_quant_history.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_quant_history
 #: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__product_uom_id
 msgid "Unit of Measure"
 msgstr "Unité de mesure"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_res_company__stock_history_snapshot_auto_locks_picking
+#: model:ir.model.fields,help:stock_quant_history.field_res_config_settings__stock_history_snapshot_auto_locks_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.res_config_settings_view_form
+msgid ""
+"When a stock quant history snapshot is generated, automatically locks all "
+"done pickings that are related to the snapshot."
+msgstr ""
+"Lorsqu'un historique des stocks est généré, toutes les préparations "
+"associées et terminées sont verrouillées."
+
+#. module: stock_quant_history
+#. odoo-python
+#: code:addons/stock_quant_history/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot unlock '%(name)s' because it has related stock quant history:\n"
+" - %(snapshot_text)s"
+msgstr ""
+"Déverrouillage impossible de la préparation '%(name)s' car un ou plusieurs historiques de stock existent :\n"
+" - %(snapshot_text)s"
 
 #. module: stock_quant_history
 #: model:ir.model,name:stock_quant_history.model_stock_quant_history_snapshot

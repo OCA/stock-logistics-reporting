@@ -161,37 +161,34 @@ class StockQuantHistorySnapshot(models.Model):
         _logger.info(
             "Apply %s stock.move.line since previous snapshot", len(stock_move_lines)
         )
+        pickings = self.env["stock.picking"]
         ignored_location_usage = self._ignored_location_usage()
         for move_line in stock_move_lines:
+            quantity = move_line.product_uom_id._compute_quantity(
+                move_line.quantity, move_line.product_id.uom_id
+            )
             if move_line.location_id.usage not in ignored_location_usage:
-                quant_history[
+                quant_copy = quant_history[
                     (move_line.product_id, move_line.lot_id, move_line.location_id)
-                ].quantity = tools.float_round(
-                    quant_history[
-                        (move_line.product_id, move_line.lot_id, move_line.location_id)
-                    ].quantity
-                    - move_line.product_uom_id._compute_quantity(
-                        move_line.quantity, move_line.product_id.uom_id
-                    ),
+                ]
+                quant_copy.quantity = tools.float_round(
+                    quant_copy.quantity - quantity,
                     precision_rounding=move_line.product_id.uom_id.rounding,
                 )
-
             if move_line.location_dest_id.usage not in ignored_location_usage:
-                quant_history[
+                quant_copy = quant_history[
                     (move_line.product_id, move_line.lot_id, move_line.location_dest_id)
-                ].quantity = tools.float_round(
-                    quant_history[
-                        (
-                            move_line.product_id,
-                            move_line.lot_id,
-                            move_line.location_dest_id,
-                        )
-                    ].quantity
-                    + move_line.product_uom_id._compute_quantity(
-                        move_line.quantity, move_line.product_id.uom_id
-                    ),
+                ]
+                quant_copy.quantity = tools.float_round(
+                    quant_copy.quantity + quantity,
                     precision_rounding=move_line.product_id.uom_id.rounding,
                 )
+            pickings |= move_line.picking_id
+
+        # Lock all related pickings
+        if self.env.company.stock_history_snapshot_auto_locks_picking:
+            _logger.info(f"Locking {len(pickings)} related pickings")
+            pickings.sudo().write({"is_locked": True})
         # remove line with zero to save same disk space
         # avoid loop with direct SQL query
         _logger.info("Remove useless stock_quant_history with quantity == 0")

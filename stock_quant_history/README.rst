@@ -39,6 +39,9 @@ are present in the database.
 Next snapshot is computed based on the previous snapshot present in the
 database.
 
+Once a snapshot has been taken, every locked and done picking won't be
+able to unlock to avoid incoherent stock history.
+
 **Table of contents**
 
 .. contents::
@@ -75,6 +78,12 @@ or
 - Go to: *Inventory / Reporting / History / Stock quants*
 - use different filters / group and views to make your analysis
 
+Avoid pickings lock automation on snapshot creation
+---------------------------------------------------
+
+- Go to: *Inventory / Configuration / Settings*
+- Uncheck the option *Auto lock picking on snapshot*
+
 Known issues / Roadmap
 ======================
 
@@ -108,6 +117,8 @@ Authors
 -------
 
 * Pierre Verkest <pierreverkest84@gmail.com>
+* Foodles
+* Stéphane Mangin <stephane.mangin@foodles.com>
 
 Maintainers
 -----------
@@ -125,10 +136,13 @@ promote its widespread use.
 .. |maintainer-petrus-v| image:: https://github.com/petrus-v.png?size=40px
     :target: https://github.com/petrus-v
     :alt: petrus-v
+.. |maintainer-StephaneMangin| image:: https://github.com/StephaneMangin.png?size=40px
+    :target: https://github.com/StephaneMangin
+    :alt: StephaneMangin
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-petrus-v| 
+|maintainer-petrus-v| |maintainer-StephaneMangin| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/17.0/stock_quant_history>`_ project on GitHub.
 
