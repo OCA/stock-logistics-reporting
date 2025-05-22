@@ -16,6 +16,7 @@
     "license": "AGPL-3",
     "depends": [
         "sale_stock",
+        "purchase_stock",
     ],
     "data": [],
 }
