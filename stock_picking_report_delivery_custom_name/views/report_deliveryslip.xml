@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2023 Moduon Team S.L.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <!-- Use description picking as an alternative name for the product -->
+        <xpath
+            expr="//table[@name='stock_move_table']//tr[@t-as='move']//span[@t-field='move.product_id']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not move.description_picking or move.description_picking == move.product_id.name or move.description_picking == move.product_id.display_name</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_backorder_table']//t[@t-as='backorder']//span[@t-field='bo_line.product_id']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not bo_line.description_picking or bo_line.description_picking == bo_line.product_id.name or bo_line.description_picking == bo_line.product_id.display_name</attribute>
+        </xpath>
+    </template>
+    <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath
+            expr="//t[contains(@t-if, 'not description and description !=')]"
+            position="after"
+        >
+            <xpath expr="//span[@t-field='move_line.product_id']" position="move" />
+        </xpath>
+        <xpath expr="//span[@t-field='move_line.product_id']" position="attributes">
+            <attribute
+                name="t-if"
+            >description == '' or description == move_line.product_id.display_name or description == move_line.product_id.name</attribute>
+        </xpath>
+    </template>
+    <template
+        id="stock_report_delivery_aggregated_move_lines"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath expr="//span[contains(@t-esc, 'name')]" position="attributes">
+            <!-- Here the logic is already processed in the method stock.move.line._get_aggregated_properties -->
+            <attribute name="t-if">not aggregated_lines[line]['description']</attribute>
+        </xpath>
+    </template>
+</odoo>
