@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2025 Foodles (https://www.foodles.co/).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <template id="report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//t[@t-as='move']" position="attributes">
+            <attribute name="t-foreach">o.get_moves_for_report_picking()</attribute>
+        </xpath>
+        <xpath expr="//t[@t-as='move']/t[@t-as='ml']" position="attributes">
+            <attribute
+                name="t-foreach"
+            >move.get_move_lines_for_report_picking()</attribute>
+        </xpath>
+    </template>
+</odoo>
