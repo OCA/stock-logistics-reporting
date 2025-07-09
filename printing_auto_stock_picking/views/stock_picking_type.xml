@@ -6,10 +6,7 @@
     <field name="arch" type="xml">
       <xpath expr="//sheet/group[last()]">
         <separator string="Auto Printing Configuration" colspan="4" />
-        <field
-                    name="auto_printing_ids"
-                    context="{'default_model': 'stock.picking.type'}"
-                />
+        <field name="auto_printing_ids" context="{'default_model': 'stock.picking'}" />
       </xpath>
     </field>
   </record>
