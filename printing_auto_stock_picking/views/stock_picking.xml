@@ -10,7 +10,7 @@
                     class="alert alert-warning"
                     role="alert"
                     style="margin-bottom:0px;"
-                    attrs="{'invisible': [('printing_auto_error', '=', False)]}"
+                    invisible="not printing_auto_error"
                 >
             Unable to print the documents: the CUPS server is maybe not available, or printers are not configured properly. Error:
             <field name="printing_auto_error" nolabel="1" />
@@ -22,7 +22,7 @@
                     name="handle_print_auto"
                     type="object"
                     string="Print documents"
-                    states="done"
+                    invisible="state != 'done'"
                 />
             </header>
         </field>

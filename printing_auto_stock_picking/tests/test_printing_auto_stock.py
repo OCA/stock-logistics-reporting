@@ -2,22 +2,20 @@
 # Copyright 2022 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from unittest import mock
-
 from odoo.exceptions import UserError
+from odoo.tools import mute_logger
 
 from odoo.addons.printing_auto_base.tests.common import (
-    PrintingPrinter,
     TestPrintingAutoCommon,
-    print_document,
+    patch_print_document,
 )
 
 
-@mock.patch.object(PrintingPrinter, "print_document", print_document)
+@patch_print_document()
 class TestAutoPrinting(TestPrintingAutoCommon):
     @classmethod
     def setUpReportAndRecord(cls):
-        cls.report = cls.env.ref("stock.action_report_delivery")
+        cls.report_ref = "stock.action_report_delivery"
         cls.record = cls.env.ref("stock.outgoing_shipment_main_warehouse")
 
     def setUp(self):
@@ -34,7 +32,8 @@ class TestAutoPrinting(TestPrintingAutoCommon):
         self.assertFalse(self.record.printing_auto_error)
 
     def test_action_done_printing_error_log(self):
-        self.record._action_done()
+        with mute_logger("odoo.addons.printing_auto_base.models.printing_auto_mixin"):
+            self.record._action_done()
         self.assertTrue(self.record.printing_auto_error)
 
     def test_action_done_printing_error_raise(self):
