@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="sale_order_portal_content_inherit_sale_stock"
+        inherit_id="sale_stock.sale_order_portal_content_inherit_sale_stock"
+    >
+        <xpath expr="//div[@name='delivery_details']" position="after">
+            <t
+                t-set="pickings_with_lots"
+                t-value="picking.state == 'done' and any(move_line.lot_id or move_line.lot_name for move_line in delivery_orders.move_line_ids)"
+            />
+            <div name="delivery_report_xlsx" t-if="pickings_with_lots">
+                <t
+                    t-set="delivery_report_xlsx_url"
+                    t-value="'/my/picking/xlsx/%s?%s' % (picking.id, keep_query())"
+                />
+                <a t-att-href="delivery_report_xlsx_url">
+                    <i class="fa fa-fw fa-file-excel-o" /><span
+                    >Download Lots / SN</span>
+                </a>
+            </div>
+        </xpath>
+    </template>
+</odoo>
