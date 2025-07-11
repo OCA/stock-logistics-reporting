@@ -6,7 +6,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo.tests import common
-from odoo.tools import test_reports
+from odoo.tools import mute_logger, test_reports
 
 
 class TestStockInventoryValuation(common.SavepointCase):
@@ -55,6 +55,7 @@ class TestStockInventoryValuation(common.SavepointCase):
             report_type="qweb-pdf",
         )
 
+    @mute_logger("odoo.tools.test_reports")
     def test_xlsx(self):
         test_reports.try_report(
             self.env.cr,
