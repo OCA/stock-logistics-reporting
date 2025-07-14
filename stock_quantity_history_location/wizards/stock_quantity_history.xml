@@ -12,11 +12,6 @@
                     groups="stock.group_stock_multi_locations"
                     invisible="context.get('active_model') != 'stock.quant'"
                 />
-                <field
-                    name="include_child_locations"
-                    attrs="{'invisible': [('location_id', '=', False)]}"
-                    groups="stock.group_stock_multi_locations"
-                />
             </field>
         </field>
     </record>

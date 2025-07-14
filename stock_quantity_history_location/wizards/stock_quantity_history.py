@@ -13,7 +13,6 @@ class StockQuantityHistory(models.TransientModel):
     location_id = fields.Many2one(
         "stock.location", domain=[("usage", "in", ["internal", "transit"])]
     )
-    include_child_locations = fields.Boolean(default=True)
 
     def open_at_date(self):
         action = super().open_at_date()
@@ -21,9 +20,6 @@ class StockQuantityHistory(models.TransientModel):
         ctx = safe_eval(ctx) if isinstance(ctx, str) else ctx
         if self.location_id:
             ctx["location"] = self.location_id.id
-            ctx["compute_child"] = self.include_child_locations
-            if ctx.get("company_owned", False):
-                ctx.pop("company_owned")
             action[
                 "display_name"
             ] = f"{self.location_id.complete_name} - {action['display_name']}"
