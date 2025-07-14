@@ -2,3 +2,6 @@
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Ernesto Tejeda
+* `Quartile <https://www.quartile.co>`_:
+
+  * Aung Ko Ko Lin
