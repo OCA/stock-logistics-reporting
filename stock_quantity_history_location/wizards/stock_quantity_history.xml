@@ -13,11 +13,6 @@
                     groups="stock.group_stock_multi_locations"
                     invisible="context.get('active_model') != 'product.product'"
                 />
-                <field
-                    name="include_child_locations"
-                    invisible="not location_id"
-                    groups="stock.group_stock_multi_locations"
-                />
             </field>
         </field>
     </record>
