@@ -108,17 +108,7 @@ class StockQuantHistorySnapshot(models.Model):
             "inventory",
         ]
 
-    def _generate_stock_quant_history(self):
-        self.ensure_one()
-        self.generated_date = fields.Datetime.now()
-        previous_quant_snapshot = self.search(
-            [
-                ("state", "=", "generated"),
-                ("inventory_date", "<=", self.inventory_date),
-            ],
-            order="inventory_date desc",
-            limit=1,
-        )
+    def _copy_previous_stock_quant_history(self):
         quant_history = DefaultDict(
             lambda product, lot, location: self.env["stock.quant.history"]
             .sudo()
@@ -132,66 +122,157 @@ class StockQuantHistorySnapshot(models.Model):
                 }
             )
         )
-        self.previous_snapshot_id = previous_quant_snapshot
-
-        _logger.info("Processing %s from %s", self.name, self.previous_snapshot_id.name)
-        if previous_quant_snapshot.stock_quant_history_ids.exists():
+        duplicated_fields = ", ".join(self.env["stock.quant.history"]._fields_to_copy())
+        _logger.info(
+            "SQL Processing %s from %s (copy fields: %s)",
+            self.name,
+            self.previous_snapshot_id.name,
+            duplicated_fields,
+        )
+        if self.previous_snapshot_id.stock_quant_history_ids.exists():
             _logger.info(
                 "Duplicate %s previous stock.quant.history...",
-                len(previous_quant_snapshot.stock_quant_history_ids),
+                len(self.previous_snapshot_id.stock_quant_history_ids),
             )
-            for stock_quant_history in previous_quant_snapshot.stock_quant_history_ids:
-                # copy is around 3x slower than create !
-                quant_copy = quant_history[
+            self.flush()
+            self.env.cr.execute(
+                "INSERT INTO stock_quant_history ("
+                "    snapshot_id,"
+                f"    {duplicated_fields}"
+                ") SELECT"
+                "    %(snapshot_id)s,"
+                f"    {duplicated_fields} "
+                "FROM"
+                "    stock_quant_history "
+                "WHERE"
+                "    snapshot_id = %(previous_snapshot_id)s",
+                dict(
+                    snapshot_id=self.id,
+                    previous_snapshot_id=self.previous_snapshot_id.id,
+                ),
+            )
+            self.refresh()
+        for stock_quant_history in self.sudo().stock_quant_history_ids:
+            quant_history[
+                (
+                    stock_quant_history.product_id,
+                    stock_quant_history.lot_id,
+                    stock_quant_history.location_id,
+                )
+            ] = stock_quant_history
+        return quant_history
+
+    def _apply_stock_move_lines_group(
+        self, quant_history, location_field_name, compute_quantity
+    ):
+        domain = self._prepare_stock_move_line_filter(self.previous_snapshot_id)
+        domain = AND(
+            [
+                domain,
+                [
                     (
-                        stock_quant_history.product_id,
-                        stock_quant_history.lot_id,
-                        stock_quant_history.location_id,
+                        f"{location_field_name}.usage",
+                        "not in",
+                        self._ignored_location_usage(),
                     )
-                ]
-                quant_copy.quantity = stock_quant_history.quantity
-
-        stock_move_lines = (
-            self.env["stock.move.line"]
-            .sudo()
-            .search(
-                self._prepare_stock_move_line_filter(previous_quant_snapshot),
+                ],
+            ]
+        )
+        for stock_move_line_grouped in self.env["stock.move.line"].read_group(
+            domain=domain,
+            fields=[
+                location_field_name,
+                "product_id",
+                "lot_id",
+                "product_uom_id",
+                "qty_done:sum(qty_done)",
+            ],
+            groupby=[location_field_name, "product_id", "lot_id", "product_uom_id"],
+            orderby=f"{location_field_name}, product_id, lot_id",
+            lazy=False,
+        ):
+            lot = (
+                self.env["stock.production.lot"]
+                .sudo()
+                .browse(
+                    stock_move_line_grouped["lot_id"][0]
+                    if stock_move_line_grouped["lot_id"]
+                    else None
+                )
             )
-        )
-        _logger.info(
-            "Apply %s stock.move.line since previous snapshot", len(stock_move_lines)
-        )
-        ignored_location_usage = self._ignored_location_usage()
-        for move_line in stock_move_lines:
-            if move_line.location_id.usage not in ignored_location_usage:
-                quant_history[
-                    (move_line.product_id, move_line.lot_id, move_line.location_id)
-                ].quantity = tools.float_round(
-                    quant_history[
-                        (move_line.product_id, move_line.lot_id, move_line.location_id)
-                    ].quantity
-                    - move_line.product_uom_id._compute_quantity(
-                        move_line.quantity, move_line.product_id.uom_id
-                    ),
-                    precision_rounding=move_line.product_id.uom_id.rounding,
+            product = (
+                self.env["product.product"]
+                .sudo()
+                .browse(
+                    stock_move_line_grouped["product_id"][0]
+                    if stock_move_line_grouped["product_id"]
+                    else None
                 )
+            )
+            location = (
+                self.env["stock.location"]
+                .sudo()
+                .browse(
+                    stock_move_line_grouped[location_field_name][0]
+                    if stock_move_line_grouped[location_field_name]
+                    else None
+                )
+            )
+            product_uom = (
+                self.env["uom.uom"]
+                .sudo()
+                .browse(
+                    stock_move_line_grouped["product_uom_id"][0]
+                    if stock_move_line_grouped["product_uom_id"]
+                    else None
+                )
+            ) or product.uom_id
+            quantity = product_uom._compute_quantity(
+                stock_move_line_grouped["qty_done"], product.uom_id
+            )
+            stock_quant_history = quant_history[(product, lot, location)]
+            stock_quant_history.quantity = tools.float_round(
+                compute_quantity(stock_quant_history.quantity, quantity),
+                precision_rounding=product.uom_id.rounding,
+            )
 
-            if move_line.location_dest_id.usage not in ignored_location_usage:
-                quant_history[
-                    (move_line.product_id, move_line.lot_id, move_line.location_dest_id)
-                ].quantity = tools.float_round(
-                    quant_history[
-                        (
-                            move_line.product_id,
-                            move_line.lot_id,
-                            move_line.location_dest_id,
-                        )
-                    ].quantity
-                    + move_line.product_uom_id._compute_quantity(
-                        move_line.quantity, move_line.product_id.uom_id
-                    ),
-                    precision_rounding=move_line.product_id.uom_id.rounding,
-                )
+    def _apply_stock_move_lines(self, quant_history):
+        self._apply_stock_move_lines_group(
+            quant_history,
+            "location_id",
+            lambda previous_quantity, aggregated_stock_move_line_quantity: previous_quantity
+            - aggregated_stock_move_line_quantity,
+        )
+        self._apply_stock_move_lines_group(
+            quant_history,
+            "location_dest_id",
+            lambda previous_quantity, aggregated_stock_move_line_quantity: previous_quantity
+            + aggregated_stock_move_line_quantity,
+        )
+
+    def _generate_stock_quant_history(self):
+        self.ensure_one()
+        _logger.info(
+            "Starting snapshot at %s...",
+            self.inventory_date,
+        )
+        self.generated_date = fields.Datetime.now()
+        previous_quant_snapshot = self.search(
+            [
+                ("state", "=", "generated"),
+                ("inventory_date", "<=", self.inventory_date),
+            ],
+            order="inventory_date desc",
+            limit=1,
+        )
+        self.previous_snapshot_id = previous_quant_snapshot
+
+        quant_history = self._copy_previous_stock_quant_history()
+        self._apply_stock_move_lines(quant_history)
+
+        # remove line with zero to save same disk space
+        # avoid loop with direct SQL query
+        _logger.info("Remove useless stock_quant_history with quantity == 0")
         # remove line with zero to save same disk space
         # avoid loop with direct SQL query
         _logger.info("Remove useless stock_quant_history with quantity == 0")
@@ -200,6 +281,21 @@ class StockQuantHistorySnapshot(models.Model):
             "DELETE FROM stock_quant_history where quantity = 0 and snapshot_id = %s",
             (self.id,),
         )
+
+        _logger.info("managed picking locks")
+        pickings = (
+            self.env["stock.move.line"]
+            .sudo()
+            .search(
+                self._prepare_stock_move_line_filter(previous_quant_snapshot),
+            )
+        ).picking_id
+        # Lock all related pickings
+        if self.env.company.stock_history_snapshot_auto_locks_picking:
+            _logger.info(f"Locking {len(pickings)} related pickings")
+            pickings.sudo().write({"is_locked": True})
+
+        _logger.info("Snapshot completed")
         self.state = "generated"
 
     def action_related_stock_quant_history_tree_view(self):

@@ -2,7 +2,7 @@
 # @author Pierre Verkest <pierreverkest84@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockQuantHistory(models.Model):
@@ -70,3 +70,28 @@ class StockQuantHistory(models.Model):
         ),
         readonly=True,
     )
+
+    @api.model
+    def _fields_to_ignore(self):
+        return [
+            "id",
+            "snapshot_id",
+            "inventory_date",
+            "create_uid",
+            "create_date",
+            "write_uid",
+            "write_date",
+        ]
+
+    @api.model
+    def _fields_to_copy(self):
+        """List of sql fields name used while duplicating
+        previous snapshot
+        """
+        ignore_fields = self._fields_to_ignore()
+        fields = [
+            field.name
+            for field in self._fields.values()
+            if field.store and field.copy and field.name not in ignore_fields
+        ]
+        return fields
