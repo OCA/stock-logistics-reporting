@@ -1,0 +1,5 @@
+# test-constraints.txt
+
+odoo-addon-stock-picking-group-by-partner-by-carrier @ \
+git+https://github.com/PolComas/stock-logistics-workflow.git@899cc5345cff897fb928fe07fcffddc054dc8297\
+#egg=odoo-addon-stock-picking-group-by-partner-by-carrier&subdirectory=stock_picking_group_by_partner_by_carrier
