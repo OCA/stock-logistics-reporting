@@ -1,6 +1,7 @@
 # test-constraints.txt
 
-odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/PolComas/stock-logistics-workflow.git@899cc5345cff897fb928fe07fcffddc054dc8297#egg=odoo-addon-stock-picking-group-by-partner-by-carrier&subdirectory=stock_picking_group_by_partner_by_carrier
+odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/PolComas/stock-logistics-workflow.git@899cc5345cff897fb928fe07fcffddc054dc8297#egg=odoo-addon-stock-picking-group-by-partner-by-carrier&subdirectory=setup/stock_picking_group_by_partner_by_carrier
+
 odoo-addon-delivery_line_sale_line_position @ file:///mnt/data/odoo-addons-dir/setup/delivery_line_sale_line_position
 odoo-addon-stock_account_quantity_history_location @ file:///mnt/data/odoo-addons-dir/setup/stock_account_quantity_history_location
 odoo-addon-stock_account_valuation_report @ file:///mnt/data/odoo-addons-dir/setup/stock_account_valuation_report
