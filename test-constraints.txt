@@ -1,5 +1,19 @@
 # test-constraints.txt
 
-odoo-addon-stock-picking-group-by-partner-by-carrier @ \
 odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/PolComas/stock-logistics-workflow.git@899cc5345cff897fb928fe07fcffddc054dc8297#egg=odoo-addon-stock-picking-group-by-partner-by-carrier&subdirectory=stock_picking_group_by_partner_by_carrier
-
+odoo-addon-delivery_line_sale_line_position @ file:///mnt/data/odoo-addons-dir/setup/delivery_line_sale_line_position
+odoo-addon-stock_account_quantity_history_location @ file:///mnt/data/odoo-addons-dir/setup/stock_account_quantity_history_location
+odoo-addon-stock_account_valuation_report @ file:///mnt/data/odoo-addons-dir/setup/stock_account_valuation_report
+odoo-addon-stock_card_report @ file:///mnt/data/odoo-addons-dir/setup/stock_card_report
+odoo-addon-stock_move_value_report @ file:///mnt/data/odoo-addons-dir/setup/stock_move_value_report
+odoo-addon-stock_picking_auto_print @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_auto_print
+odoo-addon-stock_picking_group_by_partner_by_carrier_sale_line_position @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_group_by_partner_by_carrier_sale_line_position
+odoo-addon-stock_picking_report_custom_description @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_custom_description
+odoo-addon-stock_picking_report_external_note @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_external_note
+odoo-addon-stock_picking_report_internal_delivery_address @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_internal_delivery_address
+odoo-addon-stock_picking_report_product_sticker @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_product_sticker
+odoo-addon-stock_picking_report_undelivered_product @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_undelivered_product
+odoo-addon-stock_picking_report_valued @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_valued
+odoo-addon-stock_picking_report_valued_sale_mrp @ file:///mnt/data/odoo-addons-dir/setup/stock_picking_report_valued_sale_mrp
+odoo-addon-stock_quantity_history_location @ file:///mnt/data/odoo-addons-dir/setup/stock_quantity_history_location
+odoo-addon-stock_report_quantity_by_location @ file:///mnt/data/odoo-addons-dir/setup/stock_report_quantity_by_location
