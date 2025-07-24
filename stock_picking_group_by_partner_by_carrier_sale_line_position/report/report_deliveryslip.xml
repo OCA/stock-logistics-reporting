@@ -1,45 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
   <template
-        id="report_delivery_document"
+        id="report_delivery_document_sale_line_position"
         inherit_id="delivery_line_sale_line_position.report_delivery_document"
     >
-
-
     <xpath
             expr="//table[@name='stock_move_table']/t[@t-set='has_line_position']"
             position="attributes"
         >
-      <attribute
-                name="t-value"
-            >any(report_lines.filtered(lambda x: x.position_sale_line))</attribute>
+      <attribute name="t-value">
+        any(report_lines.filtered(lambda x: x.position_sale_line))
+      </attribute>
     </xpath>
-
     <xpath
             expr="//table[@name='stock_move_line_table']/t[@t-set='has_line_position']"
             position="attributes"
         >
-      <attribute
-                name="t-value"
-            >any(report_lines.filtered(lambda x: x.position_sale_line))</attribute>
+      <attribute name="t-value">
+        any(report_lines.filtered(lambda x: x.position_sale_line))
+      </attribute>
     </xpath>
-
   </template>
 
   <template
-        id="report_delivery_document"
+        id="report_delivery_document_group_by_partner_carrier"
         inherit_id="stock_picking_group_by_partner_by_carrier.report_delivery_document"
     >
-
-    <!-- Add sale line position on remaining to deliver list -->
-    <xpath expr="//tr[@t-foreach='remainings']/td[1]/span[1]" position="before">
-      <span
-                t-if="remaining.get('sale_order_line')"
-                t-esc="remaining['sale_order_line'].position_formatted"
-            />
+    <xpath
+            expr="//table[@name='remaining_to_deliver_table']//tr[@t-foreach='remainings']/td[1]"
+            position="before"
+        >
+      <td>
+        <span
+                    t-if="remaining.get('sale_order_line')"
+                    t-esc="remaining['sale_order_line'].position_formatted"
+                />
+      </td>
     </xpath>
-
   </template>
-
 </odoo>
