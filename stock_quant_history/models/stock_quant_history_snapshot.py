@@ -112,12 +112,14 @@ class StockQuantHistorySnapshot(models.Model):
                 }
             )
         )
-        duplicated_fields = ", ".join(self.env["stock.quant.history"]._fields_to_copy())
+        fields_to_duplicate = ", ".join(
+            self.env["stock.quant.history"]._fields_to_copy()
+        )
         _logger.info(
             "SQL Processing %s from %s (copy fields: %s)",
             self.name,
             self.previous_snapshot_id.name,
-            duplicated_fields,
+            fields_to_duplicate,
         )
         if self.previous_snapshot_id.stock_quant_history_ids.exists():
             _logger.info(
@@ -128,10 +130,10 @@ class StockQuantHistorySnapshot(models.Model):
             self.env.cr.execute(
                 "INSERT INTO stock_quant_history ("
                 "    snapshot_id,"
-                f"    {duplicated_fields}"
+                f"    {fields_to_duplicate}"
                 ") SELECT"
                 "    %(snapshot_id)s,"
-                f"    {duplicated_fields} "
+                f"    {fields_to_duplicate} "
                 "FROM"
                 "    stock_quant_history "
                 "WHERE"
@@ -227,6 +229,17 @@ class StockQuantHistorySnapshot(models.Model):
             )
 
     def _apply_stock_move_lines(self, quant_history):
+        _logger.info(
+            "apply %d stock.move.line between from previous "
+            "snapshot (%s) to the current (%s)",
+            self.env["stock.move.line"]
+            .sudo()
+            .search_count(
+                self._prepare_stock_move_line_filter(self.previous_snapshot_id),
+            ),
+            self.previous_snapshot_id.name,
+            self.name,
+        )
         self._apply_stock_move_lines_group(
             quant_history,
             "location_id",
