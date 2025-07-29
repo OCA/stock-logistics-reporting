@@ -5,6 +5,7 @@
     "name": "Stock Picking Group By Partner By Carrier Sale Line Position",
     "summary": "Glue module for sale position and delivery report grouped",
     "version": "15.0.1.0.0",
+    "development_status": "Alpha",
     "category": "Delivery",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
