@@ -61,7 +61,7 @@ class TestStockPickingSort(common.TransactionCase):
             },
         ]
         for vals in lines_data1:
-            SaleLine.create({"order_id": self.order.id, **vals})
+            SaleLine.create({"order_id": self.order1.id, **vals})
 
         self.order2 = SaleOrder.create(
             {
