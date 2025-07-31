@@ -12,4 +12,5 @@
     "license": "AGPL-3",
     "depends": ["stock_picking_report_valued", "sale_mrp"],
     "data": ["report/stock_picking_report_valued.xml"],
+    "installable": False,
 }

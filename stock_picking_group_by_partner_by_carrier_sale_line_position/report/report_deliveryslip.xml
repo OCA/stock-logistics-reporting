@@ -36,7 +36,7 @@
     <xpath expr="//tr[@t-foreach='remainings']/td[1]/span[1]" position="before">
       <span
                 t-if="remaining.get('sale_order_line')"
-                t-esc="remaining['sale_order_line'].position_formatted"
+                t-out="remaining['sale_order_line'].position_formatted"
             />
     </xpath>
 

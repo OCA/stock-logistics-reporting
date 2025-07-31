@@ -1,0 +1,1 @@
+odoo-addon-stock-picking-group-by-partner-by-carrier @ git+https://github.com/PolComas/stock-logistics-workflow.git@44f06c5eb2290ae3b35ab9093cb2ba82d9e2fe4f#egg=odoo-addon-stock-picking-group-by-partner-by-carrier-&subdirectory=setup/stock_picking_group_by_partner_by_carrier
