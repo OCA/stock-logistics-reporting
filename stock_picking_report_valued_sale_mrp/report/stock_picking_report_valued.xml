@@ -26,10 +26,21 @@
         <xpath expr="//tr[@t-foreach='package_move_lines']" position="before">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
                 <t
-                    t-set="package_move_lines"
-                    t-value="package_move_lines.filtered(lambda l: not l.phantom_product_id or l.phantom_line)"
+                    t-set="package_move_lines_computed"
+                    t-value="env['stock.move.line']"
                 />
-            </t>
+                <t t-foreach="package_move_lines" t-as="move_line">
+                  <t
+                        t-set="force_compute"
+                        t-value="move_line._compute_sale_order_line_fields()"
+                    />
+                  <t
+                        t-set="package_move_lines_computed"
+                        t-value="package_move_lines_computed + move_line.filtered(lambda l: not l.phantom_product_id or l.phantom_line)"
+                    />
+                </t>
+                <t t-set="package_move_lines" t-value="package_move_lines_computed" />
+                </t>
         </xpath>
         <xpath expr="//tr[@t-foreach='move_lines']" position="before">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and is_outgoing">
