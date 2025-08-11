@@ -20,7 +20,7 @@
                     string="Stock date"
                     name="inventory_date"
                     date="inventory_date"
-                    default_period="this_month"
+                    default_period="month"
                 />
 
                 <group expand="0" string="Group By">
@@ -58,7 +58,7 @@
         <field name="name">stock.quant.history.list</field>
         <field name="model">stock.quant.history</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="snapshot_id" optional="hide" />
                 <field name="inventory_date" optional="show" />
                 <field name="product_tmpl_id" optional="hide" />
@@ -68,7 +68,7 @@
                 <field name="location_id" optional="show" />
                 <field name="company_id" optional="hide" />
                 <field name="quantity" />
-            </tree>
+            </list>
         </field>
     </record>
 
