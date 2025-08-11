@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <odoo>
-
     <record model="ir.ui.view" id="view_stock_quant_history_snapshot_search">
         <field name="name">stock.quant.history.snapshot.search</field>
         <field name="model">stock.quant.history.snapshot</field>
@@ -139,5 +138,4 @@
             action = records.action_related_stock_quant_history_tree_view()
         </field>
     </record>
-
 </odoo>
