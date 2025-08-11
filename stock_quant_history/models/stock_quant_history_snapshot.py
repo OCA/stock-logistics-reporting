@@ -240,13 +240,15 @@ class StockQuantHistorySnapshot(models.Model):
         self._apply_stock_move_lines_group(
             quant_history,
             "location_id",
-            lambda previous_quantity, aggregated_stock_move_line_quantity: previous_quantity
+            lambda previous_quantity,
+            aggregated_stock_move_line_quantity: previous_quantity
             - aggregated_stock_move_line_quantity,
         )
         self._apply_stock_move_lines_group(
             quant_history,
             "location_dest_id",
-            lambda previous_quantity, aggregated_stock_move_line_quantity: previous_quantity
+            lambda previous_quantity,
+            aggregated_stock_move_line_quantity: previous_quantity
             + aggregated_stock_move_line_quantity,
         )
 
