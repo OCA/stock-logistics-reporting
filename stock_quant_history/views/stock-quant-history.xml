@@ -3,7 +3,6 @@
      @author Pierre Verkest <pierreverkest84@gmail.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
 <odoo>
-
     <record model="ir.ui.view" id="view_stock_quant_history_search">
         <field name="name">stock.quant.history.search</field>
         <field name="model">stock.quant.history</field>
@@ -105,5 +104,4 @@
         action="action_stock_quant_history"
         sequence="10"
     />
-
 </odoo>
