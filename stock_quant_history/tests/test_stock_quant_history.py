@@ -4,10 +4,12 @@ from freezegun import freeze_time
 
 from odoo import fields
 from odoo.exceptions import AccessError
-from odoo.tests import TransactionCase, users
+from odoo.tests import users
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockQuantHistory(TransactionCase):
+class TestStockQuantHistory(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -47,8 +49,9 @@ class TestStockQuantHistory(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test",
-                "type": "product",
+                "type": "consu",
                 "tracking": "lot",
+                "is_storable": True,
             }
         )
         cls.lot = cls.env["stock.lot"].create(

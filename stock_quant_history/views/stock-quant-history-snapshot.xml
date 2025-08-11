@@ -10,7 +10,7 @@
                     string="Stock date"
                     name="inventory_date"
                     date="inventory_date"
-                    default_period="this_month"
+                    default_period="month"
                 />
                 <group expand="0" string="Group By">
                     <filter
@@ -32,12 +32,12 @@
         <field name="name">stock.quant.history.snapshot.list</field>
         <field name="model">stock.quant.history.snapshot</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="inventory_date" />
                 <field name="state" />
                 <field name="generated_date" optional="show" />
                 <field name="previous_snapshot_id" optional="hide" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -68,7 +68,7 @@
                             invisible="state not in ['generated']"
                             icon="fa-history"
                         >
-                            <!-- go to stock_quant_history_ids tree view -->
+                            <!-- go to stock_quant_history_ids list view -->
                             <!-- add stock valuation -->
                             <span>History details</span>
                         </button>
