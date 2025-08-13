@@ -192,7 +192,7 @@ class StockQuantHistorySnapshot(models.Model):
             lazy=False,
         ):
             lot = (
-                self.env["stock.production.lot"]
+                self.env["stock.lot"]
                 .sudo()
                 .browse(
                     stock_move_line_grouped["lot_id"][0]
