@@ -185,7 +185,7 @@ class StockQuantHistorySnapshot(models.Model):
                 "product_id",
                 "lot_id",
                 "product_uom_id",
-                "qty_done:sum(qty_done)",
+                "quantity:sum(quantity)",
             ],
             groupby=[location_field_name, "product_id", "lot_id", "product_uom_id"],
             orderby=f"{location_field_name}, product_id, lot_id",
@@ -228,7 +228,7 @@ class StockQuantHistorySnapshot(models.Model):
                 )
             ) or product.uom_id
             quantity = product_uom._compute_quantity(
-                stock_move_line_grouped["qty_done"], product.uom_id
+                stock_move_line_grouped["quantity"], product.uom_id
             )
             stock_quant_history = quant_history[(product, lot, location)]
             stock_quant_history.quantity = tools.float_round(
