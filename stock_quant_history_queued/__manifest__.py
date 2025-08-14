@@ -4,7 +4,7 @@
 {
     "name": "Stock Quant History Queued",
     "summary": "Use Queue jop to generate stock quants snapshots",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Pierre Verkest <pierreverkest84@gmail.com>, "
     "Odoo Community Association (OCA)",
