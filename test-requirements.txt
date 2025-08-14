@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-stock_quant_history @ git+https://github.com/OCA/stock-logistics-reporting.git@refs/pull/436/head#subdirectory=stock_quant_history
