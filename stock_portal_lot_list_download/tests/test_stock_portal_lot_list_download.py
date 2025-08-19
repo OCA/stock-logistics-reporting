@@ -19,7 +19,7 @@ class TestPortalPickingXlsx(HttpCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product with lot",
-                "type": "product",
+                "is_storable": True,
                 "tracking": "lot",
                 "list_price": 50.0,
             }
@@ -27,7 +27,7 @@ class TestPortalPickingXlsx(HttpCase):
         cls.product_no_lot = cls.env["product.product"].create(
             {
                 "name": "Product without lot",
-                "type": "product",
+                "is_storable": True,
                 "tracking": "none",
                 "list_price": 30.0,
             }
@@ -50,9 +50,9 @@ class TestPortalPickingXlsx(HttpCase):
         cls.sale_order.action_confirm()
         cls.picking = cls.sale_order.picking_ids[:1]
         for move in cls.picking.move_ids:
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
         tracked_line = cls.picking.move_line_ids.filtered(
-            lambda l: l.product_id.tracking != "none"
+            lambda line: line.product_id.tracking != "none"
         )
         tracked_line.lot_id = cls.lot.id
         cls.picking.button_validate()

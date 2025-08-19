@@ -74,7 +74,7 @@ class StockPortalLotList(CustomerPortal):
         ):
             worksheet.write(row, 0, ml.product_id.display_name, cell_format)
             worksheet.write(row, 1, ml.lot_id.name or "", cell_format)
-            worksheet.write(row, 2, ml.qty_done or 0.0, cell_format)
+            worksheet.write(row, 2, ml.quantity or 0.0, cell_format)
             row += 1
         workbook.close()
         output.seek(0)
