@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,5 +15,7 @@ msgstr ""
 
 #. module: stock_portal_lot_list_download
 #: model_terms:ir.ui.view,arch_db:stock_portal_lot_list_download.sale_order_portal_content_inherit_sale_stock
-msgid "<i class=\"fa fa-fw fa-file-excel-o\"/><span>Download Lots / SN</span>"
+msgid ""
+"<i class=\"fa fa-fw fa-file-excel-o\"/>\n"
+"                    <span>Download Lots / SN</span>"
 msgstr ""
