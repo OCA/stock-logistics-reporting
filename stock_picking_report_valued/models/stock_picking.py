@@ -4,7 +4,7 @@
 # Copyright 2016 Tecnativa - Luis M. Ontalba
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -12,9 +12,10 @@ class StockPicking(models.Model):
 
     valued = fields.Boolean(related="partner_id.valued_picking")
     currency_id = fields.Many2one(
-        related="sale_id.currency_id",
+        comodel_name="res.currency",
         string="Currency",
-        related_sudo=True,  # See explanation for sudo in compute method
+        compute="_compute_currency_id",
+        compute_sudo=True,  # for avoiding access problems
     )
     amount_untaxed = fields.Monetary(
         compute="_compute_amount_all",
@@ -45,3 +46,8 @@ class StockPicking(models.Model):
                     "amount_total": amount_untaxed + amount_tax,
                 }
             )
+
+    @api.depends("sale_id", "sale_id.currency_id", "company_id")
+    def _compute_currency_id(self):
+        for item in self:
+            item.currency_id = item.sale_id.currency_id or item.company_id.currency_id
