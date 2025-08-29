@@ -165,8 +165,10 @@ class TestStockQuantHistory(BaseCommon):
                 [
                     (
                         "location_id.usage",
-                        "=",
-                        "internal",
+                        "in",
+                        self.env[
+                            "stock.quant.history.snapshot"
+                        ]._allowed_location_usage(),
                     ),
                 ]
             ),
@@ -335,8 +337,10 @@ class TestStockQuantHistory(BaseCommon):
                 [
                     (
                         "location_id.usage",
-                        "=",
-                        "internal",
+                        "in",
+                        self.env[
+                            "stock.quant.history.snapshot"
+                        ]._allowed_location_usage(),
                     ),
                 ]
             ),
