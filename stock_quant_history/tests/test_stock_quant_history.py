@@ -165,12 +165,8 @@ class TestStockQuantHistory(BaseCommon):
                 [
                     (
                         "location_id.usage",
-                        "not in",
-                        [
-                            "customer",
-                            "inventory",
-                            "supplier",
-                        ],
+                        "=",
+                        "internal",
                     ),
                 ]
             ),
@@ -339,12 +335,8 @@ class TestStockQuantHistory(BaseCommon):
                 [
                     (
                         "location_id.usage",
-                        "not in",
-                        [
-                            "customer",
-                            "inventory",
-                            "supplier",
-                        ],
+                        "=",
+                        "internal",
                     ),
                 ]
             ),
