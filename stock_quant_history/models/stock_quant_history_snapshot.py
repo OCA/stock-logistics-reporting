@@ -149,17 +149,27 @@ class StockQuantHistorySnapshot(models.Model):
                 ]
                 quant_copy.quantity = stock_quant_history.quantity
 
-        stock_move_lines = (
-            self.env["stock.move.line"]
-            .sudo()
-            .search(
-                self._prepare_stock_move_line_filter(previous_quant_snapshot),
-            )
-        )
+        allowed_location_usage = self._allowed_location_usage()
+        domain = self._prepare_stock_move_line_filter(previous_quant_snapshot)
+        if allowed_location_usage:
+            if len(allowed_location_usage) == 1:
+                operator = "="
+                usage_value = allowed_location_usage[0]
+            else:
+                operator = "in"
+                usage_value = allowed_location_usage
+
+            location_domain = [
+                "|",
+                ("location_id.usage", operator, usage_value),
+                ("location_dest_id.usage", operator, usage_value),
+            ]
+            domain = AND([domain, location_domain])
+
+        stock_move_lines = self.env["stock.move.line"].sudo().search(domain)
         _logger.info(
             "Apply %s stock.move.line since previous snapshot", len(stock_move_lines)
         )
-        allowed_location_usage = self._allowed_location_usage()
         for move_line in stock_move_lines:
             if move_line.location_id.usage in allowed_location_usage:
                 quant_history[
