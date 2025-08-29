@@ -98,14 +98,12 @@ class StockQuantHistorySnapshot(models.Model):
         return domain
 
     @api.model
-    def _ignored_location_usage(self):
+    def _allowed_location_usage(self):
         """If you overwrite or change this
         list you'll probably want to regenerate all your
         snapshots"""
         return [
-            "supplier",
-            "customer",
-            "inventory",
+            "internal",
         ]
 
     def _generate_stock_quant_history(self):
@@ -161,9 +159,9 @@ class StockQuantHistorySnapshot(models.Model):
         _logger.info(
             "Apply %s stock.move.line since previous snapshot", len(stock_move_lines)
         )
-        ignored_location_usage = self._ignored_location_usage()
+        allowed_location_usage = self._allowed_location_usage()
         for move_line in stock_move_lines:
-            if move_line.location_id.usage not in ignored_location_usage:
+            if move_line.location_id.usage in allowed_location_usage:
                 quant_history[
                     (move_line.product_id, move_line.lot_id, move_line.location_id)
                 ].quantity = tools.float_round(
@@ -176,7 +174,7 @@ class StockQuantHistorySnapshot(models.Model):
                     precision_rounding=move_line.product_id.uom_id.rounding,
                 )
 
-            if move_line.location_dest_id.usage not in ignored_location_usage:
+            if move_line.location_dest_id.usage in allowed_location_usage:
                 quant_history[
                     (move_line.product_id, move_line.lot_id, move_line.location_dest_id)
                 ].quantity = tools.float_round(
