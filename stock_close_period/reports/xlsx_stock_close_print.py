@@ -18,6 +18,13 @@ class XlsxStockClosePeriod(models.AbstractModel):
         if data.get("ids"):
             ids = data["ids"]
             lines = self.env["stock.close.period.line"].browse(ids)
+        else:
+            # If lines contains stock.close.period objects, get their lines
+            if lines and lines._name == "stock.close.period":
+                period_lines = self.env["stock.close.period.line"]
+                for period in lines:
+                    period_lines |= period.line_ids
+                lines = period_lines
 
         sheet = workbook.add_worksheet(_("Stock Close Period"))
         sheet.set_landscape()

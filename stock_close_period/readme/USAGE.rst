@@ -1,24 +1,69 @@
-Stock Close period
+**Creating a Stock Closing Period**
 
-* Go to Inventory App
+1. Navigate to *Inventory > Stock Close Period > Stock Close Period*
+2. Click **Create** to start a new closing period
+3. Configure the following fields:
 
-* Go to menu Stock close period
+   * **Reference**: Enter a unique name for this closing (e.g., "2024-Q1 Closing")
+   * **Close Date**: Select the date for inventory valuation
+   * **Force Evaluation Method**: Choose the costing approach:
 
-* Create a new inventory
+     - *Compute based on category setup*: Uses product category configuration
+     - *Compute based on purchase average cost*: Calculates from purchase history
+     - *Compute based on cost in product*: Uses standard product cost
 
-select the close date, select the tye of calculation "Force Evaluation Method".
+   * **Last Closed** (optional): Link to previous period for incremental calculations
+   * **Bypass Negative Quantity**: Enable to ignore products with negative stock
+   * **Force Archive**: Enable to deactivate processed stock moves after closing
 
-Eventually select a Last Closed. In this case the starting point of calculation is the last Stock close period.
+**Processing Workflow**
 
-Eg. if a previous product close with 10 qty and a cost of 15€, the new period will start with this value and calculate all the stock move after.
+1. **Start - Calculate Quantities**:
 
-First calculate the qty by Click the start button possibly correct the qty es if you have non-owned products in the stock
+   * Click the **Start** button to begin processing
+   * System calculates product quantities at the closing date
+   * Review and manually adjust quantities if needed (e.g., for consignment stock)
+   * The state changes to "In Progress"
 
-After calculate the purchase value.
+2. **Compute Purchase Costs**:
 
-It can take a little while.
+   * Click **Compute Purchase** to calculate product costs
+   * System applies the selected evaluation method
+   * For purchase average: calculates from purchase orders between periods
+   * Process may take time for large inventories
 
-Repeat the operation until Purchase Ok is tiled possibly correct the cost.
+3. **Manual Adjustments** (if needed):
 
-It is possible to make comparisons with different calculation methods by creating multiple Stock Close Periods
+   * Edit individual line items for cost corrections
+   * Modify quantities for special cases
+   * Add notes or references as needed
 
+4. **Validation**:
+
+   * Review the total stock amount value
+   * Click **Validate** to finalize the closing
+   * State changes to "Validated"
+   * Period becomes read-only
+
+**Using CSV Import**
+
+For bulk inventory data import:
+
+1. Navigate to *Inventory > Stock Close Period > Stock Close Import*
+2. Select the target **Stock Close Period**
+3. Prepare CSV file with semicolon-separated format:
+
+   .. code-block:: text
+
+      CODE;COST;QTY
+      PROD001;15,50;100,00
+      PROD002;8,25;250,50
+      PROD003;102,00;50,00
+
+   * CODE: Product default code (must exist in system)
+   * COST: Unit cost (comma or dot as decimal separator)
+   * QTY: Quantity (comma or dot as decimal separator)
+
+4. Upload the file and click **Import**
+5. System validates products and creates closing lines
+6. The period is automatically marked as "done"

@@ -85,7 +85,7 @@ class Product(models.Model):
         self.env.cr.execute(
             """
             SELECT
-                SUM(stock_move_line.qty_done),
+                SUM(stock_move_line.quantity),
                 stock_move_line.product_id,
                 stock_move_line.location_id,
                 stock_move_line.lot_id,
@@ -143,7 +143,7 @@ class Product(models.Model):
         self.env.cr.execute(
             """
             SELECT
-                SUM(stock_move_line.qty_done),
+                SUM(stock_move_line.quantity),
                 stock_move_line.product_id,
                 stock_move_line.location_dest_id,
                 stock_move_line.lot_id,
