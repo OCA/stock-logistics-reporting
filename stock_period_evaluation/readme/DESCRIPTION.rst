@@ -11,6 +11,8 @@ This module enables businesses to create accurate snapshots of their inventory v
   - Standard cost from product master data
   - Purchase average cost based on historical purchases
   - Category-based costing using product category settings
+  - **FIFO (First In, First Out)** valuation method
+  - **LIFO (Last In, First Out)** valuation method
   - Manual cost override capabilities
 
 * **Date-Based Inventory Snapshots**:

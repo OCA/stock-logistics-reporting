@@ -98,6 +98,7 @@ class StockClosePeriodLine(models.Model):
         string="Company",
         store=True,
     )
+    evaluation_details = fields.Text(string="Evaluation Details")
 
     @api.depends("product_id")
     def _compute_product_name(self):
@@ -108,3 +109,13 @@ class StockClosePeriodLine(models.Model):
     def _compute_amount_line(self):
         for line in self:
             line.amount_line = line.product_qty * line.price_unit
+
+    def _format_value(self, value):
+        from odoo.tools.misc import format_amount
+
+        return format_amount(
+            self.env,
+            value,
+            self.company_id.currency_id,
+            lang_code=self.company_id.partner_id.lang
+        )

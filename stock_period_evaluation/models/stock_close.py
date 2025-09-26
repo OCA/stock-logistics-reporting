@@ -61,9 +61,11 @@ class StockClosePeriod(models.Model):
     work_end = fields.Datetime(readonly=True)
     force_evaluation_method = fields.Selection(
         [
-            ("no_force", "Compute based category setup"),
-            ("purchase", "Compute based purchase average cost"),
-            ("standard", "Compute based cost in product"),
+            ("no_force", "Category setup"),
+            ("purchase", "Purchase average cost"),
+            ("standard", "Cost in product"),
+            ("fifo", "FIFO"),
+            ("lifo", "  LIFO (continuous)"),
         ],
         default="no_force",
         copy=False,
