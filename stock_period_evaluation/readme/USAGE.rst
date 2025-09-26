@@ -11,6 +11,8 @@
      - *Compute based on category setup*: Uses product category configuration
      - *Compute based on purchase average cost*: Calculates from purchase history
      - *Compute based on cost in product*: Uses standard product cost
+     - *Compute based on FIFO*: First In, First Out valuation
+     - *Compute based on LIFO (continuous)*: Last In, First Out valuation
 
    * **Last Closed** (optional): Link to previous period for incremental calculations
    * **Bypass Negative Quantity**: Enable to ignore products with negative stock
