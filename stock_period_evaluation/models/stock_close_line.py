@@ -29,7 +29,12 @@ class StockClosePeriodLine(models.Model):
         index=True,
         required=True,
     )
-    product_name = fields.Char(related="product_id.name", store=True, readonly=True)
+    product_name = fields.Char(
+        string="Product Name",
+        compute="_compute_product_name",
+        store=True,
+        readonly=True
+    )
     product_code = fields.Char(
         related="product_id.default_code", store=True, readonly=True
     )
@@ -93,6 +98,11 @@ class StockClosePeriodLine(models.Model):
         string="Company",
         store=True,
     )
+
+    @api.depends("product_id")
+    def _compute_product_name(self):
+        for line in self:
+            line.product_name = line.product_id.name if line.product_id else ""
 
     @api.depends("product_qty", "price_unit")
     def _compute_amount_line(self):
