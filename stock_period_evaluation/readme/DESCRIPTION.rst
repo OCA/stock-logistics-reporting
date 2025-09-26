@@ -1,4 +1,4 @@
-**Stock Close Period** is a comprehensive warehouse management module that provides period-end stock valuation and inventory closing capabilities for Odoo.
+**Stock Period Evaluation** is a comprehensive warehouse management module that provides period-end stock valuation and inventory closing capabilities for Odoo.
 
 **Overview**
 

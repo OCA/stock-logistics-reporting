@@ -16,7 +16,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     # related field to manage closed lines
-    active = fields.Boolean(default=True)
+    active = fields.Boolean()
 
     def _get_purchase_price_unit(self):
         self.ensure_one()
@@ -61,7 +61,7 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     # add field to manage closed lines
-    active = fields.Boolean(related="move_id.active", store=True, default=True)
+    active = fields.Boolean(related="move_id.active", store=True)
     company_id = fields.Many2one(related="move_id.company_id", store=True)
 
     def _get_last_closing(self, closing_id, product_id, company_id):

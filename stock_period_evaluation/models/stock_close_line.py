@@ -13,12 +13,12 @@ logger = logging.getLogger(__name__)
 
 class StockClosePeriodLine(models.Model):
     _name = "stock.close.period.line"
-    _description = "Stock Close Period Line"
+    _description = "Stock Period Evaluation Line"
     _rec_name = "product_id"
 
     close_id = fields.Many2one(
         "stock.close.period",
-        string="Stock Close Period",
+        string="Stock Period Evaluation",
         index=True,
         ondelete="cascade",
     )

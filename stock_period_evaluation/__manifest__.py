@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Stock Close Period",
+    "name": "Stock Period Evaluation",
     "version": "18.0.1.0.0",
     "author": "Pordenone Linux User Group (PNLUG), Odoo Community Association (OCA),"
     "Dinamiche Aziendali srl, Sergio Corato",

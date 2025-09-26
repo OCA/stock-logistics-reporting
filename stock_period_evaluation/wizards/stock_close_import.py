@@ -24,7 +24,7 @@ class StockCloseImportWizard(models.TransientModel):
     _description = "Stock Close Import Wizard"
 
     file = fields.Binary()
-    close_id = fields.Many2one("stock.close.period", string="Stock Close Period")
+    close_id = fields.Many2one("stock.close.period", string="Stock Period Evaluation")
 
     def load_products(self, lines):
         products = {}

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class StockClosePeriod(models.Model):
     _name = "stock.close.period"
-    _description = "Stock Close Period"
+    _description = "Stock Period Evaluation"
 
     name = fields.Char(
         string="Reference",
@@ -178,7 +178,7 @@ class StockClosePeriod(models.Model):
                 last_close_date = (
                     self.env["ir.config_parameter"]
                     .sudo()
-                    .get_param("stock_close_period.last_close_date")
+                    .get_param("stock_period_evaluation.last_close_date")
                 )
             close.last_close_date = last_close_date
 

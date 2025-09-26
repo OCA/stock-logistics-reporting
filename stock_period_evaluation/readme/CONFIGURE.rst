@@ -2,13 +2,13 @@
 
 1. **Security Groups**:
 
-   * **Stock Close Period Manager** (``stock_close_period.group_stock_close_period_manager``):
+   * **Stock Period Evaluation Manager** (``stock_period_evaluation.group_stock_period_evaluation_manager``):
 
      - Full access to create, edit, validate, and delete closing periods
      - Access to import wizard and all reporting functions
      - Can archive stock moves and force evaluation methods
 
-   * **Stock Close Period User Read Only** (``stock_close_period.group_stock_close_period_user_readonly``):
+   * **Stock Period Evaluation User Read Only** (``stock_period_evaluation.group_stock_period_evaluation_user_readonly``):
 
      - View-only access to closing periods and reports
      - Cannot modify or create new periods
@@ -18,13 +18,13 @@
    Go to *Settings > Users & Companies > Users*:
 
    - Select the user to configure
-   - Assign appropriate Stock Close Period group
+   - Assign appropriate Stock Period Evaluation group
 
 **System Parameters**
 
 The module uses a system parameter for default configuration:
 
-* **Default Last Close Date**: ``stock_close_period.default_last_close_date``
+* **Default Last Close Date**: ``stock_period_evaluation.last_close_date``
 
   - Default value: 2010-01-01
   - Can be modified via *Settings > Technical > System Parameters*

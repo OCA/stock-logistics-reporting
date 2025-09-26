@@ -29,7 +29,7 @@ class StockClosePrint(models.TransientModel):
         }
 
         return self.env.ref(
-            "stock_close_period.report_xlsx_stock_close_print"
+            "stock_period_evaluation.report_xlsx_stock_close_print"
         ).report_action(
             self,
             data=datas,

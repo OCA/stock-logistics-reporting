@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="stock_close_period_line_tree" model="ir.ui.view">
+    <record id="stock_period_evaluation_line_tree" model="ir.ui.view">
         <field name="name">stock.close.period.line.tree</field>
         <field name="model">stock.close.period.line</field>
         <field name="arch" type="xml">
@@ -21,7 +21,7 @@
         </field>
     </record>
 
-    <record id="stock_close_period_line_form" model="ir.ui.view">
+    <record id="stock_period_evaluation_line_form" model="ir.ui.view">
         <field name="name">stock.close.period.line.form</field>
         <field name="model">stock.close.period.line</field>
         <field name="arch" type="xml">
@@ -68,7 +68,7 @@
         </field>
     </record>
 
-    <record id="stock_close_period_line_search" model="ir.ui.view">
+    <record id="stock_period_evaluation_line_search" model="ir.ui.view">
         <field name="name">stock.close.period.line.search</field>
         <field name="model">stock.close.period.line</field>
         <field name="arch" type="xml">
@@ -86,7 +86,7 @@
                 />
                 <group expand="0" string="Group By">
                     <filter
-                        string="Stock Close Period"
+                        string="Stock Period Evaluation"
                         name="close_period"
                         domain=""
                         context="{'group_by':'close_id'}"
@@ -109,7 +109,7 @@
     </record>
 
     <record id="action_stock_close_form_line" model="ir.actions.act_window">
-        <field name="name">Stock Close Period Line</field>
+        <field name="name">Stock Period Evaluation Line</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.close.period.line</field>
         <field name="view_mode">list,form</field>
@@ -117,8 +117,8 @@
 
     <menuitem
         id="menu_action_stock_close_form_line"
-        action="stock_close_period.action_stock_close_form_line"
-        parent="stock_close_period.menu_stock_close_group"
+        action="stock_period_evaluation.action_stock_close_form_line"
+        parent="stock_period_evaluation.menu_stock_close_group"
         sequence="20"
     />
 

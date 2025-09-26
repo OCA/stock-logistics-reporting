@@ -10,7 +10,7 @@ from odoo import _, models
 
 
 class XlsxStockClosePeriod(models.AbstractModel):
-    _name = "report.stock_close_period.report_xlsx_stock_close_print"
+    _name = "report.stock_period_evaluation.report_xlsx_stock_close_print"
     _inherit = "report.report_xlsx.abstract"
     _description = "Report Stock Close XLSX"
 
@@ -26,7 +26,7 @@ class XlsxStockClosePeriod(models.AbstractModel):
                     period_lines |= period.line_ids
                 lines = period_lines
 
-        sheet = workbook.add_worksheet(_("Stock Close Period"))
+        sheet = workbook.add_worksheet(_("Stock Period Evaluation"))
         sheet.set_landscape()
         sheet.fit_to_pages(1, 0)
         sheet.fit_to_pages(1, 0)

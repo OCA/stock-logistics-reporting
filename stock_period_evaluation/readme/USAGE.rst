@@ -1,6 +1,6 @@
 **Creating a Stock Closing Period**
 
-1. Navigate to *Inventory > Stock Close Period > Stock Close Period*
+1. Navigate to *Inventory > Stock Period Evaluation > Stock Period Evaluation*
 2. Click **Create** to start a new closing period
 3. Configure the following fields:
 
@@ -49,8 +49,8 @@
 
 For bulk inventory data import:
 
-1. Navigate to *Inventory > Stock Close Period > Stock Close Import*
-2. Select the target **Stock Close Period**
+1. Navigate to *Inventory > Stock Period Evaluation > Stock Period Import*
+2. Select the target **Stock Period Evaluation**
 3. Prepare CSV file with semicolon-separated format:
 
    .. code-block:: text
