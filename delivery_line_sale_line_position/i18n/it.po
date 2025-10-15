@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-14 15:06+0000\n"
+"PO-Revision-Date: 2025-10-15 11:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_line_sale_line_position
 #: model_terms:ir.ui.view,arch_db:delivery_line_sale_line_position.report_delivery_document
 msgid "<strong>Pos</strong>"
-msgstr ""
+msgstr "<strong>POS</strong>"
 
 #. module: delivery_line_sale_line_position
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move__display_name
@@ -31,26 +31,26 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move__id
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_line_sale_line_position
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move____last_update
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: delivery_line_sale_line_position
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move__position_sale_line
 #: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move_line__position_sale_line
 msgid "Position"
-msgstr ""
+msgstr "Posizione"
 
 #. module: delivery_line_sale_line_position
 #: model:ir.model,name:delivery_line_sale_line_position.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: delivery_line_sale_line_position
 #: model:ir.model,name:delivery_line_sale_line_position.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
