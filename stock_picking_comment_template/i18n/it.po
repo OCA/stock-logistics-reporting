@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-04 21:58+0000\n"
+"PO-Revision-Date: 2025-10-15 11:43+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_picking_comment_template
 #: model:ir.model.fields,field_description:stock_picking_comment_template.field_stock_picking__comment_template_ids
@@ -29,7 +29,7 @@ msgstr "Commenti"
 #. module: stock_picking_comment_template
 #: model:ir.ui.menu,name:stock_picking_comment_template.menu_base_comment_template_picking
 msgid "Document Comments"
-msgstr "Commenti documento"
+msgstr "Commenti del documento"
 
 #. module: stock_picking_comment_template
 #: model:ir.actions.act_window,name:stock_picking_comment_template.action_stock_picking_comment_template
