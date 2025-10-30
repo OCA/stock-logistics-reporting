@@ -8,6 +8,7 @@
                 <separator string="Auto Printing Configuration" colspan="4" />
                 <field
                     name="auto_printing_ids"
+                    domain="[('model', '=', 'stock.picking')]"
                     context="{'default_model': 'stock.picking'}"
                 />
             </page>

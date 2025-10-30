@@ -11,5 +11,4 @@ class StockPickingType(models.Model):
     auto_printing_ids = fields.Many2many(
         "printing.auto",
         string="Auto Printing Configuration",
-        domain=[("model", "=", "stock.picking")],
     )
