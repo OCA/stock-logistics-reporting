@@ -20,8 +20,8 @@ class StockQuantityHistory(models.TransientModel):
         ctx = safe_eval(ctx) if isinstance(ctx, str) else ctx
         if self.location_id:
             ctx["location"] = self.location_id.id
-            action[
-                "display_name"
-            ] = f"{self.location_id.complete_name} - {action['display_name']}"
+            action["display_name"] = (
+                f"{self.location_id.complete_name} - {action['display_name']}"
+            )
             action["context"] = ctx
         return action
