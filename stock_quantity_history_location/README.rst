@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===============================
 Stock Quantity History Location
 ===============================
@@ -17,7 +13,7 @@ Stock Quantity History Location
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
@@ -32,13 +28,23 @@ Stock Quantity History Location
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to run an Inventory report or Inventory Valuation
-report by location, for a past date or for current date.
+This module allows to run an Inventory report by location, for a past
+date or for current date.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Use Cases / Context
+===================
+
+In the standard behavior, when a user generates an inventory report for
+a specific date, the report shows data for all locations without the
+ability to filter or group by location.
+
+This module adds the ability to view inventory quantities for a specific
+location on a specific date.
 
 Usage
 =====
@@ -46,20 +52,12 @@ Usage
 First, you need to activate Storage Locations. To do so, go to Inventory
 / Configuration / Settings / Warehouse and activate it.
 
-To use this module, go to:
+To use this module,
 
-- *Inventory / Reporting / Locations*
-
-- Select Inventory at Date & Location
-
-- Filter by location
-
-- **Optionally: Mark if you want to include child location**
-
-- Choose a moment in time:
-
-  - Current Inventory
-  - At a Specific Date
+1. Go to **Inventory / Reporting / Stock**
+2. Click **INVENTORY AT DATE & LOCATION**
+3. Select the desired **Location** and specify the **Inventory at Date**
+4. Click the **CONFIRM** button
 
 Bug Tracker
 ===========
@@ -82,14 +80,18 @@ Authors
 Contributors
 ------------
 
-- Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Ernesto Tejeda
+   -  Ernesto Tejeda
 
-- `Sodexis <https://www.sodexis.com>`__ <dev@sodexis.com>
+-  `Sodexis <https://www.sodexis.com>`__ <dev@sodexis.com>
 
-  - Sakthivel <sakthivel@sodexis.com>
+   -  Sakthivel <sakthivel@sodexis.com>
+
+-  `Quartile <https://www.quartile.co>`__:
+
+   -  Aung Ko Ko Lin
 
 Maintainers
 -----------
