@@ -8,10 +8,10 @@
     "name": "Stock Period Evaluation",
     "summary": "Stock evaluation with FIFO, LIFO and average methods",
     "version": "18.0.1.1.0",
-    "author": "Pordenone Linux User Group (PNLUG), Odoo Community Association (OCA),"
+    "author": "Pordenone Linux User Group (PNLUG), Odoo Community Association (OCA), "
     "Dinamiche Aziendali srl, Sergio Corato",
     "category": "Warehouse",
-    "website": "https://github.com/OCA/stock-logistics-workflow",
+    "website": "https://github.com/OCA/stock-logistics-reporting",
     "license": "AGPL-3",
     "maintainers": ["MarcoCalcagni", "Borruso"],
     "depends": [

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
-     <record id="stock_close_print_wizard" model="ir.ui.view">
+    <record id="stock_close_print_wizard" model="ir.ui.view">
         <field name="name">Stock Close Print</field>
         <field name="model">stock.close.print.wizard</field>
         <field name="arch" type="xml">
@@ -36,6 +35,4 @@
         parent="menu_stock_close_group"
         sequence="100"
     />
-
-
 </odoo>

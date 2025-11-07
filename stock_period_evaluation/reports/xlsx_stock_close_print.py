@@ -78,7 +78,9 @@ class XlsxStockClosePeriod(models.AbstractModel):
         for row in lines:
             total_price = row.product_qty * row.price_unit
             sheet.write(i, 0, row.product_code or "")
-            sheet.write(i, 1, row.product_id.with_context(lang="it_IT").name or "")
+            sheet.write(
+                i, 1, row.product_id.with_context(lang=self.env.user.lang).name or ""
+            )
             sheet.write(i, 2, row.categ_name or "")
             sheet.write(i, 3, row.location_id.display_name or "")
             sheet.write(i, 4, row.lot_id.name or "")
@@ -93,11 +95,7 @@ class XlsxStockClosePeriod(models.AbstractModel):
         sheet.write_formula(
             i,
             10,
-            "=SUM(%s:%s)"
-            % (
-                xl_rowcol_to_cell(1, 10),
-                xl_rowcol_to_cell(i - 1, 10),
-            ),
+            f"=SUM({xl_rowcol_to_cell(1, 10)}:{xl_rowcol_to_cell(i - 1, 10)})",
             currency_format_title,
             "",
         )

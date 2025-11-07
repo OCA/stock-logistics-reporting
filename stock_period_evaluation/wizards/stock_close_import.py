@@ -7,16 +7,10 @@
 import base64
 import csv
 import io
-import logging
 from datetime import datetime
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
-
-_logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 
 
 class StockCloseImportWizard(models.TransientModel):
