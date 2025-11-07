@@ -16,9 +16,6 @@ _logger = logging.getLogger(__name__)
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    # related field to manage closed lines
-    active = fields.Boolean()
-
     def _get_purchase_price_unit(self):
         self.ensure_one()
         invoice_lines = self.env["stock.move.line"]._get_right_invoice_lines(
@@ -60,10 +57,6 @@ class StockMove(models.Model):
 
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
-
-    # add field to manage closed lines
-    active = fields.Boolean(related="move_id.active", store=True)
-    company_id = fields.Many2one(related="move_id.company_id", store=True)
 
     def _get_last_closing(self, closing_id, product_id, company_id):
         # default value
@@ -116,7 +109,6 @@ class StockMoveLine(models.Model):
                 ("product_id", "=", product_id.id),
                 ("date", ">", min_date),
                 ("date", "<=", max_date),
-                ("active", ">=", 0),
                 ("company_id", "=", company_id),
                 ("location_id.usage", "!=", "inventory"),
                 ("location_dest_id.usage", "!=", "inventory"),
@@ -215,7 +207,6 @@ class StockMoveLine(models.Model):
         )
         closing_line_id.cumulative_qty = other_closing_line_id.cumulative_qty
         closing_line_id.evaluation_method = other_closing_line_id.evaluation_method
-        self.env.cr.commit()  # pylint: disable=E8102
 
     def _get_cost_stock_move_lifo_fifo(self, closing_line_id, evaluation_method=False):
         product_id = closing_line_id.product_id
@@ -306,7 +297,6 @@ class StockMoveLine(models.Model):
             ("quantity", ">", 0),
             ("date", "<=", line.close_id.close_date),
             ("date", ">", line.close_id.last_close_date),
-            ("active", "!=", False),
             ("company_id", "=", line.close_id.company_id.id),
         ]
         if valuation_type in ["fifo", "purchase"]:
@@ -421,7 +411,7 @@ class StockMoveLine(models.Model):
 
     def _fix_zero_values(self, tuples):
         fixed_tuples = []
-        _logger.info("Current tuples are %s" % str(tuples))
+        _logger.info(f"Current tuples are {tuples}")
         for i, raw_tuple in enumerate(tuples):
             if not raw_tuple[2]:
                 # n.b. the order of the tuples is from the newer to the oldest
@@ -448,7 +438,7 @@ class StockMoveLine(models.Model):
                 )
             else:
                 fixed_tuples.append(raw_tuple)
-        _logger.info("Fixed tuples are %s" % str(fixed_tuples))
+        _logger.info(f"Fixed tuples are {fixed_tuples}")
         return fixed_tuples
 
     @staticmethod
@@ -603,7 +593,6 @@ class StockMoveLine(models.Model):
                 closing_id, closing_line_id, last_close_date, product_id
             )
 
-            self.env.cr.commit()  # pylint: disable=E8102
         _logger.info("[1/2] Finish recompute average cost product")
 
     def _write_results(self, closing_id):

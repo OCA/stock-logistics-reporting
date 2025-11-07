@@ -1,10 +1,10 @@
 # Copyright 2024 Sergio Corato <https://github.com/sergiocorato>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from odoo import fields
-from odoo.tests import Form, TransactionCase, tagged
+from odoo.tests import Form, TransactionCase
 
 
 class TestStockPeriodEvaluation(TransactionCase):
@@ -44,6 +44,12 @@ class TestStockPeriodEvaluation(TransactionCase):
                     (4, cls.env.ref("base.group_user").id),
                     (4, cls.env.ref("purchase.group_purchase_user").id),
                     (4, cls.env.ref("stock.group_stock_user").id),
+                    (
+                        4,
+                        cls.env.ref(
+                            "stock_period_evaluation.group_stock_period_evaluation_manager"
+                        ).id,
+                    ),
                 ],
             }
         )
@@ -58,9 +64,7 @@ class TestStockPeriodEvaluation(TransactionCase):
         """Create and validate a purchase order with backdated delivery"""
         date_order = fields.Date.today() - timedelta(days=days_ago)
 
-        purchase_order_form = Form(
-            self.env["purchase.order"].with_user(self.test_user)
-        )
+        purchase_order_form = Form(self.env["purchase.order"].with_user(self.test_user))
         purchase_order_form.partner_id = self.vendor
         with purchase_order_form.order_line.new() as order_line:
             order_line.product_id = self.product
@@ -100,30 +104,34 @@ class TestStockPeriodEvaluation(TransactionCase):
         date_order = fields.Date.today() - timedelta(days=days_ago)
 
         # Create a manual outgoing picking
-        picking_type_out = self.env['stock.picking.type'].search([
-            ('code', '=', 'outgoing'),
-            ('warehouse_id', '=', self.warehouse.id)
-        ], limit=1)
+        picking_type_out = self.env["stock.picking.type"].search(
+            [("code", "=", "outgoing"), ("warehouse_id", "=", self.warehouse.id)],
+            limit=1,
+        )
 
-        picking = self.env['stock.picking'].create({
-            'partner_id': self.customer.id,
-            'picking_type_id': picking_type_out.id,
-            'location_id': self.stock_location.id,
-            'location_dest_id': self.customer_location.id,
-            'scheduled_date': date_order,
-        })
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.customer.id,
+                "picking_type_id": picking_type_out.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "scheduled_date": date_order,
+            }
+        )
 
         # Create stock move
-        move = self.env['stock.move'].create({
-            'name': f'Test Delivery {self.product.name}',
-            'product_id': self.product.id,
-            'product_uom_qty': product_qty,
-            'product_uom': self.product.uom_id.id,
-            'picking_id': picking.id,
-            'location_id': self.stock_location.id,
-            'location_dest_id': self.customer_location.id,
-            'date': date_order,
-        })
+        move = self.env["stock.move"].create(
+            {
+                "name": f"Test Delivery {self.product.name}",
+                "product_id": self.product.id,
+                "product_uom_qty": product_qty,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+                "date": date_order,
+            }
+        )
 
         # Confirm and assign
         picking.action_confirm()
@@ -382,8 +390,8 @@ class TestStockPeriodEvaluation(TransactionCase):
     def test_05_evaluation_details(self):
         """Test that evaluation details are properly populated for FIFO/LIFO"""
         # Create purchases with clear prices
-        po1 = self._create_purchase_order(product_qty=10, price_unit=10, days_ago=30)
-        po2 = self._create_purchase_order(product_qty=5, price_unit=20, days_ago=20)
+        self._create_purchase_order(product_qty=10, price_unit=10, days_ago=30)
+        self._create_purchase_order(product_qty=5, price_unit=20, days_ago=20)
 
         # Create closing period with FIFO
         stock_close_period_form = Form(

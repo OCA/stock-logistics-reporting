@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from datetime import datetime, time
+from datetime import datetime
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -77,10 +77,6 @@ class StockClosePeriod(models.Model):
         copy=False,
         readonly=False,
     )
-    force_archive = fields.Boolean(
-        default=False,
-        help="Marks as archive the inventory move lines used during the process.",
-    )
     purchase_ok = fields.Boolean(
         default=False,
         readonly=True,
@@ -99,11 +95,12 @@ class StockClosePeriod(models.Model):
             if closing.state in ["confirm", "done"]:
                 raise UserError(
                     _(
-                        "State in '%s'. You can only delete in state 'Draft' or 'Cancelled'."
+                        "State in '%s'. You can only delete in state "
+                        "'Draft' or 'Cancelled'."
                     )
                     % closing.state
                 )
-        return super(StockClosePeriod, self).unlink()
+        return super().unlink()
 
     def action_set_to_draft(self):
         for closing in self:
@@ -141,7 +138,8 @@ class StockClosePeriod(models.Model):
                 .with_context(active_test=False)
                 .search(
                     [
-                        ("type", "!=", "service"),
+                        ("type", "=", "consu"),
+                        ("is_storable", "=", True),
                     ]
                 )
             ]
@@ -203,48 +201,6 @@ class StockClosePeriod(models.Model):
             res = True
         return res
 
-    def _deactivate_moves(self):
-        self.ensure_one()
-
-        # set active = False on stock_move and stock_move_line
-        close_date = self.close_date or datetime.combine(self.close_date, time.max)
-
-        self.env.cr.execute(
-            """
-            UPDATE
-                stock_move
-            SET
-                active = false
-            WHERE
-                date <= date(%s)
-                AND state = 'done'
-                AND (
-                    company_id == %s
-                    OR company_id IS NULL
-                );
-            """,
-            (close_date, self.company_id.id),
-        )
-
-        self.env.cr.execute(
-            """
-            UPDATE
-                stock_move_line
-            SET
-                active = false
-            WHERE
-                date <= date(%s)
-                AND state = 'done'
-                AND (
-                    company_id == %s
-                    OR company_id IS NULL
-                );
-            """,
-            (close_date, self.company_id.id),
-        )
-
-        return True
-
     def action_recalculate_purchase(self):
         for closing in self:
             if not closing.bypass_negative_qty and not closing._check_qty_available():
@@ -257,8 +213,6 @@ class StockClosePeriod(models.Model):
 
             self.env["stock.move.line"].recompute_average_cost_period_purchase(closing)
             closing.purchase_ok = True
-            if closing.force_archive:
-                closing._deactivate_moves()
             closing.work_end = datetime.now()
         return True
 
