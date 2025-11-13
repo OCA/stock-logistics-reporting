@@ -12,7 +12,7 @@
                 t-if="o.picking_type_id.code=='incoming' and o.move_ids[0].partner_id and o.picking_type_id.show_pickup_address"
             >
                 <span>
-                    <strong>Pick-Up Address:</strong>
+                    <strong>Pick-Up Address</strong>
                 </span>
                 <div
                     t-field="o.move_ids[0].partner_id"
@@ -26,8 +26,8 @@
         >
             <attribute
                 name="t-if"
-                separator=" "
-                add="and not o.picking_type_id.show_pickup_address"
+                separator="and"
+                add="(not o.picking_type_id.show_pickup_address)"
             />
         </xpath>
     </template>

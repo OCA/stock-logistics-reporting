@@ -6,8 +6,8 @@
         <xpath expr="//div[@name='vendor_address']" position="attributes">
             <attribute
                 name="t-if"
-                separator=" "
-                add="and not o.picking_type_id.show_pickup_address"
+                separator="and"
+                add="(not o.picking_type_id.show_pickup_address)"
             />
         </xpath>
         <xpath expr="//div[@name='vendor_address']" position="after">

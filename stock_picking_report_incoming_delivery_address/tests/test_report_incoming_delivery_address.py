@@ -19,10 +19,7 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
         cls.picking_type_out = cls.warehouse.out_type_id
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product1 = cls.env["product.product"].create(
-            {
-                "name": "Product Test 1",
-                "type": "product",
-            }
+            {"name": "Product Test 1", "type": "consu", "is_storable": True}
         )
 
     def test_report_incoming_delivery_address(self):
@@ -48,7 +45,7 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
                             "location_id": self.stock_location.id,
                             "location_dest_id": self.customer_location.id,
                             "product_uom_qty": 10,
-                            "quantity_done": 4,
+                            "quantity": 4,
                         },
                     ),
                 ],
@@ -56,21 +53,19 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
         )
         picking.action_confirm()
         picking.action_assign()
-        picking.action_set_quantities_to_reservation()
         picking._action_done()
+        picking.button_validate()
         return_wizard = (
             self.env["stock.return.picking"]
             .with_context(active_id=picking.id, active_ids=picking.ids)
             .create(
                 {
-                    "location_id": self.stock_location.id,
                     "picking_id": picking.id,
                 }
             )
         )
-        return_wizard._onchange_picking_id()
         return_wizard.product_return_moves.quantity = 4
-        stock_return_picking_action = return_wizard.create_returns()
+        stock_return_picking_action = return_wizard.action_create_returns()
         return_pick = self.env["stock.picking"].browse(
             stock_return_picking_action["res_id"]
         )
@@ -81,19 +76,19 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
         report_pdf_picking = self.env["ir.actions.report"]._render(
             "stock.action_report_picking", return_pick.ids
         )
-        self.assertTrue("Vendor Address:" in str(report_pdf_deliveryslip))
-        self.assertTrue("Vendor Address:" in str(report_pdf_picking))
-        self.assertFalse("Pick-Up Address:" in str(report_pdf_deliveryslip))
-        self.assertFalse("Pick-Up Address:" in str(report_pdf_picking))
+        self.assertTrue("Vendor Address" in str(report_pdf_deliveryslip))
+        self.assertTrue("Vendor Address" in str(report_pdf_picking))
+        self.assertFalse("Pick-Up Address" in str(report_pdf_deliveryslip))
+        self.assertFalse("Pick-Up Address" in str(report_pdf_picking))
         # Check pickup address is shown in reports
-        self.warehouse.return_type_id.show_pickup_address = True
+        return_pick.picking_type_id.show_pickup_address = True
         report_pdf_deliveryslip = self.env["ir.actions.report"]._render(
             "stock.action_report_delivery", return_pick.ids
         )
         report_pdf_picking = self.env["ir.actions.report"]._render(
             "stock.action_report_picking", return_pick.ids
         )
-        self.assertFalse("Vendor Address:" in str(report_pdf_deliveryslip))
-        self.assertFalse("Vendor Address:" in str(report_pdf_picking))
-        self.assertTrue("Pick-Up Address:" in str(report_pdf_deliveryslip))
-        self.assertTrue("Pick-Up Address:" in str(report_pdf_picking))
+        self.assertFalse("Vendor Address" in str(report_pdf_deliveryslip))
+        self.assertFalse("Vendor Address" in str(report_pdf_picking))
+        self.assertTrue("Pick-Up Address" in str(report_pdf_deliveryslip))
+        self.assertTrue("Pick-Up Address" in str(report_pdf_picking))

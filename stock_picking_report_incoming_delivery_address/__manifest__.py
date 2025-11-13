@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Report Incoming Delivery Address",
     "summary": "Allow show delivery address in report when picking type is incoming",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/OCA/stock-logistics-reporting",
