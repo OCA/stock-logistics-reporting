@@ -11,15 +11,13 @@ class TestReportQtyUndelivered(TransactionCase):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.product1 = cls.env["product.product"].create(
-            {
-                "name": "Product Test 1",
-                "type": "product",
-            }
+            {"name": "Product Test 1", "type": "consu", "is_storable": True}
         )
         cls.product2 = cls.env["product.product"].create(
             {
                 "name": "Product Test 2",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
@@ -51,7 +49,7 @@ class TestReportQtyUndelivered(TransactionCase):
                             "location_id": self.stock_location.id,
                             "location_dest_id": self.customer_location.id,
                             "product_uom_qty": 10,
-                            "quantity_done": 4,
+                            "quantity": 4,
                         },
                     ),
                     (
@@ -64,7 +62,7 @@ class TestReportQtyUndelivered(TransactionCase):
                             "location_id": self.stock_location.id,
                             "location_dest_id": self.customer_location.id,
                             "product_uom_qty": 10,
-                            "quantity_done": 10,
+                            "quantity": 10,
                         },
                     ),
                 ],
@@ -72,6 +70,7 @@ class TestReportQtyUndelivered(TransactionCase):
         )
         picking.action_confirm()
         picking.action_assign()
+        picking.move_ids_without_package[0].quantity = 4
         picking.with_context(
             skip_backorder=True, picking_ids_not_to_backorder=picking.ids
         ).button_validate()
