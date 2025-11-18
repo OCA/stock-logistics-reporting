@@ -60,7 +60,6 @@ class StockMoveLine(models.Model):
             if not valued_line:
                 continue
             quantity = line._get_report_valued_quantity()
-            sale_line_uom = valued_line.product_uom_id
             different_uom = valued_line.product_uom_id != line.product_uom_id
             # If order line quantity don't match with move line quantity compute values
             different_qty = float_compare(
@@ -73,15 +72,13 @@ class StockMoveLine(models.Model):
                 line.sale_line.mapped("tax_ids")
                 # Create virtual sale line with stock move line quantity
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
-                valued_line = line.sale_line.new(sol_vals)
-                valued_line.product_uom_qty = quantity
-            if different_qty:
-                # Force original price unit to avoid pricelist recomputed (not needed)
-                valued_line.price_unit = line.sale_line.price_unit
-            if different_uom:
-                valued_line.price_unit = sale_line_uom._compute_price(
+                sol_vals["product_uom_qty"] = quantity
+                sol_vals["product_uom_id"] = line.product_uom_id.id
+                sol_vals["price_unit"] = valued_line.product_uom_id._compute_price(
                     valued_line.price_unit, line.product_uom_id
                 )
+                sol_vals.pop("price_subtotal", None)
+                valued_line = line.sale_line.new(sol_vals)
             line.update(
                 {
                     "sale_tax_description": ", ".join(
@@ -90,6 +87,8 @@ class StockMoveLine(models.Model):
                     "sale_price_subtotal": valued_line.price_subtotal,
                     "sale_price_tax": valued_line.price_tax,
                     "sale_price_total": valued_line.price_total,
-                    "sale_price_unit": valued_line.price_unit,
+                    "sale_price_unit": line.sale_line.product_uom_id._compute_price(
+                        line.sale_line.price_unit, line.product_uom_id
+                    ),
                 }
             )
