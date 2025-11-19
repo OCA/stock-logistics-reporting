@@ -81,7 +81,7 @@ class TestStockPickingValued(common.TransactionCase):
                             "product_id": cls.product.id,
                             "price_unit": 100,
                             "product_uom_qty": 1,
-                            "tax_id": [(6, 0, cls.tax10.ids)],
+                            "tax_ids": [(6, 0, cls.tax10.ids)],
                         },
                     ),
                 ],

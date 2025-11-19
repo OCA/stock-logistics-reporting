@@ -17,7 +17,7 @@ class StockMoveLine(models.Model):
     currency_id = fields.Many2one(
         related="sale_line.currency_id", string="Sale Currency"
     )
-    sale_tax_id = fields.Many2many(related="sale_line.tax_id", string="Sale Tax")
+    sale_tax_ids = fields.Many2many(related="sale_line.tax_ids", string="Sale Tax")
     sale_price_unit = fields.Float(
         compute="_compute_sale_order_line_fields",
         compute_sudo=True,
@@ -60,8 +60,8 @@ class StockMoveLine(models.Model):
             if not valued_line:
                 continue
             quantity = line._get_report_valued_quantity()
-            sale_line_uom = valued_line.product_uom
-            different_uom = valued_line.product_uom != line.product_uom_id
+            sale_line_uom = valued_line.product_uom_id
+            different_uom = valued_line.product_uom_id != line.product_uom_id
             # If order line quantity don't match with move line quantity compute values
             different_qty = float_compare(
                 quantity,
@@ -70,7 +70,7 @@ class StockMoveLine(models.Model):
             )
             if different_uom or different_qty:
                 # Force read to cache M2M field for get values with _convert_to_write
-                line.sale_line.mapped("tax_id")
+                line.sale_line.mapped("tax_ids")
                 # Create virtual sale line with stock move line quantity
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
                 valued_line = line.sale_line.new(sol_vals)
@@ -85,7 +85,7 @@ class StockMoveLine(models.Model):
             line.update(
                 {
                     "sale_tax_description": ", ".join(
-                        t.name or t.description for t in line.sale_tax_id
+                        t.name or t.description for t in line.sale_tax_ids
                     ),
                     "sale_price_subtotal": valued_line.price_subtotal,
                     "sale_price_tax": valued_line.price_tax,

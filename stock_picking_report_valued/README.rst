@@ -21,13 +21,13 @@ Valued Picking Report
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_picking_report_valued
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_picking_report_valued
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-18-0/stock-logistics-reporting-18-0-stock_picking_report_valued
+    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-19-0/stock-logistics-reporting-19-0-stock_picking_report_valued
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -63,7 +63,7 @@ To get the stock picking valued report:
 Known issues / Roadmap
 ======================
 
-- If the picking is not reserved, values aren't computed.
+-  If the picking is not reserved, values aren't computed.
 
 Changelog
 =========
@@ -78,7 +78,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-reporting/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_picking_report_valued%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_picking_report_valued%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -93,36 +93,36 @@ Authors
 Contributors
 ------------
 
-- `Avanzosc <http://www.avanzosc.es>`__:
+-  `Avanzosc <http://www.avanzosc.es>`__:
 
-  - Oihane Crucelaegui
+   -  Oihane Crucelaegui
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pedro M. Baeza
-  - Antonio Espinosa
-  - Carlos Dauden
-  - David Vidal
-  - Luis M. Ontalba
-  - Ernesto Tejeda
-  - Sergio Teruel
-  - Carlos Roca
+   -  Pedro M. Baeza
+   -  Antonio Espinosa
+   -  Carlos Dauden
+   -  David Vidal
+   -  Luis M. Ontalba
+   -  Ernesto Tejeda
+   -  Sergio Teruel
+   -  Carlos Roca
 
-- `GreenIce <https://www.greenice.com>`__:
+-  `GreenIce <https://www.greenice.com>`__:
 
-  - Fernando La Chica <fernandolachica@gmail.com>
+   -  Fernando La Chica <fernandolachica@gmail.com>
 
-- `Landoo <https://www.landoo.es>`__:
+-  `Landoo <https://www.landoo.es>`__:
 
-  - Aritz Olea <ao@landoo.es>
+   -  Aritz Olea <ao@landoo.es>
 
-- `Studio73 <https://www.studio73.es>`__:
+-  `Studio73 <https://www.studio73.es>`__:
 
-  - Miguel Gandia <miguel@studio73.es>
+   -  Miguel Gandia <miguel@studio73.es>
 
-- `Trobz <https://trobz.com>`__:
+-  `Trobz <https://trobz.com>`__:
 
-  - Nguyen Minh Chien <chien@trobz.com>
+   -  Nguyen Minh Chien <chien@trobz.com>
 
 Maintainers
 -----------
@@ -137,6 +137,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_picking_report_valued>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_picking_report_valued>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
