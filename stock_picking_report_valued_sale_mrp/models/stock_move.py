@@ -22,6 +22,7 @@ class StockMove(models.Model):
             sale_line.move_ids.filtered(
                 lambda x: x.product_id == self.product_id
                 and not x.origin_returned_move_id
+                and not x.returned_move_ids
                 and (
                     x.state != "cancel"
                     or (x.state == "cancel" and x.picking_id.backorder_id)
