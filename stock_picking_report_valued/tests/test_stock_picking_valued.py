@@ -140,3 +140,45 @@ class TestStockPickingValued(common.TransactionCase):
             self.assertEqual(picking.amount_untaxed, 200.0)
             self.assertEqual(picking.amount_tax, 30.0)
             self.assertEqual(picking.amount_total, 230.0)
+
+    def test_06_report_total_block_not_shown_by_default(self):
+        """
+        By default, the Total Picking block should not be shown because
+        the report total matches amount_total.
+        """
+        self.sale_order.action_confirm()
+        picking = self.sale_order.picking_ids[0]
+        picking.action_assign()
+        self.assertFalse(
+            picking._show_report_valued_total_block(),
+            "Total Picking block should not be displayed when totals match",
+        )
+
+    def test_07_report_total_block_shown_when_total_differs(self):
+        """
+        The Total Picking block should be displayed when the report total
+        differs from amount_total.
+        """
+        self.sale_order.action_confirm()
+        picking = self.sale_order.picking_ids[0]
+        picking.action_assign()
+        StockPicking = type(picking)
+        # Save original method
+        original_method = StockPicking._get_report_valued_total_amount
+
+        # Patch the CORRECT method
+        def _patched_get_report_valued_total_amount(self):
+            self.ensure_one()
+            return self.amount_total + 10.23
+
+        try:
+            StockPicking._get_report_valued_total_amount = (
+                _patched_get_report_valued_total_amount
+            )
+            self.assertTrue(
+                picking._show_report_valued_total_block(),
+                "Total Picking block should be displayed when totals differ",
+            )
+        finally:
+            # Restore original method
+            StockPicking._get_report_valued_total_amount = original_method
