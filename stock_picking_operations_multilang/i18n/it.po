@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_operations_multilang
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-07-30 11:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model.fields,field_description:stock_picking_operations_multilang.field_stock_warehouse__active_lang_count
+msgid "Active Lang Count"
+msgstr "Numero lingue attive"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model.fields.selection,name:stock_picking_operations_multilang.selection__stock_warehouse__picking_operation_language_option__partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model.fields,help:stock_picking_operations_multilang.field_stock_warehouse__picking_operation_language_option
+msgid ""
+"Partner: Picking Operations report will use the partner's language.\n"
+"Warehouse: Picking Operations report will use the language specified in the Warehouse Language field."
+msgstr ""
+"Partner: il resoconto operazioni del partner utilizzerà la lingua del "
+"partner.\n"
+"Magazzino: il resoconto operazioni del partner utilizzerà la lingua indicata "
+"nel campo lingua magazzino."
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model.fields,field_description:stock_picking_operations_multilang.field_stock_warehouse__picking_operation_language_option
+msgid "Picking Operation Language Option"
+msgstr "Opzione lingua operazione prelievo"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model,name:stock_picking_operations_multilang.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model,name:stock_picking_operations_multilang.model_stock_warehouse
+#: model:ir.model.fields.selection,name:stock_picking_operations_multilang.selection__stock_warehouse__picking_operation_language_option__warehouse
+msgid "Warehouse"
+msgstr "Magazzino"
+
+#. module: stock_picking_operations_multilang
+#: model:ir.model.fields,field_description:stock_picking_operations_multilang.field_stock_warehouse__warehouse_language
+msgid "Warehouse Language"
+msgstr "Lingua magazzino"
