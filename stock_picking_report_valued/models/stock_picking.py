@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.tools import float_compare
 
 
 class StockPicking(models.Model):
@@ -51,3 +52,33 @@ class StockPicking(models.Model):
     def _compute_currency_id(self):
         for item in self:
             item.currency_id = item.sale_id.currency_id or item.company_id.currency_id
+
+    def _get_report_valued_total_amount(self):
+        """
+        Method used by delivery slip reports to get the total amount to be displayed.
+        By default, it returns the standard picking total (amount_total).
+        Other modules can override this method to add or adjust additional amounts
+        (taxes, fees, surcharges, etc.) that must be reflected in the printed
+        picking total.
+        If the returned value differs from amount_total, the report will display
+        the "Total picking" block.
+        """
+        self.ensure_one()
+        return self.amount_total
+
+    def _show_report_valued_total_block(self):
+        """
+        Return True if the Total Picking block should be displayed in the report.
+        The comparison is done using the currency rounding to avoid float
+        precision issues.
+        """
+        self.ensure_one()
+        currency = self.currency_id or self.company_id.currency_id
+        return (
+            float_compare(
+                self._get_report_valued_total_amount(),
+                self.amount_total,
+                precision_rounding=currency.rounding,
+            )
+            != 0
+        )

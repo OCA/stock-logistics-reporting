@@ -85,6 +85,40 @@
                         </tr>
                     </tbody>
                 </table>
+                <!--
+                    Total Picking block.
+                    This block is displayed only when the value returned by
+                    _get_report_total_amount() differs from amount_total.
+
+                    It is intended as an extension point for other modules that need to
+                    add extra amounts (taxes, fees, surcharges, etc.) to the printed
+                    picking total.
+                -->
+                <div
+                    id="valued_picking_total_block"
+                    name="valued_picking_total_block"
+                    class="col-6 ms-auto mt16"
+                    t-if="o._show_report_valued_total_block()"
+                >
+                    <table
+                        class="table table-sm"
+                        name="valued_picking_total_table"
+                        style="background-color: rgba(0, 0, 0, 0.1);"
+                    >
+                        <tr>
+                            <td>
+                                <strong>Total</strong>
+                            </td>
+                            <td class="text-end">
+                                <strong
+                                    t-esc="o._get_report_valued_total_amount()"
+                                    widget="monetary"
+                                    options="{'currency_field': 'currency_id'}"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </t>
         </xpath>
     </template>

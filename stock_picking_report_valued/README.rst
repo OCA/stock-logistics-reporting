@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =====================
 Valued Picking Report
 =====================
@@ -17,7 +13,7 @@ Valued Picking Report
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
@@ -36,6 +32,11 @@ Add amount information to Delivery Slip report.
 You can select at partner level if picking list report must be valued or not.
 If the picking is done it's valued with quantity done, otherwise the picking
 is valued with reserved quantity.
+
+Additionally, an extensible "Total Picking" section has been added to the
+delivery slip report. This total is displayed only when additional amounts are
+applied on top of the standard picking total, allowing downstream modules to
+adjust the reported total without altering the base report.
 
 **Table of contents**
 
@@ -110,6 +111,10 @@ Contributors
 * `Studio73 <https://www.studio73.es>`_:
 
   * Miguel Gandia <miguel@studio73.es>
+
+* `Sygel <https://sygel.es>`_:
+
+  * Angel Rivas <angel.rivas@sygel.es>
 
 Maintainers
 ~~~~~~~~~~~
