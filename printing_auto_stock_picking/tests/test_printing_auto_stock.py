@@ -5,18 +5,40 @@
 from odoo.exceptions import UserError
 from odoo.tools import mute_logger
 
-from odoo.addons.printing_auto_base.tests.common import (
-    TestPrintingAutoCommon,
-    patch_print_document,
-)
+from odoo.addons.printing_auto_base.tests.common import TestPrintingAutoCommon
 
 
-@patch_print_document()
 class TestAutoPrinting(TestPrintingAutoCommon):
     @classmethod
     def setUpReportAndRecord(cls):
         cls.report_ref = "stock.action_report_delivery"
-        cls.record = cls.env.ref("stock.outgoing_shipment_main_warehouse")
+        partner = cls.env["res.partner"].create({"name": "Test partner"})
+        product = cls.env["product.product"].create(
+            {"name": "Test product", "type": "consu"}
+        )
+        cls.record = cls.env["stock.picking"].create(
+            {
+                "partner_id": partner.id,
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
+                "location_id": cls.env.ref("stock.stock_location_stock").id,
+                "location_dest_id": cls.env.ref("stock.stock_location_customers").id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product.id,
+                            "product_uom": product.uom_id.id,
+                            "product_uom_qty": 15.0,
+                            "location_id": cls.env.ref("stock.stock_location_stock").id,
+                            "location_dest_id": cls.env.ref(
+                                "stock.stock_location_customers"
+                            ).id,
+                        },
+                    )
+                ],
+            }
+        )
 
     def setUp(self):
         # Note: Using setUpClass, cls.record.picking_type_id.auto_printing_ids
