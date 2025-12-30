@@ -18,10 +18,10 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
             {"name": "Product test 1", "type": "consu"}
         )
         cls.product_kit_comp_1 = cls.product_product.create(
-            {"name": "Product Component 1", "type": "product"}
+            {"name": "Product Component 1", "type": "consu"}
         )
         cls.product_kit_comp_2 = cls.product_product.create(
-            {"name": "Product Component 2", "type": "product"}
+            {"name": "Product Component 2", "type": "consu"}
         )
         cls.bom = cls.env["mrp.bom"].create(
             {
@@ -43,7 +43,7 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
             }
         )
         cls.product_2 = cls.product_product.create(
-            {"name": "Product test 2", "type": "product"}
+            {"name": "Product test 2", "type": "consu"}
         )
         order_form = Form(cls.env["sale.order"])
         order_form.partner_id = cls.partner
@@ -64,7 +64,7 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
 
     def test_01_picking_confirmed(self):
         for line in self.order_out_picking.move_ids:
-            line.quantity_done = line.product_uom_qty
+            line.quantity = line.product_uom_qty
         self.order_out_picking.button_validate()
         self.assertAlmostEqual(self.order_out_picking.amount_untaxed, 149.5)
         self.assertAlmostEqual(self.order_out_picking.amount_tax, 14.95)
