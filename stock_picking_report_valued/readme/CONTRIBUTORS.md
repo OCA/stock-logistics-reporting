@@ -18,3 +18,5 @@
   - Nguyen Minh Chien \<<chien@trobz.com>\>
 - [Binhex](https://binhex.cloud)
   - Antonio Ruban \<<antoniodavid8@gmail.com>\>
+- [Sygel](https://sygel.es)
+  - Angel Rivas \<<angel.rivas@sygel.es>\>

@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =====================
 Valued Picking Report
 =====================
@@ -17,7 +13,7 @@ Valued Picking Report
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
@@ -41,6 +37,12 @@ Additionally, you can configure each individual picking to be valued or
 not, regardless of the partner's configuration. This allows for more
 flexibility when generating delivery slips for different purposes or
 recipients.
+
+Additionally, an extensible "Total Picking" section has been added to
+the delivery slip report. This total is displayed only when additional
+amounts are applied on top of the standard picking total, allowing
+downstream modules to adjust the reported total without altering the
+base report.
 
 **Table of contents**
 
@@ -85,7 +87,7 @@ the picking:
 Known issues / Roadmap
 ======================
 
-- If the picking is not reserved, values aren't computed.
+-  If the picking is not reserved, values aren't computed.
 
 Changelog
 =========
@@ -115,39 +117,43 @@ Authors
 Contributors
 ------------
 
-- `Avanzosc <http://www.avanzosc.es>`__:
+-  `Avanzosc <http://www.avanzosc.es>`__:
 
-  - Oihane Crucelaegui
+   -  Oihane Crucelaegui
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pedro M. Baeza
-  - Antonio Espinosa
-  - Carlos Dauden
-  - David Vidal
-  - Luis M. Ontalba
-  - Ernesto Tejeda
-  - Sergio Teruel
+   -  Pedro M. Baeza
+   -  Antonio Espinosa
+   -  Carlos Dauden
+   -  David Vidal
+   -  Luis M. Ontalba
+   -  Ernesto Tejeda
+   -  Sergio Teruel
 
-- `GreenIce <https://www.greenice.com>`__:
+-  `GreenIce <https://www.greenice.com>`__:
 
-  - Fernando La Chica <fernandolachica@gmail.com>
+   -  Fernando La Chica <fernandolachica@gmail.com>
 
-- `Landoo <https://www.landoo.es>`__:
+-  `Landoo <https://www.landoo.es>`__:
 
-  - Aritz Olea <ao@landoo.es>
+   -  Aritz Olea <ao@landoo.es>
 
-- `Studio73 <https://www.studio73.es>`__:
+-  `Studio73 <https://www.studio73.es>`__:
 
-  - Miguel Gandia <miguel@studio73.es>
+   -  Miguel Gandia <miguel@studio73.es>
 
-- `Trobz <https://trobz.com>`__:
+-  `Trobz <https://trobz.com>`__:
 
-  - Nguyen Minh Chien <chien@trobz.com>
+   -  Nguyen Minh Chien <chien@trobz.com>
 
-- `Binhex <https://binhex.cloud>`__
+-  `Binhex <https://binhex.cloud>`__
 
-  - Antonio Ruban <antoniodavid8@gmail.com>
+   -  Antonio Ruban <antoniodavid8@gmail.com>
+
+-  `Sygel <https://sygel.es>`__
+
+   -  Angel Rivas <angel.rivas@sygel.es>
 
 Maintainers
 -----------
