@@ -41,5 +41,4 @@ class StockRule(models.Model):
                 and description_picking != line.product_id.display_name
             ):
                 res["description_picking"] = description_picking
-            res["name"] = line.name
         return res
