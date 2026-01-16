@@ -7,9 +7,11 @@
 
 <!-- /!\ do not modify above this line -->
 
-# stock-logistics-reporting
+# Stock Reporting
 
-stock-logistics-reporting
+Are you looking for modules related to logistics? Or would like to contribute
+to? There are many repositories with specific purposes. Have a look at this
+[README](https://github.com/OCA/wms/blob/19.0/README.md).
 
 <!-- /!\ do not modify below this line -->
 
