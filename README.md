@@ -24,6 +24,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [stock_picking_report_external_note](stock_picking_report_external_note/) | 19.0.1.0.0 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Adds a note in Stock Picking shown on external reports like Delivery Slip
+[stock_picking_report_valued](stock_picking_report_valued/) | 19.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
 
 [//]: # (end addons)
 

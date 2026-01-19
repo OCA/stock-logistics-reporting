@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-reporting"
-version = "19.0.20251231.0"
+version = "19.0.20260119.0"
 dependencies = [
     "odoo-addon-stock_picking_report_external_note==19.0.*",
+    "odoo-addon-stock_picking_report_valued==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
