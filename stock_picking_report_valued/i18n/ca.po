@@ -24,8 +24,10 @@ msgstr "<strong>Descompte</strong>"
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
-msgid "<strong>Subtotal</strong>"
-msgstr "<strong>Subtotal</strong>"
+msgid ""
+"<strong>Subtotal\n"
+"                    </strong>"
+msgstr ""
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
@@ -39,8 +41,10 @@ msgstr "<strong>Total</strong>"
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
-msgid "<strong>Unit Price</strong>"
-msgstr "<strong>Preu unitari</strong>"
+msgid ""
+"<strong>Unit Price\n"
+"                    </strong>"
+msgstr ""
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
@@ -132,3 +136,9 @@ msgstr "Albarà valorat"
 #: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
 msgid "You can select which partners have valued pickings"
 msgstr "Pots seleccionar quins clients tenen albarans valorats"
+
+#~ msgid "<strong>Subtotal</strong>"
+#~ msgstr "<strong>Subtotal</strong>"
+
+#~ msgid "<strong>Unit Price</strong>"
+#~ msgstr "<strong>Preu unitari</strong>"
