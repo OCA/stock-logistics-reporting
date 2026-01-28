@@ -13,7 +13,7 @@
             >not move.description_picking or move.description_picking == move.product_id.name or move.description_picking == move.product_id.display_name</attribute>
         </xpath>
         <xpath
-            expr="//table[@name='stock_backorder_table']//t[@t-as='backorder']//span[@t-field='bo_line.product_id']"
+            expr="//table[@name='stock_backorder_table']//tr[@t-as='bo_line']//span[@t-field='bo_line.product_id']"
             position="attributes"
         >
             <attribute
