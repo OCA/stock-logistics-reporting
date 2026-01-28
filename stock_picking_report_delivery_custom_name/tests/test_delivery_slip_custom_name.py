@@ -22,7 +22,8 @@ class TestStockPickingReportCustomName(common.TransactionCase):
         picking_form.picking_type_id = cls.env.ref("stock.picking_type_out")
         with picking_form.move_ids_without_package.new() as move_form:
             move_form.product_id = cls.product
-            move_form.quantity_done = 1
+            move_form.product_uom_qty = 1
+            move_form.quantity = 1
         cls.picking = picking_form.save()
 
     def _get_report_in_plain_text(self):

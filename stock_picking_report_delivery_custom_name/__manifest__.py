@@ -3,13 +3,14 @@
 
 {
     "name": "Hidden product names in pickings",
-    "summary": "Allows to hide the product display name in favor of the picking description",
-    "version": "16.0.1.0.1",
+    "summary": """
+    Allows to hide the product display name in favor of the picking description""",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Moduon, Odoo Community Association (OCA)",
-    "maintainers": ["chienandalu"],
+    "maintainers": ["chienandalu", "Andrii9090"],
     "license": "LGPL-3",
     "depends": [
         "stock",
