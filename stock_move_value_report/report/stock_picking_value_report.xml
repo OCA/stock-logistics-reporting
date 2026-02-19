@@ -91,7 +91,7 @@
                                     <span t-field="picking.state" />
                                 </td>
                                 <td class="text-center">
-                                    <span t-field="picking.date" />
+                                    <span t-field="picking.date_done" />
                                 </td>
                                 <td class="text-center" name="td_sched_date">
                                     <span t-field="picking.scheduled_date" />

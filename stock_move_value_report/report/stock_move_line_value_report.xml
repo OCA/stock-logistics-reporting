@@ -58,13 +58,10 @@
                         <span t-field="move_line.product_uom_id" />
                     </td>
                     <td class="text-end">
-                        <t
-                            t-set="valuation_layers"
-                            t-value="move_line.move_id.stock_valuation_layer_ids"
-                        />
+                        <t t-set="move" t-value="move_line.move_id" />
                         <t
                             t-set="cost"
-                            t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                            t-value="sum(move.mapped(lambda m: m.value if m.quantity > 0 else -m.value))"
                         />
                         <span
                             t-esc="cost"
@@ -97,13 +94,10 @@
                             <td class="text-end">
                                 <t t-set="total" t-value="0" />
                                 <t t-foreach="move_lines" t-as="move_line">
-                                    <t
-                                        t-set="valuation_layers"
-                                        t-value="move_line.move_id.stock_valuation_layer_ids"
-                                    />
+                                    <t t-set="move" t-value="move_line.move_id" />
                                     <t
                                         t-set="cost"
-                                        t-value="sum(valuation_layers.mapped(lambda svl: svl.unit_cost if svl.quantity > 0 else -svl.unit_cost))"
+                                        t-value="sum(move.mapped(lambda m: m.value if m.quantity > 0 else -m.value))"
                                     />
                                     <t
                                         t-set="total"
@@ -134,7 +128,7 @@
                     <t t-set="ml_from_inventories" />
                     <t
                         t-set="ml_from_scraps"
-                        t-value="move_lines_ids.filtered('move_id.scrapped')"
+                        t-value="move_lines_ids.filtered('move_id.scrap_id')"
                     />
                     <!-- ML From Pickings -->
                     <t t-if="ml_from_pickings">
@@ -147,11 +141,11 @@
                                 t-set="picking_move_lines"
                                 t-value="ml_from_pickings.filtered(lambda x: x.picking_id == picking)"
                             />
-                            <h4><span>[<t t-esc="picking.date" />]</span> Picking <t
-                                t-esc="picking.name"
-                            />: <t t-esc="picking.location_id.name" /> &#8594; <t
-                                t-esc="picking.location_dest_id.name"
-                            /></h4>
+                            <h4><span>[<t
+                                t-esc="picking.date_done"
+                            />]</span> Picking <t t-esc="picking.name" />: <t
+                                t-esc="picking.location_id.name"
+                            /> &#8594; <t t-esc="picking.location_dest_id.name" /></h4>
                             <t t-call="stock_move_value_report.stock_move_lines_value">
                                 <t t-set="move_lines" t-value="picking_move_lines" />
                                 <t
