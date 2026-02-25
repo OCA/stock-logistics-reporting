@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+    <record id="period_last_7_days" model="product.demand.period">
+        <field name="sequence" eval="10" />
+        <field name="name">Last 7 days</field>
+        <field name="start_expression">today -7d</field>
+        <field name="end_expression">today</field>
+        <field name="active" eval="False" />
+    </record>
+    <record id="period_last_month" model="product.demand.period">
+        <field name="sequence" eval="20" />
+        <field name="name">Last month</field>
+        <field name="start_expression">today =1d -1m</field>
+        <field name="end_expression">today =1d</field>
+        <field name="active" eval="False" />
+    </record>
+    <record id="period_last_30_days" model="product.demand.period">
+        <field name="sequence" eval="30" />
+        <field name="name">Last 30 days</field>
+        <field name="start_expression">today -30d</field>
+        <field name="end_expression">today</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="period_last_year" model="product.demand.period">
+        <field name="sequence" eval="40" />
+        <field name="name">Last year</field>
+        <field name="start_expression">today =1d -1y</field>
+        <field name="end_expression">today =1d</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="period_ytd" model="product.demand.period">
+        <field name="sequence" eval="45" />
+        <field name="name">Year to date</field>
+        <field name="start_expression">today =1d =1m</field>
+        <field name="end_expression">now</field>
+        <field name="active" eval="True" />
+    </record>
+    <record id="period_same_month_last_year" model="product.demand.period">
+        <field name="sequence" eval="50" />
+        <field name="name">Same month last year</field>
+        <field name="start_expression">today =1d -1y</field>
+        <field name="end_expression">today =1d -1y +1m</field>
+        <field name="active" eval="False" />
+    </record>
+    <record id="period_next_month_last_year" model="product.demand.period">
+        <field name="sequence" eval="60" />
+        <field name="name">Next month last year</field>
+        <field name="start_expression">today =1d -1y +1m</field>
+        <field name="end_expression">today =1d -1y +2m</field>
+        <field name="active" eval="False" />
+    </record>
+</odoo>
