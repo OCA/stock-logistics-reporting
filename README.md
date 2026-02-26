@@ -32,7 +32,7 @@ addon | version | maintainers | summary
 [stock_picking_report_external_note](stock_picking_report_external_note/) | 15.0.0.1.1 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Adds a note in Stock Picking shown on external reports like Delivery Slip
 [stock_picking_report_internal_delivery_address](stock_picking_report_internal_delivery_address/) | 15.0.1.0.0 |  | Show delivery address when picking type is internal
 [stock_picking_report_product_sticker](stock_picking_report_product_sticker/) | 15.0.1.0.2 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Stock Picking Report - Product Sticker
-[stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 15.0.1.0.0 |  | Display on picking report delivery slip undelivered products
+[stock_picking_report_undelivered_product](stock_picking_report_undelivered_product/) | 15.0.1.0.1 |  | Display on picking report delivery slip undelivered products
 [stock_picking_report_valued](stock_picking_report_valued/) | 15.0.1.7.1 |  | Adding Valued Picking on Delivery Slip report
 [stock_picking_report_valued_sale_mrp](stock_picking_report_valued_sale_mrp/) | 15.0.1.1.1 | <a href='https://github.com/chienandalu'><img src='https://github.com/chienandalu.png' width='32' height='32' style='border-radius:50%;' alt='chienandalu'/></a> | Allow to summarize the picking related with the selled kits
 [stock_quantity_history_location](stock_quantity_history_location/) | 15.0.1.0.0 |  | Provides stock quantity by location on past date
