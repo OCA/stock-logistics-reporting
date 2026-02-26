@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <t
-                        t-foreach="undelivered_moves.sorted(key=lambda l: (l.product_id.default_code, l.product_id.name))"
+                        t-foreach="undelivered_moves.sorted(key=lambda l: (l.product_id.default_code or '', l.product_id.name))"
                         t-as="undelivered_move"
                     >
                         <tr
