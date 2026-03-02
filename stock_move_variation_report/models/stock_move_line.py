@@ -22,8 +22,11 @@ class StockMoveLine(models.Model):
             return 0
 
     @api.depends(
-        "product_uom_qty", "product_qty", "location_id.usage", "location_dest_id.usage"
+        "quantity",
+        "move_id.product_uom_qty",
+        "location_id.usage",
+        "location_dest_id.usage",
     )
     def _compute_qty_variation(self):
         for line in self:
-            line.qty_variation = line.qty_done * line._get_qty_variation_sign()
+            line.qty_variation = line.quantity * line._get_qty_variation_sign()
