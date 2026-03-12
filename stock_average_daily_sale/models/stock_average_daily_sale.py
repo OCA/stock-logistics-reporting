@@ -76,7 +76,8 @@ class StockAverageDailySale(models.Model):
         required=True,
         compute="_compute_safety",
         help="Safety stock to cover the variability of the quantity delivered "
-        "each day. Formula: daily standard deviation * safety factor * sqrt(nbr days in the period)",
+        "each day. Formula: daily standard deviation * safety "
+        "factor * sqrt(nbr days in the period)",
     )
 
     def _compute_safety(self):
@@ -90,7 +91,8 @@ class StockAverageDailySale(models.Model):
         required=True,
         compute="_compute_recommended_qty",
         digits="Product Unit of Measure",
-        help="Minimal recommended quantity in stock. Formula: average daily qty * number days in stock + safety",
+        help="Minimal recommended quantity in stock. Formula: average daily "
+        "qty * number days in stock + safety",
     )
 
     def _compute_recommended_qty(self):
@@ -143,12 +145,10 @@ class StockAverageDailySale(models.Model):
 
     # pylint: disable=redefined-outer-name
     @api.model
-    def search(self, domain, offset=0, limit=None, order=None, count=False):
+    def search(self, domain, offset=0, limit=None, order=None):
         if not config["test_enable"] and not self._check_view():
             return self.browse()
-        return super().search(
-            domain=domain, offset=offset, limit=limit, order=order, count=count
-        )
+        return super().search(domain=domain, offset=offset, limit=limit, order=order)
 
     @api.model
     def get_refresh_date(self):
@@ -186,7 +186,8 @@ class StockAverageDailySale(models.Model):
         self.env.cr.execute(
             """
             CREATE MATERIALIZED VIEW %(table)s AS (
-                -- Create a consolidated definition of parameters used into the average daily
+                -- Create a consolidated definition of parameters used into the
+                -- average daily
                 -- sales computation. Parameters are specified by product ABC class
                 WITH cfg AS (
                     SELECT
@@ -198,16 +199,20 @@ class StockAverageDailySale(models.Model):
                         -- removing Saturday and Sunday if weekends should be excluded
                         (SELECT count(d::date)
                             FROM generate_series (date_from, date_to, '1 day') AS gs(d)
-                            WHERE NOT exclude_weekends OR EXTRACT(ISODOW FROM d) NOT IN (6,7)
+                            WHERE NOT exclude_weekends
+                                OR EXTRACT(ISODOW FROM d) NOT IN (6,7)
                         ) AS total_days
                     FROM
                         stock_average_daily_sale_config
-                    JOIN stock_location sl ON stock_average_daily_sale_config.location_id = sl.id
+                    JOIN stock_location sl
+                        ON stock_average_daily_sale_config.location_id = sl.id
                     JOIN LATERAL (
                         SELECT
                         -- start of the analyzed period computed from the original cfg
-                        (%(now)s::date - (period_value::text || ' ' || period_name::text)::interval)::date AS date_from,
-                        -- end of the analyzed period; don't consider today as we don't have all figures yet
+                        (%(now)s::date - (period_value::text || ' ' ||
+                        period_name::text)::interval)::date AS date_from,
+                        -- end of the analyzed period; don't consider today as we don't
+                        -- have all figures yet
                         (%(now)s::date - '1 day'::interval)::date AS date_to
                     ) dts ON true
                     WHERE
@@ -227,13 +232,19 @@ class StockAverageDailySale(models.Model):
                         JOIN product_template pt ON pp.product_tmpl_id = pt.id
                         CROSS JOIN LATERAL (
                             SElECT * FROM cfg
-                            WHERE cfg.abc_classification_level = COALESCE(pt.abc_storage, 'c')
-                            AND sl_src.parent_path ilike concat(cfg.location_parent_path, '%%')
-                            AND sl_dest.parent_path not ilike concat(cfg.location_parent_path, '%%')
-                            -- as date is datetime and date_to is a date, we need to add 1 day to include date_to day
-                            AND sm.date BETWEEN cfg.date_from AND (cfg.date_to + '1 day'::interval)
+                            WHERE cfg.abc_classification_level =
+                                COALESCE(pt.abc_storage, 'c')
+                            AND sl_src.parent_path ilike
+                                concat(cfg.location_parent_path, '%%')
+                            AND sl_dest.parent_path not ilike
+                                concat(cfg.location_parent_path, '%%')
+                            -- as date is datetime and date_to is a date,
+                            -- we need to add 1 day to include date_to day
+                            AND sm.date BETWEEN cfg.date_from
+                                AND (cfg.date_to + '1 day'::interval)
                             -- Consumption on excluded days are included
-                            -- AND (NOT cfg.exclude_weekends OR EXTRACT(ISODOW FROM sm.date) NOT IN (6,7))
+                            -- AND (NOT cfg.exclude_weekends
+                            -- OR EXTRACT(ISODOW FROM sm.date) NOT IN (6,7))
                         ) AS cfg
                     WHERE
                         sm.state = 'done' AND sm.product_uom_qty > 0
@@ -264,7 +275,8 @@ class StockAverageDailySale(models.Model):
                         cfg.total_days,
                         count(*) AS count_days,
                         array_agg(dc.qty)
-                            FILTER (WHERE NOT cfg.exclude_weekends OR EXTRACT(ISODOW FROM dc.day) NOT IN (6,7))
+                            FILTER (WHERE NOT cfg.exclude_weekends
+                                OR EXTRACT(ISODOW FROM dc.day) NOT IN (6,7))
                             AS daily_consumption_arr
                     FROM daily_consumption dc
                     LEFT JOIN cfg ON cfg.id = dc.config_id
@@ -274,13 +286,17 @@ class StockAverageDailySale(models.Model):
                 average_max_stddev AS(
                     SELECT
                       *,
-                      -- For days without consumption, fill with a daily consumption of 0
-                      -- The number of missing days is the total days in the period minus days where we have a count
-                      -- Combine the array of daily consumption with the 0 and compute standard deviation
+                      -- For days without consumption, fill
+                      -- with a daily consumption of 0
+                      -- The number of missing days is the total days in the period
+                      -- minus days where we have a count
+                      -- Combine the array of daily consumption with the 0
+                      -- and compute standard deviation
                       (SELECT stddev(e) FROM
                          unnest(array_cat(
                             daily_consumption_arr,
-                            ARRAY(SELECT 0.0 FROM generate_series(1, total_days - count_days))
+                            ARRAY(SELECT 0.0
+                                FROM generate_series(1, total_days - count_days))
                          )) AS e)
                       AS daily_standard_deviation
                     FROM average_max

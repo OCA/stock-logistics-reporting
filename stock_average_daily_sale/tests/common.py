@@ -5,14 +5,14 @@ from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo.fields import Datetime
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class CommonAverageSaleTest(TransactionCase):
+class CommonAverageSaleTest(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.inventory_obj = cls.env["stock.quant"].with_context(inventory_mode=True)
         cls.customers = cls.env.ref("stock.stock_location_customers")
         cls.location_obj = cls.env["stock.location"]
@@ -40,7 +40,7 @@ class CommonAverageSaleTest(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product 1",
-                "type": "product",
+                "is_storable": True,
             }
         )
 
@@ -91,7 +91,8 @@ class CommonAverageSaleTest(TransactionCase):
         move = cls._create_move(product, origin_location, qty)
         move._action_confirm()
         move._action_assign()
-        move.quantity_done = move.product_uom_qty
+        move.quantity = move.product_uom_qty
+        move.picked = True
         move._action_done()
 
     @classmethod

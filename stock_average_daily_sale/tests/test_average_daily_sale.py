@@ -58,7 +58,7 @@ class TestAverageDailySale(CommonAverageSaleTest):
         product_2 = self.env["product.product"].create(
             {
                 "name": "Product 2",
-                "type": "product",
+                "is_storable": True,
             }
         )
         inventory_date = Datetime.to_string(self.now - relativedelta(self.now, days=5))
@@ -116,7 +116,7 @@ class TestAverageDailySale(CommonAverageSaleTest):
             )
             move._action_confirm()
             move._action_assign()
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
             move._action_done()
         self.test_query_ok()
 

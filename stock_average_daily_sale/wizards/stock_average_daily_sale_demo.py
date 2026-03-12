@@ -32,7 +32,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
         )
         move._action_confirm()
         move._action_assign()
-        move.quantity_done = move.product_uom_qty
+        move.quantity = move.product_uom_qty
         move._action_done()
 
         # Create the OUT move
@@ -58,7 +58,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
             move = self._create_move(product, stock, 10.0)
             move._action_confirm()
             move._action_assign()
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
             move._action_done()
             move.priority = "1"
         move_2_date = Date.to_string(now - relativedelta(weeks=9))
@@ -66,7 +66,7 @@ class StockAverageDailySaleDemo(models.TransientModel):
             move = self._create_move(product, stock, 12.0)
             move._action_confirm()
             move._action_assign()
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
             move._action_done()
             move.priority = "1"
 
@@ -87,14 +87,14 @@ class StockAverageDailySaleDemo(models.TransientModel):
         product = self.env["product.product"].create(
             {
                 "name": "Product Test 1",
-                "type": "product",
+                "is_storable": True,
             }
         )
         self._create_movement(product)
         product = self.env["product.product"].create(
             {
                 "name": "Product Test 2",
-                "type": "product",
+                "is_storable": True,
             }
         )
         self._create_movement(product)

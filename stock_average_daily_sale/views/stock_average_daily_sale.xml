@@ -54,7 +54,7 @@
         <field name="name">stock.daily.sale.tree (in stock_average_daily_sale)</field>
         <field name="model">stock.average.daily.sale</field>
         <field name="arch" type="xml">
-            <tree create="false" delete="false">
+            <list create="false" delete="false">
                 <field
                     name="warehouse_id"
                     groups="stock.group_stock_multi_warehouses"
@@ -70,7 +70,7 @@
                 <field name="average_daily_qty" optional="show" />
                 <field name="safety" optional="show" />
                 <field name="recommended_qty" optional="show" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="stockdaily_sale_form_view">
@@ -108,7 +108,7 @@
     <record model="ir.actions.act_window" id="stock_average_daily_sale_act_window">
         <field name="name">Average Daily Sales</field>
         <field name="res_model">stock.average.daily.sale</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field
             name="context"
