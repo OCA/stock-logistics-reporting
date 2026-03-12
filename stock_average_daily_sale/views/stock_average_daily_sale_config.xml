@@ -2,7 +2,6 @@
 <!-- Copyright 2021 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="stock_average_daily_sale_config_tree_view">
         <field name="name">stock.average.daily.sale.config.tree</field>
         <field name="model">stock.average.daily.sale.config</field>
@@ -66,5 +65,4 @@
         <field name="action" ref="stock_average_daily_sale_config_act_window" />
         <field name="sequence" eval="99" />
     </record>
-
 </odoo>

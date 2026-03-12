@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 
 
 class StockAverageDailySaleDemo(models.TransientModel):
-
     _name = "stock.average.daily.sale.demo"
     _description = "Wizard to populate demo data with past moves for Average Daily Sale"
 

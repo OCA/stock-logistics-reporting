@@ -17,42 +17,44 @@ Stock Average Daily Sale
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_average_daily_sale
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_average_daily_sale
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-16-0/stock-logistics-reporting-16-0-stock_average_daily_sale
+    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-18-0/stock-logistics-reporting-18-0-stock_average_daily_sale
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to gather stock consumptions and build reporting for average
-daily consumptions. Technically, this has been done through a materialized
-postgresql view in order to be as fast as possible (some other flow modules can
-depend on this).
+This module allows to gather stock consumptions and build reporting for
+average daily consumptions. Technically, this has been done through a
+materialized postgresql view in order to be as fast as possible (some
+other flow modules can depend on this).
 
 You can add several configurations depending on the location from which
 consumptions are counted.
 
-For each product ABC classification, you can define the computation horizon,
-i.e. the amount of time to look backward (in days or weeks or months or years).
+For each product ABC classification, you can define the computation
+horizon, i.e. the amount of time to look backward (in days or weeks or
+months or years).
 
 You can exclude some days of the week like saturday and sunday from the
-computation. However, if moves occurs on those excluded days, they are still counted.
-If your warehouse is open usualy on week days, the averages will be on 5 days a
-week. If the warehouse had some activity during the week-end, this will be
-considered in the total and average as if it happened during weekdays.
+computation. However, if moves occurs on those excluded days, they are
+still counted. If your warehouse is open usualy on week days, the
+averages will be on 5 days a week. If the warehouse had some activity
+during the week-end, this will be considered in the total and average as
+if it happened during weekdays.
 
-The report also provides a recommended quantity. That recommended quantity is the biggest between:
-- a coverage in days * the average daily consumption + a safety
-- a coverage in days * the average consumption
+The report also provides a recommended quantity. That recommended
+quantity is the biggest between: - a coverage in days \* the average
+daily consumption + a safety - a coverage in days \* the average
+consumption
 
-The second part tries to better recommend a quantity for C products.
-The safety is computed as:
-daily standard deviation * sqrt(coverage) * a safety factor
-It is up to you to configure the safety factor.
+The second part tries to better recommend a quantity for C products. The
+safety is computed as: daily standard deviation \* sqrt(coverage) \* a
+safety factor It is up to you to configure the safety factor.
 
 **Table of contents**
 
@@ -62,47 +64,53 @@ It is up to you to configure the safety factor.
 Configuration
 =============
 
-* To configure data analysis, you should go to Inventory > Configuration > Average daily sales computation parameters
+- To configure data analysis, you should go to Inventory > Configuration
+  > Average daily sales computation parameters
 
-* You need to fill in the following informations:
+- You need to fill in the following informations:
 
-  * The product ABC classification you want - see product_abc_classification module
-  * The concerned warehouse
-  * The stock location for which you want to compute the usage
-  * The period of time to analyze back (in days/weeks/months/years)
-  * A safety factor
+  - The product ABC classification you want - see
+    product_abc_classification module
+  - The concerned warehouse
+  - The stock location for which you want to compute the usage
+  - The period of time to analyze back (in days/weeks/months/years)
+  - A safety factor
 
-* Go to Configuration > Technical > Scheduled Actions > Refresh average daily sales materialized view
+- Go to Configuration > Technical > Scheduled Actions > Refresh average
+  daily sales materialized view
 
-  By default, the scheduled action is set to refresh data each day. Note that
-  the current day is not take into consideration in the computations, so you
-  better run the scheduled action on the early morning.
+  By default, the scheduled action is set to refresh data each day. Note
+  that the current day is not take into consideration in the
+  computations, so you better run the scheduled action on the early
+  morning.
 
-  WARNING: The current query is not TZ compliant. So the cron must run after midnight UTC time.
+  WARNING: The current query is not TZ compliant. So the cron must run
+  after midnight UTC time.
 
-* By default, the root location where analysis is done is the Warehouse stock location,
-  but you can change it and you can compute usage for multiple locations of the warehouse.
-  Ensure to set a location that is used by the stock moves or a parent one.
+- By default, the root location where analysis is done is the Warehouse
+  stock location, but you can change it and you can compute usage for
+  multiple locations of the warehouse. Ensure to set a location that is
+  used by the stock moves or a parent one.
 
 Known issues / Roadmap
 ======================
 
-* Allow to exclude specific days
-* An extensible data gathering query
-* Make it timezone compliant
+- Allow to exclude specific days
+- An extensible data gathering query
+- Make it timezone compliant
 
 Changelog
 =========
 
 16.0.1.0.0 (2023-01-13)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [16.0][ADD] stock_average_daily_sale
+- [16.0][ADD] stock_average_daily_sale
 
 16.0.2.0.0 (2025-04-05)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-* [16.0][REF] refactor formulas for proper metrics
+- [16.0][REF] refactor formulas for proper metrics
 
 Bug Tracker
 ===========
@@ -110,7 +118,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-reporting/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_average_daily_sale%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_average_daily_sale%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -118,21 +126,21 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 * BCIM
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Laurent Mignon <laurent.mignon@acsone.eu>
-* Denis Roussel <denis.roussel@acsone.eu>
-* Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
-* Tomasz Walter <tomasz.walter@camptocamp.com>
+- Laurent Mignon <laurent.mignon@acsone.eu>
+- Denis Roussel <denis.roussel@acsone.eu>
+- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+- Tomasz Walter <tomasz.walter@camptocamp.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -152,6 +160,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-jbaudoux| 
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/16.0/stock_average_daily_sale>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_average_daily_sale>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

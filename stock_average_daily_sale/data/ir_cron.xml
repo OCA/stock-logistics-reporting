@@ -12,5 +12,4 @@
         <field name="code">model.refresh_view()</field>
         <field name="state">code</field>
     </record>
-
 </odoo>
