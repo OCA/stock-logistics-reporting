@@ -2,7 +2,7 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
     ABC_SELECTION,
@@ -69,7 +69,7 @@ class StockAverageDailySaleConfig(models.Model):
         (
             "abc_classification_level_unique",
             "UNIQUE(abc_classification_level, location_id)",
-            _("Abc Classification Level must be unique per location"),
+            "Abc Classification Level must be unique per location",
         )
     ]
 
