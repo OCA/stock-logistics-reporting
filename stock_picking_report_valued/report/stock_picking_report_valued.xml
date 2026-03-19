@@ -123,9 +123,8 @@
                             </td>
                             <td class="text-end">
                                 <strong
-                                    t-esc="o._get_report_valued_total_amount()"
-                                    widget="monetary"
-                                    options="{'currency_field': 'currency_id'}"
+                                    t-out="o._get_report_valued_total_amount()"
+                                    t-options="{'widget': 'monetary', 'display_currency': o.currency_id or o.company_id.currency_id}"
                                 />
                             </td>
                         </tr>
