@@ -1,0 +1,227 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_product_demand_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model,name:stock_product_demand_info.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.actions.act_window,help:stock_product_demand_info.action_product_demand_period
+msgid ""
+"Create demand periods to see past demand by period on products and "
+"orderpoints."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_product_demand_info
+#. odoo-javascript
+#: code:addons/stock_product_demand_info/static/src/widgets/demand_period_info.xml:0
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__demand_period_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__demand_period_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__demand_period_info
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.product_template_form_view
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_stock_warehouse_orderpoint_form_demand_period
+msgid "Demand by period"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_form
+msgid "Demand period"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.actions.act_window,name:stock_product_demand_info.action_product_demand_period
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__demand_period_ids
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_list
+msgid "Demand periods"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__display_name
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__display_name
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.actions.act_window,help:stock_product_demand_info.action_product_demand_period
+msgid ""
+"Each period has a name and start/end date expressions (e.g. \"today -7d\", "
+"\"today\")."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__end_expression
+msgid "End Expression"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,help:stock_product_demand_info.field_product_demand_period__end_expression
+msgid ""
+"End of the time window used to search for outgoing stock moves (demand). "
+"Same syntax as Start: 'today'/'now' with ±Nd, ±Nw, ±Nm, ±Ny, or =1d, =6m."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__id
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__id
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__id
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_form
+msgid "Inactive"
+msgstr ""
+
+#. module: stock_product_demand_info
+#. odoo-python
+#: code:addons/stock_product_demand_info/models/product_demand_period.py:0
+msgid "Invalid date expression: %(error)s"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_last_30_days
+msgid "Last 30 days"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_last_7_days
+msgid "Last 7 days"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_last_month
+msgid "Last month"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_last_year
+msgid "Last year"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.res_config_settings_view_form
+msgid "Manage demand periods"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model,name:stock_product_demand_info.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_next_month_last_year
+msgid "Next month last year"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,help:stock_product_demand_info.field_product_product__demand_period_info
+#: model:ir.model.fields,help:stock_product_demand_info.field_product_template__demand_period_info
+#: model:ir.model.fields,help:stock_product_demand_info.field_stock_warehouse_orderpoint__demand_period_info
+msgid "Past demand per period. Periods can be configured in General Settings."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model,name:stock_product_demand_info.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model,name:stock_product_demand_info.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model,name:stock_product_demand_info.model_product_demand_period
+msgid "Product demand period"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_same_month_last_year
+msgid "Same month last year"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__start_expression
+msgid "Start Expression"
+msgstr ""
+
+#. module: stock_product_demand_info
+#. odoo-python
+#: code:addons/stock_product_demand_info/models/product_demand_period.py:0
+msgid ""
+"Start expression must be before or equal to end expression for period "
+"\"%(name)s\"."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:ir.model.fields,help:stock_product_demand_info.field_product_demand_period__start_expression
+msgid ""
+"Start of the time window used to search for outgoing stock moves. Use "
+"'today' or 'now' followed by optional offsets: ±Nd (days), ±Nw (weeks), ±Nm "
+"(months), ±Ny (years). Use =1d for first day of month, =6m for a given "
+"month."
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.res_config_settings_view_form
+msgid "View previous demand statistics for products"
+msgstr ""
+
+#. module: stock_product_demand_info
+#: model:product.demand.period,name:stock_product_demand_info.period_ytd
+msgid "Year to date"
+msgstr ""
