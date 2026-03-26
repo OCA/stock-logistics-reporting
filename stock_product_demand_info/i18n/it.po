@@ -6,23 +6,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-03-26 13:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__active
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #. module: stock_product_demand_info
 #: model:ir.model,name:stock_product_demand_info.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: stock_product_demand_info
 #: model_terms:ir.actions.act_window,help:stock_product_demand_info.action_product_demand_period
@@ -30,16 +32,18 @@ msgid ""
 "Create demand periods to see past demand by period on products and "
 "orderpoints."
 msgstr ""
+"Crea periodi di domanda per visualizzare la domanda passata per periodo su "
+"prodotti e punti di riordino."
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: stock_product_demand_info
 #. odoo-javascript
@@ -50,19 +54,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.product_template_form_view
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_stock_warehouse_orderpoint_form_demand_period
 msgid "Demand by period"
-msgstr ""
+msgstr "Domanda per periodo"
 
 #. module: stock_product_demand_info
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_form
 msgid "Demand period"
-msgstr ""
+msgstr "Periodo domanda"
 
 #. module: stock_product_demand_info
 #: model:ir.actions.act_window,name:stock_product_demand_info.action_product_demand_period
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__demand_period_ids
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_list
 msgid "Demand periods"
-msgstr ""
+msgstr "Periodi domanda"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__display_name
@@ -71,7 +75,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_product_demand_info
 #: model_terms:ir.actions.act_window,help:stock_product_demand_info.action_product_demand_period
@@ -79,11 +83,13 @@ msgid ""
 "Each period has a name and start/end date expressions (e.g. \"today -7d\", "
 "\"today\")."
 msgstr ""
+"Ogni periodo ha un nome e delle espressioni per la data di inizio/fine (ad "
+"esempio \"today -7d\", \"today\")."
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__end_expression
 msgid "End Expression"
-msgstr ""
+msgstr "Espressione fine"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,help:stock_product_demand_info.field_product_demand_period__end_expression
@@ -91,6 +97,9 @@ msgid ""
 "End of the time window used to search for outgoing stock moves (demand). "
 "Same syntax as Start: 'today'/'now' with ±Nd, ±Nw, ±Nm, ±Ny, or =1d, =6m."
 msgstr ""
+"Fine della finestra temporale utilizzata per la ricerca di movimenti di "
+"magazzino in uscita (domanda). Stessa sintassi di Inizio: 'today'/'now' con ±"
+"Nd, ±Nw, ±Nm, ±Ny o =1d, =6m."
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__id
@@ -99,68 +108,68 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__id
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_product_demand_info
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_form
 msgid "Inactive"
-msgstr ""
+msgstr "Non attivo"
 
 #. module: stock_product_demand_info
 #. odoo-python
 #: code:addons/stock_product_demand_info/models/product_demand_period.py:0
 msgid "Invalid date expression: %(error)s"
-msgstr ""
+msgstr "Espressione data errata: %(error)s"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_last_30_days
 msgid "Last 30 days"
-msgstr ""
+msgstr "Ultimi 30 giorni"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_last_7_days
 msgid "Last 7 days"
-msgstr ""
+msgstr "Ultimi 7 giorni"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_last_month
 msgid "Last month"
-msgstr ""
+msgstr "Ultimo mese"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_last_year
 msgid "Last year"
-msgstr ""
+msgstr "Ultimo anno"
 
 #. module: stock_product_demand_info
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.res_config_settings_view_form
 msgid "Manage demand periods"
-msgstr ""
+msgstr "Gestione periodi domanda"
 
 #. module: stock_product_demand_info
 #: model:ir.model,name:stock_product_demand_info.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr ""
+msgstr "Regola giacenza minima"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_next_month_last_year
 msgid "Next month last year"
-msgstr ""
+msgstr "Il mese prossimo dell'anno scorso"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,help:stock_product_demand_info.field_product_product__demand_period_info
@@ -168,36 +177,38 @@ msgstr ""
 #: model:ir.model.fields,help:stock_product_demand_info.field_stock_warehouse_orderpoint__demand_period_info
 msgid "Past demand per period. Periods can be configured in General Settings."
 msgstr ""
+"Domanda passata per periodo. I periodi possono essere configurati nelle "
+"Impostazioni generali."
 
 #. module: stock_product_demand_info
 #: model:ir.model,name:stock_product_demand_info.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Prodotto"
 
 #. module: stock_product_demand_info
 #: model:ir.model,name:stock_product_demand_info.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: stock_product_demand_info
 #: model:ir.model,name:stock_product_demand_info.model_product_demand_period
 msgid "Product demand period"
-msgstr ""
+msgstr "Periodo domanda prodotto"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_same_month_last_year
 msgid "Same month last year"
-msgstr ""
+msgstr "Setto mese dell'anno scorso"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequenza"
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__start_expression
 msgid "Start Expression"
-msgstr ""
+msgstr "Espressione inizio"
 
 #. module: stock_product_demand_info
 #. odoo-python
@@ -206,6 +217,8 @@ msgid ""
 "Start expression must be before or equal to end expression for period "
 "\"%(name)s\"."
 msgstr ""
+"L'espressione di inizio deve essere precedente o uguale all'espressione di "
+"fine per il periodo \"%(nome)s\"."
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,help:stock_product_demand_info.field_product_demand_period__start_expression
@@ -215,13 +228,17 @@ msgid ""
 "(months), ±Ny (years). Use =1d for first day of month, =6m for a given "
 "month."
 msgstr ""
+"Inizio dell'intervallo temporale utilizzato per la ricerca di movimenti di "
+"magazzino in uscita. Utilizzare \"today\" o \"now\" seguito da offset "
+"opzionali: ±Nd (giorni), ±Nw (settimane), ±Nm (mesi), ±Ny (anni). Utilizzare "
+"=1d per il primo giorno del mese, =6m per un dato mese."
 
 #. module: stock_product_demand_info
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.res_config_settings_view_form
 msgid "View previous demand statistics for products"
-msgstr ""
+msgstr "Visualizza statistiche domanda precedenti per prodotti"
 
 #. module: stock_product_demand_info
 #: model:product.demand.period,name:stock_product_demand_info.period_ytd
 msgid "Year to date"
-msgstr ""
+msgstr "Da inizio anno"
