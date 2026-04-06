@@ -10,7 +10,7 @@ class StockPicking(models.Model):
         res = super()._compute_amount_all()
         for picking in self:
             fee_lines = picking.sale_id.order_line.filtered(
-                lambda x: x.delivery_fee_picking_id == picking
+                lambda x, picking=picking: x.delivery_fee_picking_id == picking
             )
             if not fee_lines:
                 continue

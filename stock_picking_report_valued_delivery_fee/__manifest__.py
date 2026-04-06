@@ -3,7 +3,7 @@
 {
     "name": "Valued Picking Report - Delivery Fee",
     "summary": "Add delivery fee to the valued picking total value",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-reporting",
