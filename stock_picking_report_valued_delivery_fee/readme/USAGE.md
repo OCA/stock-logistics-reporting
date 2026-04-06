@@ -1,2 +1,2 @@
-When you print the valued picking, the amount of the applied delivery fee (if any) will
-be summed to the total amount although it will only be rendered on the picking footer.
+When you print a valued picking report, any applicable delivery fee is included in
+the total amount. The fee is shown only in the report footer.
