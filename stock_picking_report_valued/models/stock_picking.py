@@ -69,16 +69,12 @@ class StockPicking(models.Model):
                     tax_lines_data.append(tax_line_dict)
 
                 if tax_lines_data:
-                    tax_results = pick.env["account.tax"]._compute_taxes(
-                        tax_lines_data
-                    )
+                    tax_results = pick.env["account.tax"]._compute_taxes(tax_lines_data)
                     totals = tax_results["totals"]
                     amount_untaxed = totals.get(pick.currency_id, {}).get(
                         "amount_untaxed", 0.0
                     )
-                    amount_tax = totals.get(pick.currency_id, {}).get(
-                        "amount_tax", 0.0
-                    )
+                    amount_tax = totals.get(pick.currency_id, {}).get("amount_tax", 0.0)
                 else:
                     amount_untaxed = amount_tax = 0.0
             else:
