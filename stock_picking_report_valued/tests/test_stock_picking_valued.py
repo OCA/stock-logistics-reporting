@@ -182,3 +182,41 @@ class TestStockPickingValued(common.TransactionCase):
         finally:
             # Restore original method
             StockPicking._get_report_valued_total_amount = original_method
+
+    def test_08_partial_delivery_with_round_globally(self):
+        """
+        Test partial delivery (different quantity) with global tax rounding.
+        This tests the code path that creates a virtual sale line with
+        different quantity when round_globally is active.
+        """
+        self.sale_order.company_id.tax_calculation_rounding_method = "round_globally"
+        self.sale_order.action_confirm()
+        self.assertTrue(len(self.sale_order.picking_ids))
+        picking = self.sale_order.picking_ids[0]
+        picking.action_assign()
+        # Change quantity to trigger the different_qty code path
+        picking.move_line_ids.quantity = 0.5
+        # Force recompute
+        picking.invalidate_recordset(["amount_untaxed", "amount_tax", "amount_total"])
+        # With 0.5 quantity: 100 * 0.5 = 50, tax = 50 * 0.15 = 7.5
+        self.assertEqual(picking.amount_untaxed, 50.0)
+        self.assertEqual(picking.amount_tax, 7.5)
+        self.assertEqual(picking.amount_total, 57.5)
+
+    def test_09_empty_picking_with_round_globally(self):
+        """
+        Test picking without sale lines with global tax rounding.
+        This tests the code path when tax_lines_data is empty.
+        """
+        self.sale_order.company_id.tax_calculation_rounding_method = "round_globally"
+        self.sale_order.action_confirm()
+        picking = self.sale_order.picking_ids[0]
+        picking.action_assign()
+        # Unreserve to clear move_line_ids with sale_line
+        picking.do_unreserve()
+        # Force recompute
+        picking.invalidate_recordset(["amount_untaxed", "amount_tax", "amount_total"])
+        # Should be 0.0 when no lines
+        self.assertEqual(picking.amount_untaxed, 0.0)
+        self.assertEqual(picking.amount_tax, 0.0)
+        self.assertEqual(picking.amount_total, 0.0)
