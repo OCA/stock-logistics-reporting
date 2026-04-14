@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_picking_inherit_partner_ref" inherit_id="stock.report_picking">
+        <xpath expr="//div[@name='div_incoming_address']" position="inside">
+            <t t-call="stock_report_partner_ref.partner_ref_block" />
+        </xpath>
+    </template>
+</odoo>
