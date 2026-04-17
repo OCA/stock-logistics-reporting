@@ -12,9 +12,20 @@ class StockMoveLine(models.Model):
         So I remove key from it to be displayed in the bottom table
         """
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+        # Only remove lines displayed in the undelivered products table
+        if not all(
+            picking.partner_id.display_undelivered_in_picking
+            for picking in self.picking_id
+        ):
+            return aggregated_move_lines
         keys_to_remove = set()
         for aggregated_move_line in aggregated_move_lines:
-            if not aggregated_move_lines[aggregated_move_line]["qty_done"]:
+            if (
+                not aggregated_move_lines[aggregated_move_line]["quantity"]
+                and aggregated_move_lines[aggregated_move_line][
+                    "product"
+                ].display_undelivered_in_picking
+            ):
                 keys_to_remove.add(aggregated_move_line)
         # To avoid change dict size on iteration
         for key_to_remmove in keys_to_remove:

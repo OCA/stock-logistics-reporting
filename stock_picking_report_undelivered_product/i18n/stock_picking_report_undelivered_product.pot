@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-24 18:11+0000\n"
+"PO-Revision-Date: 2026-08-24 18:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,22 +17,17 @@ msgstr ""
 
 #. module: stock_picking_report_undelivered_product
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
+msgid "<span>Remaining quantities not yet delivered:</span>"
+msgstr ""
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
 msgid "<strong>Product</strong>"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
 msgid "<strong>Quantity</strong>"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
-msgid "<strong>Reference</strong>"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
-msgid "<strong>Remaining products (not delivered yet)</strong>"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
@@ -78,36 +75,27 @@ msgid "Method to display undelivered product lines in report picking"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_report_undelivered_product
 #: model:ir.model,name:stock_picking_report_undelivered_product.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: model:ir.model,name:stock_picking_report_undelivered_product.model_product_template
-msgid "Product Template"
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form_inherit_undelivered_product
+msgid ""
+"Select how to display undelivered product lines in delivery slip reports."
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
-msgid "Report picking undelivered products"
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form_inherit_undelivered_product
+msgid "Undelivered Product Lines in Delivery Slip Report"
 msgstr ""
 
 #. module: stock_picking_report_undelivered_product
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
-msgid "Select method to display undelivered product lines"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
-#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_stock_move__splitted_stock_move_orig_id
-msgid "Splitted from"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
-#: model:ir.model,name:stock_picking_report_undelivered_product.model_stock_move
-msgid "Stock Move"
-msgstr ""
-
-#. module: stock_picking_report_undelivered_product
-#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
-msgid "Undelivered product lines in delivery slip report"
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form_inherit_undelivered_product
+msgid "Undelivered Products"
 msgstr ""
