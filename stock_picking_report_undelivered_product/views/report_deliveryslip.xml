@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="undeliverd_product">
         <t t-if="o.partner_id.display_undelivered_in_picking and o.state == 'done'">
             <!-- Get stock moves from backorder according to setting values -->
@@ -34,12 +33,21 @@
                 id="undelivered_product"
             >
                 <thead>
-                    <tr><th colspan="7"><strong
-                            >Remaining products (not delivered yet)</strong></th></tr>
                     <tr>
-                        <th><strong>Reference</strong></th>
-                        <th><strong>Product</strong></th>
-                        <th class="text-right"><strong>Quantity</strong></th>
+                        <th colspan="7">
+                            <strong>Remaining products (not delivered yet)</strong>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <strong>Reference</strong>
+                        </th>
+                        <th>
+                            <strong>Product</strong>
+                        </th>
+                        <th class="text-right">
+                            <strong>Quantity</strong>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,9 +67,8 @@
                                 <span t-field="undelivered_move.product_id.name" />
                             </td>
                             <td class="text-right">
+                                <span t-field="undelivered_move.product_uom_qty" />
                                 <span
-                                    t-field="undelivered_move.product_uom_qty"
-                                /> <span
                                     groups="uom.group_uom"
                                     t-field="undelivered_move.product_uom"
                                 />
@@ -85,5 +92,4 @@
             <t t-call="stock_picking_report_undelivered_product.undeliverd_product" />
         </xpath>
     </template>
-
 </odoo>
