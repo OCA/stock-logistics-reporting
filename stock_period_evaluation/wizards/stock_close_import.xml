@@ -18,6 +18,7 @@
 
     <record id="action_stock_close_import_wizard" model="ir.actions.act_window">
         <field name="name">Stock Close Import</field>
+        <field name="path">stock-close-import</field>
         <field name="res_model">stock.close.import.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

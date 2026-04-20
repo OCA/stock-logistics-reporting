@@ -23,6 +23,7 @@
 
     <record id="action_stock_close_print_wizard" model="ir.actions.act_window">
         <field name="name">Stock Close Print</field>
+        <field name="path">stock-close-print</field>
         <field name="res_model">stock.close.print.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

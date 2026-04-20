@@ -6,7 +6,7 @@
 
 from xlsxwriter.utility import xl_rowcol_to_cell
 
-from odoo import _, models
+from odoo import models
 
 
 class XlsxStockClosePeriod(models.AbstractModel):
@@ -26,7 +26,7 @@ class XlsxStockClosePeriod(models.AbstractModel):
                     period_lines |= period.line_ids
                 lines = period_lines
 
-        sheet = workbook.add_worksheet(_("Stock Period Evaluation"))
+        sheet = workbook.add_worksheet(self.env._("Stock Period Evaluation"))
         sheet.set_landscape()
         sheet.fit_to_pages(1, 0)
         sheet.fit_to_pages(1, 0)
@@ -57,17 +57,17 @@ class XlsxStockClosePeriod(models.AbstractModel):
 
         # header
         sheet_title = [
-            _("Product"),
-            _("Name"),
-            _("Category"),
-            _("Location"),
-            _("Lot/Serial Number"),
-            _("Owner"),
-            _("Evaluation"),
-            _("Quantity"),
-            _("Uom"),
-            _("Unit Cost"),
-            _("Total Cost"),
+            self.env._("Product"),
+            self.env._("Name"),
+            self.env._("Category"),
+            self.env._("Location"),
+            self.env._("Lot/Serial Number"),
+            self.env._("Owner"),
+            self.env._("Evaluation"),
+            self.env._("Quantity"),
+            self.env._("Uom"),
+            self.env._("Unit Cost"),
+            self.env._("Total Cost"),
         ]
         i = 0
         sheet.write_row(i, 0, sheet_title, title_style)
@@ -91,7 +91,7 @@ class XlsxStockClosePeriod(models.AbstractModel):
             sheet.write(i, 9, row.price_unit, currency_format)
             sheet.write(i, 10, total_price, currency_format)
             i += 1
-        sheet.write(i, 9, _("Total"), title_style)
+        sheet.write(i, 9, self.env._("Total"), title_style)
         sheet.write_formula(
             i,
             10,

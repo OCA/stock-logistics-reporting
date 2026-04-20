@@ -87,7 +87,7 @@
                     name="negative_qty"
                     domain="[('product_qty','&lt;',0)]"
                 />
-                <group expand="0" string="Group By">
+                <group>
                     <filter
                         string="Stock Period Evaluation"
                         name="close_period"
@@ -113,7 +113,7 @@
 
     <record id="action_stock_close_form_line" model="ir.actions.act_window">
         <field name="name">Stock Period Evaluation Line</field>
-        <field name="type">ir.actions.act_window</field>
+        <field name="path">stock-period-evaluation-line</field>
         <field name="res_model">stock.close.period.line</field>
         <field name="view_mode">list,form</field>
     </record>

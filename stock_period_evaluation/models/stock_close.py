@@ -7,8 +7,9 @@
 import logging
 from datetime import datetime
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Command
 
 logger = logging.getLogger(__name__)
 
@@ -90,17 +91,17 @@ class StockClosePeriod(models.Model):
         help="Ignore lines with negative quantity.",
     )
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_closing_state(self):
         for closing in self:
             if closing.state in ["confirm", "done"]:
                 raise UserError(
-                    _(
+                    self.env._(
                         "State in '%s'. You can only delete in state "
-                        "'Draft' or 'Cancelled'."
+                        "'Draft' or 'Cancelled'.",
+                        closing.state,
                     )
-                    % closing.state
                 )
-        return super().unlink()
 
     def action_set_to_draft(self):
         for closing in self:
@@ -117,9 +118,7 @@ class StockClosePeriod(models.Model):
         # if not set no_recompute_lines
         if not self.no_recompute_lines:
             self.line_ids = [
-                (
-                    0,
-                    0,
+                Command.create(
                     dict(
                         close_id=self.id,
                         product_id=product.id,
@@ -205,7 +204,7 @@ class StockClosePeriod(models.Model):
         for closing in self:
             if not closing.bypass_negative_qty and not closing._check_qty_available():
                 raise UserError(
-                    _(
+                    self.env._(
                         "It's not possible to continue the execution."
                         "There are products with quantities < 0."
                     )

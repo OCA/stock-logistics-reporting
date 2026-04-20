@@ -25,7 +25,7 @@ class StockClosePeriodLine(models.Model):
     product_id = fields.Many2one(
         "product.product",
         string="Product",
-        domain=[("type", "=", "product")],
+        domain=[("type", "=", "consu"), ("is_storable", "=", True)],
         index=True,
         required=True,
     )

@@ -4,6 +4,7 @@
 from datetime import timedelta
 
 from odoo import fields
+from odoo.fields import Command
 from odoo.tests import Form, TransactionCase
 
 
@@ -11,26 +12,51 @@ class TestStockPeriodEvaluation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.customer = cls.env.ref("base.res_partner_2")
-        cls.customer.customer_rank = 1
-        cls.buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
-        cls.vendor = cls.env.ref("base.res_partner_3")
-
-        # Create product with supplier info
-        supplierinfo = cls.env["product.supplierinfo"].create(
+        cls.customer = cls.env["res.partner"].create(
             {
-                "partner_id": cls.vendor.id,
-                "delay": 10,
+                "name": "Acme Corporation",
+                "is_company": True,
+                "street": "77 Santa Barbara Rd",
+                "city": "Pleasant Hill",
+                "state_id": cls.env.ref("base.state_us_5").id,
+                "zip": "94523",
+                "email": "acme_corp@yourcompany.example.com",
+                "phone": "(603)-996-3829",
+                "vat": "US12345673",
             }
         )
+        cls.customer.customer_rank = 1
+        cls.buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
+        cls.vendor = cls.env["res.partner"].create(
+            {
+                "name": "Gemini Furniture",
+                "is_company": True,
+                "street": "Via Industria 21",
+                "city": "Serravalle",
+                "state_id": cls.env.ref("base.sm").id,
+                "zip": "47899",
+                "email": "gemini_furniture@fake.geminifurniture.com",
+                "phone": "+378 0549 885555",
+                "vat": "SM12345",
+            }
+        )
+
+        # Create product with supplier info
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product Test Valuation",
                 "standard_price": 55.0,
                 "type": "consu",
                 "is_storable": True,
-                "seller_ids": [(6, 0, [supplierinfo.id])],
-                "route_ids": [(6, 0, [cls.buy_route.id])],
+                "seller_ids": [
+                    Command.create(
+                        {
+                            "partner_id": cls.vendor.id,
+                            "delay": 10,
+                        }
+                    )
+                ],
+                "route_ids": [Command.set(cls.buy_route.ids)],
             }
         )
 
@@ -40,12 +66,11 @@ class TestStockPeriodEvaluation(TransactionCase):
                 "name": "Test User",
                 "login": "test_valuation",
                 "email": "test@test.email",
-                "groups_id": [
-                    (4, cls.env.ref("base.group_user").id),
-                    (4, cls.env.ref("purchase.group_purchase_user").id),
-                    (4, cls.env.ref("stock.group_stock_user").id),
-                    (
-                        4,
+                "group_ids": [
+                    Command.link(cls.env.ref("base.group_user").id),
+                    Command.link(cls.env.ref("purchase.group_purchase_user").id),
+                    Command.link(cls.env.ref("stock.group_stock_user").id),
+                    Command.link(
                         cls.env.ref(
                             "stock_period_evaluation.group_stock_period_evaluation_manager"
                         ).id,
@@ -122,7 +147,6 @@ class TestStockPeriodEvaluation(TransactionCase):
         # Create stock move
         move = self.env["stock.move"].create(
             {
-                "name": f"Test Delivery {self.product.name}",
                 "product_id": self.product.id,
                 "product_uom_qty": product_qty,
                 "product_uom": self.product.uom_id.id,
@@ -434,7 +458,13 @@ class TestStockPeriodEvaluation(TransactionCase):
     def test_06_category_based_valuation(self):
         """Test category-based automatic valuation method selection"""
         # Set product category to use FIFO
-        self.product.categ_id.property_cost_method = "fifo"
+        categ_fifo = self.env["product.category"].create(
+            {
+                "name": "FIFO Category",
+                "property_cost_method": "fifo",
+            }
+        )
+        self.product.categ_id = categ_fifo.id
 
         # Create purchases
         self._create_purchase_order(product_qty=10, price_unit=5, days_ago=30)

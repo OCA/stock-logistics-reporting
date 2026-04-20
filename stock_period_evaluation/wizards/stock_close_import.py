@@ -9,7 +9,7 @@ import csv
 import io
 from datetime import datetime
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 
@@ -28,7 +28,7 @@ class StockCloseImportWizard(models.TransientModel):
                 [("default_code", "=", default_code)], limit=1
             )
             if not product_obj:
-                raise UserError(_("Product %s not found") % default_code)
+                raise UserError(self.env._("Product %s not found", default_code))
             products[default_code] = product_obj[0]
         return products
 

@@ -7,7 +7,7 @@
 {
     "name": "Stock Period Evaluation",
     "summary": "Stock evaluation with FIFO, LIFO and average methods",
-    "version": "18.0.1.1.0",
+    "version": "19.0.1.0.0",
     "author": "Pordenone Linux User Group (PNLUG), Odoo Community Association (OCA), "
     "Dinamiche Aziendali srl, Sergio Corato",
     "category": "Warehouse",
@@ -22,6 +22,7 @@
     ],
     "data": [
         "security/stock_close_group.xml",
+        "security/stock_close_rule.xml",
         "security/ir.model.access.csv",
         "data/ir_config_parameter_data.xml",
         "views/stock_close_views.xml",

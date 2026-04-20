@@ -136,7 +136,7 @@
 
     <record id="action_stock_close_form" model="ir.actions.act_window">
         <field name="name">Stock Period Evaluation</field>
-        <field name="type">ir.actions.act_window</field>
+        <field name="path">stock-period-evaluation</field>
         <field name="res_model">stock.close.period</field>
         <field name="view_mode">list,form</field>
     </record>

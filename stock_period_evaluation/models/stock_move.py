@@ -8,7 +8,8 @@
 import logging
 from datetime import datetime, time
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -78,17 +79,9 @@ class StockMoveLine(models.Model):
 
     @api.model
     def _get_right_invoice_lines(self, purchase_line_id):
-        invoice_lines = purchase_line_id.invoice_lines.filtered(
+        return purchase_line_id.invoice_lines.filtered(
             lambda il: il.move_id.is_purchase_document()
         )
-        if "rc_original_purchase_invoice_ids" in self.env["account.move"].fields_get():
-            rc_original_purchase_invoice_ids = invoice_lines.mapped(
-                "move_id.rc_original_purchase_invoice_ids"
-            )
-            invoice_lines = invoice_lines.filtered(
-                lambda il: il.move_id.id in rc_original_purchase_invoice_ids.ids
-            )
-        return invoice_lines
 
     def _get_additional_landed_cost_new(self, move_id, company_id):
         # function meant to be overriden
@@ -244,7 +237,7 @@ class StockMoveLine(models.Model):
                 f"{closing_line_id._format_value(x['evaluated_qty'] * x['price_unit'])}"
                 for x in res_dict
             ]
-            + [_("Total: %s") % line_total]
+            + [self.env._("Total: %s", line_total)]
         )
         cumulative_amount = 0
         cumulative_qty = 0
@@ -291,29 +284,41 @@ class StockMoveLine(models.Model):
         order = "date desc, id desc"
         move_line_obj = self.env["stock.move.line"]
         # do not exclude inventory moves, as they are needed to compute qty at date
-        move_line_domain = [
-            ("state", "=", "done"),
-            ("product_id", "=", line.product_id.id),
-            ("quantity", ">", 0),
-            ("date", "<=", line.close_id.close_date),
-            ("date", ">", line.close_id.last_close_date),
-            ("company_id", "=", line.close_id.company_id.id),
-        ]
+        move_line_domain = Domain(
+            [
+                ("state", "=", "done"),
+                ("product_id", "=", line.product_id.id),
+                ("quantity", ">", 0),
+                ("date", "<=", line.close_id.close_date),
+                ("date", ">", line.close_id.last_close_date),
+                ("company_id", "=", line.close_id.company_id.id),
+            ]
+        )
         if valuation_type in ["fifo", "purchase"]:
             # search for incoming moves
-            move_line_domain += [
-                ("location_id.usage", "!=", "internal"),
-                ("location_dest_id.usage", "=", "internal"),
-                # todo solo per acquisti? ("purchase_line_id", "!=", False),
-            ]
+            move_line_domain = Domain.AND(
+                [
+                    move_line_domain,
+                    [
+                        ("location_id.usage", "!=", "internal"),
+                        ("location_dest_id.usage", "=", "internal"),
+                        # todo solo per acquisti? ("purchase_line_id", "!=", False),
+                    ],
+                ]
+            )
         else:
             # search for incoming and outgoing moves
             # fixme this search even internal moves
-            move_line_domain += [
-                "|",
-                ("location_id.usage", "=", "internal"),
-                ("location_dest_id.usage", "=", "internal"),
-            ]
+            move_line_domain = Domain.AND(
+                [
+                    move_line_domain,
+                    [
+                        "|",
+                        ("location_id.usage", "=", "internal"),
+                        ("location_dest_id.usage", "=", "internal"),
+                    ],
+                ]
+            )
         move_line_ids = move_line_obj.search(move_line_domain, order=order)
         move_line_ids = sorted(
             [x for x in move_line_ids],

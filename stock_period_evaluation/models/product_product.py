@@ -53,7 +53,7 @@ class Product(models.Model):
             (self.id, self.env.user.company_id.id),
         )
 
-        for row2 in self._cr.fetchall():
+        for row2 in self.env.cr.fetchall():
             quant_qty = row2[0] * 1.0
             product_id = row2[1]
             location_id = row2[2]
@@ -109,7 +109,7 @@ class Product(models.Model):
             (date, self.id, self.env.user.company_id.id),
         )
 
-        for row in self._cr.fetchall():
+        for row in self.env.cr.fetchall():
             move_qty = row[0]
             product_id = row[1]
             location_id = row[2]
@@ -159,7 +159,7 @@ class Product(models.Model):
             (date, self.id, self.env.user.company_id.id),
         )
 
-        for row in self._cr.fetchall():
+        for row in self.env.cr.fetchall():
             move_qty = row[0]
             product_id = row[1]
             location_dest_id = row[2]
