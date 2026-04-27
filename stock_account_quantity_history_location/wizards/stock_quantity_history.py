@@ -35,7 +35,7 @@ class StockQuantityHistory(models.TransientModel):
                     ],
                 ]
             )
-            action[
-                "display_name"
-            ] = f"{self.location_id.complete_name} - {action['display_name']}"
+            action["display_name"] = (
+                f"{self.location_id.complete_name} - {action['display_name']}"
+            )
         return action
