@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_valued_sale_mrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-06-04 10:26+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued_sale_mrp.valued_report_picking_has_serial_move_line
+msgid "<span class=\"font-italic\">: </span>"
+msgstr "<span class=\"font-italic\">: </span>"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model:ir.model.fields,field_description:stock_picking_report_valued_sale_mrp.field_stock_move_line__phantom_delivered_qty
+msgid "Phantom Delivered Qty"
+msgstr "Q.tà consegna fantasma"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model:ir.model.fields,field_description:stock_picking_report_valued_sale_mrp.field_stock_move_line__phantom_line
+msgid "Phantom Line"
+msgstr "Riga fantasma"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model:ir.model.fields,field_description:stock_picking_report_valued_sale_mrp.field_stock_move_line__phantom_product_id
+msgid "Product Kit"
+msgstr "Kit prodotto"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model:ir.model,name:stock_picking_report_valued_sale_mrp.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_picking_report_valued_sale_mrp
+#: model:ir.model,name:stock_picking_report_valued_sale_mrp.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="stock_report_delivery_document_inherit_mrp"
+        inherit_id="mrp.stock_report_delivery_document_inherit_mrp"
+    >
+        <!-- disable printing of kits in a separate table -->
+        <xpath
+            expr="//t[@name='has_packages']/preceding-sibling::t[@t-set='has_kits'][1]"
+            position="attributes"
+        >
+            <attribute name="t-value">env['stock.move.line']</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@name='no_package_section']/preceding-sibling::t[@t-set='has_kits'][1]"
+            position="attributes"
+        >
+            <attribute name="t-value">env['stock.move.line']</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="valued_report_picking_has_serial_move_line"
+        inherit_id="stock_picking_report_valued.valued_report_picking_has_serial_move_line"
+    >
+        <xpath expr="." position="attributes">
+            <attribute name="t-if">
+                not (
+                    o.valued
+                    and o.sale_id
+                    and o.move_line_ids
+                    and is_outgoing
+                    and move_line.phantom_product_id
+                    and not move_line.phantom_line
+                )
+            </attribute>
+        </xpath>
+
+        <xpath expr="//td[1]" position="before">
+            <t
+                t-set="can_display_phantom"
+                t-value="is_outgoing and o.valued and o.sale_id and o.move_line_ids and move_line.phantom_line"
+            />
+        </xpath>
+
+        <!-- Show valued fields in a special way for the rows corresponding to kits -->
+        <xpath expr="//span[@t-field='move_line.product_id']" position="attributes">
+            <attribute name="t-if">not can_display_phantom</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='move_line.product_id']" position="before">
+            <span t-field="move_line.sale_line.product_id" t-if="can_display_phantom" />
+        </xpath>
+
+        <xpath expr="//td[@name='move_line_lot_quantity']" position="attributes">
+            <attribute name="t-if">not can_display_phantom</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='move_line_lot_quantity']" position="after">
+            <td class="text-center" t-if="can_display_phantom">
+                <span t-field="move_line.phantom_delivered_qty" />
+                <span t-field="move_line.sale_line.product_uom" />
+            </td>
+        </xpath>
+
+        <xpath expr="//span[@t-field='move_line.lot_id.name']" position="attributes">
+            <attribute name="t-if">not can_display_phantom</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='move_line.lot_id.name']" position="after">
+            <t
+                t-set="kit_move_lines"
+                t-value="move_line.sale_line.mapped('move_ids.move_line_ids').filtered(lambda x: x.sale_line == move_line.sale_line)"
+            />
+            <t t-if="kit_move_lines and can_display_phantom">
+                <table class="table-borderless">
+                    <t
+                        t-foreach="kit_move_lines.mapped('product_id')"
+                        t-as="kit_component"
+                    >
+                        <small class="font-italic" t-out="kit_component.display_name" />
+                        <t t-if="kit_move_lines.mapped('lot_id')">
+                            <span class="font-italic">: </span>
+                        </t>
+                        <small
+                            t-out="', '.join([k.lot_id.name for k in kit_move_lines.filtered(lambda x: x.lot_id and x.product_id == kit_component)])"
+                        />
+                        <br />
+                    </t>
+                </table>
+            </t>
+        </xpath>
+    </template>
+</odoo>
