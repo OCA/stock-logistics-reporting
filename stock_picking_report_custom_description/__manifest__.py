@@ -17,5 +17,7 @@
     "depends": [
         "sale_stock",
     ],
-    "data": [],
+    "data": [
+        "report/report_deliveryslip.xml",
+    ],
 }

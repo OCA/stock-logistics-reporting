@@ -70,13 +70,13 @@ Authors
 Contributors
 ------------
 
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Carlos Dauden
-  - Sergio Teruel
-  - Ernesto Tejeda
-  - Pilar Vargas
-  - Carolina Fernandez
+   -  Carlos Dauden
+   -  Sergio Teruel
+   -  Ernesto Tejeda
+   -  Pilar Vargas
+   -  Carolina Fernandez
 
 Maintainers
 -----------
