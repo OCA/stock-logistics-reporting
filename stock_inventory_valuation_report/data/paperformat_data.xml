@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="paperformat_inventory_valuation_report" model="report.paperformat">
         <field name="name">Inventory Valuation Report A4</field>
         <field name="default" eval="True" />
@@ -16,5 +15,4 @@
         <field name="header_spacing">24</field>
         <field name="dpi">90</field>
     </record>
-
 </odoo>
