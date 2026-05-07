@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- TREE -->
+    <record id="view_picking_tree_printed" model="ir.ui.view">
+        <field name="name">stock.picking.tree.printed</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="printed" optional="show" />
+                <field name="printed_report_names" optional="hide" />
+                <button
+                    name="action_view_printed_logs"
+                    type="object"
+                    string="Logs"
+                    invisible="not printed_report_names"
+                    icon="fa-print"
+                    groups="stock.group_stock_manager"
+                />
+            </field>
+        </field>
+    </record>
+
+    <!-- SEARCH -->
+    <record id="view_picking_search_printed" model="ir.ui.view">
+        <field name="name">stock.picking.search.printed</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='available']" position="after">
+                <separator />
+                <filter
+                    name="printed_true"
+                    string="Printed"
+                    domain="[('printed', '=', True)]"
+                />
+                <filter
+                    name="printed_false"
+                    string="Not Printed"
+                    domain="[('printed', '=', False)]"
+                />
+            </xpath>
+            <xpath expr="//search/group" position="inside">
+                <filter
+                    name="group_by_printed"
+                    string="Printed"
+                    context="{'group_by': 'printed'}"
+                />
+                <filter
+                    name="group_by_printed_report_names"
+                    string="Printed Report Names"
+                    context="{'group_by': 'printed_report_names'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
