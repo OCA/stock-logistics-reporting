@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import _, models
+from odoo import models
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -24,7 +24,9 @@ class StockQuantityHistory(models.TransientModel):
                 new_context = safe_eval(new_context)
             except (TypeError, SyntaxError, NameError, ValueError):
                 _logger.warning(
-                    _("Failed context evaluation: %(context)s", context=new_context)
+                    self.env._(
+                        "Failed context evaluation: %(context)s", context=new_context
+                    )
                 )
                 new_context = {}
         model = self.env["report.stock.inventory.valuation.report"]
