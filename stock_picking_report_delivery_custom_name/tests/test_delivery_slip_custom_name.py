@@ -1,14 +1,15 @@
 # Copyright 2023 Moduon Team S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
-from odoo.tests import Form, common
+from odoo.tests import Form
 from odoo.tools import html2plaintext
 
+from odoo.addons.base.tests.common import BaseCommon
 
-class TestStockPickingReportCustomName(common.TransactionCase):
+
+class TestStockPickingReportCustomName(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.customer = cls.env["res.partner"].create({"name": "Mr. Odoo"})
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Super secret part name",
@@ -20,7 +21,7 @@ class TestStockPickingReportCustomName(common.TransactionCase):
         cls.delivery_type = cls.env.ref("stock.picking_type_out")
         picking_form = Form(cls.env["stock.picking"])
         picking_form.picking_type_id = cls.env.ref("stock.picking_type_out")
-        with picking_form.move_ids_without_package.new() as move_form:
+        with picking_form.move_ids.new() as move_form:
             move_form.product_id = cls.product
             move_form.product_uom_qty = 1
             move_form.quantity = 1
