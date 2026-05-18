@@ -41,7 +41,7 @@
         id="stock_report_delivery_aggregated_move_lines"
         inherit_id="stock.stock_report_delivery_aggregated_move_lines"
     >
-        <xpath expr="//span[contains(@t-esc, 'name')]" position="attributes">
+        <xpath expr="//span[contains(@t-out, 'name')]" position="attributes">
             <!-- Here the logic is already processed in the method stock.move.line._get_aggregated_properties -->
             <attribute name="t-if">not aggregated_lines[line]['description']</attribute>
         </xpath>
