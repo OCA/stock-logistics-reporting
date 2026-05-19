@@ -1,0 +1,31 @@
+<odoo>
+    <template
+        id="stock_picking_report_without_order_qty_report"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//th[@name='th_sm_ordered']" position="attributes">
+            <attribute name="t-if">o.state != 'done'</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='move.product_uom_qty']/.." position="attributes">
+            <attribute name="t-if">o.state != 'done'</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_sml_qty_ordered']" position="attributes">
+            <attribute name="t-if">o.state != 'done'</attribute>
+        </xpath>
+        <xpath expr="//th[@name='lot_serial']" position="attributes">
+            <attribute name="t-if">has_serial_number</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_picking_report_wo_order_qty_report_call"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath
+            expr="//td[@name='move_line_aggregated_qty_ordered']"
+            position="attributes"
+        >
+            <attribute name="t-if">o.state != 'done'</attribute>
+        </xpath>
+    </template>
+</odoo>
