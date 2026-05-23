@@ -6,141 +6,143 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 17:12+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Customer Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Dirección do Cliente:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Delivery Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Dirección de Envío:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Partner Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Dirección da empresa:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<span><strong>Warehouse Address:</strong></span>"
-msgstr ""
+msgstr "<span><strong>Dirección de almacén:</strong></span>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Commitment Date</strong>"
-msgstr ""
+msgstr "<strong>Data de compromiso</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Date</strong>"
-msgstr ""
+msgstr "<strong>Data</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Location</strong>"
-msgstr ""
+msgstr "<strong>Localización</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Order (Origin)</strong>"
-msgstr ""
+msgstr "<strong>Pedido (Orixe)</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Product</strong>"
-msgstr ""
+msgstr "<strong>Produto</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Quantity</strong>"
-msgstr ""
+msgstr "<strong>Cantidade</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 msgid "<strong>Scheduled Date</strong>"
-msgstr ""
+msgstr "<strong>Data planificada</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>Source Document</strong>"
-msgstr ""
+msgstr "<strong>Documento de Orixe</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_picking_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "<strong>State</strong>"
-msgstr ""
+msgstr "<strong>Estado</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Subtotal</strong>"
-msgstr ""
+msgstr "<strong>Subtotal</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "<strong>Total operations value balance</strong>"
-msgstr ""
+msgstr "<strong>Balance total de operacións</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value_total
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Total</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "<strong>Value</strong>"
-msgstr ""
+msgstr "<strong>Valor</strong>"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_inventory_value_document
 msgid "Inventory"
-msgstr ""
+msgstr "Inventario"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.stock_move_lines_value
 msgid "Lot/Serial Number"
-msgstr ""
+msgstr "Lote/Número de serie"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_move_line_value
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_move_value
 msgid "Operations Cost Value Report"
-msgstr ""
+msgstr "Informe de Valor de Custo de Operacións"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Picking"
-msgstr ""
+msgstr "Albará"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_picking_value
 msgid "Picking Operations Cost Value"
-msgstr ""
+msgstr "Valor de Custo de Operacións de Albará"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "Scrap"
-msgstr ""
+msgstr "Refugallo"
 
 #. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_scrap_value
 msgid "Scrap Operations Cost Value"
-msgstr ""
+msgstr "Valor de Custo de Operacións de Refugallo"
 
 #. module: stock_move_value_report
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
-msgstr ""
+msgstr "Valor de Custo de Operacións Seleccionadas"
