@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 16.0.1.1.0 |  | Adds the sale line position to the delivery report lines
 [stock_account_valuation_discrepancy_adjust](stock_account_valuation_discrepancy_adjust/) | 16.0.1.0.0 | <a href='https://github.com/AaronHForgeFlow'><img src='https://github.com/AaronHForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='AaronHForgeFlow'/></a> | Implements Wizard for Adjust Discrepancies on Account Inventory Valuation
 [stock_account_valuation_report](stock_account_valuation_report/) | 16.0.1.1.1 |  | Improves logic of the Inventory Valuation Report
-[stock_average_daily_sale](stock_average_daily_sale/) | 16.0.3.0.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Allows to gather consumed products on daily basis
+[stock_average_daily_sale](stock_average_daily_sale/) | 16.0.3.0.2 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Allows to gather consumed products on daily basis
 [stock_card_report](stock_card_report/) | 16.0.1.0.2 |  | Add stock card report on Inventory Reporting.
 [stock_move_value_report](stock_move_value_report/) | 16.0.1.0.0 |  | Stock Move Cost Value Report
 [stock_picking_batch_report](stock_picking_batch_report/) | 16.0.1.0.0 |  | Stock Picking Batch Report

@@ -5,7 +5,7 @@
     "name": "Stock Average Daily Sale",
     "summary": """
         Allows to gather consumed products on daily basis""",
-    "version": "16.0.3.0.1",
+    "version": "16.0.3.0.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "maintainers": ["jbaudoux"],
