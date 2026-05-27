@@ -11,7 +11,7 @@ from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
 class StockAverageDailySaleConfig(models.Model):
     _name = "stock.average.daily.sale.config"
     _description = "Average daily sales computation parameters"
-    check_company_auto = True
+    _check_company_auto = True
 
     abc_classification_level = fields.Selection(
         selection=ABC_SELECTION, required=True, default="b"
