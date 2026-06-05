@@ -122,17 +122,11 @@ msgid "Operations Cost Value Report"
 msgstr "Relatório de Custo de Operações"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
-msgid "Picking"
-msgstr "Operação de Stock"
-
-#. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_picking_value
 msgid "Picking Operations Cost Value"
 msgstr "Custo de Operações de Stock"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "Scrap"
 msgstr "Refugo"
@@ -146,6 +140,9 @@ msgstr "Custo das Operações de Refugo"
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
 msgstr "Custo das operações selecionadas"
+
+#~ msgid "Picking"
+#~ msgstr "Operação de Stock"
 
 #~ msgid "Inventory Operations Cost Value"
 #~ msgstr "Custo das Operações de Inventário"

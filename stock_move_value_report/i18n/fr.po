@@ -122,17 +122,11 @@ msgid "Operations Cost Value Report"
 msgstr "Rapport sur la valeur des coûts d'exploitation"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
-msgid "Picking"
-msgstr "Bon de transfert"
-
-#. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_picking_value
 msgid "Picking Operations Cost Value"
 msgstr "Valeur du coût des opérations de transfert"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "Scrap"
 msgstr "Rebut"
@@ -146,6 +140,9 @@ msgstr "Valeur du coût des opérations de mise au rebut"
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
 msgstr "Valeur du coût des opérations sélectionnées"
+
+#~ msgid "Picking"
+#~ msgstr "Bon de transfert"
 
 #~ msgid "Inventory Operations Cost Value"
 #~ msgstr "Valeur du coût des opérations d'inventaire"

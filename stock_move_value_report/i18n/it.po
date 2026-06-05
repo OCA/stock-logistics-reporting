@@ -122,17 +122,11 @@ msgid "Operations Cost Value Report"
 msgstr "Resoconto valore costo operazioni"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
-msgid "Picking"
-msgstr "Prelievo"
-
-#. module: stock_move_value_report
 #: model:ir.actions.report,name:stock_move_value_report.action_report_stock_picking_value
 msgid "Picking Operations Cost Value"
 msgstr "Valore costo operazioni prelievo"
 
 #. module: stock_move_value_report
-#: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_scrap_value_document
 msgid "Scrap"
 msgstr "Scarto"
@@ -146,3 +140,6 @@ msgstr "Valore costo operazioni scarto"
 #: model_terms:ir.ui.view,arch_db:stock_move_value_report.report_stock_move_value_document
 msgid "Selected operations cost value"
 msgstr "Valore costo operazioni selezionate"
+
+#~ msgid "Picking"
+#~ msgstr "Prelievo"
