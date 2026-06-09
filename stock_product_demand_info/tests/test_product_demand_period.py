@@ -3,6 +3,9 @@
 
 from datetime import timedelta
 
+from freezegun import freeze_time
+
+from odoo import fields
 from odoo.exceptions import UserError
 from odoo.fields import Command
 
@@ -66,6 +69,28 @@ class TestProductDemandPeriod(StockProductDemandInfoCommon):
         self.assertIn(key, self.orderpoint.demand_period_info)
         self.assertEqual(self.orderpoint.demand_period_info[key]["value"], 7.0)
         self.assertEqual(self.orderpoint.demand_period_info[key]["name"], "Last 7 days")
+
+    @freeze_time("2026-05-28 12:00:00")
+    def test_ytd_excludes_today(self):
+        """Test YTD demand excludes outgoing moves dated today."""
+        today = fields.Date.today()
+        self.period_ytd.active = True
+        self._create_outgoing_move(self.product, today - timedelta(days=1), 2000.0)
+        self._create_outgoing_move(self.product, today, 800.0)
+        self.product.invalidate_recordset(["demand_period_info"])
+        key = str(self.period_ytd.id)
+        self.assertEqual(self.product.demand_period_info[key]["value"], 2000.0)
+
+    @freeze_time("2026-05-28 12:00:00")
+    def test_orderpoint_ytd_excludes_today(self):
+        """Test orderpoint YTD demand excludes outgoing moves dated today."""
+        today = fields.Date.today()
+        self.period_ytd.active = True
+        self._create_outgoing_move(self.product, today - timedelta(days=1), 2000.0)
+        self._create_outgoing_move(self.product, today, 800.0)
+        self.orderpoint.invalidate_recordset(["demand_period_info"])
+        key = str(self.period_ytd.id)
+        self.assertEqual(self.orderpoint.demand_period_info[key]["value"], 2000.0)
 
     def test_demand_no_active_periods(self):
         """With no active periods, demand_period_info is empty."""
