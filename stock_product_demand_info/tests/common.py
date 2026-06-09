@@ -22,6 +22,7 @@ class StockProductDemandInfoCommon(TransactionCase):
             "stock_product_demand_info.period_last_30_days"
         )
         cls.period_last_year = cls.env.ref("stock_product_demand_info.period_last_year")
+        cls.period_ytd = cls.env.ref("stock_product_demand_info.period_ytd")
         cls.period_same_month_last_year = cls.env.ref(
             "stock_product_demand_info.period_same_month_last_year"
         )
