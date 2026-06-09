@@ -88,6 +88,9 @@ class ProductProduct(models.Model):
                 ("product_id", "in", product_ids),
                 ("date", ">=", period.start_expression),
                 ("date", "<=", period.end_expression),
+                # Demand history is based on completed days only,
+                # so we exclude moves of the current day (even if they are done).
+                ("date", "<", "today"),
                 ("state", "in", moves_states),
                 ("product_qty", ">", 0),
             ]
