@@ -1,0 +1,22 @@
+<t t-name="stock_inventory_valuation_report.InventoryValuationReportBackend">
+    <div class="o_stock_inventory_valuation_report_page">
+        <!-- Buttons -->
+        <div class="button_row mb-2">
+            <button type="button" t-on-click="print" class="btn btn-sm btn-primary">
+                <span class="fa fa-print" /> Print
+            </button>
+            <button type="button" t-on-click="export" class="btn btn-sm btn-success">
+                <span class="fa fa-download" /> Export
+            </button>
+        </div>
+
+        <div
+            class="o_report_content"
+            style="overflow:auto; max-height: calc(100vh - 120px); border: 1px solid #ddd; padding: 10px; background: #fff;"
+        >
+            <t t-if="html">
+                <t t-out="html" />
+            </t>
+        </div>
+    </div>
+</t>
