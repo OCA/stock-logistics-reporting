@@ -1,0 +1,10 @@
+<odoo>
+    <record model="ir.rule" id="stock_move_delay_report_comp_rule">
+        <field name="name">Stock Move Delay Analysis multi-company</field>
+        <field name="model_id" ref="model_stock_move_delay_report" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
