@@ -113,15 +113,19 @@ class TestStockMoveDelayReport(TransactionCase):
         )
         self.env.flush_all()
 
-        user = self.env["res.users"].with_context(no_reset_password=True).create(
-            {
-                "name": "Delay Report User",
-                "login": "delay_report_user",
-                "email": "delay_report_user@example.com",
-                "company_id": self.company.id,
-                "company_ids": [(6, 0, [self.company.id])],
-                "all_group_ids": [(6, 0, [self.env.ref("base.group_user").id])],
-            }
+        user = (
+            self.env["res.users"]
+            .with_context(no_reset_password=True)
+            .create(
+                {
+                    "name": "Delay Report User",
+                    "login": "delay_report_user",
+                    "email": "delay_report_user@example.com",
+                    "company_id": self.company.id,
+                    "company_ids": [(6, 0, [self.company.id])],
+                    "all_group_ids": [(6, 0, [self.env.ref("base.group_user").id])],
+                }
+            )
         )
         reports = self.env["stock.move.delay.report"].with_user(user).search([])
 
