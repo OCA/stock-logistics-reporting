@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="action_stock_inventory_valuation_report_html" model="ir.actions.client">
         <field name="name">Inventory Valuation Report</field>
         <field name="tag">stock_inventory_valuation_report_backend</field>
@@ -50,31 +49,13 @@
         <field name="attachment_use">False</field>
     </record>
 
-
-    <template
-        id="assets_backend"
-        name="stock_inventory_valuation_report assets"
-        inherit_id="web.assets_backend"
-    >
-        <xpath expr="." position="inside">
-            <link
-                href="/stock_inventory_valuation_report/static/src/css/report.css"
-                rel="stylesheet"
-            />
-            <script
-                type="text/javascript"
-                src="/stock_inventory_valuation_report/static/src/js/stock_inventory_valuation_report_backend.js"
-            />
-        </xpath>
-    </template>
-
     <template id="stock_inventory_valuation_report.internal_layout">
         <div class="article">
             <link
                 href="/stock_inventory_valuation_report/static/src/css/report.css"
                 rel="stylesheet"
             />
-            <t t-raw="0" />
+            <t t-out="0" />
         </div>
         <div class="footer">
             <div class="row">
@@ -126,7 +107,7 @@
         <div class="page">
             <div class="row">
                 <t t-set="title">Inventory Valuation Report</t>
-                <h4 class="mt0" t-esc="title" style="text-align: center;" />
+                <h4 class="mt0" t-out="title" style="text-align: center;" />
             </div>
             <!-- Display filters -->
             <t
@@ -167,7 +148,7 @@
             </div>
             <div class="act_as_row">
                 <div class="act_as_cell">
-                    <span t-esc="o.inventory_datetime.strftime('%Y-%m-%d')" />
+                    <span t-out="o.inventory_datetime.strftime('%Y-%m-%d')" />
                 </div>
                 <div class="act_as_cell">
                     <span t-field='o.company_id.name' />
@@ -201,32 +182,32 @@
     >
         <div class="act_as_row lines">
             <div class="act_as_cell left">
-                <t t-esc="n" />
+                <t t-out="n" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.reference" />
+                <t t-out="line.reference" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.name" />
+                <t t-out="line.name" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.barcode" />
+                <t t-out="line.barcode" />
             </div>
             <div class="act_as_cell right">
-                <t t-esc="'{0:,.3f}'.format(line.qty_at_date)" />
+                <t t-out="'{0:,.3f}'.format(line.qty_at_date)" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.uom_id.name" />
+                <t t-out="line.uom_id.name" />
             </div>
             <div class="act_as_cell amount">
                 <t
-                    t-esc="line.standard_price"
+                    t-out="line.standard_price"
                     t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
                 />
             </div>
             <div class="act_as_cell amount">
                 <t
-                    t-esc="line.stock_value"
+                    t-out="line.stock_value"
                     t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
                 />
             </div>
@@ -239,11 +220,10 @@
         <div class="act_as_table data_table mt0" style="width: 100%;">
             <div class="total_row">
                 <t
-                    t-esc="total"
+                    t-out="total"
                     t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
                 />
             </div>
         </div>
     </template>
-
 </odoo>

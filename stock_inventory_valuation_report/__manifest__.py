@@ -4,7 +4,7 @@
 {
     "name": "Stock Inventory Valuation Report",
     "summary": "Add report button on Inventory Valuation.",
-    "version": "14.0.1.0.1",
+    "version": "17.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Ecosoft,Odoo Community Association (OCA)",
@@ -19,5 +19,12 @@
         "reports/stock_inventory_valuation_report.xml",
         "wizard/stock_quantity_history_view.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "stock_inventory_valuation_report/static/src/css/report.css",
+            "stock_inventory_valuation_report/static/src/js/stock_inventory_valuation_report_backend.esm.js",
+            "stock_inventory_valuation_report/static/src/xml/stock_inventory_valuation_report_backend.xml",
+        ],
+    },
     "installable": True,
 }
