@@ -1,0 +1,230 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_summary
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-15 14:52+0000\n"
+"PO-Revision-Date: 2024-03-15 14:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.view_picking_summary_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Category"
+msgstr "Catégorie"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__standard_price
+msgid "Cost"
+msgstr "Coût"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__create_uid
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__create_date
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__create_date
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__display_name
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.view_picking_summary_wizard_form
+msgid "For Pickings details"
+msgstr "Pour les détails des livraisons"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.view_picking_summary_wizard_form
+msgid "For Summary"
+msgstr "Pour le résumé"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.view_picking_summary_wizard_form
+msgid "General informations"
+msgstr "Informations générales"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__id
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__id
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,help:stock_picking_report_summary.field_picking_summary_wizard_product__standard_price
+msgid ""
+"In Standard Price & AVCO: value of the product (automatically computed in "
+"AVCO).\n"
+"        In FIFO: value of the next unit that will leave the stock "
+"(automatically computed).\n"
+"        Used to value the product when the purchase cost is not known (e.g. "
+"inventory adjustment).\n"
+"        Used to compute margins on sale orders."
+msgstr ""
+"Également utilisé comme prix de base pour les listes. Exprimé dans l'unité "
+"de mesure par défaut du produit."
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard____last_update
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__write_uid
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__write_date
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__write_date
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__picking_line_qty
+msgid "Number of Selected Picking"
+msgstr "Quantité sélectionnée"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__picking_id
+msgid "Picking"
+msgstr "Livraison"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__picking_line_ids
+msgid "Picking Line"
+msgstr "Ligne de bon de livraison"
+
+#. module: stock_picking_report_summary
+#: model:ir.actions.act_window,name:stock_picking_report_summary.action_picking_summary
+#: model:ir.actions.report,name:stock_picking_report_summary.report_picking_summary
+msgid "Picking Summary"
+msgstr "Résumé des livraisons"
+
+#. module: stock_picking_report_summary
+#: model:ir.model,name:stock_picking_report_summary.model_picking_summary_wizard
+msgid "Picking Summary Wizard"
+msgstr ""
+
+#. module: stock_picking_report_summary
+#: model:ir.model,name:stock_picking_report_summary.model_picking_summary_wizard_picking
+msgid "Picking Summary Wizard Picking"
+msgstr ""
+
+#. module: stock_picking_report_summary
+#: model:ir.model,name:stock_picking_report_summary.model_picking_summary_wizard_product
+msgid "Picking Summary Wizard Product"
+msgstr ""
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Pickings Details"
+msgstr "Détails des livraisons"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.view_picking_summary_wizard_form
+msgid "Print PDF"
+msgstr "Imprimer le PDF"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__print_details
+msgid "Print Picking Details"
+msgstr "Imprimer le détail des livraisons"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__print_prices
+msgid "Print Standard Prices"
+msgstr "Imprimer les prix de revient"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__print_summary
+msgid "Print Summary"
+msgstr "Imprimer le résumé"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__print_unit_in_list
+msgid "Print Units"
+msgstr "Imprimer les unités de mesure"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__product_id
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Product"
+msgstr "Article"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__product_line_ids
+msgid "Product Line"
+msgstr "Ligne de produit"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Products Summary"
+msgstr "Résumé des bons de livraison"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__quantity_total
+msgid "Quantity Total"
+msgstr "Quantité totale"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard__standard_price_total
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__standard_price_total
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Standard Price Total"
+msgstr "Total prix de vente"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Standard Unit Price"
+msgstr "Coût unitaire"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Total price"
+msgstr "Prix total"
+
+#. module: stock_picking_report_summary
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_summary.picking_summary
+msgid "Unit"
+msgstr "Unité"
+
+#. module: stock_picking_report_summary
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_picking__wizard_id
+#: model:ir.model.fields,field_description:stock_picking_report_summary.field_picking_summary_wizard_product__wizard_id
+msgid "Wizard"
+msgstr "Assistant"
