@@ -5,7 +5,7 @@
     "name": "Stock Average Daily Sale",
     "summary": """
         Allows to gather delivered products average on daily basis""",
-    "version": "14.0.1.0.2",
+    "version": "14.0.1.0.3",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
