@@ -1,6 +1,8 @@
 # Copyright 2024 Moduon Team S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
+from unittest.mock import patch
+
 from odoo.tests.common import TransactionCase
 
 
@@ -22,6 +24,19 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
             {"name": "Product Test 1", "type": "consu", "is_storable": True}
         )
 
+    def _render_stock_reports(self, picking):
+        with patch.object(
+            type(self.env["ir.actions.report"]), "barcode", return_value=b""
+        ):
+            return (
+                self.env["ir.actions.report"]._render(
+                    "stock.action_report_delivery", picking.ids
+                ),
+                self.env["ir.actions.report"]._render(
+                    "stock.action_report_picking", picking.ids
+                ),
+            )
+
     def test_report_incoming_delivery_address(self):
         """Check pickup address is shown in reports (deliveryslip and picking)"""
         self.env["stock.quant"]._update_available_quantity(
@@ -33,12 +48,11 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.customer_location.id,
                 "picking_type_id": self.picking_type_out.id,
-                "move_ids_without_package": [
+                "move_ids": [
                     (
                         0,
                         0,
                         {
-                            "name": "Test Move Product 1",
                             "product_id": self.product1.id,
                             "partner_id": self.partner.id,
                             "product_uom": self.product1.uom_id.id,
@@ -70,11 +84,8 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
             stock_return_picking_action["res_id"]
         )
         # Check pickup address is not shown in reports
-        report_pdf_deliveryslip = self.env["ir.actions.report"]._render(
-            "stock.action_report_delivery", return_pick.ids
-        )
-        report_pdf_picking = self.env["ir.actions.report"]._render(
-            "stock.action_report_picking", return_pick.ids
+        report_pdf_deliveryslip, report_pdf_picking = self._render_stock_reports(
+            return_pick
         )
         self.assertTrue("Vendor Address" in str(report_pdf_deliveryslip))
         self.assertTrue("Vendor Address" in str(report_pdf_picking))
@@ -82,11 +93,8 @@ class TestReportIncomingDeliveryAddress(TransactionCase):
         self.assertFalse("Pick-Up Address" in str(report_pdf_picking))
         # Check pickup address is shown in reports
         return_pick.picking_type_id.show_pickup_address = True
-        report_pdf_deliveryslip = self.env["ir.actions.report"]._render(
-            "stock.action_report_delivery", return_pick.ids
-        )
-        report_pdf_picking = self.env["ir.actions.report"]._render(
-            "stock.action_report_picking", return_pick.ids
+        report_pdf_deliveryslip, report_pdf_picking = self._render_stock_reports(
+            return_pick
         )
         self.assertFalse("Vendor Address" in str(report_pdf_deliveryslip))
         self.assertFalse("Vendor Address" in str(report_pdf_picking))

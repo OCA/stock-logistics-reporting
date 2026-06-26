@@ -4,9 +4,9 @@
 {
     "name": "Stock Picking Report Incoming Delivery Address",
     "summary": "Allow show delivery address in report when picking type is incoming",
-    "version": "18.0.1.0.1",
+    "version": "19.0.1.0.0",
     "development_status": "Alpha",
-    "category": "Uncategorized",
+    "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Moduon, Odoo Community Association (OCA)",
     "maintainers": ["EmilioPascual", "rafaelbn"],

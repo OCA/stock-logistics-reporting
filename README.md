@@ -24,6 +24,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [stock_picking_report_external_note](stock_picking_report_external_note/) | 19.0.1.0.0 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Adds a note in Stock Picking shown on external reports like Delivery Slip
+[stock_picking_report_incoming_delivery_address](stock_picking_report_incoming_delivery_address/) | 19.0.1.0.0 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Allow show delivery address in report when picking type is incoming
 [stock_picking_report_valued](stock_picking_report_valued/) | 19.0.1.0.0 |  | Adding Valued Picking on Delivery Slip report
 [stock_product_demand_info](stock_product_demand_info/) | 19.0.1.1.0 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Past demand by configurable periods on product and orderpoint
 

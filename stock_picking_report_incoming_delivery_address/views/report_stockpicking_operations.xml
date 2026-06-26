@@ -3,32 +3,40 @@
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
 <odoo>
     <template id="report_picking" inherit_id="stock.report_picking">
-        <xpath
-            expr="//div[@t-if=&quot;o.picking_type_id.code==&apos;incoming&apos; and o.partner_id&quot;]"
-            position="after"
-        >
+        <xpath expr="//div[@name='div_outgoing_address']" position="after">
             <div
-                name="pickup_address"
-                t-if="o.picking_type_id.code=='incoming' and o.move_ids[0].partner_id and o.picking_type_id.show_pickup_address"
+                class="col-5 offset-1"
+                name="div_incoming_address"
+                t-if="o.picking_type_id.code == 'incoming'"
             >
-                <span>
-                    <strong>Pick-Up Address</strong>
-                </span>
-                <div
-                    t-field="o.move_ids[0].partner_id"
-                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                <t
+                    t-set="pickup_partner"
+                    t-value="o.move_ids and o.move_ids[0].partner_id or False"
                 />
+                <div t-if="o.partner_id and not o.picking_type_id.show_pickup_address">
+                    <span>
+                        <strong>Vendor Address</strong>
+                    </span>
+                    <div name="partner_header">
+                        <div
+                            t-field="o.partner_id.commercial_partner_id"
+                            t-options='{"widget": "contact", "fields": ["name"], "no_marker": True, "phone_icons": True}'
+                        />
+                    </div>
+                </div>
+                <div
+                    name="pickup_address"
+                    t-if="pickup_partner and o.picking_type_id.show_pickup_address"
+                >
+                    <span>
+                        <strong>Pick-Up Address</strong>
+                    </span>
+                    <div
+                        t-out="pickup_partner"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                </div>
             </div>
-        </xpath>
-        <xpath
-            expr="//div[@t-if=&quot;o.picking_type_id.code==&apos;incoming&apos; and o.partner_id&quot;]"
-            position="attributes"
-        >
-            <attribute
-                name="t-if"
-                separator="and"
-                add="(not o.picking_type_id.show_pickup_address)"
-            />
         </xpath>
     </template>
 </odoo>
