@@ -1,6 +1,7 @@
 import io
 
 import xlsxwriter
+from werkzeug.exceptions import NotFound
 
 from odoo import exceptions
 from odoo.http import content_disposition, request, route
@@ -18,8 +19,8 @@ class StockPortalLotList(CustomerPortal):
             picking = self._stock_picking_check_access(
                 picking_id, access_token=access_token
             )
-        except exceptions.AccessError:
-            return request.redirect("/my")
+        except (exceptions.AccessError, exceptions.MissingError):
+            raise NotFound() from None
         xlsx_content = self._generate_picking_lot_xlsx(picking)
         filename = f"{picking.name}_lots.xlsx"
         return request.make_response(
@@ -69,11 +70,9 @@ class StockPortalLotList(CustomerPortal):
         worksheet.write("C3", "Quantity", header_format)
         # Data
         row = 3
-        for ml in picking.move_line_ids_without_package.filtered(
-            lambda ml: ml.lot_id or ml.lot_name
-        ):
+        for ml in picking.move_line_ids.filtered(lambda ml: ml.lot_id or ml.lot_name):
             worksheet.write(row, 0, ml.product_id.display_name, cell_format)
-            worksheet.write(row, 1, ml.lot_id.name or "", cell_format)
+            worksheet.write(row, 1, ml.lot_id.name or ml.lot_name or "", cell_format)
             worksheet.write(row, 2, ml.quantity or 0.0, cell_format)
             row += 1
         workbook.close()

@@ -6,10 +6,10 @@
     >
         <xpath expr="//div[@name='delivery_details']/a" position="after">
             <t
-                t-set="pickings_with_lots"
-                t-value="picking.state == 'done' and any(move_line.lot_id or move_line.lot_name for move_line in delivery_orders.move_line_ids)"
+                t-set="picking_with_lots"
+                t-value="picking.state == 'done' and any(move_line.lot_id or move_line.lot_name for move_line in picking.move_line_ids)"
             />
-            <div name="delivery_report_xlsx" t-if="pickings_with_lots">
+            <div name="delivery_report_xlsx" t-if="picking_with_lots">
                 <t
                     t-set="delivery_report_xlsx_url"
                     t-value="'/my/picking/xlsx/%s?%s' % (picking.id, keep_query())"

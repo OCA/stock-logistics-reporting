@@ -5,10 +5,13 @@
     "name": "Stock Portal Lot List Donwload",
     "summary": "Allows portal users to download lot list of delivery pickings in Excel "
     "format.",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
+    "development_status": "Beta",
+    "category": "Inventory/Delivery",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Tecnativa, Odoo Community Association (OCA)",
+    "application": False,
     "depends": ["sale_stock"],
     "data": [
         "views/sale_stock_portal_template.xml",
