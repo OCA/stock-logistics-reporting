@@ -4,11 +4,13 @@
 
 {
     "name": "Stock Picking Report Header Repeater",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
+    "development_status": "Beta",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "category": "Warehouse Management",
     "license": "AGPL-3",
+    "application": False,
     "depends": [
         "stock",
     ],
