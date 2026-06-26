@@ -8,9 +8,16 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     def _get_picking_operations_lang(self):
+        self.ensure_one()
         warehouse = self.picking_type_id.warehouse_id
-        if warehouse.picking_operation_language_option == "partner" and self.partner_id:
+        if (
+            warehouse.picking_operation_language_option == "partner"
+            and self.partner_id.lang
+        ):
             return self.partner_id.lang
-        if warehouse.picking_operation_language_option == "warehouse":
+        if (
+            warehouse.picking_operation_language_option == "warehouse"
+            and warehouse.warehouse_language
+        ):
             return warehouse.warehouse_language
-        return self.env.user.lang
+        return self._get_report_lang() or self.env.user.lang or self.env.lang
