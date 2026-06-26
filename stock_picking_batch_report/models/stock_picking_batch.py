@@ -4,7 +4,7 @@
 from odoo import models
 
 
-class StockPikcingBatch(models.Model):
+class StockPickingBatch(models.Model):
     _inherit = "stock.picking.batch"
 
     def get_out_pickings(self):

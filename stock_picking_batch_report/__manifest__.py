@@ -3,11 +3,12 @@
 
 {
     "name": "Stock Picking Batch Report",
-    "version": "18.0.1.0.0",
-    "author": "Open Source Integrators, " "Odoo Community Association (OCA)",
+    "version": "19.0.1.0.0",
+    "author": "Open Source Integrators, Odoo Community Association (OCA)",
+    "development_status": "Beta",
     "license": "AGPL-3",
     "summary": "Stock Picking Batch Report",
-    "category": "Stock",
+    "category": "Inventory/Delivery",
     "maintainer": "Open Source Integrators",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "depends": ["stock_picking_batch"],
