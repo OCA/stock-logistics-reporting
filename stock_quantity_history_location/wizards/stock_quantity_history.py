@@ -18,10 +18,13 @@ class StockQuantityHistory(models.TransientModel):
     def open_at_date(self):
         action = super().open_at_date()
         ctx = action["context"]
-        ctx = safe_eval(ctx) if isinstance(ctx, str) else ctx
+        ctx = safe_eval(ctx) if isinstance(ctx, str) else dict(ctx)
         if self.location_id:
             ctx["location"] = self.location_id.id
-            ctx["compute_child"] = self.include_child_locations
+            if self.include_child_locations:
+                ctx.pop("strict", None)
+            else:
+                ctx["strict"] = True
             if ctx.get("company_owned", False):
                 ctx.pop("company_owned")
             action["display_name"] = (

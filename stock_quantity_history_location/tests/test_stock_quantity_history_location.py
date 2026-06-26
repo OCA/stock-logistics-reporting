@@ -14,7 +14,9 @@ class TestStockQuantityHistoryLocation(TestCommon):
         super().setUpClass()
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.main_company = cls.env.ref("base.main_company")
-        cls.product = cls.env.ref("product.product_product_3")
+        cls.product = cls.env["product.product"].create(
+            {"name": "Test Quantity History Product", "is_storable": True}
+        )
         cls.test_stock_loc = cls.env["stock.location"].create(
             {
                 "usage": "internal",
@@ -33,6 +35,15 @@ class TestStockQuantityHistoryLocation(TestCommon):
         cls._create_stock_move(cls, location_dest_id=cls.child_test_stock_loc, qty=100)
         cls.group_multi_locations = cls.env.ref("stock.group_stock_multi_locations")
 
+    def _product_qty_available(self, context):
+        self.env.invalidate_all()
+        return (
+            self.env["product.product"]
+            .browse(self.product.id)
+            .with_context(**context)
+            .qty_available
+        )
+
     def test_01_wizard_past_date(self):
         wizard = self.env["stock.quantity.history"].create(
             {
@@ -42,9 +53,10 @@ class TestStockQuantityHistoryLocation(TestCommon):
             }
         )
         action = wizard.with_context(company_owned=True).open_at_date()
-        self.assertEqual(
-            self.product.with_context(**action["context"]).qty_available, 100.0
-        )
+        self.assertEqual(action["context"]["location"], self.test_stock_loc.id)
+        self.assertNotIn("strict", action["context"])
+        self.assertNotIn("company_owned", action["context"])
+        self.assertEqual(self._product_qty_available(action["context"]), 100.0)
         self.assertEqual(
             self.product.with_context(
                 location=self.child_test_stock_loc.id, to_date="2019-08-10"
@@ -57,11 +69,19 @@ class TestStockQuantityHistoryLocation(TestCommon):
             {"location_id": self.test_stock_loc.id, "include_child_locations": False}
         )
         action = wizard.with_context().open_at_date()
-        self.assertEqual(action["context"]["compute_child"], False)
         self.assertEqual(action["context"]["location"], self.test_stock_loc.id)
+        self.assertEqual(action["context"]["strict"], True)
+        self.assertEqual(self._product_qty_available(action["context"]), 0.0)
         wizard = self.env["stock.quantity.history"].create(
             {"location_id": self.test_stock_loc.id, "include_child_locations": True}
         )
         action = wizard.with_context().open_at_date()
-        self.assertEqual(action["context"]["compute_child"], True)
         self.assertEqual(action["context"]["location"], self.test_stock_loc.id)
+        self.assertNotIn("strict", action["context"])
+        self.assertEqual(self._product_qty_available(action["context"]), 100.0)
+
+    def test_03_wizard_without_location(self):
+        wizard = self.env["stock.quantity.history"].create({})
+        action = wizard.with_context().open_at_date()
+        self.assertNotIn("location", action["context"])
+        self.assertNotIn("strict", action["context"])

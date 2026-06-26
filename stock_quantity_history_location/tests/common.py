@@ -12,7 +12,6 @@ class TestCommon(TransactionCase):
     def _create_stock_move(self, location_dest_id, qty):
         move = self.env["stock.move"].create(
             {
-                "name": "Stock move in",
                 "location_id": self.supplier_location.id,
                 "location_dest_id": location_dest_id.id,
                 "product_id": self.product.id,
