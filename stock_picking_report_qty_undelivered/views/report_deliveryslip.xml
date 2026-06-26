@@ -13,14 +13,14 @@
             <t t-if="o.picking_type_id.summary_qty_undelivered">
                 <t
                     t-set="cancel_moves"
-                    t-value="o.move_ids.filtered(lambda x: x.state == 'done' and (x.product_uom_qty > x.quantity))"
+                    t-value="o.move_ids.filtered(lambda x: x.state == 'done' and x.product_uom.compare(x.product_uom_qty, x.quantity) &gt; 0)"
                 />
                 <t t-if="cancel_moves">
                     <p class="mt-5">
                         <span>Summary of undelivered quantities:</span>
                     </p>
                     <table
-                        class="table table-borderless"
+                        class="table table-sm table-borderless"
                         name="stock_moves_cancel_table"
                         style="table-layout: fixed;"
                     >
@@ -29,7 +29,7 @@
                                 <th name="th_uq_product">
                                     <strong>Product</strong>
                                 </th>
-                                <th name="th_uq_quantity" class="text-center">
+                                <th name="th_uq_quantity" class="text-end">
                                     <strong>Quantity</strong>
                                 </th>
                             </tr>
@@ -40,17 +40,22 @@
                                     <td class="w-auto">
                                         <span t-field="move.product_id" />
                                         <p
-                                            t-if="move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
+                                            t-if="move.description_picking and move.description_picking != move.product_id.name and move._get_report_description_picking()"
                                         >
-                                            <span t-field="move.description_picking" />
+                                            <span
+                                                t-out="move._get_report_description_picking()"
+                                                t-options="{'widget': 'text'}"
+                                            />
                                         </p>
                                     </td>
-                                    <td class="text-center w-auto">
+                                    <td class="text-end w-auto">
                                         <span
-                                            t-esc="move.product_uom_qty - move.quantity"
-                                            t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
+                                            t-out="format_number(move.product_uom_qty - move.quantity)"
                                         />
-                                        <span t-field="move.product_uom" />
+                                        <span
+                                            t-field="move.product_uom"
+                                            groups="uom.group_uom"
+                                        />
                                     </td>
                                 </tr>
                             </t>
@@ -66,21 +71,37 @@
         inherit_id="stock.stock_report_delivery_aggregated_move_lines"
         priority="99"
     >
-        <xpath expr="//span[contains(@t-esc, 'qty_ordered')]" position="replace">
-            <t
+        <xpath
+            expr="//td[@name='move_line_aggregated_qty_ordered']/span[1]"
+            position="replace"
+        >
+            <span
                 t-if="aggregated_lines[line]['move'].picking_type_id.summary_qty_undelivered"
+                t-out="format_number(aggregated_lines[line]['move'].product_uom_qty)"
+            />
+            <span
+                t-else=""
+                t-out="format_number(aggregated_lines[line]['qty_ordered'])"
+            />
+        </xpath>
+        <xpath
+            expr="//td[@name='move_line_aggregated_qty_ordered']/t/span[1]"
+            position="replace"
+        >
+            <span
+                t-if="aggregated_lines[line]['move'].picking_type_id.summary_qty_undelivered"
+                class="text-muted"
+                t-out="aggregated_lines[line]['product_uom']._compute_quantity(aggregated_lines[line]['move'].product_uom_qty, aggregated_lines[line]['packaging_uom_id'])"
             >
-                <span
-                    t-esc="aggregated_lines[line]['move'].product_uom_qty"
-                    t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
-                />
-            </t>
-            <t t-else="">
-                <span
-                    t-esc="aggregated_lines[line]['qty_ordered']"
-                    t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
-                />
-            </t>
+                1.00
+            </span>
+            <span
+                t-else=""
+                class="text-muted"
+                t-out="aggregated_lines[line]['packaging_qty_ordered']"
+            >
+                1.00
+            </span>
         </xpath>
     </template>
 </odoo>

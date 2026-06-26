@@ -5,7 +5,7 @@
 from odoo import fields, models
 
 
-class ModelName(models.Model):
+class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
     summary_qty_undelivered = fields.Boolean(
