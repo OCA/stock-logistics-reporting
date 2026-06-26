@@ -69,62 +69,55 @@ class StockMoveLine(models.Model):
             # If the the kit is partially delivered, this could lead to an
             # unacurate value.
             phantom_line = move_lines[:1]
-            if phantom_line:
-                price_unit = (
-                    sale_line.price_subtotal / sale_line.product_uom_qty
-                    if sale_line.product_uom_qty
-                    else sale_line.price_reduce
-                )
-                # Compute how many kits were delivered from the components and
-                # the original demand. Note that if the qty is edited in the sale
-                # order this could lead to inconsistencies.
-                components_per_kit = phantom_line.move_id._get_components_per_kit()
-                phantom_line_qty_done = sum(
-                    move_lines.filtered(
-                        lambda x, phantom_line=phantom_line: x.product_id
-                        == phantom_line.product_id
-                    ).mapped("quantity")
-                )
-                quantity = (
-                    phantom_line_qty_done / components_per_kit
-                    if components_per_kit
-                    else 0
-                )
-                taxes = phantom_line.sale_tax_id.compute_all(
-                    price_unit=price_unit,
-                    currency=phantom_line.currency_id,
-                    quantity=quantity,
-                    product=phantom_line.product_id,
-                    partner=sale_line.order_id.partner_shipping_id,
-                )
-                if sale_line.company_id.tax_calculation_rounding_method == (
-                    "round_globally"
-                ):
-                    price_tax = sum(
-                        t.get("amount", 0.0) for t in taxes.get("taxes", [])
-                    )
-                else:
-                    price_tax = taxes["total_included"] - taxes["total_excluded"]
-                phantom_line.update(
-                    {
-                        "sale_tax_description": ", ".join(
-                            t.name or t.description for t in phantom_line.sale_tax_id
-                        ),
-                        "sale_price_subtotal": taxes["total_excluded"],
-                        "sale_price_tax": price_tax,
-                        "sale_price_total": taxes["total_included"],
-                        "phantom_line": True,
-                        "phantom_delivered_qty": quantity,
-                    }
-                )
-                # Remove the other lines
-                redundant_lines = move_lines[1:]
-                if redundant_lines:
-                    redundant_lines.update(
-                        {
-                            "sale_tax_description": "",
-                            "sale_price_subtotal": 0.0,
-                            "sale_price_tax": 0.0,
-                            "sale_price_total": 0.0,
-                        }
-                    )
+            price_unit = (
+                sale_line.price_subtotal / sale_line.product_uom_qty
+                if sale_line.product_uom_qty
+                else sale_line.price_reduce
+            )
+            # Compute how many kits were delivered from the components and
+            # the original demand. Note that if the qty is edited in the sale
+            # order this could lead to inconsistencies.
+            components_per_kit = phantom_line.move_id._get_components_per_kit()
+            phantom_line_qty_done = sum(
+                move_lines.filtered(
+                    lambda x, phantom_line=phantom_line: x.product_id
+                    == phantom_line.product_id
+                ).mapped("quantity")
+            )
+            quantity = (
+                phantom_line_qty_done / components_per_kit if components_per_kit else 0
+            )
+            taxes = phantom_line.sale_tax_ids.compute_all(
+                price_unit=price_unit,
+                currency=phantom_line.currency_id,
+                quantity=quantity,
+                product=phantom_line.product_id,
+                partner=sale_line.order_id.partner_shipping_id,
+            )
+            if sale_line.company_id.tax_calculation_rounding_method == (
+                "round_globally"
+            ):
+                price_tax = sum(t.get("amount", 0.0) for t in taxes.get("taxes", []))
+            else:
+                price_tax = taxes["total_included"] - taxes["total_excluded"]
+            phantom_line.update(
+                {
+                    "sale_tax_description": ", ".join(
+                        t.name or t.description for t in phantom_line.sale_tax_ids
+                    ),
+                    "sale_price_subtotal": taxes["total_excluded"],
+                    "sale_price_tax": price_tax,
+                    "sale_price_total": taxes["total_included"],
+                    "phantom_line": True,
+                    "phantom_delivered_qty": quantity,
+                }
+            )
+            # Remove the other lines
+            move_lines[1:].update(
+                {
+                    "sale_tax_description": "",
+                    "sale_price_subtotal": 0.0,
+                    "sale_price_tax": 0.0,
+                    "sale_price_total": 0.0,
+                }
+            )

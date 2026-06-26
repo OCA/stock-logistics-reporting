@@ -24,15 +24,19 @@ class StockMove(models.Model):
                 .get(product)
             )
             if bom and bom.type == "phantom" and sale_line.product_uom_qty:
-                component_demand = sum(
-                    sale_line.move_ids.filtered(
-                        lambda x: x.product_id == self.product_id
-                        and not x.origin_returned_move_id
-                        and (
-                            x.state != "cancel"
-                            or (x.state == "cancel" and x.picking_id.backorder_id)
-                        )
-                    ).mapped("product_uom_qty")
-                )
-                result = component_demand / sale_line.product_uom_qty
+                bom_line = bom.bom_line_ids.filtered(
+                    lambda line: line.product_id == self.product_id
+                )[:1]
+                if bom_line:
+                    component_qty = bom_line.product_uom_id._compute_quantity(
+                        bom_line.product_qty,
+                        self.product_uom,
+                        round=False,
+                    )
+                    bom_qty = bom.product_uom_id._compute_quantity(
+                        bom.product_qty,
+                        sale_line.product_uom_id,
+                        round=False,
+                    )
+                    result = component_qty / bom_qty if bom_qty else 0.0
         return result

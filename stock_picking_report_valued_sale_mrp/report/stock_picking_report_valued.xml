@@ -59,7 +59,7 @@
         <xpath expr="//td[@name='move_line_lot_quantity']" position="after">
             <td class="text-center" t-if="can_display_phantom">
                 <span t-field="move_line.phantom_delivered_qty" />
-                <span t-field="move_line.sale_line.product_uom" />
+                <span t-field="move_line.sale_line.product_uom_id" />
             </td>
         </xpath>
 
