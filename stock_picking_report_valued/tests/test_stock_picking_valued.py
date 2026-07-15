@@ -34,7 +34,9 @@ class TestStockPickingValued(common.TransactionCase):
                 "taxes_id": [(6, 0, cls.tax.ids)],
             }
         )
-        cls.partner = cls.env["res.partner"].create({"name": "Mr. Odoo"})
+        cls.partner = cls.env["res.partner"].create(
+            {"name": "Mr. Odoo", "valued_picking": True}
+        )
         cls.sale_order = cls.env["sale.order"].create(
             {
                 "partner_id": cls.partner.id,
