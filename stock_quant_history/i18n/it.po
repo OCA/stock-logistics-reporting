@@ -1,0 +1,284 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_history
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-05-07 09:23+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_form
+msgid "<span>History details</span>"
+msgstr "<span>Dettagli cronologia</span>"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__previous_snapshot_id
+msgid "Base snapshot used to generate this snapshot"
+msgstr "Snapshot di base utilizzato per generare questo snapshot"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: stock_quant_history
+#: model:ir.actions.server,name:stock_quant_history.action_multi_related_stock_quant_history_tree_view
+msgid "Compare stocks"
+msgstr "Compara giacenze"
+
+#. module: stock_quant_history
+#: model_terms:ir.actions.act_window,help:stock_quant_history.action_stock_quant_history_snapshot
+msgid "Create your first snapshot!"
+msgstr "Crea il primo snapshot!"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__create_uid
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__create_date
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__generated_date
+msgid "Date when stock.quant.history line have been created."
+msgstr "Data di creazione della riga stock.quant.history."
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history__product_uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "Unità di misura predefinita per tutte le operazioni di magazzino."
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__display_name
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_quant_history
+#: model:ir.model.fields.selection,name:stock_quant_history.selection__stock_quant_history_snapshot__state__draft
+msgid "Draft"
+msgstr "Bozza"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_form
+msgid "Generate"
+msgstr "Genera"
+
+#. module: stock_quant_history
+#: model_terms:ir.actions.act_window,help:stock_quant_history.action_stock_quant_history
+msgid "Generate stock quant history from stock quant history snapshot before!"
+msgstr ""
+"Generare prima la cronologia del quanto della giacenza dallo snapshot della "
+"cronologia del quanto della giacenza!"
+
+#. module: stock_quant_history
+#: model:ir.model.fields.selection,name:stock_quant_history.selection__stock_quant_history_snapshot__state__generated
+msgid "Generated"
+msgstr "Generato"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__generated_date
+msgid "Generated date"
+msgstr "Data generazione"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__stock_quant_history_ids
+msgid "Generated stock quant history for current snapshot settings."
+msgstr ""
+"Cronologia del quanto di giacenza generata per le impostazioni attuali dello "
+"snapshot."
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_search
+msgid "Group By"
+msgstr "Raggruppa per"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__id
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__inventory_date
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__inventory_date
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_search
+msgid "Inventory date"
+msgstr "Data inventario"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history____last_update
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__write_uid
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__write_date
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history__company_id
+msgid "Let this field empty if this location is shared between companies"
+msgstr ""
+"Lasciare questo campo vuoto se questa ubicazione è condivisa tra aziende"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__location_id
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+msgid "Location"
+msgstr "Ubicazione"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+msgid "Location and sub-locations of"
+msgstr "Ubicazione e sotto ubicazione di"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+msgid "Lot"
+msgstr "Lotto"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__lot_id
+msgid "Lot/Serial Number"
+msgstr "Numero di lotto/serie"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__product_id
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__product_tmpl_id
+msgid "Product Template"
+msgstr "Modello prodotto"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__quantity
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history__quantity
+msgid ""
+"Quantity of products in this quant, in the default unit of measure of the "
+"product"
+msgstr ""
+"Quantità di prodotti in questo quanto, nell'unità di misura predefinita del "
+"prodotto"
+
+#. module: stock_quant_history
+#: model:ir.ui.menu,name:stock_quant_history.menu_action_stock_quant_history_snapshot
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+msgid "Snapshot"
+msgstr "Snapshot"
+
+#. module: stock_quant_history
+#: code:addons/stock_quant_history/models/stock_quant_history_snapshot.py:0
+#, python-format
+msgid "Snapshot %s"
+msgstr "Snapshot %s"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__previous_snapshot_id
+msgid "Snapshot base"
+msgstr "Snapshot base"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__snapshot_id
+msgid "Snapshot settings"
+msgstr "Impostazioni snapshot"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history__snapshot_id
+msgid "Snapshot settings used to generate this line"
+msgstr "Impostazioni snapshot utilizzate per generare questa riga"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__state
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_search
+msgid "Status"
+msgstr "Stato"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_search
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_snapshot_search
+msgid "Stock date"
+msgstr "Data giacenza"
+
+#. module: stock_quant_history
+#: model:ir.ui.menu,name:stock_quant_history.menu_action_stock_history
+#: model:ir.ui.menu,name:stock_quant_history.menu_action_stock_quant_history
+msgid "Stock history"
+msgstr "Cronologia giacenza"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history_snapshot__stock_quant_history_ids
+msgid "Stock quant history"
+msgstr "Cronologia quanto giacenza"
+
+#. module: stock_quant_history
+#: model_terms:ir.ui.view,arch_db:stock_quant_history.view_stock_quant_history_pivot
+msgid "Stock quants"
+msgstr "Quanti giacenza"
+
+#. module: stock_quant_history
+#: model:ir.model,name:stock_quant_history.model_stock_quant_history
+msgid "Stock quants history"
+msgstr "Cronologia quanti giacenza"
+
+#. module: stock_quant_history
+#: model:ir.actions.act_window,name:stock_quant_history.action_stock_quant_history
+#: model:ir.actions.act_window,name:stock_quant_history.action_stock_quant_history_snapshot
+msgid "Stock snapshot"
+msgstr "Snapshot giacenza"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history__inventory_date
+#: model:ir.model.fields,help:stock_quant_history.field_stock_quant_history_snapshot__inventory_date
+msgid ""
+"The date used to create stock.quant.history as it was for the given date"
+msgstr ""
+"La data utilizzata per creare stock.quant.history così come era per la data "
+"specificata"
+
+#. module: stock_quant_history
+#: model:ir.model.fields,field_description:stock_quant_history.field_stock_quant_history__product_uom_id
+msgid "Unit of Measure"
+msgstr "Unità di misura"
+
+#. module: stock_quant_history
+#: model:ir.model,name:stock_quant_history.model_stock_quant_history_snapshot
+msgid "stock.quant.history generation configuration model"
+msgstr "modello configurazione stock.quant.history generation"
