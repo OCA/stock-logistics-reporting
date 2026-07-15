@@ -17,11 +17,6 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_quantity_history_location
-#: model:ir.model.fields,field_description:stock_quantity_history_location.field_stock_quantity_history__include_child_locations
-msgid "Include Child Locations"
-msgstr "Includere ubicazioni figlie"
-
-#. module: stock_quantity_history_location
 #. odoo-javascript
 #: code:addons/stock_quantity_history_location/static/src/components/inventory_report/inventory_report.xml:0
 #, python-format
@@ -44,6 +39,9 @@ msgstr "Ubicazione"
 #: model:ir.model,name:stock_quantity_history_location.model_stock_quantity_history
 msgid "Stock Quantity History"
 msgstr "Storico quantità giacenza"
+
+#~ msgid "Include Child Locations"
+#~ msgstr "Includere ubicazioni figlie"
 
 #~ msgid "Include child locations"
 #~ msgstr "Includi locazioni figlie"
