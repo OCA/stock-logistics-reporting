@@ -1,0 +1,6 @@
+- Jordi Ballester Alomar \<jordi.ballester@forgeflow.com\>
+- [Tecnativa](https://www.tecnativa.com):
+  - Víctor Martínez
+  - Ernesto Tejeda
+- [Sodexis](https://www.sodexis.com):
+  - Atchuthan Ubendran
