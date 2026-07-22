@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [delivery_line_sale_line_position](delivery_line_sale_line_position/) | 18.0.1.0.0 |  | Adds the sale line position to the delivery report lines
 [printing_auto_stock_picking](printing_auto_stock_picking/) | 18.0.1.1.0 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Printing Auto Stock Picking
+[stock_account_quantity_history_location](stock_account_quantity_history_location/) | 18.0.1.0.0 |  | Glue module between Stock Account and Stock Quantity History Location modules
 [stock_account_valuation_report](stock_account_valuation_report/) | 18.0.1.0.1 |  | Improves logic of the Inventory Valuation Report
 [stock_delivery_note](stock_delivery_note/) | 18.0.1.0.0 |  | This module allows to fill in a delivery note that will be displayed on delivery report
 [stock_inventory_valuation_report](stock_inventory_valuation_report/) | 18.0.1.0.0 |  | Add report button on Inventory Valuation.
