@@ -78,6 +78,7 @@ class TestStockPickingValuedMrp(common.TransactionCase):
         cls.order_out_picking = cls.sale_order_3.picking_ids
 
     def test_01_picking_confirmed(self):
+        self.env.company.tax_calculation_rounding_method = "round_per_line"
         for line in self.order_out_picking.move_ids:
             line.quantity = line.product_uom_qty
         self.order_out_picking.button_validate()
