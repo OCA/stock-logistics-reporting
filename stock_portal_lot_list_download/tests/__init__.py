@@ -1,0 +1,1 @@
+from . import test_stock_portal_lot_list_download
