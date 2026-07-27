@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* printing_auto_stock_picking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-07-28 09:25+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: printing_auto_stock_picking
+#: model:ir.model.fields,field_description:printing_auto_stock_picking.field_stock_picking__auto_printing_ids
+#: model:ir.model.fields,field_description:printing_auto_stock_picking.field_stock_picking_type__auto_printing_ids
+#: model_terms:ir.ui.view,arch_db:printing_auto_stock_picking.view_picking_type_form_inherit
+msgid "Auto Printing Configuration"
+msgstr "Configurazione stampa automatica"
+
+#. module: printing_auto_stock_picking
+#: model:ir.model,name:printing_auto_stock_picking.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: printing_auto_stock_picking
+#: model_terms:ir.ui.view,arch_db:printing_auto_stock_picking.view_picking_form
+msgid "Print documents"
+msgstr "Stampa documenti"
+
+#. module: printing_auto_stock_picking
+#: model:ir.model.fields,field_description:printing_auto_stock_picking.field_stock_picking__printing_auto_error
+msgid "Printing error"
+msgstr "Errore di stampa"
+
+#. module: printing_auto_stock_picking
+#: model:ir.model,name:printing_auto_stock_picking.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: printing_auto_stock_picking
+#: model_terms:ir.ui.view,arch_db:printing_auto_stock_picking.view_picking_form
+msgid ""
+"Unable to print the documents: the CUPS server is maybe not available, or "
+"printers are not configured properly. Error:"
+msgstr ""
+"Impossibile stampare i documenti: il server CUPS non è disponibile o o le "
+"stampanti non sono configurate correttamente. Errore:"
