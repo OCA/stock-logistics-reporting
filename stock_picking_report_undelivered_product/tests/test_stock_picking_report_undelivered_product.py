@@ -1,7 +1,6 @@
 # Copyright 2020 Sergio Teruel - Tecnativa <sergio.teruel@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.tests import common
-from odoo.tests.common import Form
+from odoo.tests import Form, common
 
 
 class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
@@ -31,21 +30,24 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
             {
                 "name": "Test product undelivered display",
                 "display_undelivered_in_picking": True,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.product_no_display = self.ProductProduct.create(
             {
                 "name": "Test product undelivered no display",
                 "display_undelivered_in_picking": False,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.product_no_display_wo_stock = self.ProductProduct.create(
             {
                 "name": "Test product undelivered no display without stock",
                 "display_undelivered_in_picking": False,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.StockQuant.create(
@@ -61,13 +63,13 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking_form.picking_type_id = self.picking_type_out
         picking_form.partner_id = partner
 
-        with picking_form.move_ids_without_package.new() as line:
+        with picking_form.move_ids.new() as line:
             line.product_id = self.product_display
             line.product_uom_qty = 50.00
-        with picking_form.move_ids_without_package.new() as line:
+        with picking_form.move_ids.new() as line:
             line.product_id = self.product_no_display
             line.product_uom_qty = 20.00
-        with picking_form.move_ids_without_package.new() as line:
+        with picking_form.move_ids.new() as line:
             line.product_id = self.product_no_display_wo_stock
             line.product_uom_qty = 20.00
         return picking_form.save()
@@ -83,57 +85,53 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking = self._create_picking(self.partner_display)
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids.qty_done = 10.00
+        picking.move_line_ids.quantity = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
-        self.assertIn("undelivered_product", str(res[0]))
+        self.assertIn("Remaining quantities not yet delivered", str(res[0]))
 
     def test_no_displayed_customer(self):
         picking = self._create_picking(self.partner_no_display)
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids.qty_done = 10.00
+        picking.move_line_ids.quantity = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
-        self.assertNotIn("undelivered_product", str(res[0]))
+        self.assertNotIn("Remaining quantities not yet delivered", str(res[0]))
 
     def test_no_displayed_product(self):
         picking = self._create_picking(self.partner_display)
-        picking.move_lines.filtered(
-            lambda l: l.product_id == self.product_display
+        picking.move_ids.filtered(
+            lambda move_line: move_line.product_id == self.product_display
         ).unlink()
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids.qty_done = 10.00
+        picking.move_line_ids.quantity = 10.00
         self._transfer_picking_no_backorder(picking)
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
-        self.assertNotIn("undelivered_product", str(res[0]))
+        self.assertNotIn("Remaining quantities not yet delivered", str(res[0]))
 
     def test_picking_report_method(self):
         product = self.ProductProduct.create(
             {
                 "name": "test01",
                 "display_undelivered_in_picking": True,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         product2 = self.ProductProduct.create(
             {
                 "name": "test02",
                 "display_undelivered_in_picking": True,
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.StockQuant.create(
@@ -146,34 +144,30 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking_form = Form(self.StockPicking)
         picking_form.picking_type_id = self.picking_type_out
         picking_form.partner_id = self.partner_display
-        with picking_form.move_ids_without_package.new() as line:
+        with picking_form.move_ids.new() as line:
             line.product_id = product
             line.product_uom_qty = 50.00
-        with picking_form.move_ids_without_package.new() as line:
+        with picking_form.move_ids.new() as line:
             line.product_id = product2
             line.product_uom_qty = 20.00
         picking = picking_form.save()
 
         picking.action_confirm()
         picking.action_assign()
-        picking.move_line_ids.qty_done = 10.00
+        picking.move_line_ids.quantity = 10.00
         self._transfer_picking_no_backorder(picking)
 
         # Empty setting method field
-        picking.company_id.undelivered_product_slip_report_method = False
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        picking.company_id.undelivered_product_slip_report_method = "all"
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
         self.assertIn("test02", str(res[0]))
 
         # Print all undelivered lines, partial and completely lines
         picking.company_id.undelivered_product_slip_report_method = "all"
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
         self.assertIn("test02", str(res[0]))
 
@@ -181,10 +175,8 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.company_id.undelivered_product_slip_report_method = (
             "partially_undelivered"
         )
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
         self.assertNotIn("test02", str(res[0]))
 
@@ -192,9 +184,7 @@ class TestStockPickingReportUndeliveredProduct(common.TransactionCase):
         picking.company_id.undelivered_product_slip_report_method = (
             "completely_undelivered"
         )
-        res = (
-            self.env["ir.actions.report"]
-            ._get_report_from_name("stock.report_deliveryslip")
-            ._render_qweb_html(picking.ids)
+        res = self.env["ir.actions.report"]._render_qweb_html(
+            "stock.report_deliveryslip", picking.ids
         )
         self.assertNotIn("partially_undelivered_line", str(res[0]))

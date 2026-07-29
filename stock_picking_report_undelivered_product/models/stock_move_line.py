@@ -14,7 +14,7 @@ class StockMoveLine(models.Model):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
         keys_to_remove = set()
         for aggregated_move_line in aggregated_move_lines:
-            if not aggregated_move_lines[aggregated_move_line]["qty_done"]:
+            if not aggregated_move_lines[aggregated_move_line]["quantity"]:
                 keys_to_remove.add(aggregated_move_line)
         # To avoid change dict size on iteration
         for key_to_remmove in keys_to_remove:

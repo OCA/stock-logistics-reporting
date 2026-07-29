@@ -92,6 +92,10 @@ Contributors
      - Sergio Teruel <sergio.teruel@tecnativa.com>
      - Carlos Dauden <carlos.dauden@tecnativa.com>
 
+- `Apik <https://www.apik.cloud>`__:
+
+     - Michel Guiheneuf <mgu@apik.cloud>
+
 Maintainers
 -----------
 
