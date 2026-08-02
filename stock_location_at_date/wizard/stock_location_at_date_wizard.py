@@ -1,77 +1,85 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime, time
+
 import pytz
-from odoo import _, api, fields, models
+
+from odoo import _, fields, models
 
 
 class StockLocationAtDateWizard(models.TransientModel):
-    _name = 'stock.location.at.date.wizard'
-    _description = 'Wizard for Location Inventory At Date'
+    _name = "stock.location.at.date.wizard"
+    _description = "Wizard for Location Inventory At Date"
 
     at_date = fields.Date(
-        string='Stock As Of Date',
+        string="Stock As Of Date",
         required=True,
         default=fields.Date.today,
-        help='Stock quantities and valuation will be calculated up to end-of-day (23:59:59) on this date in your local timezone.',
+        help=(
+            "Stock quantities and valuation will be calculated up to end-of-day "
+            "(23:59:59) on this date in your local timezone."
+        ),
     )
     company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+        "res.company",
+        string="Company",
         required=True,
         default=lambda self: self.env.company,
     )
     location_ids = fields.Many2many(
-        'stock.location',
-        string='Locations',
-        domain=[('usage', 'in', ['internal', 'transit'])],
-        help='Leave empty to include all internal and transit locations. Sub-locations (child_of) are automatically included.',
+        "stock.location",
+        string="Locations",
+        domain=[("usage", "in", ["internal", "transit"])],
+        help=(
+            "Leave empty to include all internal and transit locations. "
+            "Sub-locations (child_of) are automatically included."
+        ),
     )
     category_ids = fields.Many2many(
-        'product.category',
-        string='Product Categories',
-        help='Leave empty to include all product categories. Sub-categories (child_of) are automatically included.',
+        "product.category",
+        string="Product Categories",
+        help=(
+            "Leave empty to include all product categories. "
+            "Sub-categories (child_of) are automatically included."
+        ),
     )
     product_ids = fields.Many2many(
-        'product.product',
-        string='Products',
-        help='Leave empty to include all products.',
+        "product.product",
+        string="Products",
+        help="Leave empty to include all products.",
     )
 
     def action_open_report(self):
         self.ensure_one()
-        # Determine local timezone (User tz -> Company tz -> Default Asia/Dhaka)
-        tz_name = self.env.user.tz or self.env.company.partner_id.tz or 'Asia/Dhaka'
+        tz_name = self.env.user.tz or self.env.company.partner_id.tz or "Asia/Dhaka"
         try:
             user_tz = pytz.timezone(tz_name)
         except Exception:
-            user_tz = pytz.timezone('Asia/Dhaka')
+            user_tz = pytz.timezone("Asia/Dhaka")
 
-        # Local end-of-day (23:59:59) -> UTC Datetime for database filtering
         local_eod = user_tz.localize(datetime.combine(self.at_date, time(23, 59, 59)))
         utc_cutoff = local_eod.astimezone(pytz.utc).replace(tzinfo=None)
 
-        # Clear previous session lines for this user
         self.env.cr.execute(
             "DELETE FROM stock_location_at_date_report WHERE create_uid = %s",
-            [self.env.user.id]
+            [self.env.user.id],
         )
 
-        # Build dynamic SQL WHERE filters
         where_conditions = [
             "sml.state = 'done'",
             "sml.location_id != sml.location_dest_id",
             "sml.date <= %s",
             "sml.company_id = %s",
-            "loc.usage IN ('internal', 'transit')"
+            "loc.usage IN ('internal', 'transit')",
         ]
         params = [utc_cutoff, self.company_id.id]
 
         if self.location_ids:
-            child_location_ids = self.env['stock.location'].search([('id', 'child_of', self.location_ids.ids)]).ids
+            loc_domain = [("id", "child_of", self.location_ids.ids)]
+            child_location_ids = self.env["stock.location"].search(loc_domain).ids
             where_conditions.append("loc.id = ANY(%s)")
             params.append(child_location_ids)
         if self.category_ids:
-            child_category_ids = self.env['product.category'].search([('id', 'child_of', self.category_ids.ids)]).ids
+            cat_domain = [("id", "child_of", self.category_ids.ids)]
+            child_category_ids = self.env["product.category"].search(cat_domain).ids
             where_conditions.append("pt.categ_id = ANY(%s)")
             params.append(child_category_ids)
         if self.product_ids:
@@ -81,6 +89,8 @@ class StockLocationAtDateWizard(models.TransientModel):
         where_clause = " AND ".join(where_conditions)
 
         insert_params = [self.env.user.id, self.at_date] + params
+
+        cost_expr = "COALESCE((pp.standard_price->>sml.company_id::text)::numeric, 0.0)"
 
         query = f"""
             INSERT INTO stock_location_at_date_report (
@@ -116,42 +126,45 @@ class StockLocationAtDateWizard(models.TransientModel):
                 sml.lot_id AS lot_id,
                 sml.package_id AS package_id,
                 SUM(
-                    CASE WHEN sml.location_dest_id = loc.id 
-                         THEN sml.quantity_product_uom 
-                         ELSE -sml.quantity_product_uom 
+                    CASE WHEN sml.location_dest_id = loc.id
+                         THEN sml.quantity_product_uom
+                         ELSE -sml.quantity_product_uom
                     END
                 ) AS quantity,
-                COALESCE((pp.standard_price->>sml.company_id::text)::numeric, 0.0) AS unit_cost,
+                {cost_expr} AS unit_cost,
                 SUM(
-                    CASE WHEN sml.location_dest_id = loc.id 
-                         THEN sml.quantity_product_uom 
-                         ELSE -sml.quantity_product_uom 
+                    CASE WHEN sml.location_dest_id = loc.id
+                         THEN sml.quantity_product_uom
+                         ELSE -sml.quantity_product_uom
                     END
-                ) * COALESCE((pp.standard_price->>sml.company_id::text)::numeric, 0.0) AS total_value
+                ) * {cost_expr} AS total_value
             FROM stock_move_line sml
             JOIN product_product pp ON pp.id = sml.product_id
             JOIN product_template pt ON pt.id = pp.product_tmpl_id
             JOIN stock_location loc ON loc.id IN (sml.location_id, sml.location_dest_id)
             WHERE {where_clause}
-            GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage, sml.product_id, pp.product_tmpl_id, pt.categ_id, pt.uom_id, sml.lot_id, sml.package_id, pp.standard_price
+            GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage,
+                     sml.product_id, pp.product_tmpl_id, pt.categ_id, pt.uom_id,
+                     sml.lot_id, sml.package_id, pp.standard_price
             HAVING SUM(
-                CASE WHEN sml.location_dest_id = loc.id 
-                     THEN sml.quantity_product_uom 
-                     ELSE -sml.quantity_product_uom 
+                CASE WHEN sml.location_dest_id = loc.id
+                     THEN sml.quantity_product_uom
+                     ELSE -sml.quantity_product_uom
                 END
             ) != 0
         """
         self.env.cr.execute(query, insert_params)
 
+        formatted_date = self.at_date.strftime("%d %B %Y")
         return {
-            'type': 'ir.actions.act_window',
-            'name': _('Location Inventory As Of %s') % self.at_date.strftime('%d %B %Y'),
-            'res_model': 'stock.location.at.date.report',
-            'view_mode': 'list,pivot,graph',
-            'domain': [('create_uid', '=', self.env.user.id)],
-            'context': {
-                'search_default_group_by_location': 1,
-                'search_default_group_by_product': 1,
+            "type": "ir.actions.act_window",
+            "name": _("Location Inventory As Of %s") % formatted_date,
+            "res_model": "stock.location.at.date.report",
+            "view_mode": "list,pivot,graph",
+            "domain": [("create_uid", "=", self.env.user.id)],
+            "context": {
+                "search_default_group_by_location": 1,
+                "search_default_group_by_product": 1,
             },
-            'target': 'main',
+            "target": "main",
         }
