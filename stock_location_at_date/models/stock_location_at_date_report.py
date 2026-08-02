@@ -40,7 +40,7 @@ class StockLocationAtDateReport(models.Model):
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", readonly=True)
 
     lot_id = fields.Many2one("stock.lot", string="Lot / Serial No.", readonly=True)
-    package_id = fields.Many2one("stock.quant.package", string="Package", readonly=True)
+    package_id = fields.Many2one("stock.package", readonly=True)
 
     quantity = fields.Float(digits="Product Unit of Measure", readonly=True)
     unit_cost = fields.Monetary(currency_field="currency_id", readonly=True)
