@@ -1,83 +1,94 @@
-# -*- coding: utf-8 -*-
 from datetime import datetime, time
+
 import pytz
-from odoo import _, api, fields, models
+
+from odoo import fields, models
 from odoo.tools import SQL
 
 
 class StockLocationAtDateWizard(models.TransientModel):
-    _name = 'stock.location.at.date.wizard'
-    _description = 'Wizard for Location Inventory At Date'
+    _name = "stock.location.at.date.wizard"
+    _description = "Wizard for Location Inventory At Date"
 
     at_date = fields.Date(
-        string='Stock As Of Date',
+        string="Stock As Of Date",
         required=True,
         default=fields.Date.today,
-        help='Stock quantities and valuation will be calculated up to end-of-day (23:59:59) on this date in your local timezone.',
+        help=(
+            "Stock quantities and valuation will be calculated up to end-of-day "
+            "(23:59:59) on this date in your local timezone."
+        ),
     )
     company_id = fields.Many2one(
-        'res.company',
-        string='Company',
+        "res.company",
+        string="Company",
         required=True,
         default=lambda self: self.env.company,
     )
     location_ids = fields.Many2many(
-        'stock.location',
-        string='Locations',
-        domain=[('usage', 'in', ['internal', 'transit'])],
-        help='Leave empty to include all internal and transit locations. Sub-locations (child_of) are automatically included.',
+        "stock.location",
+        string="Locations",
+        domain=[("usage", "in", ["internal", "transit"])],
+        help=(
+            "Leave empty to include all internal and transit locations. "
+            "Sub-locations (child_of) are automatically included."
+        ),
     )
     category_ids = fields.Many2many(
-        'product.category',
-        string='Product Categories',
-        help='Leave empty to include all product categories. Sub-categories (child_of) are automatically included.',
+        "product.category",
+        string="Product Categories",
+        help=(
+            "Leave empty to include all product categories. "
+            "Sub-categories (child_of) are automatically included."
+        ),
     )
     product_ids = fields.Many2many(
-        'product.product',
-        string='Products',
-        help='Leave empty to include all products.',
+        "product.product",
+        string="Products",
+        help="Leave empty to include all products.",
     )
 
     def action_open_report(self):
         self.ensure_one()
-        # Determine local timezone (User tz -> Company tz -> Default Asia/Dhaka)
-        tz_name = self.env.user.tz or self.env.company.partner_id.tz or 'Asia/Dhaka'
+        tz_name = self.env.user.tz or self.env.company.partner_id.tz or "Asia/Dhaka"
         try:
             user_tz = pytz.timezone(tz_name)
         except Exception:
-            user_tz = pytz.timezone('Asia/Dhaka')
+            user_tz = pytz.timezone("Asia/Dhaka")
 
-        # Local end-of-day (23:59:59) -> UTC Datetime for database filtering
         local_eod = user_tz.localize(datetime.combine(self.at_date, time(23, 59, 59)))
         utc_cutoff = local_eod.astimezone(pytz.utc).replace(tzinfo=None)
 
-        # Clear previous session lines for this user
         self.env.cr.execute(
-            SQL("DELETE FROM stock_location_at_date_report WHERE create_uid = %s", self.env.user.id)
+            SQL(
+                "DELETE FROM stock_location_at_date_report WHERE create_uid = %s",
+                self.env.user.id,
+            )
         )
 
-        # Build dynamic SQL WHERE filters using Odoo 19 SQL objects
         where_conditions = [
             SQL("sml.state = 'done'"),
             SQL("sml.location_id != sml.location_dest_id"),
             SQL("sml.date <= %s", utc_cutoff),
             SQL("sml.company_id = %s", self.company_id.id),
-            SQL("loc.usage IN ('internal', 'transit')")
+            SQL("loc.usage IN ('internal', 'transit')"),
         ]
 
         if self.location_ids:
-            child_location_ids = self.env['stock.location'].search([('id', 'child_of', self.location_ids.ids)]).ids
+            loc_domain = [("id", "child_of", self.location_ids.ids)]
+            child_location_ids = self.env["stock.location"].search(loc_domain).ids
             where_conditions.append(SQL("loc.id = ANY(%s)", child_location_ids))
         if self.category_ids:
-            child_category_ids = self.env['product.category'].search([('id', 'child_of', self.category_ids.ids)]).ids
+            cat_domain = [("id", "child_of", self.category_ids.ids)]
+            child_category_ids = self.env["product.category"].search(cat_domain).ids
             where_conditions.append(SQL("pt.categ_id = ANY(%s)", child_category_ids))
         if self.product_ids:
-            where_conditions.append(SQL("sml.product_id = ANY(%s)", self.product_ids.ids))
+            where_conditions.append(
+                SQL("sml.product_id = ANY(%s)", self.product_ids.ids)
+            )
 
         where_clause = SQL(" AND ").join(where_conditions)
 
-        # In Odoo 19, stock.valuation.layer is replaced by stock_move.value engine.
-        # Cost is derived from move.value / move.quantity (perpetual) or product_product.standard_price (JSONB).
         query = SQL(
             """
             INSERT INTO stock_location_at_date_report (
@@ -113,9 +124,9 @@ class StockLocationAtDateWizard(models.TransientModel):
                 sml.lot_id AS lot_id,
                 sml.package_id AS package_id,
                 SUM(
-                    CASE WHEN sml.location_dest_id = loc.id 
-                         THEN sml.quantity_product_uom 
-                         ELSE -sml.quantity_product_uom 
+                    CASE WHEN sml.location_dest_id = loc.id
+                         THEN sml.quantity_product_uom
+                         ELSE -sml.quantity_product_uom
                     END
                 ) AS quantity,
                 COALESCE(
@@ -124,9 +135,9 @@ class StockLocationAtDateWizard(models.TransientModel):
                     0.0
                 ) AS unit_cost,
                 SUM(
-                    CASE WHEN sml.location_dest_id = loc.id 
-                         THEN sml.quantity_product_uom 
-                         ELSE -sml.quantity_product_uom 
+                    CASE WHEN sml.location_dest_id = loc.id
+                         THEN sml.quantity_product_uom
+                         ELSE -sml.quantity_product_uom
                     END
                 ) * COALESCE(
                     NULLIF((sm.value / NULLIF(sm.quantity, 0)), 0),
@@ -139,29 +150,33 @@ class StockLocationAtDateWizard(models.TransientModel):
             JOIN product_template pt ON pt.id = pp.product_tmpl_id
             JOIN stock_location loc ON loc.id IN (sml.location_id, sml.location_dest_id)
             WHERE %s
-            GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage, sml.product_id, pp.product_tmpl_id, pt.categ_id, pt.uom_id, sml.lot_id, sml.package_id, pp.standard_price, sm.value, sm.quantity
+            GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage,
+                     sml.product_id, pp.product_tmpl_id, pt.categ_id,
+                     pt.uom_id, sml.lot_id, sml.package_id,
+                     pp.standard_price, sm.value, sm.quantity
             HAVING SUM(
-                CASE WHEN sml.location_dest_id = loc.id 
-                     THEN sml.quantity_product_uom 
-                     ELSE -sml.quantity_product_uom 
-                    END
+                CASE WHEN sml.location_dest_id = loc.id
+                     THEN sml.quantity_product_uom
+                     ELSE -sml.quantity_product_uom
+                END
             ) != 0
             """,
             self.env.user.id,
             self.at_date,
-            where_clause
+            where_clause,
         )
         self.env.cr.execute(query)
 
+        formatted_date = self.at_date.strftime("%d %B %Y")
         return {
-            'type': 'ir.actions.act_window',
-            'name': _('Location Inventory As Of %s') % self.at_date.strftime('%d %B %Y'),
-            'res_model': 'stock.location.at.date.report',
-            'view_mode': 'list,pivot,graph',
-            'domain': [('create_uid', '=', self.env.user.id)],
-            'context': {
-                'search_default_group_by_location': 1,
-                'search_default_group_by_product': 1,
+            "type": "ir.actions.act_window",
+            "name": self.env._("Location Inventory As Of %s", formatted_date),
+            "res_model": "stock.location.at.date.report",
+            "view_mode": "list,pivot,graph",
+            "domain": [("create_uid", "=", self.env.user.id)],
+            "context": {
+                "search_default_group_by_location": 1,
+                "search_default_group_by_product": 1,
             },
-            'target': 'main',
+            "target": "main",
         }
