@@ -374,14 +374,24 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:c869e60a5f26c93afcd13b4ba9d7c469eca7b9e4993cbcb72d9888d9fec7978a
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_quant_history"><img alt="OCA/stock-logistics-reporting" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-reporting-18-0/stock-logistics-reporting-18-0-stock_quant_history"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_quant_history"><img alt="OCA/stock-logistics-reporting" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-reporting-19-0/stock-logistics-reporting-19-0-stock_quant_history"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module allows regenerate stock.quant as it was for a given date.</p>
 <p>All stock quant history re-generated for a given date are called
 snapshot.</p>
+<p>Each snapshot belongs to one company. Its base snapshot and stock move
+lines are restricted to that company, including when shared stock
+locations are involved.</p>
 <p>To generate the first snapshot this module assume all stock.move.line
 are present in the database.</p>
 <p>Next snapshot is computed based on the previous snapshot present in the
 database.</p>
+<p>Snapshots with the same inventory date are chained in creation order.
+The newest previously generated snapshot is used as the base.</p>
+<p>Generated snapshots are immutable and cannot be generated a second time.
+Create a new snapshot when another stock-history calculation is needed.</p>
+<p>Extensions may override the allowed location usages. An empty allowed
+usage list applies no moves; for an incremental snapshot, the copied
+base quantities are therefore preserved.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -410,9 +420,12 @@ database.</p>
 <h3><a class="toc-backref" href="#toc-entry-2">Generate a new stock snapshot</a></h3>
 <ul class="simple">
 <li>Go to: <em>Inventory / Reporting / History / Stock snapshot</em></li>
+<li>choose the company for the snapshot</li>
 <li>choose the date you want to re-generate stock quants</li>
 <li>click on Generate</li>
 </ul>
+<p>A generated snapshot cannot be generated again. Create a new snapshot to
+run the calculation for another company or date.</p>
 </div>
 <div class="section" id="consult-stock-quant-for-a-given-snapshot">
 <h3><a class="toc-backref" href="#toc-entry-3">Consult stock quant for a given snapshot</a></h3>
@@ -461,7 +474,7 @@ snapshots (not reused as based snapshot)</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -483,7 +496,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/petrus-v"><img alt="petrus-v" src="https://github.com/petrus-v.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_quant_history">OCA/stock-logistics-reporting</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_quant_history">OCA/stock-logistics-reporting</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

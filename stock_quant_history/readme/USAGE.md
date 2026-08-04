@@ -1,8 +1,12 @@
 ## Generate a new stock snapshot
 
 - Go to: *Inventory / Reporting / History / Stock snapshot*
+- choose the company for the snapshot
 - choose the date you want to re-generate stock quants
 - click on Generate
+
+A generated snapshot cannot be generated again. Create a new snapshot
+to run the calculation for another company or date.
 
 ## Consult stock quant for a given snapshot
 

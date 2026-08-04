@@ -4,7 +4,7 @@
 {
     "name": "Stock Quant History",
     "summary": "Re-generate stock quants for given date",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "license": "AGPL-3",
     "author": "Pierre Verkest <pierreverkest84@gmail.com>, "
     "Odoo Community Association (OCA)",
@@ -14,6 +14,7 @@
         "petrus-v",
     ],
     "data": [
+        "security/stock_quant_history_security.xml",
         "security/ir.model.access.csv",
         "views/stock-quant-history-snapshot.xml",
         "views/stock-quant-history.xml",

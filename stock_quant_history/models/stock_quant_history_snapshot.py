@@ -4,10 +4,9 @@
 import logging
 from collections import defaultdict
 
-from pytz import timezone
-
-from odoo import _, api, fields, models, tools
-from odoo.osv.expression import AND
+from odoo import api, fields, models, tools
+from odoo.exceptions import LockError, UserError
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -22,6 +21,7 @@ class StockQuantHistorySnapshot(models.Model):
     _name = "stock.quant.history.snapshot"
     _description = "stock.quant.history generation configuration model"
     _order = "inventory_date desc"
+    _check_company_auto = True
 
     name = fields.Char(
         compute="_compute_name",
@@ -43,6 +43,12 @@ class StockQuantHistorySnapshot(models.Model):
         readonly=True,
         required=True,
     )
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        required=True,
+        index=True,
+        default=lambda self: self.env.company,
+    )
 
     inventory_date = fields.Datetime(
         string="Inventory date",
@@ -60,41 +66,78 @@ class StockQuantHistorySnapshot(models.Model):
         comodel_name="stock.quant.history.snapshot",
         string="Snapshot base",
         readonly=True,
+        check_company=True,
         help="Base snapshot used to generate this snapshot",
     )
 
     @api.depends("inventory_date")
+    @api.depends_context("lang", "tz")
     def _compute_name(self):
-        # Odoo enforce users to be linked to an active lang
-        lang = self.env["res.lang"]._lang_get(self.env.user.lang)
+        # env.lang reflects explicit language overrides from the context.
+        lang = self.env["res.lang"]._lang_get(self.env.lang or "en_US")
         dt_format = lang.date_format + " " + lang.time_format
 
         for rec in self:
             if not rec.inventory_date:
-                rec.name = _("Snapshot")
+                rec.name = rec.env._("Snapshot")
                 continue
 
-            user_tz = self.env.user.tz or "UTC"
-            user_timezone = timezone(user_tz)
+            local_inventory_date = fields.Datetime.context_timestamp(
+                rec, rec.inventory_date
+            )
 
-            local_inventory_date = rec.inventory_date.astimezone(user_timezone)
-
-            rec.name = _("Snapshot %s") % local_inventory_date.strftime(dt_format)
+            rec.name = rec.env._(
+                "Snapshot %(date)s",
+                date=local_inventory_date.strftime(dt_format),
+            )
 
     def action_generate_stock_quant_history(self):
+        self._lock_for_generation()
         for snapshot in self:
             snapshot._generate_stock_quant_history()
 
+    def _lock_and_refresh(self, field_names):
+        self.flush_recordset(field_names)
+        self.lock_for_update(allow_referencing=True)
+        self.invalidate_recordset(field_names, flush=False)
+
+    def _lock_for_generation(self):
+        # Preserve state changes already made in this transaction before
+        # invalidating the cache to read the value protected by the row lock.
+        try:
+            self._lock_and_refresh(["state"])
+        except LockError:
+            raise UserError(
+                self.env._("A selected snapshot is already being generated.")
+            ) from None
+        if any(snapshot.state != "draft" for snapshot in self):
+            raise UserError(self.env._("Only draft snapshots can be generated."))
+
+    def write(self, vals):
+        if vals:
+            try:
+                self._lock_and_refresh(["state"])
+            except LockError:
+                raise UserError(
+                    self.env._(
+                        "A snapshot cannot be modified while it is being processed."
+                    )
+                ) from None
+            if any(snapshot.state != "draft" for snapshot in self):
+                raise UserError(self.env._("Generated snapshots cannot be modified."))
+        return super().write(vals)
+
     def _prepare_stock_move_line_filter(self, previous_quant_snapshot):
-        domain = [
-            ("state", "=", "done"),
-            ("date", "<=", self.inventory_date),
-            ("product_id.is_storable", "=", True),
-        ]
+        domain = Domain(
+            [
+                ("state", "=", "done"),
+                ("date", "<=", self.inventory_date),
+                ("product_id.is_storable", "=", True),
+                ("company_id", "=", self.company_id.id),
+            ]
+        )
         if previous_quant_snapshot.exists():
-            domain = AND(
-                [domain, [("date", ">", previous_quant_snapshot.inventory_date)]]
-            )
+            domain &= Domain("date", ">", previous_quant_snapshot.inventory_date)
         return domain
 
     @api.model
@@ -108,13 +151,16 @@ class StockQuantHistorySnapshot(models.Model):
 
     def _generate_stock_quant_history(self):
         self.ensure_one()
+        self._lock_for_generation()
         self.generated_date = fields.Datetime.now()
         previous_quant_snapshot = self.search(
             [
                 ("state", "=", "generated"),
                 ("inventory_date", "<=", self.inventory_date),
+                ("company_id", "=", self.company_id.id),
             ],
-            order="inventory_date desc",
+            # Same-date snapshots follow their creation order.
+            order="inventory_date desc, id desc",
             limit=1,
         )
         quant_history = DefaultDict(
@@ -164,7 +210,7 @@ class StockQuantHistorySnapshot(models.Model):
                 ("location_id.usage", operator, usage_value),
                 ("location_dest_id.usage", operator, usage_value),
             ]
-            domain = AND([domain, location_domain])
+            domain &= Domain(location_domain)
 
         stock_move_lines = self.env["stock.move.line"].sudo().search(domain)
         _logger.info(
@@ -203,11 +249,21 @@ class StockQuantHistorySnapshot(models.Model):
         # remove line with zero to save same disk space
         # avoid loop with direct SQL query
         _logger.info("Remove useless stock_quant_history with quantity == 0")
-        self.env["stock.quant.history"]._flush()
+        history_model = self.env["stock.quant.history"]
+        history_model.flush_model(["snapshot_id", "quantity"])
         self.env.cr.execute(
-            "DELETE FROM stock_quant_history where quantity = 0 and snapshot_id = %s",
+            """
+            DELETE FROM stock_quant_history
+            WHERE quantity = 0 AND snapshot_id = %s
+            RETURNING id
+            """,
             (self.id,),
         )
+        deleted_history = history_model.browse(
+            history_id for (history_id,) in self.env.cr.fetchall()
+        )
+        deleted_history.invalidate_recordset(flush=False)
+        self.invalidate_recordset(["stock_quant_history_ids"], flush=False)
         self.state = "generated"
 
     def action_related_stock_quant_history_tree_view(self):

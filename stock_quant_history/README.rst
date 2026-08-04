@@ -21,13 +21,13 @@ Stock Quant History
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_quant_history
+    :target: https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_quant_history
     :alt: OCA/stock-logistics-reporting
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-18-0/stock-logistics-reporting-18-0-stock_quant_history
+    :target: https://translation.odoo-community.org/projects/stock-logistics-reporting-19-0/stock-logistics-reporting-19-0-stock_quant_history
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-reporting&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -37,11 +37,25 @@ This module allows regenerate stock.quant as it was for a given date.
 All stock quant history re-generated for a given date are called
 snapshot.
 
+Each snapshot belongs to one company. Its base snapshot and stock move
+lines are restricted to that company, including when shared stock
+locations are involved.
+
 To generate the first snapshot this module assume all stock.move.line
 are present in the database.
 
 Next snapshot is computed based on the previous snapshot present in the
 database.
+
+Snapshots with the same inventory date are chained in creation order.
+The newest previously generated snapshot is used as the base.
+
+Generated snapshots are immutable and cannot be generated a second time.
+Create a new snapshot when another stock-history calculation is needed.
+
+Extensions may override the allowed location usages. An empty allowed
+usage list applies no moves; for an incremental snapshot, the copied
+base quantities are therefore preserved.
 
 **Table of contents**
 
@@ -55,8 +69,12 @@ Generate a new stock snapshot
 -----------------------------
 
 - Go to: *Inventory / Reporting / History / Stock snapshot*
+- choose the company for the snapshot
 - choose the date you want to re-generate stock quants
 - click on Generate
+
+A generated snapshot cannot be generated again. Create a new snapshot to
+run the calculation for another company or date.
 
 Consult stock quant for a given snapshot
 ----------------------------------------
@@ -101,7 +119,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-reporting/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-reporting/issues/new?body=module:%20stock_quant_history%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -134,6 +152,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-petrus-v| 
 
-This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/18.0/stock_quant_history>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/19.0/stock_quant_history>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

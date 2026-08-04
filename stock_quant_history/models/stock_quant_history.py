@@ -9,6 +9,8 @@ class StockQuantHistory(models.Model):
     _name = "stock.quant.history"
     _description = "Stock quants history"
     _order = "snapshot_id, inventory_date, product_id, lot_id, location_id"
+    _check_company_auto = True
+
     snapshot_id = fields.Many2one(
         comodel_name="stock.quant.history.snapshot",
         ondelete="cascade",
@@ -48,7 +50,7 @@ class StockQuantHistory(models.Model):
     location_id = fields.Many2one(
         "stock.location",
         "Location",
-        auto_join=True,
+        bypass_search_access=True,
         ondelete="restrict",
         readonly=True,
         required=True,

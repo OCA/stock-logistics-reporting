@@ -23,7 +23,7 @@
                     default_period="month"
                 />
 
-                <group expand="0" string="Group By">
+                <group>
                     <filter
                         name="group_by_snapshot_id"
                         string="Snapshot"
@@ -48,6 +48,11 @@
                         name="group_by_location_id"
                         string="Location"
                         context="{'group_by':'location_id'}"
+                    />
+                    <filter
+                        name="group_by_company_id"
+                        string="Company"
+                        context="{'group_by':'company_id'}"
                     />
                 </group>
             </search>
