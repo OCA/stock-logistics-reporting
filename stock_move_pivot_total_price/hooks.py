@@ -6,6 +6,31 @@ from odoo.tools.sql import column_exists
 _logger = logging.getLogger(__name__)
 
 
+def _backfill_product_total_price(cr):
+    cr.execute(
+        """
+        WITH product_prices AS (
+            SELECT
+                pp.id AS product_product_id,
+                COALESCE(pt.list_price, 0)
+                    + COALESCE(SUM(ptav.price_extra), 0) AS unit_price
+            FROM product_product pp
+            JOIN product_template pt ON pt.id = pp.product_tmpl_id
+            LEFT JOIN product_variant_combination pvc
+                ON pvc.product_product_id = pp.id
+            LEFT JOIN product_template_attribute_value ptav
+                ON ptav.id = pvc.product_template_attribute_value_id
+            GROUP BY pp.id, pt.list_price
+        )
+        UPDATE stock_move sm
+        SET product_total_price =
+            prices.unit_price * COALESCE(sm.quantity, 0)
+        FROM product_prices prices
+        WHERE prices.product_product_id = sm.product_id;
+        """
+    )
+
+
 def create_column_product_total_price(cr):
     if not column_exists(cr, "stock_move", "product_total_price"):
         _logger.info("Initializing column product_total_price on table stock_move")
@@ -16,33 +41,7 @@ def create_column_product_total_price(cr):
             columntype="float",
             comment="Total Product Price",
         )
-        cr.execute(
-            """
-            WITH product_prices AS (
-                SELECT
-                    pt.id AS product_id,
-                    sm.id AS stock_move_id,
-                    (pt.list_price
-                    + (COALESCE(SUM(pav.default_extra_price), 0)
-                    + COALESCE(SUM(ptav.price_extra), 0)))
-                    * SUM(sm.quantity) AS total_price
-                FROM product_template pt
-                INNER JOIN product_product as pp ON pp.product_tmpl_id = pt.id
-                LEFT JOIN product_variant_combination pvc ON
-                pt.id = pvc.product_product_id
-                LEFT JOIN product_template_attribute_value ptav ON
-                pvc.product_template_attribute_value_id = ptav.id
-                LEFT JOIN product_attribute_value pav ON
-                ptav.product_attribute_value_id = pav.id
-                LEFT JOIN stock_move sm ON sm.product_id = pp.id
-                GROUP BY pt.id, pt.list_price, sm.id
-            )
-            UPDATE stock_move sm
-            SET product_total_price = pp.total_price
-            FROM product_prices pp
-            WHERE sm.id = pp.stock_move_id;
-        """
-        )
+        _backfill_product_total_price(cr)
 
 
 def pre_init_hook(env):
