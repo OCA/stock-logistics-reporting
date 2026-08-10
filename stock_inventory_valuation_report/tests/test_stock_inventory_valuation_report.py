@@ -2,55 +2,44 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import datetime
+from unittest.mock import patch
 
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
-from odoo.tests import common
+from odoo import Command, fields
+from odoo.exceptions import AccessError
+from odoo.tests import common, new_test_user
 from odoo.tools import mute_logger, test_reports
 
+from odoo.addons.stock_account.tests.common import TestStockValuationCommon
 
-class TestStockInventoryValuation(common.TransactionCase):
+
+class TestStockInventoryValuationOutputs(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-
-        cls.inv_valuation_report_model = cls.env[
-            "report.stock.inventory.valuation.report"
-        ]
-
-        cls.qweb_report_name = (
-            "stock_inventory_valuation_report."
-            "report_stock_inventory_valuation_report_pdf"
+        cls.report = cls.env["report.stock.inventory.valuation.report"].create(
+            {"company_id": cls.env.company.id}
         )
-        cls.xlsx_report_name = "s_i_v_r.report_stock_inventory_valuation_report_xlsx"
-        cls.xlsx_action_name = (
-            "stock_inventory_valuation_report."
-            "action_stock_inventory_valuation_report_xlsx"
-        )
-
-        cls.report_title = "Inventory Valuation Report"
-
-        cls.base_filters = {
-            "company_id": cls.env.user.company_id.id,
-        }
-
-        cls.report = cls.inv_valuation_report_model.create(cls.base_filters)
 
     def test_html(self):
         test_reports.try_report(
             self.env.cr,
             self.env.uid,
-            self.qweb_report_name,
+            "stock_inventory_valuation_report."
+            "report_stock_inventory_valuation_report_pdf",
             [self.report.id],
             report_type="qweb-html",
         )
 
-    def test_qweb(self):
+    def test_qweb_pdf(self):
         test_reports.try_report(
             self.env.cr,
             self.env.uid,
-            self.qweb_report_name,
+            "stock_inventory_valuation_report."
+            "report_stock_inventory_valuation_report_pdf",
             [self.report.id],
             report_type="qweb-pdf",
         )
@@ -60,451 +49,362 @@ class TestStockInventoryValuation(common.TransactionCase):
         test_reports.try_report(
             self.env.cr,
             self.env.uid,
-            self.xlsx_report_name,
+            "s_i_v_r.report_stock_inventory_valuation_report_xlsx",
             [self.report.id],
             report_type="xlsx",
         )
 
-    def test_print(self):
-        self.report.print_report("qweb")
-        self.report.print_report("xlsx")
+    def test_print_actions(self):
+        self.assertEqual(self.report.print_report("qweb")["report_type"], "qweb-pdf")
+        self.assertEqual(self.report.print_report("xlsx")["report_type"], "xlsx")
 
 
-class TestStockInventoryValuationReport(common.TransactionCase):
+class TestStockInventoryValuationReport(TestStockValuationCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.company_id = cls.env.ref("base.main_company")
-        cls.date = datetime.datetime.now()
+        cls.now = fields.Datetime.now()
 
-        cls.location_stock_id = cls.env.ref("stock.stock_location_stock")
-        cls.location_customers_id = cls.env.ref("stock.stock_location_customers")
-        cls.location_suppliers_id = cls.env.ref("stock.stock_location_suppliers")
-
-        cls.picking_type_in_id = cls.env.ref("stock.picking_type_in")
-        cls.picking_type_out_id = cls.env.ref("stock.picking_type_out")
-        cls.product_category_all = cls.env.ref("product.product_category_all")
-
-    def test_get_report_html(self):
-        report = self.env["report.stock.inventory.valuation.report"].create(
+    def _create_product(self, name, category=None, standard_price=10.0):
+        return self.env["product.product"].create(
             {
-                "company_id": self.company_id.id,
-                "inventory_datetime": self.date,
+                "name": name,
+                "is_storable": True,
+                "categ_id": (category or self.category_standard).id,
+                "standard_price": standard_price,
             }
         )
-        report._compute_results()
-        report.get_html(given_context={"active_id": report.id})
 
-    def test_wizard(self):
+    def _get_report(
+        self,
+        *,
+        company=None,
+        inventory_datetime=None,
+        product=None,
+        product_tmpl=None,
+        extra_context=None,
+    ):
+        company = company or self.company
+        context = {
+            **self.env.context,
+            "allowed_company_ids": company.ids,
+            **(extra_context or {}),
+        }
+        if product:
+            context["product_id"] = product.id
+        if product_tmpl:
+            context["product_tmpl_id"] = product_tmpl.id
+        return (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(**context)
+            .with_company(company)
+            .create(
+                {
+                    "company_id": company.id,
+                    "inventory_datetime": inventory_datetime or fields.Datetime.now(),
+                }
+            )
+        )
+
+    def _get_product_line(self, report, product):
+        return report.results.filtered(lambda line: line.name == product.name)
+
+    def test_get_report_html(self):
+        report = self._get_report()
+        result = report.get_html(given_context={"active_id": report.id})
+        self.assertIn("Inventory Valuation Report", result["html"])
+        self.assertEqual(
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(active_id=False)
+            ._get_html(),
+            {},
+        )
+
+    @mute_logger("odoo.tools.test_reports")
+    def test_populated_xlsx(self):
+        product = self._create_product("XLSX product", standard_price=10)
+        self._make_in_move(product, 2, unit_cost=10)
+        report = self._get_report(product=product)
+        report_action = self.env.ref(
+            "stock_inventory_valuation_report."
+            "action_stock_inventory_valuation_report_xlsx"
+        )
+
+        content, output_format = report_action._render_xlsx(
+            report_action.report_name, report.ids, data={}
+        )
+
+        self.assertEqual(output_format, "xlsx")
+        self.assertTrue(content.startswith(b"PK"))
+        self.assertEqual(report.results.stock_value, 20)
+
+    def test_wizard_actions_and_active_company(self):
         wizard = self.env["stock.quantity.history"].create({})
-        wizard._export("qweb-pdf")
-        wizard.button_export_html()
-        wizard.button_export_pdf()
-        wizard.button_export_xlsx()
+        values = wizard._prepare_stock_inventory_valuation_report()
+        self.assertEqual(values["company_id"], self.env.company.id)
+        self.assertEqual(wizard._export("qweb-pdf")["report_type"], "qweb-pdf")
+        self.assertEqual(wizard.button_export_pdf()["report_type"], "qweb-pdf")
+        self.assertEqual(wizard.button_export_xlsx()["report_type"], "xlsx")
+        html_action = wizard.button_export_html()
+        self.assertIn("active_id", html_action["context"])
 
-    def test_wizard_with_inventory_datetime(self):
-        """
-        Test wizard with inventory_datetime set
-        to cover line 49 where inventory_datetime is checked.
-        """
-        inventory_datetime = datetime.datetime.now() + relativedelta(days=-7)
+        action = self.env.ref(
+            "stock_inventory_valuation_report."
+            "action_stock_inventory_valuation_report_html"
+        )
+        with patch.object(type(action), "read", return_value=[{"context": {}}]):
+            html_action = wizard.button_export_html()
+        self.assertIn("active_id", html_action["context"])
+
+        other_wizard = (
+            self.env["stock.quantity.history"]
+            .with_company(self.other_company)
+            .with_context(allowed_company_ids=self.other_company.ids)
+            .create({})
+        )
+        self.assertEqual(
+            other_wizard._prepare_stock_inventory_valuation_report()["company_id"],
+            self.other_company.id,
+        )
+
+    def test_wizard_preserves_inventory_datetime(self):
+        inventory_datetime = self.now - relativedelta(days=7)
         wizard = self.env["stock.quantity.history"].create(
             {"inventory_datetime": inventory_datetime}
         )
-
-        # Test _prepare_stock_inventory_valuation_report with datetime
-        vals = wizard._prepare_stock_inventory_valuation_report()
         self.assertEqual(
-            vals["inventory_datetime"],
+            wizard._prepare_stock_inventory_valuation_report()["inventory_datetime"],
             inventory_datetime,
-            msg="inventory_datetime should be included in prepared values",
         )
-
-        # Test export methods with datetime
-        wizard._export("qweb-pdf")
-        result = wizard.button_export_html()
-        self.assertIn(
-            "context", result, msg="HTML export should return action with context"
+        wizard.inventory_datetime = False
+        self.assertNotIn(
+            "inventory_datetime",
+            wizard._prepare_stock_inventory_valuation_report(),
         )
 
     @mute_logger(
         "odoo.addons.stock_inventory_valuation_report.wizard.stock_quantity_history"
     )
-    def test_wizard_button_export_html_with_string_context(self):
-        """
-        Test button_export_html when action context is a string
-        to cover lines 22-29 including the safe_eval exception handling.
-        """
+    def test_wizard_handles_serialized_action_context(self):
         wizard = self.env["stock.quantity.history"].create({})
-
-        # Mock the action to have a string context (normal case)
         action = self.env.ref(
             "stock_inventory_valuation_report."
             "action_stock_inventory_valuation_report_html"
         )
-
-        # Store original context
         original_context = action.context
-
         try:
-            # Test with valid string context
             action.context = "{'test_key': 'test_value'}"
             result = wizard.button_export_html()
-            self.assertIsInstance(
-                result, dict, msg="button_export_html should return a dict"
-            )
-            self.assertIn("context", result, msg="Result should contain context")
+            self.assertEqual(result["context"]["test_key"], "test_value")
 
-            # Test with invalid string context to trigger exception (lines 22-26)
             action.context = "invalid python code {"
             result = wizard.button_export_html()
-            # Should handle exception gracefully and return empty context
-            self.assertIsInstance(
-                result, dict, msg="Should return dict even with invalid context"
-            )
-
+            self.assertIn("active_id", result["context"])
         finally:
-            # Restore original context
             action.context = original_context
 
-    def test_wizard_export_methods_coverage(self):
-        """
-        Test all export methods to ensure full coverage
-        of wizard functionality.
-        """
-        inventory_datetime = datetime.datetime.now()
-        wizard = self.env["stock.quantity.history"].create(
-            {"inventory_datetime": inventory_datetime}
+    def test_historical_quantity_and_cost(self):
+        product = self._create_product(
+            "Historical AVCO product", category=self.category_avco
         )
+        date_1 = self.now - relativedelta(days=3)
+        date_2 = self.now - relativedelta(days=2)
+        between_dates = self.now - relativedelta(days=2, hours=12)
 
-        # Test PDF export
-        pdf_result = wizard.button_export_pdf()
-        self.assertTrue(pdf_result, msg="PDF export should return a result")
+        with freeze_time(date_1):
+            self._make_in_move(product, 10, unit_cost=10)
+        with freeze_time(date_2):
+            self._make_in_move(product, 10, unit_cost=20)
 
-        # Test XLSX export
-        xlsx_result = wizard.button_export_xlsx()
-        self.assertTrue(xlsx_result, msg="XLSX export should return a result")
+        first_report = self._get_report(
+            product=product, inventory_datetime=between_dates
+        )
+        first_line = self._get_product_line(first_report, product)
+        self.assertEqual(first_line.qty_at_date, 10)
+        self.assertEqual(first_line.standard_price, 10)
+        self.assertEqual(first_line.stock_value, 100)
 
-        # Test HTML export
-        html_result = wizard.button_export_html()
-        self.assertIsInstance(html_result, dict, msg="HTML export should return a dict")
-        self.assertIn("context", html_result, msg="HTML result should have context")
-        # Verify that active_id and active_ids are in context (line 29)
-        context = html_result.get("context", {})
-        if isinstance(context, dict):
-            self.assertIn(
-                "active_id",
-                context,
-                msg="Context should contain active_id after update",
-            )
+        current_report = self._get_report(product=product)
+        current_line = self._get_product_line(current_report, product)
+        self.assertEqual(current_line.qty_at_date, 20)
+        self.assertEqual(current_line.standard_price, 15)
+        self.assertEqual(current_line.stock_value, 300)
 
-    def test_date_report_result(self):
-        """
-        Check that report shows the correct product quantity
-        when specifying a date in the past.
-        """
-        product = self.env["product.product"].create(
+    def test_cost_methods(self):
+        cases = (
+            ("standard", self.category_standard, 10.0),
+            ("average", self.category_avco, 15.0),
+            ("fifo", self.category_fifo, 15.0),
+        )
+        for name, category, expected_cost in cases:
+            with self.subTest(cost_method=name):
+                product = self._create_product(
+                    f"{name} valuation product", category=category
+                )
+                self._make_in_move(product, 5, unit_cost=10)
+                self._make_in_move(product, 5, unit_cost=20)
+                line = self._get_product_line(
+                    self._get_report(product=product), product
+                )
+                self.assertEqual(line.qty_at_date, 10)
+                self.assertEqual(line.standard_price, expected_cost)
+                self.assertEqual(line.stock_value, 10 * expected_cost)
+
+    def test_alternate_move_uom_uses_product_uom(self):
+        product = self._create_product("Pack receipt product")
+        move = self._make_in_move(
+            product,
+            2,
+            unit_cost=10,
+            uom_id=self.uom_pack_of_6.id,
+        )
+        self.assertEqual(move.move_line_ids.quantity, 2)
+        self.assertEqual(move.move_line_ids.quantity_product_uom, 12)
+
+        line = self._get_product_line(self._get_report(product=product), product)
+        self.assertEqual(line.qty_at_date, 12)
+        self.assertEqual(line.uom_id, product.uom_id)
+
+    def test_company_isolation_and_cost(self):
+        product = self._create_product("Shared multi-company product")
+        product.company_id = False
+        product.with_company(self.company).standard_price = 10
+        product.with_company(self.other_company).standard_price = 40
+        self._make_in_move(product, 2, company=self.company, unit_cost=10)
+        self._make_in_move(product, 3, company=self.other_company, unit_cost=40)
+
+        company_report = self._get_report(company=self.company, product=product)
+        company_line = self._get_product_line(company_report, product)
+        self.assertEqual(company_report.company_id, self.company)
+        self.assertEqual(company_line.qty_at_date, 2)
+        self.assertEqual(company_line.standard_price, 10)
+
+        other_report = self._get_report(company=self.other_company, product=product)
+        other_line = self._get_product_line(other_report, product)
+        self.assertEqual(other_report.company_id, self.other_company)
+        self.assertEqual(other_line.qty_at_date, 3)
+        self.assertEqual(other_line.standard_price, 40)
+        self.assertEqual(other_line.currency_id, self.other_company.currency_id)
+
+    def test_consigned_quantity_is_included(self):
+        product = self._create_product("Consigned product")
+        self._make_in_move(product, 3, unit_cost=10, owner_id=self.owner.id)
+        line = self._get_product_line(self._get_report(product=product), product)
+        self.assertEqual(line.qty_at_date, 3)
+
+    def test_internal_transfer_does_not_change_total(self):
+        product = self._create_product("Internal transfer product")
+        self._make_in_move(product, 10, unit_cost=10)
+        other_location = self.env["stock.location"].create(
             {
-                "name": "test valuation report date",
-                "type": "consu",
-                "is_storable": True,
-                "company_id": self.company_id.id,
-                "categ_id": self.product_category_all.id,
+                "name": "Secondary internal location",
+                "usage": "internal",
+                "location_id": self.warehouse.view_location_id.id,
+                "company_id": self.company.id,
             }
         )
+        self._make_out_move(
+            product,
+            4,
+            location_dest_id=other_location.id,
+            force_assign=True,
+        )
+        line = self._get_product_line(self._get_report(product=product), product)
+        self.assertEqual(line.qty_at_date, 10)
 
-        partner_id = self.env["res.partner"].create({"name": "Test Partner"})
-        product_qty = 100
-        date_with_stock = self.date + relativedelta(days=-1)
+    def test_inventory_scrap_and_return_directions(self):
+        product = self._create_product("Direction product")
+        self._make_in_move(
+            product,
+            10,
+            unit_cost=10,
+            location_id=self.inventory_location.id,
+        )
+        self._make_out_move(
+            product,
+            4,
+            location_dest_id=self.inventory_location.id,
+        )
+        self._make_in_move(
+            product,
+            2,
+            unit_cost=10,
+            location_id=self.customer_location.id,
+        )
+        line = self._get_product_line(self._get_report(product=product), product)
+        self.assertEqual(line.qty_at_date, 8)
 
-        # Receive the product
-        receipt = self.env["stock.picking"].create(
-            {
-                "location_id": self.location_suppliers_id.id,
-                "location_dest_id": self.location_stock_id.id,
-                "picking_type_id": self.picking_type_in_id.id,
-                "partner_id": partner_id.id,
-                "company_id": self.company_id.id,
-                "move_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Receive product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": product_qty,
-                        },
-                    )
-                ],
-            }
-        )
-        receipt.action_confirm()
-        for move_line in receipt.move_line_ids:
-            move_line.quantity = product_qty
-        receipt.button_validate()
-        move = receipt.move_ids
-        move.date = date_with_stock
-        move.stock_valuation_layer_ids._write({"create_date": date_with_stock})
-        self.assertEqual(
-            product.with_context(to_date=date_with_stock).quantity_svl,
-            product_qty,
-            msg="Product should be present in stock at this date",
-        )
-        self.assertEqual(
-            product.quantity_svl,
-            product_qty,
-            msg="Product should be present in stock at this date",
-        )
-
-        # Report should have a line with the product and its quantity
-        report = self.env["report.stock.inventory.valuation.report"].create(
-            {
-                "company_id": self.company_id.id,
-            }
-        )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
-        self.assertEqual(
-            len(product_row),
-            1,
-            msg="There should be one line for this produce in the report",
-        )
-        self.assertEqual(
-            product_row.qty_at_date,
-            product_qty,
-            msg="The product should have full quantity",
-        )
-
-        # Deliver the product
-        delivery = self.env["stock.picking"].create(
-            {
-                "location_id": self.location_stock_id.id,
-                "location_dest_id": self.location_customers_id.id,
-                "partner_id": partner_id.id,
-                "company_id": self.company_id.id,
-                "picking_type_id": self.picking_type_out_id.id,
-                "move_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Deliver product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": product_qty,
-                        },
-                    )
-                ],
-            }
-        )
-        delivery.action_confirm()
-        for move_line in delivery.move_line_ids:
-            move_line.quantity = product_qty
-        delivery.button_validate()
-        date_no_stock = self.date + relativedelta(hours=-6)
-        move = delivery.move_ids
-        move.date = date_no_stock
-        move.stock_valuation_layer_ids._write({"create_date": date_no_stock})
-        self.assertEqual(
-            product.with_context(to_date=date_with_stock).quantity_svl,
-            product_qty,
-            msg="The product should have full quantity at this date.",
-        )
-        self.assertEqual(
-            product.with_context(to_date=self.date).quantity_svl,
-            0,
-            msg="The product should not be present at this date.",
-        )
-
-        report = self.env["report.stock.inventory.valuation.report"].create(
-            {
-                "company_id": self.company_id.id,
-                "inventory_datetime": date_no_stock,
-            }
-        )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
+    def test_zero_and_negative_stock_are_excluded(self):
+        zero_product = self._create_product("Zero stock product")
+        self._make_in_move(zero_product, 5, unit_cost=10)
+        self._make_out_move(zero_product, 5)
         self.assertFalse(
-            product_row,
-            msg="Product should not be present in this report "
-            "for this date, because it was delivered.",
+            self._get_product_line(self._get_report(product=zero_product), zero_product)
         )
 
-        report = self.env["report.stock.inventory.valuation.report"].create(
-            {
-                "company_id": self.company_id.id,
-                "inventory_datetime": date_with_stock,
-            }
-        )
-        product_row = report.results.filtered(lambda r: r.name == product.name)
-        self.assertEqual(
-            len(product_row),
-            1,
-            msg="Report for this date should have one line for the product.",
-        )
-        self.assertEqual(
-            product_row.qty_at_date,
-            product_qty,
-            msg="Report for this date should show full quantity for the product",
-        )
-
-    def test_report_with_product_id_context(self):
-        """
-        Test report generation with product_id in context
-        to cover the product_id filtering branch.
-        """
-        product = self.env["product.product"].create(
-            {
-                "name": "test product_id filter",
-                "type": "consu",
-                "is_storable": True,
-                "company_id": self.company_id.id,
-                "categ_id": self.product_category_all.id,
-            }
-        )
-
-        # Create stock movement for the product
-        partner_id = self.env["res.partner"].create({"name": "Test Partner"})
-        receipt = self.env["stock.picking"].create(
-            {
-                "location_id": self.location_suppliers_id.id,
-                "location_dest_id": self.location_stock_id.id,
-                "picking_type_id": self.picking_type_in_id.id,
-                "partner_id": partner_id.id,
-                "company_id": self.company_id.id,
-                "move_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Receive product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": 50,
-                        },
-                    )
-                ],
-            }
-        )
-        receipt.action_confirm()
-        for move_line in receipt.move_line_ids:
-            move_line.quantity = 50
-        receipt.button_validate()
-
-        # Generate report with product_id in context
-        report = (
-            self.env["report.stock.inventory.valuation.report"]
-            .with_context(product_id=product.id)
-            .create(
-                {
-                    "company_id": self.company_id.id,
-                }
+        negative_product = self._create_product("Negative stock product")
+        self._make_out_move(negative_product, 2)
+        self.assertFalse(
+            self._get_product_line(
+                self._get_report(product=negative_product), negative_product
             )
         )
 
-        # Should have exactly one line for this product
-        self.assertEqual(
-            len(report.results),
-            1,
-            msg="Report should have exactly one line when filtered by product_id",
-        )
-        self.assertEqual(
-            report.results[0].name,
-            product.name,
-            msg="Report line should be for the filtered product",
-        )
+    def test_product_and_template_filters_with_product_precedence(self):
+        product_a = self._create_product("Filtered product A")
+        product_b = self._create_product("Filtered product B")
+        self._make_in_move(product_a, 1, unit_cost=10)
+        self._make_in_move(product_b, 2, unit_cost=10)
 
-    def test_report_with_product_tmpl_id_context(self):
-        """
-        Test report generation with product_tmpl_id in context
-        to cover the product_tmpl_id filtering branch.
-        """
+        product_report = self._get_report(
+            product=product_a,
+            product_tmpl=product_b.product_tmpl_id,
+        )
+        self.assertEqual(product_report.results.mapped("name"), [product_a.name])
+
+        template_report = self._get_report(product_tmpl=product_b.product_tmpl_id)
+        self.assertEqual(template_report.results.mapped("name"), [product_b.name])
+
+    def test_non_storable_product_is_excluded(self):
         product = self.env["product.product"].create(
-            {
-                "name": "test product_tmpl_id filter",
-                "type": "consu",
-                "is_storable": True,
-                "company_id": self.company_id.id,
-                "categ_id": self.product_category_all.id,
-            }
+            {"name": "Service product", "is_storable": False}
         )
+        report = self._get_report(product=product)
+        self.assertFalse(report.results)
 
-        # Create stock movement for the product
-        partner_id = self.env["res.partner"].create({"name": "Test Partner"})
-        receipt = self.env["stock.picking"].create(
-            {
-                "location_id": self.location_suppliers_id.id,
-                "location_dest_id": self.location_stock_id.id,
-                "picking_type_id": self.picking_type_in_id.id,
-                "partner_id": partner_id.id,
-                "company_id": self.company_id.id,
-                "move_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "Receive product",
-                            "product_id": product.id,
-                            "product_uom": product.uom_id.id,
-                            "product_uom_qty": 30,
-                        },
-                    )
-                ],
-            }
+    def test_user_without_stock_group_is_denied(self):
+        user = new_test_user(
+            self.env,
+            login="inventory_valuation_no_stock_access",
+            groups="base.group_user",
+            company_id=self.company.id,
+            company_ids=[Command.set(self.company.ids)],
         )
-        receipt.action_confirm()
-        for move_line in receipt.move_line_ids:
-            move_line.quantity = 30
-        receipt.button_validate()
-
-        # Generate report with product_tmpl_id in context
-        report = (
-            self.env["report.stock.inventory.valuation.report"]
-            .with_context(product_tmpl_id=product.product_tmpl_id.id)
-            .create(
+        with self.assertRaises(AccessError):
+            self.env["report.stock.inventory.valuation.report"].with_user(user).create(
                 {
-                    "company_id": self.company_id.id,
+                    "company_id": self.company.id,
+                    "inventory_datetime": self.now,
                 }
             )
-        )
 
-        # Should have exactly one line for products of this template
-        product_row = report.results.filtered(lambda r: r.name == product.name)
+    def test_cutoff_after_delivery_excludes_product(self):
+        product = self._create_product("Delivered product")
+        receipt_date = self.now - relativedelta(days=2)
+        delivery_date = self.now - relativedelta(days=1)
+        with freeze_time(receipt_date):
+            self._make_in_move(product, 5, unit_cost=10)
+        with freeze_time(delivery_date):
+            self._make_out_move(product, 5)
+
+        before_delivery = self._get_report(
+            product=product,
+            inventory_datetime=receipt_date + datetime.timedelta(hours=1),
+        )
         self.assertEqual(
-            len(product_row),
-            1,
-            msg="Report should have line for product with filtered template",
+            self._get_product_line(before_delivery, product).qty_at_date, 5
         )
-
-    def test_report_with_no_storable_products(self):
-        """
-        Test report generation when no storable products exist
-        to cover the early return branch when products list is empty.
-        """
-        # Create a non-storable product
-        product = self.env["product.product"].create(
-            {
-                "name": "test non-storable product",
-                "type": "service",
-                "company_id": self.company_id.id,
-                "categ_id": self.product_category_all.id,
-            }
-        )
-
-        # Generate report with this non-storable product in context
-        report = (
-            self.env["report.stock.inventory.valuation.report"]
-            .with_context(product_id=product.id)
-            .create(
-                {
-                    "company_id": self.company_id.id,
-                }
-            )
-        )
-
-        # Should have no results since the product is not storable
-        self.assertEqual(
-            len(report.results),
-            0,
-            msg="Report should have no results for non-storable products",
+        self.assertFalse(
+            self._get_product_line(self._get_report(product=product), product)
         )

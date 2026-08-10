@@ -60,7 +60,7 @@
         <div class="footer">
             <div class="row">
                 <div class="col-6 custom_footer" />
-                <div class="col-6 text-right custom_footer">
+                <div class="col-6 text-end custom_footer">
                     <span class="page" />/<span class="topage" />
                 </div>
             </div>
@@ -202,13 +202,13 @@
             <div class="act_as_cell amount">
                 <t
                     t-esc="line.standard_price"
-                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                    t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"
                 />
             </div>
             <div class="act_as_cell amount">
                 <t
                     t-esc="line.stock_value"
-                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                    t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"
                 />
             </div>
         </div>
@@ -221,7 +221,7 @@
             <div class="total_row">
                 <t
                     t-esc="total"
-                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                    t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"
                 />
             </div>
         </div>

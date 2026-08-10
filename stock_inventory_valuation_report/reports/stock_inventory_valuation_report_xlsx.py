@@ -15,6 +15,12 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
     _inherit = "report.report_xlsx.abstract"
 
     def _get_ws_params(self, wb, data, objects):
+        identifier_format = wb.add_format(
+            {"border": 1, "align": "left", "num_format": "@"}
+        )
+        wrapped_text_format = wb.add_format(
+            {"border": 1, "align": "left", "valign": "top", "text_wrap": True}
+        )
         stock_inventory_valuation_template = {
             "1_number": {
                 "header": {
@@ -31,6 +37,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("reference"),
+                    "format": identifier_format,
                 },
                 "width": 15,
             },
@@ -40,8 +47,9 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("name"),
+                    "format": wrapped_text_format,
                 },
-                "width": 36,
+                "width": 50,
             },
             "4_barcode": {
                 "header": {
@@ -49,8 +57,9 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("barcode"),
+                    "format": identifier_format,
                 },
-                "width": 15,
+                "width": 18,
             },
             "5_qty_at_date": {
                 "header": {

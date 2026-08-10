@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class StockInventoryValuationView(models.TransientModel):
@@ -36,6 +36,8 @@ class StockInventoryValuationReport(models.TransientModel):
     # Filters fields, used for data computation
     company_id = fields.Many2one(
         comodel_name="res.company",
+        required=True,
+        default=lambda self: self.env.company,
     )
     inventory_datetime = fields.Datetime(required=True, default=fields.Datetime.now)
 
@@ -45,7 +47,7 @@ class StockInventoryValuationReport(models.TransientModel):
         compute="_compute_results",
     )
 
-    @api.depends("inventory_datetime")
+    @api.depends("inventory_datetime", "company_id")
     def _compute_results(self):
         """
         Generate report lines, one per product with stock at the given date.
@@ -58,17 +60,21 @@ class StockInventoryValuationReport(models.TransientModel):
         self.ensure_one()
 
         # Build domain for products
-        domain = [("is_storable", "=", True)]
+        domain = Domain("is_storable", "=", True)
         product_id = self.env.context.get("product_id")
         product_tmpl_id = self.env.context.get("product_tmpl_id")
         if product_id:
-            domain = expression.AND([domain, [("id", "=", product_id)]])
+            domain &= Domain("id", "=", product_id)
         elif product_tmpl_id:
-            domain = expression.AND(
-                [domain, [("product_tmpl_id", "=", product_tmpl_id)]]
-            )
+            domain &= Domain("product_tmpl_id", "=", product_tmpl_id)
 
-        products = self.env["product.product"].search(domain)
+        company = self.company_id
+        product_model = (
+            self.env["product.product"]
+            .with_company(company)
+            .with_context(allowed_company_ids=company.ids)
+        )
+        products = product_model.search(domain)
 
         if not products:
             self.results = self.env["stock.inventory.valuation.view"]
@@ -85,11 +91,11 @@ class StockInventoryValuationReport(models.TransientModel):
             SELECT ml.product_id,
                    COALESCE(
                        SUM(CASE WHEN loc_dest.usage = 'internal'
-                           THEN ml.quantity ELSE 0 END), 0
+                           THEN ml.quantity_product_uom ELSE 0 END), 0
                    ) as qty_in,
                    COALESCE(
                        SUM(CASE WHEN loc_src.usage = 'internal'
-                           THEN ml.quantity ELSE 0 END), 0
+                           THEN ml.quantity_product_uom ELSE 0 END), 0
                    ) as qty_out
             FROM stock_move_line ml
             INNER JOIN stock_location loc_src ON ml.location_id = loc_src.id
@@ -104,7 +110,7 @@ class StockInventoryValuationReport(models.TransientModel):
         """
 
         self.env.cr.execute(
-            query, (tuple(products.ids), self.inventory_datetime, self.env.company.id)
+            query, (tuple(products.ids), self.inventory_datetime, company.id)
         )
 
         qty_data = {
@@ -118,10 +124,10 @@ class StockInventoryValuationReport(models.TransientModel):
             lambda p: p.id in qty_data and qty_data[p.id] > 0
         )
 
-        # Apply context to get historical SVL values
+        # Apply the selected date and company to Odoo's historical valuation.
         products_at_date = products_with_stock.with_context(
             to_date=self.inventory_datetime,
-            company_owned=True,
+            allowed_company_ids=company.ids,
         )
 
         for product, product_at_date in zip(
@@ -129,14 +135,7 @@ class StockInventoryValuationReport(models.TransientModel):
         ):
             qty_at_date = qty_data[product.id]
 
-            # Calculate historical cost from SVL (same as Odoo 12 get_history_price)
-            # Use value_svl / quantity_svl from product with to_date context
-            if product_at_date.quantity_svl:
-                standard_price = (
-                    product_at_date.value_svl / product_at_date.quantity_svl
-                )
-            else:
-                standard_price = product_at_date.standard_price
+            standard_price = product_at_date.avg_cost
 
             stock_value = qty_at_date * standard_price
 
@@ -176,7 +175,7 @@ class StockInventoryValuationReport(models.TransientModel):
     def _get_html(self):
         result = {}
         rcontext = {}
-        report = self.browse(self._context.get("active_id"))
+        report = self.browse(self.env.context.get("active_id"))
         if report:
             rcontext["o"] = report
             result["html"] = self.env["ir.ui.view"]._render_template(

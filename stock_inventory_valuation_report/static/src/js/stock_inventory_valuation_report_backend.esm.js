@@ -2,10 +2,12 @@
 
 import {Component, markup, onMounted, onWillStart, useRef, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+import {standardActionServiceProps} from "@web/webclient/actions/action_service";
 import {useService} from "@web/core/utils/hooks";
 
 class StockInventoryValuationReportBackend extends Component {
     static template = "stock_inventory_valuation_report.ClientAction";
+    static props = {...standardActionServiceProps};
 
     setup() {
         this.orm = useService("orm");

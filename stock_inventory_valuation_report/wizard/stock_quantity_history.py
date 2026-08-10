@@ -46,7 +46,7 @@ class StockQuantityHistory(models.TransientModel):
     def _prepare_stock_inventory_valuation_report(self):
         self.ensure_one()
         vals = {
-            "company_id": self.env.user.company_id.id,
+            "company_id": self.env.company.id,
         }
         if self.inventory_datetime:
             vals["inventory_datetime"] = self.inventory_datetime
