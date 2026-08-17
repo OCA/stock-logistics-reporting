@@ -3,7 +3,7 @@
 {
     "name": "Stock Move Report Show Quantity Variation",
     "summary": "Show quantity variation the the Inventory Moves report",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-reporting",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
