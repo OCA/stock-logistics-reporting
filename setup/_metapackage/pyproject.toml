@@ -2,8 +2,12 @@
 name = "odoo-addons-oca-stock-logistics-reporting"
 version = "19.0.20260724.0"
 dependencies = [
+<<<<<<< HEAD
     "odoo-addon-stock_delivery_note==19.0.*",
     "odoo-addon-stock_move_value_report==19.0.*",
+=======
+    "odoo-addon-stock_picking_operations_multilang==19.0.*",
+>>>>>>> 711a7ff ([19.0][MIG] stock_picking_operations_multilang: Migration to 19.0)
     "odoo-addon-stock_picking_report_external_note==19.0.*",
     "odoo-addon-stock_picking_report_valued==19.0.*",
     "odoo-addon-stock_product_demand_info==19.0.*",
