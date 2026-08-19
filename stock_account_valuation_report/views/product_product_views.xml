@@ -8,9 +8,6 @@
                 <field name="display_name" />
                 <field name="qty_at_date" />
                 <field name="uom_id" groups="uom.group_uom" />
-                <field name="currency_id" column_invisible="1" />
-                <field name="cost_currency_id" column_invisible="1" />
-                <field name="valuation" column_invisible="1" />
                 <field
                     name="stock_value"
                     sum="Stock Valuation"
@@ -18,10 +15,10 @@
                     options="{'currency_field': 'cost_currency_id'}"
                 />
                 <button
-                    name="action_view_valuation_layers"
+                    name="action_view_valuation_moves"
                     type="object"
                     icon="fa-info-circle"
-                    title="View Valuation Layers"
+                    title="View Stock Moves"
                     invisible="valuation != 'real_time'"
                 />
                 <field
@@ -43,7 +40,12 @@
                     invisible="valuation != 'real_time'"
                 />
                 <field name="qty_discrepancy" sum="Qty Discrepancy" />
-                <field name="valuation_discrepancy" sum="Valuation Discrepancy" />
+                <field
+                    name="valuation_discrepancy"
+                    sum="Valuation Discrepancy"
+                    widget="monetary"
+                    options="{'currency_field': 'cost_currency_id'}"
+                />
             </list>
         </field>
     </record>
@@ -53,7 +55,7 @@
         <field name="res_model">product.product</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_stock_product_tree2" />
-        <field name="domain">[('type', '=', 'product')]</field>
+        <field name="domain">[('is_storable', '=', True)]</field>
         <field
             name="context"
         >{'company_owned': True, 'create': False, 'edit' : False}</field>
@@ -69,9 +71,6 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_search_form_view" />
         <field name="arch" type="xml">
-            <field name="name" position="after">
-                <field name="valuation_discrepancy" />
-            </field>
             <filter name="inactive" position="after">
                 <separator />
                 <filter

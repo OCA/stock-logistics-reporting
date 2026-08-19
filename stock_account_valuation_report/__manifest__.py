@@ -4,7 +4,7 @@
 
 {
     "name": "Stock Account Valuation Report",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Improves logic of the Inventory Valuation Report",
     "author": "ForgeFlow S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
