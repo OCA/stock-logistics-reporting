@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-04-11 10:25+0000\n"
+"PO-Revision-Date: 2026-08-19 03:53+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
@@ -46,42 +46,42 @@ msgstr "Knjigovodska vrednost"
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,help:stock_account_valuation_report.field_stock_valuation_history__inventory_datetime
 msgid "Choose a date to get the valuation at that date"
-msgstr ""
+msgstr "Izberite datum, da boste dobili vrednotenje na ta dan"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
 msgid "Choose your date"
-msgstr ""
+msgstr "Izberi datum"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_valuation_history
 msgid "Confirm"
-msgstr ""
+msgstr "Potrdi"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.actions.act_window,help:stock_account_valuation_report.product_valuation_action
 msgid "Create a product to see its name and valuation."
-msgstr ""
+msgstr "Ustvarite proizvod, da bi videli njegov naziv in vrednotenje."
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: stock_account_valuation_report
 #: model:ir.actions.act_window,name:stock_account_valuation_report.history_valuation_action
@@ -98,7 +98,7 @@ msgstr ""
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__qty_at_date
@@ -118,12 +118,12 @@ msgstr "Dnevniška postavka"
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_stock_valuation_history__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
@@ -138,7 +138,7 @@ msgstr "Proizvod"
 #. module: stock_account_valuation_report
 #: model:ir.model,name:stock_account_valuation_report.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Različica proizvoda"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__qty_discrepancy
@@ -160,24 +160,24 @@ msgstr "FIFO premik v realnem času"
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "Stock Valuation"
-msgstr ""
+msgstr "Vrednotenje zaloge"
 
 #. module: stock_account_valuation_report
 #: model:ir.model,name:stock_account_valuation_report.model_stock_valuation_history
 msgid "Stock Valuation History"
-msgstr ""
+msgstr "Zgodovina vrednotenj zaloge"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__valuation_discrepancy
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.view_stock_product_tree2
 msgid "Valuation Discrepancy"
-msgstr ""
+msgstr "Neskladja vrednotenja"
 
 #. module: stock_account_valuation_report
 #: model:ir.model.fields,field_description:stock_account_valuation_report.field_product_product__valuation_layer_ids
 msgid "Valuation Layer"
-msgstr ""
+msgstr "Nivo vrednotenja"
 
 #. module: stock_account_valuation_report
 #: model_terms:ir.ui.view,arch_db:stock_account_valuation_report.product_search_form_view
