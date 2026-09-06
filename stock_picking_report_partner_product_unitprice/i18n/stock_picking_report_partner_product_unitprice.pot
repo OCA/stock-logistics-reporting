@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_partner_product_unitprice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-06 18:01+0000\n"
+"PO-Revision-Date: 2026-09-06 18:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_partner_product_unitprice.report_delivery_document_inherit
+msgid "<strong>Unit Price</strong>"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model:ir.model,name:stock_picking_report_partner_product_unitprice.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_res_partner__display_name
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_res_partner__id
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_stock_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model:ir.model,name:stock_picking_report_partner_product_unitprice.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_res_partner__picking_report_render_unitprice
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_unitprice.field_res_users__picking_report_render_unitprice
+msgid "Render Unit Price on Delivery Slip"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_unitprice
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_partner_product_unitprice.report_delivery_document_inherit
+msgid "Unit Price"
+msgstr ""
