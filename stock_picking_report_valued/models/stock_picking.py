@@ -41,10 +41,47 @@ class StockPicking(models.Model):
         records...).
         """
         for pick in self:
-            amount_untaxed = amount_tax = 0.0
-            for line in pick.move_line_ids:
-                amount_untaxed += line.sale_price_subtotal
-                amount_tax += line.sale_price_tax
+            pick = pick.with_company(pick.company_id)
+            move_lines = pick.move_line_ids.filtered(lambda x: x.sale_line)
+
+            if pick.company_id.tax_calculation_rounding_method == "round_globally":
+                # With global rounding, we need to use the same method as sale.order
+                # to calculate taxes on all lines together, not sum line by line
+                tax_lines_data = []
+                for line in move_lines:
+                    valued_line = line.sale_line
+                    quantity = line._get_report_valued_quantity()
+                    different_uom = valued_line.product_uom != line.product_uom_id
+                    different_qty = float_compare(
+                        quantity,
+                        valued_line.product_uom_qty,
+                        precision_rounding=line.product_uom_id.rounding,
+                    )
+                    if different_uom or different_qty:
+                        # Create virtual sale line with move line quantity
+                        valued_line.mapped("tax_id")  # Force cache
+                        sol_vals = valued_line._convert_to_write(valued_line._cache)
+                        sol_vals["product_uom_qty"] = quantity
+                        sol_vals.pop("price_subtotal", None)
+                        valued_line = valued_line.new(sol_vals)
+
+                    tax_line_dict = valued_line._convert_to_tax_base_line_dict()
+                    tax_lines_data.append(tax_line_dict)
+
+                if tax_lines_data:
+                    tax_results = pick.env["account.tax"]._compute_taxes(tax_lines_data)
+                    totals = tax_results["totals"]
+                    amount_untaxed = totals.get(pick.currency_id, {}).get(
+                        "amount_untaxed", 0.0
+                    )
+                    amount_tax = totals.get(pick.currency_id, {}).get("amount_tax", 0.0)
+                else:
+                    amount_untaxed = amount_tax = 0.0
+            else:
+                # With round_per_line, sum the tax from each line (current behavior)
+                amount_untaxed = sum(move_lines.mapped("sale_price_subtotal"))
+                amount_tax = sum(move_lines.mapped("sale_price_tax"))
+
             pick.update(
                 {
                     "amount_untaxed": amount_untaxed,
