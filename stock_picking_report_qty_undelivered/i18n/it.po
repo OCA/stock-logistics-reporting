@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_qty_undelivered
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_report_qty_undelivered
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_qty_undelivered.report_delivery_document_qty_not_done
+msgid "<span>Summary of undelivered quantities:</span>"
+msgstr "<span>Riepilo delle quantità non consegnate:</span>"
+
+#. module: stock_picking_report_qty_undelivered
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_qty_undelivered.report_delivery_document_qty_not_done
+msgid "<strong>Product</strong>"
+msgstr "<strong>Prodotto</strong>"
+
+#. module: stock_picking_report_qty_undelivered
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_qty_undelivered.report_delivery_document_qty_not_done
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Quantità</strong>"
+
+#. module: stock_picking_report_qty_undelivered
+#: model:ir.model,name:stock_picking_report_qty_undelivered.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_picking_report_qty_undelivered
+#: model:ir.model.fields,field_description:stock_picking_report_qty_undelivered.field_stock_picking_type__summary_qty_undelivered
+msgid "Print a summary with undelivered qty"
+msgstr "Stampa un riepilogo con le quantità non consegnate"
+
+#. module: stock_picking_report_qty_undelivered
+#: model:ir.model.fields,help:stock_picking_report_qty_undelivered.field_stock_picking_type__summary_qty_undelivered
+msgid "Print a summary with undelivered quantity in the picking report"
+msgstr ""
+"Stampa un riepilogo con le quantità non consegnate nel resoconto del prelievo"
