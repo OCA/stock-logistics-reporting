@@ -1,3 +1,6 @@
 - [Tecnativa](https://www.tecnativa.com):
   - David Vidal
   - Carlos Roca
+- [Camptocamp](https://www.camptocamp.com):
+  - Italo Lopes
+  - Vincent Van Rossem

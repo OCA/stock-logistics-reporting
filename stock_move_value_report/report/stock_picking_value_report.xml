@@ -8,60 +8,58 @@
                     <div class="row">
                         <div class="col-6">
                             <div
-                                t-if="picking.move_ids and picking.move_ids[0].partner_id and picking.move_ids[0].partner_id.id != picking.partner_id.id"
+                                t-if="o.move_ids and o.move_ids[0].partner_id and o.move_ids[0].partner_id.id != o.partner_id.id"
                             >
                                 <span><strong>Delivery Address:</strong></span>
                                 <div
-                                    t-field="picking.move_ids[0].partner_id"
+                                    t-field="o.move_ids[0].partner_id"
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                                 />
                             </div>
                             <div
-                                t-if="picking.picking_type_id.code != 'internal' and (not picking.move_ids or not picking.move_ids[0].partner_id) and picking.picking_type_id.warehouse_id.partner_id"
+                                t-if="o.picking_type_id.code != 'internal' and (not o.move_ids or not o.move_ids[0].partner_id) and o.picking_type_id.warehouse_id.partner_id"
                             >
                                 <span><strong>Warehouse Address:</strong></span>
                                 <div
-                                    t-field="picking.picking_type_id.warehouse_id.partner_id"
+                                    t-field="o.picking_type_id.warehouse_id.partner_id"
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                                 />
                             </div>
                         </div>
                         <div class="offset-1 col-5">
                             <div
-                                t-if="picking.picking_type_id.code=='incoming' and picking.partner_id"
+                                t-if="o.picking_type_id.code=='incoming' and o.partner_id"
                             >
                                 <span><strong>Partner Address:</strong></span>
                             </div>
                             <div
-                                t-if="picking.picking_type_id.code=='internal' and picking.partner_id"
+                                t-if="o.picking_type_id.code=='internal' and o.partner_id"
                             >
                                 <span><strong>Warehouse Address:</strong></span>
                             </div>
                             <div
-                                t-if="picking.picking_type_id.code=='outgoing' and picking.partner_id"
+                                t-if="o.picking_type_id.code=='outgoing' and o.partner_id"
                             >
                                 <span><strong>Customer Address:</strong></span>
                             </div>
-                            <div t-if="picking.partner_id" name="partner_header">
+                            <div t-if="o.partner_id" name="partner_header">
                                 <div
-                                    t-field="picking.partner_id"
+                                    t-field="o.partner_id"
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                                 />
-                                <p t-if="picking.sudo().partner_id.vat"><t
-                                        t-esc="picking.company_id.country_id.vat_label or 'TIN'"
-                                    />: <span
-                                        t-field="picking.sudo().partner_id.vat"
-                                    /></p>
+                                <p t-if="o.sudo().partner_id.vat"><t
+                                        t-esc="o.company_id.country_id.vat_label or 'TIN'"
+                                    />: <span t-field="o.sudo().partner_id.vat" /></p>
                             </div>
                         </div>
                     </div>
                     <br />
-                    <h1 t-field="picking.name" class="mt0 float-left" />
+                    <h1 t-field="o.name" class="mt0 float-left" />
                     <div class="clearfix" />
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th class="text-start" t-if="picking.origin"><strong
+                                <th class="text-start" t-if="o.origin"><strong
                                     >Order (Origin)</strong></th>
                                 <th class="text-center"><strong>State</strong></th>
                                 <th class="text-center"><strong
@@ -72,49 +70,45 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td t-if="picking.origin" class="text-start">
-                                    <span t-field="picking.origin" />
+                                <td t-if="o.origin" class="text-start">
+                                    <span t-field="o.origin" />
                                 </td>
                                 <td class="text-center">
-                                    <span t-field="picking.state" />
+                                    <span t-field="o.state" />
                                 </td>
                                 <td class="text-center">
-                                    <span t-field="picking.date" />
+                                    <span t-field="o.date" />
                                 </td>
                                 <td class="text-center" name="td_sched_date">
-                                    <span t-field="picking.scheduled_date" />
+                                    <span t-field="o.scheduled_date" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <br />
                     <br />
-                    <h4>[<t t-esc="picking.location_id.name" /> &#8594; <t
-                            t-esc="picking.location_dest_id.name"
+                    <h4>[<t t-esc="o.location_id.name" /> &#8594; <t
+                            t-esc="o.location_dest_id.name"
                         />]</h4>
                     <t t-call="stock_move_value_report.stock_move_lines_value">
-                        <t t-set="move_lines" t-value="picking.move_line_ids" />
-                        <t
-                            t-set="currency_id"
-                            t-value="picking.company_id.currency_id"
-                        />
+                        <t t-set="move_lines" t-value="o.move_line_ids" />
+                        <t t-set="currency_id" t-value="o.company_id.currency_id" />
                     </t>
                     <br />
                     <t t-call="stock_move_value_report.stock_move_lines_value_total">
-                        <t t-set="move_lines" t-value="picking.move_line_ids" />
-                        <t
-                            t-set="currency_id"
-                            t-value="picking.company_id.currency_id"
-                        />
+                        <t t-set="move_lines" t-value="o.move_line_ids" />
+                        <t t-set="currency_id" t-value="o.company_id.currency_id" />
                     </t>
-                    <p t-esc="picking.note" />
+                    <p t-esc="o.note" />
                 </div>
             </t>
          </t>
     </template>
 
     <template id="report_stock_picking_value">
-        <t t-foreach="docs" t-as="picking">
+        <t t-foreach="docs" t-as="o">
+            <!-- TODO: Remove on the next migration -->
+            <t t-set="picking" t-value="o" />
             <t t-call="stock_move_value_report.report_stock_picking_value_document" />
         </t>
     </template>

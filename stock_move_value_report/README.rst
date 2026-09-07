@@ -96,6 +96,11 @@ Contributors
   - David Vidal
   - Carlos Roca
 
+-  `Camptocamp <https://www.camptocamp.com>`__:
+
+   -  Italo Lopes
+   -  Vincent Van Rossem
+
 Maintainers
 -----------
 

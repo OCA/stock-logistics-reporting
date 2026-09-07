@@ -5,20 +5,20 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h1 class="mt0 float-left">Scrap <t t-esc="scrap.name" /></h1>
+                    <h1 class="mt0 float-left">Scrap <t t-esc="o.name" /></h1>
                     <div class="clearfix" />
                     <table class="table table-sm">
                         <thead>
                             <tr>
                                 <th class="text-center"><strong>Location</strong></th>
-                                <th t-if="scrap.origin" class="text-center"><strong
+                                <th t-if="o.origin" class="text-center"><strong
                                     >Source Document</strong></th>
                                 <th class="text-center"><strong>State</strong></th>
                                 <th class="text-center"><strong>Date</strong></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-foreach="scrap.move_ids" t-as="move">
+                            <t t-foreach="o.move_ids" t-as="move">
                                 <tr>
                                     <td class="text-start">
                                         <span
@@ -26,7 +26,7 @@
                                         />
                                     </td>
                                     <td t-if="move.scrap_id.origin" class="text-center">
-                                        <span t-field="scrap.origin" />
+                                        <span t-field="o.origin" />
                                     </td>
                                     <td class="text-center">
                                         <span t-field="move.scrap_id.state" />
@@ -43,7 +43,7 @@
                     <t t-call="stock_move_value_report.stock_move_lines_value">
                         <t
                             t-set="move_lines"
-                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
+                            t-value="o.mapped('move_ids').mapped('move_line_ids')"
                         />
                         <t t-set="currency_id" t-value="res_company.currency_id" />
                     </t>
@@ -51,7 +51,7 @@
                     <t t-call="stock_move_value_report.stock_move_lines_value_total">
                         <t
                             t-set="move_lines"
-                            t-value="scrap.mapped('move_ids').mapped('move_line_ids')"
+                            t-value="o.mapped('move_ids').mapped('move_line_ids')"
                         />
                         <t t-set="currency_id" t-value="res_company.currency_id" />
                     </t>
@@ -61,7 +61,9 @@
     </template>
 
     <template id="report_stock_scrap_value">
-        <t t-foreach="docs" t-as="scrap">
+        <t t-foreach="docs" t-as="o">
+            <!-- TODO: Remove on the next migration -->
+            <t t-set="scrap" t-value="o" />
             <t t-call="stock_move_value_report.report_stock_scrap_value_document" />
         </t>
     </template>

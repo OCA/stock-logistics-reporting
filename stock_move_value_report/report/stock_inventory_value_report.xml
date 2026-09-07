@@ -5,9 +5,7 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h1 class="mt0 float-left">Inventory <t
-                            t-esc="inventory.name"
-                        /></h1>
+                    <h1 class="mt0 float-left">Inventory <t t-esc="o.name" /></h1>
                     <div class="clearfix" />
                     <table class="table table-sm">
                         <thead>
@@ -18,16 +16,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-foreach="inventory.location_ids" t-as="location">
+                            <tr t-foreach="o.location_ids" t-as="location">
                                 <td class="text-start">
                                     <span t-field="location.name" />
                                 </td>
                                 <td class="text-center">
-                                    <span t-field="inventory.state" />
+                                    <span t-field="o.state" />
                                 </td>
 
                                 <td class="text-center" name="td_date">
-                                    <span t-field="inventory.date" />
+                                    <span t-field="o.date" />
                                 </td>
                             </tr>
                         </tbody>
@@ -37,23 +35,17 @@
                     <t t-call="stock_move_value_report.stock_move_lines_value">
                         <t
                             t-set="move_lines"
-                            t-value="inventory.mapped('move_ids.move_line_ids')"
+                            t-value="o.mapped('move_ids.move_line_ids')"
                         />
-                        <t
-                            t-set="currency_id"
-                            t-value="inventory.company_id.currency_id"
-                        />
+                        <t t-set="currency_id" t-value="o.company_id.currency_id" />
                     </t>
                     <br />
                     <t t-call="stock_move_value_report.stock_move_lines_value_total">
                         <t
                             t-set="move_lines"
-                            t-value="inventory.mapped('move_ids.move_line_ids')"
+                            t-value="o.mapped('move_ids.move_line_ids')"
                         />
-                        <t
-                            t-set="currency_id"
-                            t-value="inventory.company_id.currency_id"
-                        />
+                        <t t-set="currency_id" t-value="o.company_id.currency_id" />
                     </t>
                 </div>
             </t>
@@ -61,7 +53,9 @@
     </template>
 
     <template id="report_stock_inventory_value">
-        <t t-foreach="docs" t-as="inventory">
+        <t t-foreach="docs" t-as="o">
+            <!-- TODO: Remove on the next migration -->
+            <t t-set="inventory" t-value="o" />
             <t t-call="stock_move_value_report.report_stock_inventory_value_document" />
         </t>
     </template>
