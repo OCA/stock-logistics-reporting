@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Foodles (http://www.foodles.co).
+     @author Pierre Verkest <pierreverkest84@gmail.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="stock_quant_history_snapshot_company_rule" model="ir.rule">
+        <field name="name">Stock quant history snapshot company</field>
+        <field name="model_id" ref="model_stock_quant_history_snapshot" />
+        <field name="domain_force">[("company_id", "in", company_ids)]</field>
+    </record>
+    <record id="stock_quant_history_company_rule" model="ir.rule">
+        <field name="name">Stock quant history company</field>
+        <field name="model_id" ref="model_stock_quant_history" />
+        <field name="domain_force">
+            [("snapshot_id.company_id", "in", company_ids)]
+        </field>
+    </record>
+</odoo>
