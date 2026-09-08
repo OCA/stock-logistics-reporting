@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+        Add Customer Reference (partner.ref) to picking reports.
+        Priority:
+        1. Sale order commercial partner ref
+        2. Picking partner commercial partner ref
+    -->
+    <template id="partner_ref_block">
+        <t
+            t-set="partner"
+            t-value="o.partner_id
+            or (o.sale_id and o.sale_id.partner_id)"
+        />
+
+        <t
+            t-set="partner_ref"
+            t-value="
+            partner and (
+                partner.ref
+                or partner.commercial_partner_id.ref
+            )
+       "
+        />
+        <t t-if="partner_ref">
+            <div style="margin-top: 4px;">
+                <strong>Customer Reference:</strong>
+                <p class="m-0" t-esc="partner_ref" />
+            </div>
+        </t>
+    </template>
+</odoo>
