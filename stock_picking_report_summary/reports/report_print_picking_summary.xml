@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="report_picking_summary" model="ir.actions.report">
+        <field name="name">Picking Summary</field>
+        <field name="model">picking.summary.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_picking_report_summary.picking_summary</field>
+        <field name="report_file">stock_picking_report_summary.picking_summary</field>
+        <field
+            name="binding_model_id"
+            ref="stock_picking_report_summary.model_picking_summary_wizard"
+        />
+        <field name="paperformat_id" ref="product.paperformat_label_sheet" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
