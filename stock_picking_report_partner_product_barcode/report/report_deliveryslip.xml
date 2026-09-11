@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 NICO SOLUTIIONS - ENGERINEERING & IT
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<odoo>
+    <template
+        id="report_delivery_document_inherit"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//table[@name='stock_move_table']" position="before">
+            <t
+                t-set="render_barcode"
+                t-value="o.partner_id.picking_report_render_barcode and any(m.product_id and m.product_id.barcode for m in o.move_ids)"
+            />
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']//thead//tr/th[last()]"
+            position="after"
+        >
+            <th t-if="render_barcode" name="th_sm_barcode" class="text-center">
+                <strong>Barcode</strong>
+            </th>
+        </xpath>
+        <xpath expr="//tr[@t-foreach='lines']/td[last()]" position="after">
+            <td class="text-center" t-if="render_barcode">
+                <span
+                    t-if="move.product_id.barcode"
+                    t-esc="move.product_id.barcode"
+                    t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 400,
+                'height': 100, 'quiet': 0, 'img_style': 'height:25px;'}"
+                />
+            </td>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_line_table']//thead//tr/th[last()]"
+            position="after"
+        >
+            <th
+                t-if="render_barcode"
+                name="th_sml_barcode"
+                class="text-center"
+            >Barcode</th>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines_inherit"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath expr="//tr[@t-foreach='aggregated_lines']" position="before">
+            <t
+                t-set="render_agg_barcode"
+                t-value="o.partner_id.picking_report_render_barcode and any(v.get('barcode') for v in aggregated_lines.values())"
+            />
+        </xpath>
+        <xpath expr="//tr[@t-foreach='aggregated_lines']//td[last()]" position="after">
+            <td class="text-center" name="move_line_barcode" t-if="render_agg_barcode">
+                <span
+                    t-if="aggregated_lines[line]['barcode']"
+                    t-esc="aggregated_lines[line]['barcode']"
+                    t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 400,
+                'height': 100, 'quiet': 0, 'img_style': 'height:25px;'}"
+                />
+            </td>
+        </xpath>
+    </template>
+    <template
+        id="stock_report_delivery_has_serial_move_line_barcode_inherit"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//td[@name='move_line_lot_quantity']" position="after">
+            <td class="text-center" name="move_line_lot_barcode" t-if="render_barcode">
+                <span
+                    t-if="move_line.product_id.barcode"
+                    t-esc="move_line.product_id.barcode"
+                    t-options="{
+                        'widget': 'barcode',
+                        'symbology': 'auto',
+                        'width': 400,
+                        'height': 100,
+                        'quiet': 0,
+                        'img_style': 'height:25px;'
+                    }"
+                />
+            </td>
+        </xpath>
+    </template>
+</odoo>
