@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <template id="report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//div[@name='div_outgoing_address']" position="after">
+            <div
+                class="col-5 offset-1"
+                name="div_incoming_address"
+                t-if="o.picking_type_id.code == 'incoming'"
+            >
+                <t
+                    t-set="pickup_partner"
+                    t-value="o.move_ids and o.move_ids[0].partner_id or False"
+                />
+                <div t-if="o.partner_id and not o.picking_type_id.show_pickup_address">
+                    <span>
+                        <strong>Vendor Address</strong>
+                    </span>
+                    <div name="partner_header">
+                        <div
+                            t-field="o.partner_id.commercial_partner_id"
+                            t-options='{"widget": "contact", "fields": ["name"], "no_marker": True, "phone_icons": True}'
+                        />
+                    </div>
+                </div>
+                <div
+                    name="pickup_address"
+                    t-if="pickup_partner and o.picking_type_id.show_pickup_address"
+                >
+                    <span>
+                        <strong>Pick-Up Address</strong>
+                    </span>
+                    <div
+                        t-out="pickup_partner"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
+                    />
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

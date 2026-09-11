@@ -6,6 +6,7 @@ dependencies = [
     "odoo-addon-stock_move_value_report==19.0.*",
     "odoo-addon-stock_picking_report_custom_description==19.0.*",
     "odoo-addon-stock_picking_report_external_note==19.0.*",
+    "odoo-addon-stock_picking_report_incoming_delivery_address==19.0.*",
     "odoo-addon-stock_picking_report_valued==19.0.*",
     "odoo-addon-stock_product_demand_info==19.0.*",
 ]
