@@ -5,6 +5,7 @@
 
 from unittest.mock import patch
 
+from odoo import Command
 from odoo.tests import common
 
 
@@ -180,3 +181,41 @@ class TestStockPickingValued(common.TransactionCase):
                 picking._show_report_valued_total_block(),
                 "Total Picking block should be displayed when totals differ",
             )
+
+    def test_08_distinct_uom(self):
+        """Prices must be expressed in the unit of measure of the operation.
+
+        The order is placed in dozens, but stock always works in the reference
+        unit of measure of the product, so the operation is done in units and
+        the unit price printed next to that quantity has to be converted to
+        units as well.
+        """
+        dozen = self.env.ref("uom.product_uom_dozen")
+        unit = self.env.ref("uom.product_uom_unit")
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "company_id": self.env.user.company_id.id,
+                "order_line": [
+                    Command.create(
+                        {
+                            "product_id": self.product.id,
+                            "product_uom": dozen.id,
+                            "product_uom_qty": 1,
+                            "price_unit": 1200,
+                        }
+                    )
+                ],
+            }
+        )
+        sale_order.action_confirm()
+        picking = sale_order.picking_ids
+        picking.action_assign()
+        move_line = picking.move_line_ids
+        self.assertEqual(move_line.product_uom_id, unit)
+        self.assertEqual(move_line.quantity, 12.0)
+        self.assertEqual(move_line.sale_price_unit, 100.0)
+        self.assertEqual(move_line.sale_price_subtotal, 1200.0)
+        self.assertEqual(picking.amount_untaxed, 1200.0)
+        self.assertEqual(picking.amount_tax, 180.0)
+        self.assertEqual(picking.amount_total, 1380.0)

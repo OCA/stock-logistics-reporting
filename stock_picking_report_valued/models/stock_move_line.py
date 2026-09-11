@@ -73,6 +73,10 @@ class StockMoveLine(models.Model):
                 # Create virtual sale line with stock move line quantity
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
                 sol_vals["product_uom_qty"] = quantity
+                sol_vals["product_uom"] = line.product_uom_id.id
+                sol_vals["price_unit"] = valued_line.product_uom._compute_price(
+                    valued_line.price_unit, line.product_uom_id
+                )
                 sol_vals.pop("price_subtotal", None)
                 valued_line = line.sale_line.new(sol_vals)
             line.update(
@@ -83,6 +87,8 @@ class StockMoveLine(models.Model):
                     "sale_price_subtotal": valued_line.price_subtotal,
                     "sale_price_tax": valued_line.price_tax,
                     "sale_price_total": valued_line.price_total,
-                    "sale_price_unit": line.sale_line.price_unit,
+                    "sale_price_unit": line.sale_line.product_uom._compute_price(
+                        line.sale_line.price_unit, line.product_uom_id
+                    ),
                 }
             )
