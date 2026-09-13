@@ -88,10 +88,36 @@ class StockLocationAtDateWizard(models.TransientModel):
 
         where_clause = " AND ".join(where_conditions)
 
-        insert_params = [self.env.user.id, self.at_date] + params
+        svl_where = ["svl.company_id = %s", "svl.create_date <= %s"]
+        svl_params = [self.company_id.id, utc_cutoff]
+
+        if self.product_ids:
+            svl_where.append("svl.product_id = ANY(%s)")
+            svl_params.append(self.product_ids.ids)
+        elif self.category_ids:
+            svl_where.append(
+                """
+                EXISTS (
+                    SELECT 1
+                    FROM product_product pp_svl
+                    JOIN product_template pt_svl ON pt_svl.id = pp_svl.product_tmpl_id
+                    WHERE pp_svl.id = svl.product_id
+                      AND pt_svl.categ_id = ANY(%s)
+                )
+                """
+            )
+            svl_params.append(child_category_ids)
+
+        svl_where_clause = " AND ".join(svl_where)
+
+        insert_params = (
+            svl_params + svl_params + [self.env.user.id, self.at_date] + params
+        )
 
         cost_subquery = """
             COALESCE(
+                svl_cost.avg_unit_cost,
+                latest_svl_cost.unit_cost,
                 (
                     SELECT ip.value_float
                     FROM ir_property ip
@@ -114,7 +140,52 @@ class StockLocationAtDateWizard(models.TransientModel):
             )
         """
 
+        cost_method_subquery = """
+            COALESCE(
+                (
+                    SELECT ip.value_text
+                    FROM ir_property ip
+                    WHERE ip.name = 'property_cost_method'
+                      AND ip.res_id = 'product.category,' || pt.categ_id
+                      AND (ip.company_id = sml.company_id OR ip.company_id IS NULL)
+                    ORDER BY ip.company_id DESC NULLS LAST
+                    LIMIT 1
+                ),
+                (
+                    SELECT ip.value_text
+                    FROM ir_property ip
+                    WHERE ip.name = 'property_cost_method'
+                      AND ip.res_id IS NULL
+                      AND (ip.company_id = sml.company_id OR ip.company_id IS NULL)
+                    ORDER BY ip.company_id DESC NULLS LAST
+                    LIMIT 1
+                ),
+                'standard'
+            )
+        """
+
         query = f"""
+            WITH svl_cost AS (
+                SELECT
+                    svl.product_id,
+                    CASE
+                        WHEN SUM(svl.quantity) > 0
+                        THEN SUM(svl.value) / SUM(svl.quantity)
+                        ELSE NULL
+                    END AS avg_unit_cost
+                FROM stock_valuation_layer svl
+                WHERE {svl_where_clause}
+                GROUP BY svl.product_id
+            ),
+            latest_svl_cost AS (
+                SELECT DISTINCT ON (svl2.product_id)
+                    svl2.product_id,
+                    svl2.unit_cost
+                FROM stock_valuation_layer svl2
+                WHERE {svl_where_clause}
+                  AND svl2.unit_cost > 0
+                ORDER BY svl2.product_id, svl2.create_date DESC, svl2.id DESC
+            )
             INSERT INTO stock_location_at_date_report (
                 create_uid,
                 create_date,
@@ -126,6 +197,7 @@ class StockLocationAtDateWizard(models.TransientModel):
                 product_id,
                 product_tmpl_id,
                 categ_id,
+                cost_method,
                 uom_id,
                 lot_id,
                 package_id,
@@ -144,6 +216,7 @@ class StockLocationAtDateWizard(models.TransientModel):
                 sml.product_id AS product_id,
                 pp.product_tmpl_id AS product_tmpl_id,
                 pt.categ_id AS categ_id,
+                {cost_method_subquery} AS cost_method,
                 pt.uom_id AS uom_id,
                 sml.lot_id AS lot_id,
                 sml.package_id AS package_id,
@@ -164,10 +237,13 @@ class StockLocationAtDateWizard(models.TransientModel):
             JOIN product_product pp ON pp.id = sml.product_id
             JOIN product_template pt ON pt.id = pp.product_tmpl_id
             JOIN stock_location loc ON loc.id IN (sml.location_id, sml.location_dest_id)
+            LEFT JOIN svl_cost ON svl_cost.product_id = sml.product_id
+            LEFT JOIN latest_svl_cost ON latest_svl_cost.product_id = sml.product_id
             WHERE {where_clause}
             GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage,
                      sml.product_id, pp.product_tmpl_id, pt.categ_id, pt.uom_id,
-                     sml.lot_id, sml.package_id, pp.id, pt.id
+                     sml.lot_id, sml.package_id, pp.id, pt.id,
+                     svl_cost.avg_unit_cost, latest_svl_cost.unit_cost
             HAVING SUM(
                 CASE WHEN sml.location_dest_id = loc.id
                      THEN sml.quantity_product_uom

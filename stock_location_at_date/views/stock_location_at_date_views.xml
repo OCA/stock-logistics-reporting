@@ -11,6 +11,7 @@
                 <field name="location_complete_name" string="Location" />
                 <field name="product_id" />
                 <field name="categ_id" optional="show" />
+                <field name="cost_method" optional="show" />
                 <field name="lot_id" optional="show" />
                 <field name="package_id" optional="hide" />
                 <field name="uom_id" string="UoM" optional="show" />
@@ -36,6 +37,7 @@
                 <field name="location_id" string="Location" />
                 <field name="product_id" string="Product" />
                 <field name="categ_id" string="Product Category" />
+                <field name="cost_method" string="Costing Method" />
                 <field name="lot_id" string="Lot / Serial No." />
                 <group>
                     <filter
@@ -52,6 +54,11 @@
                         name="group_by_category"
                         string="Product Category"
                         context="{'group_by': 'categ_id'}"
+                    />
+                    <filter
+                        name="group_by_cost_method"
+                        string="Costing Method"
+                        context="{'group_by': 'cost_method'}"
                     />
                     <filter
                         name="group_by_lot"
@@ -83,19 +90,10 @@
         <field name="model">stock.location.at.date.report</field>
         <field name="arch" type="xml">
             <graph string="Location Inventory At Date" type="bar" stacked="True">
-                <field name="location_id" type="row" />
-                <field name="quantity" type="measure" />
+                <field name="location_id" />
+                <field name="total_value" type="measure" />
             </graph>
         </field>
-    </record>
-
-    <!-- Window Action -->
-    <record id="action_stock_location_at_date_report" model="ir.actions.act_window">
-        <field name="name">Location Inventory At Date</field>
-        <field name="res_model">stock.location.at.date.report</field>
-        <field name="view_mode">tree,pivot,graph</field>
-        <field name="search_view_id" ref="view_stock_location_at_date_report_search" />
-        <field name="context">{'search_default_group_by_location': 1}</field>
     </record>
 
 </odoo>
