@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Wizard Form View -->
+    <record id="view_stock_location_at_date_wizard_form" model="ir.ui.view">
+        <field name="name">stock.location.at.date.wizard.form</field>
+        <field name="model">stock.location.at.date.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Location Inventory At Date">
+                <group>
+                    <group>
+                        <field name="at_date" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                    </group>
+                </group>
+                <group string="Filters (Optional)">
+                    <field
+                        name="location_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                    <field
+                        name="category_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                    <field
+                        name="product_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_open_report"
+                        string="View Inventory"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="action_stock_location_at_date_wizard" model="ir.actions.act_window">
+        <field name="name">Location Inventory At Date</field>
+        <field name="res_model">stock.location.at.date.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu Item under Inventory > Reporting -->
+    <menuitem
+        id="menu_stock_location_at_date_wizard"
+        name="Location Inventory At Date"
+        parent="stock.menu_warehouse_report"
+        action="action_stock_location_at_date_wizard"
+        sequence="25"
+    />
+
+</odoo>
