@@ -89,6 +89,49 @@ class StockLocationAtDateWizard(models.TransientModel):
 
         where_clause = SQL(" AND ").join(where_conditions)
 
+        cost_method_sql = SQL(
+            """
+            COALESCE(
+                pc.property_cost_method->>sml.company_id::text,
+                rc.cost_method,
+                'standard'
+            )
+            """
+        )
+
+        hist_std_price_sql = SQL(
+            """
+            COALESCE(
+                (
+                    SELECT pv.value
+                    FROM product_value pv
+                    WHERE pv.product_id = sml.product_id
+                      AND pv.company_id = sml.company_id
+                      AND pv.date <= %s
+                    ORDER BY pv.date DESC, pv.id DESC
+                    LIMIT 1
+                ),
+                (pp.standard_price->>sml.company_id::text)::numeric,
+                0.0
+            )
+            """,
+            utc_cutoff,
+        )
+
+        cost_sql = SQL(
+            """
+            CASE
+                WHEN %(cost_method)s = 'standard' THEN %(hist_std_price)s
+                ELSE COALESCE(
+                    NULLIF((sm.value / NULLIF(sm.quantity, 0)), 0),
+                    %(hist_std_price)s
+                )
+            END
+            """,
+            cost_method=cost_method_sql,
+            hist_std_price=hist_std_price_sql,
+        )
+
         query = SQL(
             """
             INSERT INTO stock_location_at_date_report (
@@ -102,6 +145,7 @@ class StockLocationAtDateWizard(models.TransientModel):
                 product_id,
                 product_tmpl_id,
                 categ_id,
+                cost_method,
                 uom_id,
                 lot_id,
                 package_id,
@@ -110,9 +154,9 @@ class StockLocationAtDateWizard(models.TransientModel):
                 total_value
             )
             SELECT
-                %s AS create_uid,
+                %(uid)s AS create_uid,
                 NOW() AS create_date,
-                %s AS at_date,
+                %(at_date)s AS at_date,
                 sml.company_id AS company_id,
                 loc.id AS location_id,
                 loc.complete_name AS location_complete_name,
@@ -120,6 +164,7 @@ class StockLocationAtDateWizard(models.TransientModel):
                 sml.product_id AS product_id,
                 pp.product_tmpl_id AS product_tmpl_id,
                 pt.categ_id AS categ_id,
+                %(cost_method)s AS cost_method,
                 pt.uom_id AS uom_id,
                 sml.lot_id AS lot_id,
                 sml.package_id AS package_id,
@@ -129,29 +174,24 @@ class StockLocationAtDateWizard(models.TransientModel):
                          ELSE -sml.quantity_product_uom
                     END
                 ) AS quantity,
-                COALESCE(
-                    NULLIF((sm.value / NULLIF(sm.quantity, 0)), 0),
-                    (pp.standard_price->>sml.company_id::text)::numeric,
-                    0.0
-                ) AS unit_cost,
+                %(cost)s AS unit_cost,
                 SUM(
                     CASE WHEN sml.location_dest_id = loc.id
                          THEN sml.quantity_product_uom
                          ELSE -sml.quantity_product_uom
                     END
-                ) * COALESCE(
-                    NULLIF((sm.value / NULLIF(sm.quantity, 0)), 0),
-                    (pp.standard_price->>sml.company_id::text)::numeric,
-                    0.0
-                ) AS total_value
+                ) * %(cost)s AS total_value
             FROM stock_move_line sml
             JOIN stock_move sm ON sm.id = sml.move_id
             JOIN product_product pp ON pp.id = sml.product_id
             JOIN product_template pt ON pt.id = pp.product_tmpl_id
+            JOIN product_category pc ON pc.id = pt.categ_id
+            JOIN res_company rc ON rc.id = sml.company_id
             JOIN stock_location loc ON loc.id IN (sml.location_id, sml.location_dest_id)
-            WHERE %s
+            WHERE %(where)s
             GROUP BY sml.company_id, loc.id, loc.complete_name, loc.usage,
                      sml.product_id, pp.product_tmpl_id, pt.categ_id,
+                     pc.property_cost_method, rc.cost_method,
                      pt.uom_id, sml.lot_id, sml.package_id,
                      pp.standard_price, sm.value, sm.quantity
             HAVING SUM(
@@ -161,9 +201,11 @@ class StockLocationAtDateWizard(models.TransientModel):
                 END
             ) != 0
             """,
-            self.env.user.id,
-            self.at_date,
-            where_clause,
+            uid=self.env.user.id,
+            at_date=self.at_date,
+            cost_method=cost_method_sql,
+            cost=cost_sql,
+            where=where_clause,
         )
         self.env.cr.execute(query)
 

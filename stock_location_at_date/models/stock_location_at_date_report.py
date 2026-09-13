@@ -37,6 +37,15 @@ class StockLocationAtDateReport(models.Model):
     categ_id = fields.Many2one(
         "product.category", string="Product Category", readonly=True
     )
+    cost_method = fields.Selection(
+        selection=[
+            ("standard", "Standard Price"),
+            ("average", "Average Cost (AVCO)"),
+            ("fifo", "FIFO"),
+        ],
+        string="Costing Method",
+        readonly=True,
+    )
     uom_id = fields.Many2one("uom.uom", string="Unit of Measure", readonly=True)
 
     lot_id = fields.Many2one("stock.lot", string="Lot / Serial No.", readonly=True)
@@ -68,6 +77,7 @@ class StockLocationAtDateReport(models.Model):
                     product_id INTEGER,
                     product_tmpl_id INTEGER,
                     categ_id INTEGER,
+                    cost_method VARCHAR,
                     uom_id INTEGER,
                     lot_id INTEGER,
                     package_id INTEGER,
