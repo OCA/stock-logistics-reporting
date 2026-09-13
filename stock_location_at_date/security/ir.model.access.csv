@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_location_at_date_report,stock.location.at.date.report,model_stock_location_at_date_report,stock.group_stock_user,1,0,0,0
+access_stock_location_at_date_wizard,stock.location.at.date.wizard,model_stock_location_at_date_wizard,stock.group_stock_user,1,1,1,1
