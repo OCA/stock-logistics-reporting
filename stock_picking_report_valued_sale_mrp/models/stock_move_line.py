@@ -1,6 +1,10 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMoveLine(models.Model):
@@ -75,7 +79,16 @@ class StockMoveLine(models.Model):
                     lambda x: x.product_id == phantom_line.product_id
                 ).mapped("qty_done")
             )
-            quantity = phantom_line_qty_done / components_per_kit
+            if components_per_kit:
+                quantity = phantom_line_qty_done / components_per_kit
+            else:
+                quantity = 0.0
+                _logger.warning(
+                    "Kit %s in picking %s: components per kit could not be "
+                    "determined, valued quantity set to 0",
+                    sale_line.product_id.display_name,
+                    phantom_line.picking_id.name,
+                )
             taxes = phantom_line.sale_tax_id.compute_all(
                 price_unit=price_unit,
                 currency=phantom_line.currency_id,
