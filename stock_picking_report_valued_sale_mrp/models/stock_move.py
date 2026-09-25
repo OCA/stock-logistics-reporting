@@ -10,7 +10,13 @@ class StockMove(models.Model):
     def _get_components_per_kit(self):
         """Compute how many kit components were demanded from this line. We
         rely on the matching of sale order and pickings demands, but if those
-        were manually changed, it could lead to inconsistencies"""
+        were manually changed, it could lead to inconsistencies.
+
+        A negative sale line is a return: the core turns negative demand into
+        return moves (see stock.move._action_confirm), so its moves are its
+        own demand even when they are linked to the delivery they return.
+        Only the moves returning a move of the same line (the return sent
+        back to the customer) are left out."""
         self.ensure_one()
         sale_line = self.sale_line_id
         if (
@@ -20,10 +26,24 @@ class StockMove(models.Model):
             or not sale_line.product_uom_qty
         ):
             return 0.0
+        is_return_line = (
+            float_compare(
+                sale_line.product_uom_qty,
+                0,
+                precision_rounding=sale_line.product_uom.rounding,
+            )
+            < 0
+        )
         # Moves returning the demand of the line are not demand themselves.
         demand_moves = sale_line.move_ids.filtered(
             lambda x: x.product_id == self.product_id
-            and not x.origin_returned_move_id
+            and (
+                not x.origin_returned_move_id
+                or (
+                    is_return_line
+                    and x.origin_returned_move_id.sale_line_id != sale_line
+                )
+            )
             and (
                 x.state != "cancel"
                 or (x.state == "cancel" and x.picking_id.backorder_id)
@@ -39,7 +59,7 @@ class StockMove(models.Model):
                 "product_uom_qty"
             )
         ) or max(demand_moves.mapped("product_uom_qty"), default=0.0)
-        return component_demand / sale_line.product_uom_qty
+        return component_demand / abs(sale_line.product_uom_qty)
 
     def _is_fully_returned(self, move):
         """Tell whether everything the move demanded has been returned."""
