@@ -1,7 +1,8 @@
 # Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import timedelta
+from datetime import date, datetime, timedelta
+from unittest import mock
 
 from freezegun import freeze_time
 
@@ -9,10 +10,64 @@ from odoo import fields
 from odoo.exceptions import UserError
 from odoo.fields import Command
 
+from odoo.addons.stock_product_demand_info.models.product_demand_period import (
+    parse_date,
+    parse_iso_date,
+)
+
 from .common import StockProductDemandInfoCommon
 
 
 class TestProductDemandPeriod(StockProductDemandInfoCommon):
+    def test_parse_iso_date_datetime_zulu(self):
+        value = parse_iso_date("2026-05-28T12:30:45Z")
+        self.assertIsInstance(value, datetime)
+        self.assertIsNotNone(value.tzinfo)
+
+    def test_parse_iso_date_invalid(self):
+        with self.assertRaisesRegex(ValueError, "Invalid term"):
+            parse_iso_date("2026-99-99")
+
+    def test_parse_date_empty(self):
+        with self.assertRaisesRegex(ValueError, "Empty date value"):
+            parse_date("   ", self.env)
+
+    def test_parse_date_invalid_term_operator(self):
+        with self.assertRaisesRegex(ValueError, "Invalid term"):
+            parse_date("today *2d", self.env)
+
+    @freeze_time("2026-05-27 16:45:00")
+    def test_parse_date_weekday_and_week_start(self):
+        next_monday = parse_date("today +monday", self.env)
+        previous_monday = parse_date("today -monday", self.env)
+        week_start = parse_date("today +week_start", self.env)
+
+        self.assertIsInstance(next_monday, date)
+        self.assertIsInstance(previous_monday, date)
+        self.assertIsInstance(week_start, date)
+        self.assertLessEqual(previous_monday, next_monday)
+
+    @freeze_time("2026-05-27 16:45:00")
+    def test_parse_date_equal_weekday_truncates_datetime(self):
+        value = parse_date("now =monday", self.env, naive=False)
+        self.assertIsInstance(value, datetime)
+        self.assertEqual(value.hour, 0)
+        self.assertEqual(value.minute, 0)
+        self.assertEqual(value.second, 0)
+
+    def test_parse_date_equal_week_not_supported(self):
+        with self.assertRaisesRegex(ValueError, "Invalid term"):
+            parse_date("now =1w", self.env)
+
+    @freeze_time("2026-05-27 16:45:00")
+    def test_parse_date_naive_timezone_conversion(self):
+        aware = parse_date("now", self.env, naive=False)
+        naive = parse_date("now", self.env, naive=True)
+        self.assertIsInstance(aware, datetime)
+        self.assertIsNotNone(aware.tzinfo)
+        self.assertIsInstance(naive, datetime)
+        self.assertIsNone(naive.tzinfo)
+
     def test_validation_invalid_expression_create(self):
         with self.assertRaisesRegex(UserError, "Invalid date expression"):
             self.env["product.demand.period"].create(
@@ -70,6 +125,25 @@ class TestProductDemandPeriod(StockProductDemandInfoCommon):
         self.assertEqual(self.orderpoint.demand_period_info[key]["value"], 7.0)
         self.assertEqual(self.orderpoint.demand_period_info[key]["name"], "Last 7 days")
 
+    def test_orderpoint_without_product(self):
+        orderpoint = self.env["stock.warehouse.orderpoint"].new(
+            {
+                "warehouse_id": self.warehouse.id,
+            }
+        )
+        orderpoint._compute_demand_period_info()
+        self.assertFalse(orderpoint.demand_period_info)
+
+    def test_orderpoint_missing_product_key_in_values(self):
+        self.period_7d.active = True
+        with mock.patch.object(
+            type(self.product),
+            "_get_demand_period_info",
+            return_value={},
+        ):
+            self.orderpoint.invalidate_recordset(["demand_period_info"])
+            self.assertFalse(self.orderpoint.demand_period_info)
+
     @freeze_time("2026-05-28 12:00:00")
     def test_ytd_excludes_today(self):
         """Test YTD demand excludes outgoing moves dated today."""
@@ -122,8 +196,7 @@ class TestProductDemandPeriod(StockProductDemandInfoCommon):
         template = self.env["product.template"].create(
             {
                 "name": "Product With Variants",
-                "type": "consu",
-                "is_storable": True,
+                "detailed_type": "product",
                 "uom_id": self.env.ref("uom.product_uom_unit").id,
                 "attribute_line_ids": [
                     Command.create(

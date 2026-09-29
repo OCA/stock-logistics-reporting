@@ -12,7 +12,7 @@
                 <group
                     string="Demand by period"
                     name="demand_period_info_group"
-                    invisible="not is_storable"
+                    invisible="detailed_type != 'product'"
                 >
                     <label for="demand_period_info" colspan="2" />
                     <field

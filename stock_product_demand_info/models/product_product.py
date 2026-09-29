@@ -6,8 +6,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from odoo import api, fields, models
-from odoo.fields import Domain
+from odoo.osv import expression
 from odoo.tools.misc import formatLang
+
+from .product_demand_period import parse_date
 
 if TYPE_CHECKING:
     from typing import Any
@@ -31,7 +33,7 @@ class ProductProduct(models.Model):
     @api.model
     def _get_demand_period_moves_location_domain(
         self, warehouse: StockWarehouse | None = None
-    ) -> Domain:
+    ) -> list:
         """Return the location domain for demand moves.
 
         Strongly inspired by ``_get_monthly_demand_moves_location_domain`` in
@@ -42,34 +44,18 @@ class ProductProduct(models.Model):
         - Without warehouse (product form): all outgoing to customer or production.
         """
         if warehouse:
-            return Domain.AND(
+            return expression.AND(
                 [
-                    Domain("location_id.warehouse_id", "=", warehouse.id),
-                    Domain.OR(
-                        [
-                            Domain("location_dest_id.warehouse_id", "!=", warehouse.id),
-                            Domain(
-                                "location_final_id.warehouse_id", "!=", warehouse.id
-                            ),
-                        ]
-                    ),
-                    Domain("location_dest_id.usage", "!=", "inventory"),
+                    [("location_id.warehouse_id", "=", warehouse.id)],
+                    [("location_dest_id.warehouse_id", "!=", warehouse.id)],
+                    [("location_dest_id.usage", "!=", "inventory")],
                 ]
             )
         # No warehouse: all outgoing to customer or production (exclude inventory)
-        return Domain.AND(
+        return expression.AND(
             [
-                Domain.OR(
-                    [
-                        Domain(
-                            "location_dest_id.usage", "in", ["customer", "production"]
-                        ),
-                        Domain(
-                            "location_final_id.usage", "in", ["customer", "production"]
-                        ),
-                    ]
-                ),
-                Domain("location_dest_id.usage", "!=", "inventory"),
+                [("location_dest_id.usage", "in", ["customer", "production"])],
+                [("location_dest_id.usage", "!=", "inventory")],
             ]
         )
 
@@ -79,23 +65,26 @@ class ProductProduct(models.Model):
         warehouse: StockWarehouse | None,
         period: ProductDemandPeriod,
         product_ids: list[int],
-    ) -> Domain:
+    ) -> list:
         """Return the full domain for demand moves in the given period."""
-        moves_states = ["assigned", "confirmed", "partially_available", "done"]
-        base_domain = Domain(
-            [
-                ("company_id", "=", self.env.company.id),
-                ("product_id", "in", product_ids),
-                ("date", ">=", period.start_expression),
-                ("date", "<=", period.end_expression),
-                # Demand history is based on completed days only,
-                # so we exclude moves of the current day (even if they are done).
-                ("date", "<", "today"),
-                ("state", "in", moves_states),
-                ("product_qty", ">", 0),
-            ]
+        start = fields.Datetime.to_datetime(
+            parse_date(period.start_expression, self.env)
         )
-        return Domain.AND(
+        end = fields.Datetime.to_datetime(parse_date(period.end_expression, self.env))
+        today_start = fields.Datetime.to_datetime(fields.Date.context_today(self))
+        moves_states = ["assigned", "confirmed", "partially_available", "done"]
+        base_domain = [
+            ("company_id", "=", self.env.company.id),
+            ("product_id", "in", product_ids),
+            ("date", ">=", start),
+            ("date", "<=", end),
+            # Demand history is based on completed days only,
+            # so we exclude moves of the current day (even if they are done).
+            ("date", "<", today_start),
+            ("state", "in", moves_states),
+            ("product_qty", ">", 0),
+        ]
+        return expression.AND(
             [base_domain, self._get_demand_period_moves_location_domain(warehouse)]
         )
 

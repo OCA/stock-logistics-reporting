@@ -34,8 +34,7 @@ class StockProductDemandInfoCommon(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product Demand",
-                "type": "consu",
-                "is_storable": True,
+                "detailed_type": "product",
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
@@ -55,7 +54,9 @@ class StockProductDemandInfoCommon(TransactionCase):
             warehouse = cls.warehouse
         return cls.env["stock.move"].create(
             {
+                "name": product.display_name,
                 "product_id": product.id,
+                "product_uom": product.uom_id.id,
                 "product_uom_qty": qty,
                 "date": fields.Datetime.to_datetime(date),
                 "location_id": warehouse.lot_stock_id.id,

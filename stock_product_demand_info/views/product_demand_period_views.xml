@@ -7,13 +7,13 @@
     <record id="view_product_demand_period_list" model="ir.ui.view">
         <field name="model">product.demand.period</field>
         <field name="arch" type="xml">
-            <list string="Demand periods" editable="bottom">
+            <tree editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="start_expression" />
                 <field name="end_expression" />
                 <field name="active" widget="boolean_toggle" />
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -45,7 +45,7 @@
     <record id="action_product_demand_period" model="ir.actions.act_window">
         <field name="name">Demand periods</field>
         <field name="res_model">product.demand.period</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{'active_test': False}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
