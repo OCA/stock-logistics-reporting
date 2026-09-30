@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_create,perm_write,perm_unlink,perm_read
+access_product_demand_period_user,Product Demand Period (User),stock_product_demand_info.model_product_demand_period,stock.group_stock_user,0,0,0,1
+access_product_demand_period_manager,Product Demand Period (Manager),stock_product_demand_info.model_product_demand_period,stock.group_stock_manager,1,1,1,1
