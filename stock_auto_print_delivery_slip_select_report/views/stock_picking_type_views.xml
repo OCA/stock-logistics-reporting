@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Tecnativa - Carlos Roca
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <field name="auto_print_delivery_slip" position="before">
+                <label for="auto_print_delivery_slip" string="Delivery Slip" />
+                <div class="o_row" name="delivery_slip_report">
+                    <label
+                        for="delivery_slip_report_id"
+                        string="Print report:"
+                        invisible="not auto_print_delivery_slip"
+                        class="fw-bold"
+                    />
+                    <field
+                        name="delivery_slip_report_id"
+                        invisible="not auto_print_delivery_slip"
+                        options="{'no_create': True, 'no_open': True}"
+                    />
+                </div>
+            </field>
+            <xpath
+                expr="//div[@name='delivery_slip_report']/label[@for='delivery_slip_report_id']"
+                position="before"
+            >
+                <xpath
+                    expr="//field[@name='auto_print_delivery_slip']"
+                    position="move"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
