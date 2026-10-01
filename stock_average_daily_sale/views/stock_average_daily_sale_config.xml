@@ -17,6 +17,7 @@
                 <field name="period_name" />
                 <field name="number_days_qty_in_stock" />
                 <field name="safety_factor" />
+                <field name="number_sales_qty_in_stock" />
             </tree>
         </field>
     </record>
@@ -40,6 +41,7 @@
                             <field name="period_name" />
                             <field name="number_days_qty_in_stock" />
                             <field name="safety_factor" />
+                            <field name="number_sales_qty_in_stock" />
                         </group>
                     </group>
                 </sheet>
