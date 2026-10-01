@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
     ABC_SELECTION,
@@ -13,6 +14,14 @@ class StockAverageDailySaleConfig(models.Model):
     _name = "stock.average.daily.sale.config"
     _description = "Average daily sales computation parameters"
     _check_company_auto = True
+
+    _inherit = ["mail.thread"]
+
+    _STRATEGY_FIELDS = (
+        "use_average_daily_strategy",
+        "use_average_sales_strategy",
+        "use_max_sales_strategy",
+    )
 
     active = fields.Boolean(default=True)
     abc_classification_level = fields.Selection(
@@ -60,10 +69,22 @@ class StockAverageDailySaleConfig(models.Model):
         required=True,
     )
     period_value = fields.Integer("Period analyzed value", required=True)
+    use_average_daily_strategy = fields.Boolean(default=True, tracking=True)
     number_days_qty_in_stock = fields.Integer(
-        string="Number of days of quantities in stock", required=True, default=2
+        string="Number of days of quantities in stock",
+        required=True,
+        default=2,
+        tracking=True,
     )
-    safety_factor = fields.Float(digits=(2, 2), required=True)
+    safety_factor = fields.Float(digits=(2, 2), required=True, tracking=True)
+    use_average_sales_strategy = fields.Boolean(tracking=True)
+    number_sales_qty_in_stock = fields.Integer(
+        string="Number of sales quantities in stock",
+        required=True,
+        default=2,
+        tracking=True,
+    )
+    use_max_sales_strategy = fields.Boolean(tracking=True)
 
     _sql_constraints = [
         (
@@ -72,6 +93,12 @@ class StockAverageDailySaleConfig(models.Model):
             _("Abc Classification Level must be unique per location"),
         )
     ]
+
+    @api.constrains(*_STRATEGY_FIELDS)
+    def _check_at_least_one_strategy(self):
+        for rec in self:
+            if not any(getattr(rec, field) for field in self._STRATEGY_FIELDS):
+                raise UserError(_("There should be at least one strategy selected."))
 
     @api.depends("warehouse_id")
     def _compute_average_daily_sale_root_location_id(self):

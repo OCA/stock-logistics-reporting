@@ -17,6 +17,7 @@
                 <field name="period_name" />
                 <field name="number_days_qty_in_stock" />
                 <field name="safety_factor" />
+                <field name="number_sales_qty_in_stock" />
             </tree>
         </field>
     </record>
@@ -33,16 +34,53 @@
                             <field name="location_id" />
                             <field name="company_id" />
                             <field name="abc_classification_level" />
-                            <field name="exclude_weekends" />
                         </group>
                         <group>
                             <field name="period_value" />
                             <field name="period_name" />
-                            <field name="number_days_qty_in_stock" />
-                            <field name="safety_factor" />
+                            <field name="exclude_weekends" />
+                        </group>
+                    </group>
+                    <group name="strategies" string="Strategies">
+                        <group
+                            name="average_daily_strategy"
+                            string="Average Daily Usage"
+                        >
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Target quantity = (Number of Days × Average Daily Quantity) + Safety Buffer.
+                            </div>
+                            <field name="use_average_daily_strategy" />
+                            <field
+                                name="number_days_qty_in_stock"
+                                attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
+                            />
+                            <field
+                                name="safety_factor"
+                                attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
+                            />
+                        </group>
+                        <group name="average_sales_strategy" string="Average Sales">
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Target quantity = Number of Sales to Cover × Average Quantity per Sale.
+                            </div>
+                            <field name="use_average_sales_strategy" />
+                            <field
+                                name="number_sales_qty_in_stock"
+                                attrs="{'invisible': [('use_average_sales_strategy', '=', False)]}"
+                            />
+                        </group>
+                        <group name="max_sales_strategy" string="Max Sales">
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Target quantity = Max Quantity in one Sale.
+                            </div>
+                            <field name="use_max_sales_strategy" />
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>
