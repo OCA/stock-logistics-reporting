@@ -90,19 +90,42 @@ class StockAverageDailySale(models.Model):
         required=True,
         compute="_compute_recommended_qty",
         digits="Product Unit of Measure",
-        help="Minimal recommended quantity in stock. Formula: average daily qty * number days in stock + safety",
+        help="Minimal recommended quantity in stock. Equal to the max "
+        "recommended quantity across all active strategies.",
     )
 
+    def _get_strategy_qty_average_daily(self):
+        if not self.config_id.use_average_daily_strategy:
+            return 0.0
+        return (
+            self.config_id.number_days_qty_in_stock * self.average_daily_qty
+        ) + self.safety
+
+    def _get_strategy_qty_average_sales(self):
+        if not self.config_id.use_average_sales_strategy:
+            return 0.0
+        return self.config_id.number_sales_qty_in_stock * self.average_qty_by_sale
+
+    def _get_strategy_qty_max_sales(self):
+        if not self.config_id.use_max_sales_strategy:
+            return 0.0
+        return self.max_daily_qty
+
+    def _get_strategy_methods(self):
+        """Collect all strategy calculation methods matching prefix `_get_strategy_qty_`."""
+        methods = []
+        for attr_name in dir(self):
+            if attr_name.startswith("_get_strategy_qty_"):
+                attr = getattr(self, attr_name)
+                if callable(attr):
+                    methods.append(attr)
+        return methods
+
     def _compute_recommended_qty(self):
+        strategy_methods = self._get_strategy_methods()
         for rec in self:
-            average_daily = (
-                rec.config_id.number_days_qty_in_stock * rec.average_daily_qty
-                + rec.safety
-            )
-            average_sale = (
-                rec.config_id.number_sales_qty_in_stock * rec.average_qty_by_sale
-            )
-            rec.recommended_qty = max(average_daily, average_sale)
+            strategy_qtys = [method() for method in strategy_methods]
+            rec.recommended_qty = max(strategy_qtys, default=0.0)
 
     sale_ok = fields.Boolean(
         string="Can be Sold",
