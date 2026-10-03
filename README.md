@@ -38,6 +38,7 @@ addon | version | maintainers | summary
 [stock_quant_history](stock_quant_history/) | 17.0.1.0.0 | <a href='https://github.com/petrus-v'><img src='https://github.com/petrus-v.png' width='32' height='32' style='border-radius:50%;' alt='petrus-v'/></a> | Re-generate stock quants for given date
 [stock_quant_history_queued](stock_quant_history_queued/) | 17.0.1.0.0 | <a href='https://github.com/petrus-v'><img src='https://github.com/petrus-v.png' width='32' height='32' style='border-radius:50%;' alt='petrus-v'/></a> | Use Queue jop to generate stock quants snapshots
 [stock_quantity_history_location](stock_quantity_history_location/) | 17.0.1.0.0 | <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> <a href='https://github.com/rolandojduartem'><img src='https://github.com/rolandojduartem.png' width='32' height='32' style='border-radius:50%;' alt='rolandojduartem'/></a> | Provides stock quantity by location on past date
+[stock_report_partner_ref](stock_report_partner_ref/) | 17.0.1.0.0 | <a href='https://github.com/Binhex Systems Solutions S.L'><img src='https://github.com/Binhex Systems Solutions S.L.png' width='32' height='32' style='border-radius:50%;' alt='Binhex Systems Solutions S.L'/></a> | Adds customer reference to stock picking reports
 
 [//]: # (end addons)
 
