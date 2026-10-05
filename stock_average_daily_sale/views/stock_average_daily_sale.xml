@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_daily_sale_search_view">
+        <field name="name">stock.daily.sale.search (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale</field>
+        <field name="arch" type="xml">
+            <search string="Search Average Daily Sale">
+                <field name="product_id" />
+                <field
+                    name="warehouse_id"
+                    groups="stock.group_stock_multi_warehouses"
+                />
+                <field name="location_id" groups="stock.group_adv_location" />
+                <separator />
+                <filter
+                    string="Can be Sold"
+                    name="filter_to_sell"
+                    domain="[('sale_ok','=',1)]"
+                />
+                <separator />
+                <filter
+                    string="Normal product"
+                    name="normal_product"
+                    domain="[('is_mto','=',False)]"
+                />
+                <filter
+                    string="On Order"
+                    name="on_order"
+                    domain="[('is_mto','=',True)]"
+                />
+                <group expand='0' string='Group by...'>
+                    <filter
+                        string="Warehouse"
+                        name="group_by_warehouse"
+                        domain="[]"
+                        context="{'group_by': 'warehouse_id'}"
+                        groups="stock.group_stock_multi_warehouses"
+                    />
+                    <filter
+                        string="Location"
+                        name="group_by_location"
+                        domain="[]"
+                        context="{'group_by': 'location_id'}"
+                        groups="stock.group_adv_location"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stockdaily_sale_tree_view">
+        <field name="name">stock.daily.sale.tree (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field
+                    name="warehouse_id"
+                    groups="stock.group_stock_multi_warehouses"
+                />
+                <field name="location_id" groups="stock.group_adv_location" />
+                <field name="product_id" />
+                <field name="date_from" optional="hide" />
+                <field name="date_to" optional="hide" />
+                <field name="abc_classification_level" optional="show" />
+                <field name="nbr_sales" optional="show" />
+                <field name="average_qty_by_sale" optional="show" />
+                <field name="average_daily_sales_count" optional="show" />
+                <field name="average_daily_qty" optional="show" />
+                <field name="safety" optional="show" />
+                <field name="recommended_qty" optional="show" />
+            </list>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="stockdaily_sale_form_view">
+        <field name="name">stock.daily.sale.form (in stock_average_daily_sale)</field>
+        <field name="model">stock.average.daily.sale</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <group>
+                    <group>
+                        <field
+                            name="warehouse_id"
+                            groups="stock.group_stock_multi_warehouses"
+                        />
+                        <field name="location_id" groups="stock.group_adv_location" />
+                        <field name="product_id" />
+                        <field name="abc_classification_level" />
+                        <field name="sale_ok" />
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <group>
+                        <field name="nbr_sales" />
+                        <field name="average_qty_by_sale" />
+                        <field name="average_daily_sales_count" />
+                        <field name="max_daily_qty" />
+                        <field name="average_daily_qty" />
+                        <field name="daily_standard_deviation" />
+                        <field name="safety" />
+                        <field name="recommended_qty" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="stock_average_daily_sale_act_window">
+        <field name="name">Average Daily Sales</field>
+        <field name="res_model">stock.average.daily.sale</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field
+            name="context"
+        >{"search_default_filter_to_sell":1, "search_default_normal_product": 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data found.
+
+                You maybe need to launch the cron to refresh the average daily sale data.
+            </p>
+        </field>
+    </record>
+    <record model="ir.ui.menu" id="stock_average_daily_sale_menu">
+        <field name="name">Average Daily Sales</field>
+        <field name="parent_id" ref="stock.menu_warehouse_report" />
+        <field name="action" ref="stock_average_daily_sale_act_window" />
+        <field name="sequence" eval="99" />
+    </record>
+</odoo>
