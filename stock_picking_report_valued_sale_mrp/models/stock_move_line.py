@@ -1,5 +1,6 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 
 
@@ -75,7 +76,9 @@ class StockMoveLine(models.Model):
                     lambda x: x.product_id == phantom_line.product_id
                 ).mapped("qty_done")
             )
-            quantity = phantom_line_qty_done / components_per_kit
+            quantity = (
+                phantom_line_qty_done / components_per_kit if components_per_kit else 0
+            )
             taxes = phantom_line.sale_tax_id.compute_all(
                 price_unit=price_unit,
                 currency=phantom_line.currency_id,
