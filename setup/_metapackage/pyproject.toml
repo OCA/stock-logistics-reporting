@@ -7,6 +7,7 @@ dependencies = [
     "odoo-addon-stock_picking_report_custom_description==19.0.*",
     "odoo-addon-stock_picking_report_external_note==19.0.*",
     "odoo-addon-stock_picking_report_valued==19.0.*",
+    "odoo-addon-stock_portal_lot_list_download==19.0.*",
     "odoo-addon-stock_product_demand_info==19.0.*",
 ]
 classifiers=[
