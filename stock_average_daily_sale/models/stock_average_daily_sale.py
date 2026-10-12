@@ -92,6 +92,7 @@ class StockAverageDailySale(models.Model):
         digits="Product Unit of Measure",
         help="Minimal recommended quantity in stock. Formula: average daily qty * number days in stock + safety",
     )
+    recommended_qty_details = fields.Char(compute="_compute_recommended_qty")
 
     def _compute_recommended_qty(self):
         for rec in self:
@@ -99,6 +100,11 @@ class StockAverageDailySale(models.Model):
             average_daily = lt * rec.average_daily_qty + rec.safety
             average_sale = lt * rec.average_qty_by_sale
             rec.recommended_qty = max(average_daily, average_sale)
+            rec.recommended_qty_details = _(
+                "Average Daily: %(average_daily).2f | Average Sale: %(average_sale).2f",
+                average_daily=average_daily,
+                average_sale=average_sale,
+            )
 
     sale_ok = fields.Boolean(
         string="Can be Sold",
