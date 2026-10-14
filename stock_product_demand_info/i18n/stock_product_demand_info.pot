@@ -43,11 +43,13 @@ msgstr ""
 #. module: stock_product_demand_info
 #. odoo-javascript
 #: code:addons/stock_product_demand_info/static/src/widgets/demand_period_info.xml:0
+#: code:addons/stock_product_demand_info/static/src/widgets/demand_period_info.xml:0
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__demand_period_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__demand_period_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__demand_period_info
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.product_template_form_view
 #: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_stock_warehouse_orderpoint_form_demand_period
+#, python-format
 msgid "Demand by period"
 msgstr ""
 
@@ -59,16 +61,11 @@ msgstr ""
 #. module: stock_product_demand_info
 #: model:ir.actions.act_window,name:stock_product_demand_info.action_product_demand_period
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__demand_period_ids
-#: model_terms:ir.ui.view,arch_db:stock_product_demand_info.view_product_demand_period_list
 msgid "Demand periods"
 msgstr ""
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__display_name
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__display_name
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__display_name
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -93,10 +90,6 @@ msgstr ""
 
 #. module: stock_product_demand_info
 #: model:ir.model.fields,field_description:stock_product_demand_info.field_product_demand_period__id
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_product__id
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_product_template__id
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_res_config_settings__id
-#: model:ir.model.fields,field_description:stock_product_demand_info.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr ""
 
@@ -108,6 +101,7 @@ msgstr ""
 #. module: stock_product_demand_info
 #. odoo-python
 #: code:addons/stock_product_demand_info/models/product_demand_period.py:0
+#, python-format
 msgid "Invalid date expression: %(error)s"
 msgstr ""
 
@@ -201,6 +195,7 @@ msgstr ""
 #. module: stock_product_demand_info
 #. odoo-python
 #: code:addons/stock_product_demand_info/models/product_demand_period.py:0
+#, python-format
 msgid ""
 "Start expression must be before or equal to end expression for period "
 "\"%(name)s\"."
