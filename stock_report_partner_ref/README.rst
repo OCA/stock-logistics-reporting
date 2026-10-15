@@ -96,12 +96,12 @@ Credits
 Authors
 -------
 
-* Binhex Systems Solutions S.L
+* Binhex
 
 Contributors
 ------------
 
-- `Binhex Systems Solutions S.L. <https://www.binhex.cloud>`__:
+- `Binhex <https://www.binhex.cloud>`__:
 
   - Ariel Torres
 
@@ -118,13 +118,13 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-Binhex Systems Solutions S.L| image:: https://github.com/Binhex Systems Solutions S.L.png?size=40px
-    :target: https://github.com/Binhex Systems Solutions S.L
-    :alt: Binhex Systems Solutions S.L
+.. |maintainer-Binhex| image:: https://github.com/Binhex.png?size=40px
+    :target: https://github.com/Binhex
+    :alt: Binhex
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Binhex Systems Solutions S.L| 
+|maintainer-Binhex| 
 
 This module is part of the `OCA/stock-logistics-reporting <https://github.com/OCA/stock-logistics-reporting/tree/17.0/stock_report_partner_ref>`_ project on GitHub.
 
