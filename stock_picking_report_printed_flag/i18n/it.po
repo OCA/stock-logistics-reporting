@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-10-19 10:37+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,help:stock_picking_report_printed_flag.field_stock_picking__printed_report_names
@@ -20,6 +22,9 @@ msgid ""
 "Comma-separated list of printed report names, computed from related printed "
 "logs. Only active if enabled in configuration."
 msgstr ""
+"Elenco, separato da virgole, dei nomi dei resoconti stampati, calcolati a "
+"partire dai relativi registri di stampa. Attivo solo se abilitato nella "
+"configurazione."
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,help:stock_picking_report_printed_flag.field_stock_picking__printed
@@ -27,37 +32,38 @@ msgid ""
 "Indicates whether at least one configured report has been printed for this "
 "record."
 msgstr ""
+"Indica se per questo record è stato stampato almeno un resoconto configurato."
 
 #. module: stock_picking_report_printed_flag
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_printed_flag.view_picking_tree_printed
 msgid "Logs"
-msgstr ""
+msgstr "Registri"
 
 #. module: stock_picking_report_printed_flag
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_printed_flag.view_picking_search_printed
 msgid "Not Printed"
-msgstr ""
+msgstr "Non stampato"
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,field_description:stock_picking_report_printed_flag.field_stock_picking__printed_log_ids
 msgid "Print Logs"
-msgstr ""
+msgstr "Stampa registri"
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,field_description:stock_picking_report_printed_flag.field_stock_picking__printed
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_printed_flag.view_picking_search_printed
 msgid "Printed"
-msgstr ""
+msgstr "Stampato"
 
 #. module: stock_picking_report_printed_flag
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_printed_flag.view_picking_search_printed
 msgid "Printed Report Names"
-msgstr ""
+msgstr "Nomi resoconti stampati"
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,field_description:stock_picking_report_printed_flag.field_stock_picking__printed_report_names
 msgid "Printed Reports Names"
-msgstr ""
+msgstr "Nomi resoconti stampati"
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model.fields,help:stock_picking_report_printed_flag.field_stock_picking__printed_log_ids
@@ -65,8 +71,11 @@ msgid ""
 "Technical relation to printed logs using a generic reference pattern "
 "(res_model, res_id). Only logs related to this model type are included."
 msgstr ""
+"Relazione tecnica con i registri stampati, che utilizza un modello di "
+"riferimento generico (res_model, res_id). Sono inclusi solo i registri "
+"relativi a questo tipo di modello."
 
 #. module: stock_picking_report_printed_flag
 #: model:ir.model,name:stock_picking_report_printed_flag.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
