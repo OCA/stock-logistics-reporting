@@ -45,22 +45,35 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         cls.product_2 = cls.product_product.create(
             {"name": "Product test 2", "type": "product"}
         )
+        (
+            cls.sale_order_3,
+            cls.order_line,
+            cls.order_out_picking,
+        ) = cls._create_sale_order_with_lines(
+            product=cls.product_kit,
+            quantity=5,
+            price_unit=29.9,
+            tax=cls.tax10,
+        )
+
+    @classmethod
+    def _create_sale_order_with_lines(cls, product, quantity, price_unit, tax=None):
+        """Create a sale order with a single line, confirm it, and return
+        the sale order, filtered order line, and picking."""
         order_form = Form(cls.env["sale.order"])
         order_form.partner_id = cls.partner
         with order_form.order_line.new() as line_form:
-            line_form.product_id = cls.product_kit
-            line_form.product_uom_qty = 5
-            line_form.price_unit = 29.9
+            line_form.product_id = product
+            line_form.product_uom_qty = quantity
+            line_form.price_unit = price_unit
             line_form.tax_id.clear()
-            line_form.tax_id.add(cls.tax10)
-        cls.sale_order_3 = order_form.save()
-        cls.sale_order_3.action_confirm()
-        # Maybe other modules create additional lines in the create
-        # method in sale.order model, so let's find the correct line.
-        cls.order_line = cls.sale_order_3.order_line.filtered(
-            lambda r: r.product_id == cls.product_kit
-        )
-        cls.order_out_picking = cls.sale_order_3.picking_ids
+            if tax:
+                line_form.tax_id.add(tax)
+        sale_order = order_form.save()
+        sale_order.action_confirm()
+        order_line = sale_order.order_line.filtered(lambda r: r.product_id == product)
+        picking = sale_order.picking_ids[0] if sale_order.picking_ids else None
+        return sale_order, order_line, picking
 
     def test_01_picking_confirmed(self):
         for line in self.order_out_picking.move_ids:
@@ -73,3 +86,90 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         self.env["ir.actions.report"]._render_qweb_html(
             self.env.ref("stock.action_report_delivery"), self.order_out_picking.ids
         )
+
+    @classmethod
+    def _create_sale_order_for_kits(cls, qty):
+        """Create a new sale order for the configured kit product."""
+        return cls._create_sale_order_with_lines(
+            product=cls.product_kit,
+            quantity=qty,
+            price_unit=29.9,
+        )
+
+    def _validate_picking(self, picking):
+        picking.action_assign()
+        for line in picking.move_ids:
+            line.quantity_done = line.product_uom_qty
+        picking.button_validate()
+
+    def _return_picking(self, picking, quantity_factor=1.0):
+        """Return a picking, optionally only a fraction of it, and validate
+        the resulting return picking."""
+        return_wiz = Form(
+            self.env["stock.return.picking"].with_context(
+                active_id=picking.id,
+                active_model="stock.picking",
+            )
+        ).save()
+        if quantity_factor != 1.0:
+            for line in return_wiz.product_return_moves:
+                line.quantity = line.move_id.product_uom_qty * quantity_factor
+        return_picking = self.env["stock.picking"].browse(
+            return_wiz.create_returns()["res_id"]
+        )
+        self._validate_picking(return_picking)
+        return return_picking
+
+    def _assert_components_per_kit(self, picking):
+        """Every component of the picking must expose its kit ratio."""
+        kit_lines = picking.move_line_ids.filtered("phantom_product_id")
+        self.assertTrue(kit_lines)
+        expected_per_kit = {
+            self.product_kit_comp_1.id: 2.0,
+            self.product_kit_comp_2.id: 4.0,
+        }
+        for sale_line in kit_lines.mapped("sale_line"):
+            move_lines = kit_lines.filtered(lambda x: x.sale_line == sale_line)
+            phantom_line = move_lines[:1]
+            if not phantom_line:
+                continue
+            move = phantom_line.move_id
+            expected = expected_per_kit[move.product_id.id]
+            got = move._get_components_per_kit()
+            self.assertEqual(
+                got,
+                expected,
+                f"_get_components_per_kit returned {got} but expected {expected} "
+                f"for component {move.product_id.display_name}",
+            )
+
+    def test_02_get_components_per_kit_return_redelivery(self):
+        """Cancel + re-confirm adds a second delivery (#451): the ratio must
+        not double."""
+        sale, _so_line, picking = self._create_sale_order_for_kits(qty=2)
+        self._validate_picking(picking)
+        self._return_picking(picking)
+        sale._action_cancel()
+        sale.action_draft()
+        sale.action_confirm()
+        redelivery = sale.picking_ids.filtered(
+            lambda p: p.state not in ("done", "cancel")
+        )
+        self.assertTrue(redelivery)
+        self._validate_picking(redelivery[0])
+        self._assert_components_per_kit(redelivery[0])
+
+    def test_03_get_components_per_kit_return_of_return(self):
+        """The usual redelivery is to return the return: the ratio stays."""
+        _sale, _so_line, picking = self._create_sale_order_for_kits(qty=2)
+        self._validate_picking(picking)
+        return_picking = self._return_picking(picking)
+        redelivery = self._return_picking(return_picking)
+        self._assert_components_per_kit(redelivery)
+
+    def test_04_get_components_per_kit_partial_return(self):
+        """A partial return must not zero the ratio."""
+        _sale, _so_line, picking = self._create_sale_order_for_kits(qty=2)
+        self._validate_picking(picking)
+        self._return_picking(picking, quantity_factor=0.5)
+        self._assert_components_per_kit(picking)
