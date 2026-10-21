@@ -31,17 +31,14 @@ class StockAverageDailySale(models.Model):
     )
     average_daily_sales_count = fields.Float(
         required=True,
-        digits="Product Unit of Measure",
         help="How much deliveries on average for this product on the period.",
     )
     average_qty_by_sale = fields.Float(
         required=True,
-        digits="Product Unit of Measure",
         help="The quantity "
         "delivered on average for one delivery of this product on the period.",
     )
     average_daily_qty = fields.Float(
-        digits="Product Unit of Measure",
         required=True,
         help="The quantity delivered on average on one day for this product on "
         "the period.",
