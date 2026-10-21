@@ -204,6 +204,11 @@ msgid "Number of days of quantities in stock"
 msgstr ""
 
 #. module: stock_average_daily_sale
+#: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale_config__number_sales_qty_in_stock
+msgid "Number of sales quantities in stock"
+msgstr ""
+
+#. module: stock_average_daily_sale
 #: model:ir.model.fields,field_description:stock_average_daily_sale.field_stock_average_daily_sale__is_mto
 #: model_terms:ir.ui.view,arch_db:stock_average_daily_sale.stock_daily_sale_search_view
 msgid "On Order"
