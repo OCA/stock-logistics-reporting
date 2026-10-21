@@ -95,9 +95,13 @@ class StockAverageDailySale(models.Model):
 
     def _compute_recommended_qty(self):
         for rec in self:
-            lt = rec.config_id.number_days_qty_in_stock
-            average_daily = lt * rec.average_daily_qty + rec.safety
-            average_sale = lt * rec.average_qty_by_sale
+            average_daily = (
+                rec.config_id.number_days_qty_in_stock * rec.average_daily_qty
+                + rec.safety
+            )
+            average_sale = (
+                rec.config_id.number_sales_qty_in_stock * rec.average_qty_by_sale
+            )
             rec.recommended_qty = max(average_daily, average_sale)
 
     sale_ok = fields.Boolean(

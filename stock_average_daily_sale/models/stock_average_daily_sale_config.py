@@ -63,6 +63,9 @@ class StockAverageDailySaleConfig(models.Model):
     number_days_qty_in_stock = fields.Integer(
         string="Number of days of quantities in stock", required=True, default=2
     )
+    number_sales_qty_in_stock = fields.Integer(
+        string="Number of sales quantities in stock", required=True, default=2
+    )
     safety_factor = fields.Float(digits=(2, 2), required=True)
 
     _sql_constraints = [
