@@ -44,7 +44,7 @@ class ProductTemplate(models.Model):
                         res[template][period_id]["value"] += data["value"]
                         res[template][period_id]["formatted_value"] = formatLang(
                             self.env,
-                            value=data["value"],
+                            value=res[template][period_id]["value"],
                             dp="Product Unit",
                         )
         return res
