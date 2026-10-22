@@ -23,6 +23,9 @@ export class DemandPeriodInfoGrid extends Component {
 
     get uomName() {
         const val = this.props.record.data[this.uomFieldName];
+        if (Array.isArray(val)) {
+            return val[1];
+        }
         return val?.display_name ?? val;
     }
 
