@@ -8,6 +8,7 @@ from freezegun import freeze_time
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.fields import Command
+from odoo.tools.misc import formatLang
 
 from .common import StockProductDemandInfoCommon
 
@@ -149,6 +150,10 @@ class TestProductDemandPeriod(StockProductDemandInfoCommon):
         self.assertEqual(variant_l.demand_period_info[key]["value"], 0.0)
         self.assertIn(key, template.demand_period_info)
         self.assertEqual(template.demand_period_info[key]["value"], 15.0)
+        self.assertEqual(
+            template.demand_period_info[key]["formatted_value"],
+            formatLang(self.env, value=15.0, dp="Product Unit"),
+        )
         self.assertEqual(template.demand_period_info[key]["name"], "Last 7 days")
 
     def test_demand_two_periods_enabled(self):
