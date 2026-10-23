@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-reporting"
-version = "17.0.20261014.0"
+version = "17.0.20261023.0"
 dependencies = [
     "odoo-addon-delivery_line_sale_line_position>=17.0dev,<17.1dev",
     "odoo-addon-stock_delivery_note>=17.0dev,<17.1dev",
@@ -15,6 +15,7 @@ dependencies = [
     "odoo-addon-stock_picking_report_internal_delivery_address>=17.0dev,<17.1dev",
     "odoo-addon-stock_picking_report_printed_flag>=17.0dev,<17.1dev",
     "odoo-addon-stock_picking_report_salesperson>=17.0dev,<17.1dev",
+    "odoo-addon-stock_picking_report_summary>=17.0dev,<17.1dev",
     "odoo-addon-stock_picking_report_valued>=17.0dev,<17.1dev",
     "odoo-addon-stock_product_demand_info>=17.0dev,<17.1dev",
     "odoo-addon-stock_quant_history>=17.0dev,<17.1dev",
