@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =================================
 Stock Picking Report Printed Flag
 =================================
@@ -17,7 +13,7 @@ Stock Picking Report Printed Flag
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--reporting-lightgray.png?logo=github
@@ -115,12 +111,12 @@ Credits
 Authors
 -------
 
-* Binhex Systems Solutions S.L
+* Binhex
 
 Contributors
 ------------
 
-- `Binhex Systems Solutions S.L. <https://www.binhex.cloud>`__:
+- `Binhex <https://www.binhex.cloud>`__:
 
   - Ariel Torres
   - Rolando Pérez Rebollo
