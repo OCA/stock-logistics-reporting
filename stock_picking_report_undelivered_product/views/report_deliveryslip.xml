@@ -1,0 +1,59 @@
+<odoo>
+    <template
+        id="undeliverd_product"
+        inherit_id="stock.report_delivery_document"
+        priority="200"
+    >
+        <xpath expr="//*[@t-set='backorders']" position="after">
+            <t t-if="o.partner_id.display_undelivered_in_picking and o.state == 'done'">
+                <t
+                    t-set="all_moves"
+                    t-value="o.mapped('move_ids') + o.mapped('backorder_ids').mapped('move_ids')"
+                />
+                <t t-if="o.company_id.undelivered_product_slip_report_method == 'all'">
+                    <t
+                        t-set="undelivered_moves"
+                        t-value="all_moves.filtered(lambda l: (l.product_uom_qty - l.quantity) > 0.0 and l.product_id.display_undelivered_in_picking)"
+                    />
+                </t>
+                <t
+                    t-if="o.company_id.undelivered_product_slip_report_method == 'partially_undelivered'"
+                >
+                    <t
+                        t-set="undelivered_moves"
+                        t-value="all_moves.filtered(lambda l: l.state != 'cancel' and (l.product_uom_qty - l.quantity) > 0.0 and (l.product_uom_qty - l.quantity) != l.product_uom_qty and l.product_id.display_undelivered_in_picking)"
+                    />
+                </t>
+                <t
+                    t-if="o.company_id.undelivered_product_slip_report_method == 'completely_undelivered'"
+                >
+                    <t
+                        t-set="undelivered_moves"
+                        t-value="all_moves.filtered(lambda l: l.state == 'cancel' and l.product_id.display_undelivered_in_picking and l.product_uom_qty > 0.0)"
+                    />
+                </t>
+            </t>
+        </xpath>
+
+        <xpath
+            expr="//*[@t-if='not (o.backorder_ids and backorders)']"
+            position="attributes"
+        >
+            <attribute name="t-if">not undelivered_moves</attribute>
+        </xpath>
+
+        <xpath expr="//tr[contains(@t-foreach, 'backorders')]" position="attributes">
+            <attribute name="t-foreach">undelivered_moves</attribute>
+        </xpath>
+
+        <xpath
+            expr="//span[@t-out='format_number(bo_line.product_uom_qty)']"
+            position="attributes"
+        >
+            <attribute name="t-field" />
+            <attribute
+                name="t-esc"
+            >bo_line.product_uom_qty - bo_line.quantity</attribute>
+        </xpath>
+    </template>
+</odoo>
