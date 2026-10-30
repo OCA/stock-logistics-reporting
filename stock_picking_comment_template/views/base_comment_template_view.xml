@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.actions.act_window" id="action_stock_picking_comment_template">
+        <field name="name">Stock Picking Comment Templates</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">base.comment.template</field>
+        <field name="view_mode">list,form</field>
+        <!-- Filtering on model_ids does not work: it is a non-stored computed
+             field and the domain optimizer resolves the leaf against ir.model's
+             display_name instead of calling its search method. -->
+        <field name="domain">[("models", "like", "stock.picking")]</field>
+        <field name="context" eval="{'default_models': 'stock.picking'}" />
+    </record>
+
+    <menuitem
+        name="Document Comments"
+        id="menu_base_comment_template_picking"
+        action="stock_picking_comment_template.action_stock_picking_comment_template"
+        parent="stock.menu_stock_config_settings"
+    />
+</odoo>
