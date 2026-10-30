@@ -11,5 +11,8 @@
 - [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
   - Bhavesh Heliconia
 
+- [openfellas GmbH](https://openfellas.com):
+  - Kareem Ibrahim \<<kareem.ibrahim@openfellas.com>\>
+
 Do not contact contributors directly about support or help with
 technical issues.
