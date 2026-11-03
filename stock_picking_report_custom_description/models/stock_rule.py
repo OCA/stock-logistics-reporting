@@ -36,6 +36,9 @@ class StockRule(models.Model):
             description_picking = line.name
             if description_picking.startswith(pattern):
                 description_picking = description_picking.replace(pattern, "")
+            # Since 20.0 the line name has no product display name prefix, so
+            # the leftover line break would otherwise end up in the picking
+            description_picking = description_picking.strip()
             if (
                 description_picking
                 and description_picking != line.product_id.display_name
