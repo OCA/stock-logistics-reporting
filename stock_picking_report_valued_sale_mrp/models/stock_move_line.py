@@ -67,11 +67,14 @@ class StockMoveLine(models.Model):
             phantom_line = move_lines[:1]
             if not phantom_line:
                 continue
-            price_unit = (
-                sale_line.price_subtotal / sale_line.product_uom_qty
-                if sale_line.product_uom_qty
-                else sale_line.price_reduce
-            )
+            if sale_line.product_uom_qty:
+                # price_subtotal is tax-excluded: don't extract included taxes
+                # again
+                price_unit = sale_line.price_subtotal / sale_line.product_uom_qty
+                handle_price_include = False
+            else:
+                price_unit = sale_line.price_reduce
+                handle_price_include = True
             # Compute how many kits were delivered from the components and
             # the components per kit (see _get_components_per_kit).
             kit_line = next(
@@ -104,6 +107,7 @@ class StockMoveLine(models.Model):
                 quantity=quantity,
                 product=phantom_line.product_id,
                 partner=sale_line.order_id.partner_shipping_id,
+                handle_price_include=handle_price_include,
             )
             if sale_line.company_id.tax_calculation_rounding_method == (
                 "round_globally"
