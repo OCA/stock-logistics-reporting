@@ -8,6 +8,12 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockPickingReportCustomDescription(BaseCommon):
+    _test_user_groups = (
+        "base.group_user",
+        "sales_team.group_sale_salesman",
+        "stock.group_stock_user",
+    )
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
