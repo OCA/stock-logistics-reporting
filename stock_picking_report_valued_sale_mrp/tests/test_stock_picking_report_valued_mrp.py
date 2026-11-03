@@ -92,7 +92,9 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
     # Helpers
     # ------------------------------------------------------------------
 
-    def _create_kit_order(self, qty, extra_lines=None, product=None, uom=None):
+    def _create_kit_order(
+        self, qty, extra_lines=None, product=None, uom=None, price_unit=29.9, taxes=None
+    ):
         """Sale order of ``qty`` kits (negative ``qty`` = return), confirmed."""
         product = product or self.product_kit
         lines = [
@@ -103,8 +105,8 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
                     "product_id": product.id,
                     "product_uom": (uom or product.uom_id).id,
                     "product_uom_qty": qty,
-                    "price_unit": 29.9,
-                    "tax_id": [(6, 0, self.tax10.ids)],
+                    "price_unit": price_unit,
+                    "tax_id": [(6, 0, (self.tax10 if taxes is None else taxes).ids)],
                 },
             )
         ]
@@ -161,6 +163,24 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         for move in picking.move_ids:
             expected = (expected_per_kit or self.components_per_kit)[move.product_id]
             self.assertAlmostEqual(move._get_components_per_kit(), expected)
+
+    def _create_tax(self, amount, price_include):
+        return self.env["account.tax"].create(
+            {
+                "name": f"Tax {amount}% {'included' if price_include else ''}",
+                "type_tax_use": "sale",
+                "amount_type": "percent",
+                "amount": amount,
+                "price_include": price_include,
+            }
+        )
+
+    def _assert_kit_amounts(self, picking, subtotal, tax, total):
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, subtotal)
+        self.assertAlmostEqual(kit_line.sale_price_tax, tax)
+        self.assertAlmostEqual(kit_line.sale_price_total, total)
+        return kit_line
 
     def _create_kit_return(self, origin_picking, qty=1):
         """Return of ``qty`` kits: sale order with a negative line, which the
@@ -467,6 +487,85 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
                 self.components_per_kit[move.product_id],
             )
 
+    def test_17_kit_price_include_tax(self):
+        """Kit at 10.91 with 10% VAT included: the included tax is extracted
+        once (9.92 / 0.99 / 10.91), not twice (9.02 / 0.90 / 9.92)."""
+        order = self._create_kit_order(
+            1, price_unit=10.91, taxes=self._create_tax(10, True)
+        )
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kit_amounts(picking, 9.92, 0.99, 10.91)
+        self.assertAlmostEqual(picking.amount_untaxed, 9.92)
+        self.assertAlmostEqual(picking.amount_total, 10.91)
+
+    def test_18_kit_price_include_igic(self):
+        """Kit at 10.91 with 3% IGIC included: 10.59 / 0.32 / 10.91."""
+        order = self._create_kit_order(
+            1, price_unit=10.91, taxes=self._create_tax(3, True)
+        )
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kit_amounts(picking, 10.59, 0.32, 10.91)
+
+    def test_19_kit_tax_excluded_and_exempt_unchanged(self):
+        """Tax excluded and no tax: the kit is valued as its sale line."""
+        for taxes, tax, total in (
+            (self.tax10, 2.99, 32.89),
+            (self.env["account.tax"], 0.0, 29.9),
+        ):
+            order = self._create_kit_order(1, taxes=taxes)
+            picking = order.picking_ids
+            self._deliver(picking)
+            self._assert_kit_amounts(picking, 29.9, tax, total)
+
+    def test_20_kit_and_normal_line_price_include(self):
+        """Kit and a plain product with VAT included: the plain line is valued
+        as its sale line and the kit without the tax extracted twice."""
+        tax = self._create_tax(10, True)
+        order = self._create_kit_order(
+            1,
+            price_unit=10.91,
+            taxes=tax,
+            extra_lines=[
+                (
+                    0,
+                    0,
+                    {
+                        "product_id": self.product_2.id,
+                        "product_uom_qty": 3,
+                        "price_unit": 10.0,
+                        "tax_id": [(6, 0, tax.ids)],
+                    },
+                )
+            ],
+        )
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kit_amounts(picking, 9.92, 0.99, 10.91)
+        plain_sale_line = order.order_line.filtered(
+            lambda l: l.product_id == self.product_2
+        )
+        plain_line = picking.move_line_ids.filtered(
+            lambda l: l.product_id == self.product_2
+        )
+        self.assertAlmostEqual(
+            plain_line.sale_price_subtotal, plain_sale_line.price_subtotal
+        )
+        self.assertAlmostEqual(plain_line.sale_price_total, plain_sale_line.price_total)
+
+    def test_21_kit_price_include_partial_delivery(self):
+        """2 kits with VAT included, 1 per picking: each picking values 1 kit
+        without the tax extracted twice."""
+        order = self._create_kit_order(
+            2, price_unit=10.91, taxes=self._create_tax(10, True)
+        )
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._deliver(backorder)
+        self._assert_kit_amounts(picking, 9.92, 0.99, 10.91)
+        self._assert_kit_amounts(backorder, 9.92, 0.99, 10.91)
+
     def test_22_split_delivery_without_return(self):
         """2 kits delivered in two pickings, no return: 1 kit in each."""
         order = self._create_kit_order(2)
@@ -595,6 +694,45 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         self._return_picking(picking)
         self._deliver(backorder)
         self._assert_one_kit(backorder)
+
+    def test_30_kit_price_include_with_discount(self):
+        """Kit at 10.91 with VAT included and a 10% discount: valued from the
+        discounted subtotal of the sale line (8.93 / 0.89 / 9.82)."""
+        order = self._create_kit_order(
+            1, price_unit=10.91, taxes=self._create_tax(10, True)
+        )
+        order.order_line.discount = 10
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kit_amounts(picking, 8.93, 0.89, 9.82)
+
+    def test_31_return_price_include(self):
+        """A kit with VAT included returned from a negative sale line: the
+        return is valued as 1 positive kit without the tax extracted twice."""
+        tax = self._create_tax(10, True)
+        order = self._create_kit_order(1, price_unit=10.91, taxes=tax)
+        self._deliver(order.picking_ids)
+        return_order = self._create_kit_order(-1, price_unit=10.91, taxes=tax)
+        return_picking = return_order.picking_ids
+        for move in return_picking.move_ids:
+            move.origin_returned_move_id = order.picking_ids.move_ids.filtered(
+                lambda m, move=move: m.product_id == move.product_id
+            )
+        self._deliver(return_picking)
+        kit_line = self._assert_kit_amounts(return_picking, 9.92, 0.99, 10.91)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, 1.0)
+
+    def test_32_kit_price_include_round_globally(self):
+        """With taxes rounded globally the kit amounts are the same."""
+        self.env.company.tax_calculation_rounding_method = "round_globally"
+        order = self._create_kit_order(
+            1, price_unit=10.91, taxes=self._create_tax(10, True)
+        )
+        picking = order.picking_ids
+        self._deliver(picking)
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, 9.92)
+        self.assertAlmostEqual(kit_line.sale_price_total, 10.91, delta=0.005)
 
     def test_33_template_bom_with_variant_line(self):
         """A kit BoM on the template with a line only for one variant, replaced
