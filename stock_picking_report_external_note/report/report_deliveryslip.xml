@@ -7,7 +7,7 @@
         inherit_id="stock.report_delivery_document"
     >
         <xpath expr="//div[hasclass('page')]" position="inside">
-            <div t-if="o.external_note" t-field="o.external_note" class="mt-5" />
+            <div t-if="o.external_note" class="mt-5" t-field="o.external_note" />
         </xpath>
     </template>
 </odoo>
