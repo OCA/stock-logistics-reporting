@@ -92,14 +92,16 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
     # Helpers
     # ------------------------------------------------------------------
 
-    def _create_kit_order(self, qty, extra_lines=None):
+    def _create_kit_order(self, qty, extra_lines=None, product=None, uom=None):
         """Sale order of ``qty`` kits (negative ``qty`` = return), confirmed."""
+        product = product or self.product_kit
         lines = [
             (
                 0,
                 0,
                 {
-                    "product_id": self.product_kit.id,
+                    "product_id": product.id,
+                    "product_uom": (uom or product.uom_id).id,
                     "product_uom_qty": qty,
                     "price_unit": 29.9,
                     "tax_id": [(6, 0, self.tax10.ids)],
@@ -120,6 +122,45 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
     def _deliver(self, picking):
         self._set_quantity_done(picking)
         picking.button_validate()
+
+    def _deliver_partially(self, picking, factor, backorder=True):
+        """Validate ``factor`` of the picking, with or without a backorder for
+        the rest. Return the backorder, if any."""
+        self._set_quantity_done(picking, factor)
+        action = picking.button_validate()
+        wizard = Form(
+            self.env[action["res_model"]].with_context(**action["context"])
+        ).save()
+        if backorder:
+            wizard.process()
+        else:
+            wizard.process_cancel_backorder()
+        return picking.backorder_ids
+
+    def _create_kit_bom(self, product, lines, product_qty=1.0):
+        """Kit BoM of ``product`` with ``lines`` as (component, qty)."""
+        return self.env["mrp.bom"].create(
+            {
+                "product_id": product.id,
+                "product_tmpl_id": product.product_tmpl_id.id,
+                "type": "phantom",
+                "product_qty": product_qty,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": component.id, "product_qty": qty})
+                    for component, qty in lines
+                ],
+            }
+        )
+
+    def _assert_one_kit(self, picking, expected_per_kit=None):
+        """The picking is valued as 1 kit and, when given, each component
+        exposes its ratio."""
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, 1.0)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, 29.9)
+        for move in picking.move_ids:
+            expected = (expected_per_kit or self.components_per_kit)[move.product_id]
+            self.assertAlmostEqual(move._get_components_per_kit(), expected)
 
     def _create_kit_return(self, origin_picking, qty=1):
         """Return of ``qty`` kits: sale order with a negative line, which the
@@ -378,3 +419,519 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         self.assertAlmostEqual(kit_line.phantom_delivered_qty, 3.0)
         self.assertAlmostEqual(kit_line.sale_price_subtotal, 89.7)
         self.assertAlmostEqual(return_picking.amount_untaxed, 89.7)
+
+    def test_13_qty_increase_after_full_return(self):
+        """1 kit delivered, the line raised to 2 and the first delivery fully
+        returned: the second delivery is valued as 1 kit, not 2."""
+        order = self._create_kit_order(1)
+        first_picking = order.picking_ids
+        self._deliver(first_picking)
+        # The core recomputes the price from the pricelist on a qty change
+        order.order_line.write({"product_uom_qty": 2, "price_unit": 29.9})
+        second_picking = order.picking_ids - first_picking
+        self.assertEqual(len(second_picking), 1)
+        self._return_picking(first_picking)
+        self._deliver(second_picking)
+        self._assert_one_kit(second_picking)
+
+    def test_14_backorder_after_full_return(self):
+        """2 kits delivered in two pickings and the first one fully returned:
+        the backorder is valued as 1 kit, not 2."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(backorder)
+
+    def test_15_negative_line_return_then_backorder(self):
+        """2 kits delivered in two pickings and the first one returned from a
+        negative sale line: the backorder is valued as 1 kit."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        _return_order, return_picking = self._create_kit_return(picking)
+        self._deliver(return_picking)
+        self._deliver(backorder)
+        self._assert_one_kit(backorder)
+
+    def test_16_components_per_kit_without_bom_line(self):
+        """A component move without BoM line keeps the demand ratio."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        self._deliver(picking)
+        picking.move_ids.bom_line_id = False
+        for move in picking.move_ids:
+            self.assertAlmostEqual(
+                move._get_components_per_kit(),
+                self.components_per_kit[move.product_id],
+            )
+
+    def test_22_split_delivery_without_return(self):
+        """2 kits delivered in two pickings, no return: 1 kit in each."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._deliver(backorder)
+        self._assert_one_kit(picking)
+        self._assert_one_kit(backorder)
+
+    def test_23_bom_qty_and_repeated_component(self):
+        """A BoM making 2 kits with the same component in two lines; backorder
+        after a full return: the backorder is valued as 1 kit."""
+        kit = self.product_product.create({"name": "Kit x2", "type": "consu"})
+        self._create_kit_bom(
+            kit,
+            [
+                (self.product_kit_comp_1, 2),
+                (self.product_kit_comp_1, 2),
+                (self.product_kit_comp_2, 4),
+            ],
+            product_qty=2,
+        )
+        order = self._create_kit_order(2, product=kit)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(
+            backorder,
+            {self.product_kit_comp_1: 2.0, self.product_kit_comp_2: 2.0},
+        )
+
+    def test_24_nested_kit(self):
+        """A kit with an inner kit, backorder after a full return: the components of
+        the inner kit point to its BoM, and the backorder is still valued as
+        1 kit."""
+        inner_kit = self.product_product.create({"name": "Inner kit", "type": "consu"})
+        self._create_kit_bom(inner_kit, [(self.product_kit_comp_2, 3)])
+        kit = self.product_product.create({"name": "Outer kit", "type": "consu"})
+        self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (inner_kit, 1)])
+        order = self._create_kit_order(2, product=kit)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(
+            backorder,
+            {self.product_kit_comp_1: 2.0, self.product_kit_comp_2: 3.0},
+        )
+
+    def test_25_partial_delivery_without_backorder(self):
+        """1 of 2 kits delivered and the rest cancelled (no backorder): the
+        picking is valued as 1 kit, not 2."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        self.assertFalse(self._deliver_partially(picking, 0.5, backorder=False))
+        self._assert_one_kit(picking)
+
+    def test_26_two_step_delivery(self):
+        """Pick + ship: only the ship moves hang from the sale line. The
+        backorder of the ship picking after a full return values 1 kit."""
+        warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", self.env.company.id)], limit=1
+        )
+        warehouse.delivery_steps = "pick_ship"
+        order = self._create_kit_order(2)
+        pick = order.picking_ids.filtered(
+            lambda p: p.picking_type_id == warehouse.pick_type_id
+        )
+        ship = order.picking_ids.filtered(
+            lambda p: p.picking_type_id == warehouse.out_type_id
+        )
+        self.assertTrue(pick and ship)
+        self.assertFalse(pick.move_ids.sale_line_id)
+        self._deliver(pick)
+        backorder = self._deliver_partially(ship, 0.5)
+        self._return_picking(ship)
+        self._deliver(backorder)
+        self._assert_one_kit(backorder)
+
+    def test_27_kit_sold_in_other_uom(self):
+        """A kit sold by the dozen: the ratio is per dozen and the backorder
+        after a full return is valued as 1 dozen."""
+        dozen = self.env.ref("uom.product_uom_dozen")
+        order = self._create_kit_order(2, uom=dozen)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(
+            backorder,
+            {self.product_kit_comp_1: 24.0, self.product_kit_comp_2: 48.0},
+        )
+
+    def test_28_component_in_kit_and_inner_kit(self):
+        """The same component in the kit and in its inner kit: both lines are
+        added up; backorder after a full return."""
+        inner_kit = self.product_product.create({"name": "Inner kit", "type": "consu"})
+        self._create_kit_bom(
+            inner_kit,
+            [(self.product_kit_comp_1, 1), (self.product_kit_comp_2, 3)],
+        )
+        kit = self.product_product.create({"name": "Outer kit", "type": "consu"})
+        self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (inner_kit, 1)])
+        order = self._create_kit_order(2, product=kit)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(
+            backorder,
+            {self.product_kit_comp_1: 3.0, self.product_kit_comp_2: 3.0},
+        )
+
+    def test_29_new_bom_after_sale(self):
+        """A new BoM replaces the kit BoM after the sale: the moves keep the
+        BoM they were exploded with, so the ratio doesn't change."""
+        order = self._create_kit_order(2)
+        self.bom.active = False
+        self._create_kit_bom(
+            self.product_kit,
+            [(self.product_kit_comp_1, 5), (self.product_kit_comp_2, 1)],
+        )
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(backorder)
+
+    def test_33_template_bom_with_variant_line(self):
+        """A kit BoM on the template with a line only for one variant, replaced
+        after the sale; backorder after a full return: each variant is valued
+        as 1 kit with the BoM its moves were exploded with."""
+        attribute = self.env["product.attribute"].create(
+            {
+                "name": "Color",
+                "value_ids": [(0, 0, {"name": "Red"}), (0, 0, {"name": "Blue"})],
+            }
+        )
+        template = self.env["product.template"].create(
+            {
+                "name": "Kit by color",
+                "type": "consu",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": attribute.id,
+                            "value_ids": [(6, 0, attribute.value_ids.ids)],
+                        },
+                    )
+                ],
+            }
+        )
+        red_value = template.attribute_line_ids.product_template_value_ids.filtered(
+            lambda v: v.name == "Red"
+        )
+        red = template.product_variant_ids.filtered(
+            lambda p: red_value in p.product_template_attribute_value_ids
+        )
+        blue = template.product_variant_ids - red
+        bom = self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": template.id,
+                "type": "phantom",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_kit_comp_1.id, "product_qty": 2},
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_kit_comp_2.id,
+                            "product_qty": 4,
+                            "bom_product_template_attribute_value_ids": [
+                                (6, 0, red_value.ids)
+                            ],
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_kit_comp_1.id,
+                            "product_qty": 1,
+                            "bom_product_template_attribute_value_ids": [
+                                (6, 0, red_value.ids)
+                            ],
+                        },
+                    ),
+                ],
+            }
+        )
+        orders = {
+            variant: self._create_kit_order(2, product=variant)
+            for variant in red | blue
+        }
+        bom.active = False
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": template.id,
+                "type": "phantom",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_kit_comp_1.id, "product_qty": 5},
+                    ),
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_kit_comp_2.id, "product_qty": 1},
+                    ),
+                ],
+            }
+        )
+        for variant, expected in (
+            (red, {self.product_kit_comp_1: 3.0, self.product_kit_comp_2: 4.0}),
+            (blue, {self.product_kit_comp_1: 2.0}),
+        ):
+            picking = orders[variant].picking_ids
+            self.assertEqual(
+                picking.move_ids.product_id,
+                self.product_product.concat(*expected.keys()),
+            )
+            backorder = self._deliver_partially(picking, 0.5)
+            self._return_picking(picking)
+            self._deliver(backorder)
+            self._assert_one_kit(backorder, expected)
+
+    def test_34_kit_with_a_consumable_component(self):
+        """A kit of a storable and a consumable component (a kit of only
+        consumables isn't a kit for the core, see product.get_components);
+        backorder after a full return: the backorder is valued as 1 kit."""
+        consumable = self.product_product.create(
+            {"name": "Consumable component", "type": "consu"}
+        )
+        kit = self.product_product.create({"name": "Mixed kit", "type": "consu"})
+        self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (consumable, 3)])
+        order = self._create_kit_order(2, product=kit)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_one_kit(backorder, {self.product_kit_comp_1: 2.0, consumable: 3.0})
+
+    def _assert_kits(self, picking, kits, expected_per_kit):
+        """The picking is valued as ``kits`` kits and each component exposes
+        its ratio."""
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, kits)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, kits * 29.9)
+        for move in picking.move_ids:
+            self.assertAlmostEqual(
+                move._get_components_per_kit(), expected_per_kit[move.product_id]
+            )
+
+    def test_35_inner_kit_bom_making_several(self):
+        """An inner kit BoM making 3 units: the components per kit are the
+        ones of the moves, rounded as the core rounds them for the line."""
+        inner_kit = self.product_product.create({"name": "Inner kit", "type": "consu"})
+        self._create_kit_bom(inner_kit, [(self.product_kit_comp_2, 1)], product_qty=3)
+        kit = self.product_product.create({"name": "Outer kit", "type": "consu"})
+        self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (inner_kit, 1)])
+        for kits, comp_2_per_kit in ((3, 1 / 3), (1, 0.34)):
+            order = self._create_kit_order(kits, product=kit)
+            picking = order.picking_ids
+            self._deliver(picking)
+            self._assert_kits(
+                picking,
+                kits,
+                {
+                    self.product_kit_comp_1: 2.0,
+                    self.product_kit_comp_2: comp_2_per_kit,
+                },
+            )
+
+    def test_36_half_component_in_whole_units(self):
+        """Half a component per kit with a UoM rounded to whole units: the
+        core rounds the component of the line up, and so does the ratio."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        for kits, comp_1_per_kit in ((10, 0.5), (1, 1.0)):
+            order = self._create_kit_order(kits, product=kit)
+            picking = order.picking_ids
+            self._deliver(picking)
+            self._assert_kits(
+                picking,
+                kits,
+                {
+                    self.product_kit_comp_1: comp_1_per_kit,
+                    self.product_kit_comp_2: 4.0,
+                },
+            )
+
+    def test_37_nested_kit_outer_bom_replaced(self):
+        """The outer BoM of a nested kit replaced after the sale: the
+        components of the inner kit take it from the other moves of the
+        picking, not from the new BoM."""
+        inner_kit = self.product_product.create({"name": "Inner kit", "type": "consu"})
+        self._create_kit_bom(inner_kit, [(self.product_kit_comp_2, 3)])
+        kit = self.product_product.create({"name": "Outer kit", "type": "consu"})
+        bom = self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (inner_kit, 1)])
+        order = self._create_kit_order(2, product=kit)
+        bom.active = False
+        self._create_kit_bom(kit, [(self.product_kit_comp_1, 2), (inner_kit, 2)])
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kits(
+            picking,
+            2.0,
+            {self.product_kit_comp_1: 2.0, self.product_kit_comp_2: 3.0},
+        )
+
+    def test_38_only_inner_kits_outer_bom_replaced(self):
+        """A kit made only of an inner kit, its BoM replaced after the sale:
+        no move tells the kit BoM, so the demand ratio is used instead of the
+        new BoM."""
+        inner_kit = self.product_product.create({"name": "Inner kit", "type": "consu"})
+        self._create_kit_bom(
+            inner_kit, [(self.product_kit_comp_1, 2), (self.product_kit_comp_2, 3)]
+        )
+        kit = self.product_product.create({"name": "Outer kit", "type": "consu"})
+        bom = self._create_kit_bom(kit, [(inner_kit, 1)])
+        order = self._create_kit_order(2, product=kit)
+        bom.active = False
+        self._create_kit_bom(kit, [(inner_kit, 2)])
+        picking = order.picking_ids
+        self._deliver(picking)
+        self._assert_kits(
+            picking,
+            2.0,
+            {self.product_kit_comp_1: 2.0, self.product_kit_comp_2: 3.0},
+        )
+
+    def test_39_bom_line_replaced_after_sale(self):
+        """A BoM line deleted and created again after the sale: its moves lose
+        the BoM line, so the demand ratio is used instead of the new line."""
+        kit = self.product_product.create({"name": "Edited kit", "type": "consu"})
+        bom = self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 2), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(2, product=kit)
+        bom.bom_line_ids.filtered(
+            lambda line: line.product_id == self.product_kit_comp_1
+        ).unlink()
+        bom.bom_line_ids = [
+            (0, 0, {"product_id": self.product_kit_comp_1.id, "product_qty": 3})
+        ]
+        picking = order.picking_ids
+        self.assertFalse(
+            picking.move_ids.filtered(
+                lambda m: m.product_id == self.product_kit_comp_1
+            ).bom_line_id
+        )
+        self._deliver(picking)
+        self._assert_kits(
+            picking,
+            2.0,
+            {self.product_kit_comp_1: 2.0, self.product_kit_comp_2: 4.0},
+        )
+
+    def test_40_half_component_in_whole_units_qty_increase(self):
+        """Half a component per kit with a UoM rounded to whole units and the
+        line raised after the first delivery: each explosion rounds up on its
+        own, so the BoM of the whole line doesn't match the moves and the
+        demand ratio is used instead. Each delivery is valued as 1 kit."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(1, product=kit)
+        first_picking = order.picking_ids
+        self._deliver(first_picking)
+        order.order_line.write({"product_uom_qty": 2, "price_unit": 29.9})
+        second_picking = order.picking_ids - first_picking
+        self._deliver(second_picking)
+        for picking in first_picking | second_picking:
+            self._assert_kits(
+                picking,
+                1.0,
+                {self.product_kit_comp_1: 1.0, self.product_kit_comp_2: 4.0},
+            )
+
+    def test_41_half_component_in_whole_units_backorder_after_return(self):
+        """Half a component per kit with a UoM rounded to whole units, 4 kits
+        delivered in two pickings and the first one fully returned: the line
+        was exploded once, so its BoM still matches the moves and the
+        backorder is valued as 2 kits."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(4, product=kit)
+        picking = order.picking_ids
+        backorder = self._deliver_partially(picking, 0.5)
+        self._return_picking(picking)
+        self._deliver(backorder)
+        self._assert_kits(
+            backorder,
+            2.0,
+            {self.product_kit_comp_1: 0.5, self.product_kit_comp_2: 4.0},
+        )
+
+    def test_42_half_component_qty_increase_after_full_return(self):
+        """Half a component per kit with a UoM rounded to whole units, the
+        line raised after the first delivery and the first delivery fully
+        returned: the rounded component can't tell the kits, so they are
+        deduced from the other one and the second delivery is valued as 1 kit."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(1, product=kit)
+        first_picking = order.picking_ids
+        self._deliver(first_picking)
+        order.order_line.write({"product_uom_qty": 2, "price_unit": 29.9})
+        second_picking = order.picking_ids - first_picking
+        self._return_picking(first_picking)
+        self._deliver(second_picking)
+        kit_line = self._kit_line(second_picking)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, 1.0)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, 29.9)
+
+    def test_43_half_component_partial_delivery_without_backorder(self):
+        """Half a component per kit with a UoM rounded to whole units and 2
+        of 4 kits delivered without backorder: the cancelled rest was exploded
+        with the line, so the BoM still tells the components per kit."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(4, product=kit)
+        picking = order.picking_ids
+        self._deliver_partially(picking, 0.5, backorder=False)
+        self._assert_kits(
+            picking,
+            2.0,
+            {self.product_kit_comp_1: 0.5, self.product_kit_comp_2: 4.0},
+        )
+
+    def test_44_half_component_qty_increase_before_delivery(self):
+        """Half a component per kit with a UoM rounded to whole units and the
+        line raised before delivering: both explosions end up in the same
+        picking, valued as 2 kits."""
+        self.env.ref("uom.product_uom_unit").rounding = 1.0
+        kit = self.product_product.create({"name": "Kit of halves", "type": "consu"})
+        self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 0.5), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(1, product=kit)
+        order.order_line.write({"product_uom_qty": 2, "price_unit": 29.9})
+        picking = order.picking_ids
+        self._deliver(picking)
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, 2.0)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, 59.8)

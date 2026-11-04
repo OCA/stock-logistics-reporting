@@ -60,9 +60,10 @@ class StockMoveLine(models.Model):
         kit_lines = self.filtered("phantom_product_id")
         for sale_line in kit_lines.mapped("sale_line"):
             move_lines = kit_lines.filtered(lambda x: x.sale_line == sale_line)
-            # Deduce the kit quantity from the first component in the picking.
-            # If the the kit is partially delivered, this could lead to an
-            # unacurate value.
+            # Deduce the kit quantity from a component whose BoM tells its
+            # quantity per kit or, if none does, from the first component in
+            # the picking. If the the kit is partially delivered, this could
+            # lead to an unacurate value.
             phantom_line = move_lines[:1]
             if not phantom_line:
                 continue
@@ -72,12 +73,19 @@ class StockMoveLine(models.Model):
                 else sale_line.price_reduce
             )
             # Compute how many kits were delivered from the components and
-            # the original demand. Note that if the qty is edited in the sale
-            # order this could lead to inconsitencies.
-            components_per_kit = phantom_line.move_id._get_components_per_kit()
+            # the components per kit (see _get_components_per_kit).
+            kit_line = next(
+                (
+                    line
+                    for line in move_lines
+                    if line.move_id._get_components_per_kit_from_bom()
+                ),
+                phantom_line,
+            )
+            components_per_kit = kit_line.move_id._get_components_per_kit()
             phantom_line_qty_done = sum(
                 move_lines.filtered(
-                    lambda x: x.product_id == phantom_line.product_id
+                    lambda x: x.product_id == kit_line.product_id
                 ).mapped("qty_done")
             )
             if components_per_kit:
