@@ -134,6 +134,7 @@ Contributors
 * Denis Roussel <denis.roussel@acsone.eu>
 * Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 * Tomasz Walter <tomasz.walter@camptocamp.com>
+* Nicolas Delbovier <nicolas.delbovier@acsone.eu> (https://www.acsone.eu/)
 
 Maintainers
 ~~~~~~~~~~~
