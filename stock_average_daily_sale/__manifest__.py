@@ -16,16 +16,16 @@
         "product_route_mto",
     ],
     "data": [
-        "security/stock_average_daily_sale_config.xml",
-        "security/stock_average_daily_sale.xml",
-        "security/stock_average_daily_sale_demo.xml",
-        "views/stock_average_daily_sale_config.xml",
-        "views/stock_average_daily_sale.xml",
+        "security/stock_average_daily_usage_config.xml",
+        "security/stock_average_daily_usage.xml",
+        "security/stock_average_daily_usage_demo.xml",
+        "views/stock_average_daily_usage_config.xml",
+        "views/stock_average_daily_usage.xml",
         "data/ir_cron.xml",
     ],
     "external_dependencies": {"python": ["freezegun"]},
     "demo": [
-        "demo/stock_average_daily_sale_config.xml",
+        "demo/stock_average_daily_usage_config.xml",
         "demo/stock_move.xml",
     ],
 }

@@ -20,8 +20,8 @@ from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
 _logger = logging.getLogger(__name__)
 
 
-class StockAverageDailySale(models.Model):
-    _name = "stock.average.daily.sale"
+class StockAverageDailyUsage(models.Model):
+    _name = "stock.average.daily.usage"
     _auto = False
     _order = "abc_classification_level ASC, product_id ASC"
     _description = "Average Daily Consumption for Products"
@@ -32,13 +32,15 @@ class StockAverageDailySale(models.Model):
     average_daily_consumption_count = fields.Float(
         required=True,
         digits="Product Unit of Measure",
-        help="Average number of consumption operations per day for this product over the period.",
+        help="Average number of consumption operations per day for this product over "
+        "the period.",
     )
     average_qty_by_consumption = fields.Float(
         string="Average Qty by Consumption",
         required=True,
         digits="Product Unit of Measure",
-        help="Quantity delivered on average per consumption operation for this product over the period.",
+        help="Quantity delivered on average per consumption operation for this "
+        "product over the period.",
     )
     average_daily_qty = fields.Float(
         digits="Product Unit of Measure",
@@ -48,11 +50,12 @@ class StockAverageDailySale(models.Model):
     max_daily_qty = fields.Float(
         digits="Product Unit of Measure",
         required=True,
-        help="Maximum quantity consumed in a single day for this product over the period.",
+        help="Maximum quantity consumed in a single day for this product over the "
+        "period.",
     )
     config_id = fields.Many2one(
-        string="Stock Average Daily Sale Configuration",
-        comodel_name="stock.average.daily.sale.config",
+        string="Stock Average Daily Usage Configuration",
+        comodel_name="stock.average.daily.usage.config",
         required=True,
     )
     date_from = fields.Date(string="From", required=True)
@@ -66,7 +69,8 @@ class StockAverageDailySale(models.Model):
     nbr_consumptions = fields.Integer(
         string="Number of Consumptions",
         required=True,
-        help="Total number of consumption moves for this product over the complete period.",
+        help="Total number of consumption moves for this product over the "
+        "complete period.",
     )
     product_id = fields.Many2one(
         comodel_name="product.product", string="Product", required=True, index=True
@@ -75,7 +79,8 @@ class StockAverageDailySale(models.Model):
         required=True,
         compute="_compute_safety",
         help="Safety stock to cover the variability of the quantity consumed "
-        "each day. Formula: daily standard deviation * safety factor * sqrt(number of days in the period)",
+        "each day. Formula: daily standard deviation * safety factor * "
+        "sqrt(number of days in the period)",
     )
 
     def _compute_safety(self):
@@ -114,7 +119,8 @@ class StockAverageDailySale(models.Model):
 
     @api.model
     def _get_strategy_methods_names(self):
-        """Collect all strategy calculation method names matching prefix `_get_strategy_qty_`."""
+        """Collect all strategy calculation method names matching prefix
+        `_get_strategy_qty_`."""
         return [
             attr_name
             for attr_name in dir(self)
@@ -183,7 +189,7 @@ class StockAverageDailySale(models.Model):
     @api.model
     def get_refresh_date(self):
         return self.env["ir.config_parameter"].get_param(
-            "stock_average_daily_sale_refresh_date"
+            "stock_average_daily_usage_refresh_date"
         )
 
     @api.model
@@ -191,7 +197,7 @@ class StockAverageDailySale(models.Model):
         if date is None:
             date = fields.Datetime.now()
         self.env["ir.config_parameter"].set_param(
-            "stock_average_daily_sale_refresh_date", date
+            "stock_average_daily_usage_refresh_date", date
         )
 
     @api.model
@@ -214,13 +220,13 @@ class StockAverageDailySale(models.Model):
         )
         now = fields.Datetime.now()
         self.env.cr.execute(
-            """
+            """ -- # noqa: B950
             CREATE MATERIALIZED VIEW %(table)s AS (
                 -- Create a consolidated definition of parameters used into the average daily
                 -- consumption computation. Parameters are specified by product ABC class
                 WITH cfg AS (
                     SELECT
-                        stock_average_daily_sale_config.*,
+                        stock_average_daily_usage_config.*,
                         dts.date_from,
                         dts.date_to,
                         sl.parent_path AS location_parent_path,
@@ -231,8 +237,8 @@ class StockAverageDailySale(models.Model):
                             WHERE NOT exclude_weekends OR EXTRACT(ISODOW FROM d) NOT IN (6,7)
                         ) AS total_days
                     FROM
-                        stock_average_daily_sale_config
-                    JOIN stock_location sl ON stock_average_daily_sale_config.location_id = sl.id
+                        stock_average_daily_usage_config
+                    JOIN stock_location sl ON stock_average_daily_usage_config.location_id = sl.id
                     JOIN LATERAL (
                         SELECT
                         -- start of the analyzed period computed from the original cfg
@@ -241,7 +247,7 @@ class StockAverageDailySale(models.Model):
                         (%(now)s::date - '1 day'::interval)::date AS date_to
                     ) dts ON true
                     WHERE
-                        stock_average_daily_sale_config.active = True
+                        stock_average_daily_usage_config.active = True
                 ),
                 -- Collect max and min date on all moves to avoid collecting moves outside observed scopes
                 cfg_bounds AS (
@@ -386,7 +392,7 @@ class StockAverageDailySale(models.Model):
                     JOIN cfg ON cfg.id = metrics.config_id
                     JOIN product_product pp ON pp.id = metrics.product_id
                     JOIN product_template pt ON pt.id = pp.product_tmpl_id
-                ) WITH NO DATA;""",
+                ) WITH NO DATA;""",  # noqa: B950
             {
                 "table": AsIs(self._table),
                 "now": now,

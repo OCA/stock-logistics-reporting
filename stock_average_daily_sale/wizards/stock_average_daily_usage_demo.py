@@ -11,10 +11,12 @@ from odoo.fields import Date, Datetime
 _logger = logging.getLogger(__name__)
 
 
-class StockAverageDailySaleDemo(models.TransientModel):
+class StockAverageDailyUsageDemo(models.TransientModel):
 
-    _name = "stock.average.daily.sale.demo"
-    _description = "Wizard to populate demo data with past moves for Average Daily Sale"
+    _name = "stock.average.daily.usage.demo"
+    _description = (
+        "Wizard to populate demo data with past moves for Average Daily Usage"
+    )
 
     def _create_move(self, product, origin_location, qty):
         suppliers = self.env.ref("stock.stock_location_suppliers")
@@ -100,4 +102,4 @@ class StockAverageDailySaleDemo(models.TransientModel):
         )
         self._create_movement(product)
 
-        self.env["stock.average.daily.sale"].refresh_view()
+        self.env["stock.average.daily.usage"].refresh_view()

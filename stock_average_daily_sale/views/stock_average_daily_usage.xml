@@ -3,11 +3,13 @@
      Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="stock_daily_sale_search_view">
-        <field name="name">stock.daily.sale.search (in stock_average_daily_sale)</field>
-        <field name="model">stock.average.daily.sale</field>
+    <record model="ir.ui.view" id="stock_daily_usage_search_view">
+        <field
+            name="name"
+        >stock.daily.usage.search (in stock_average_daily_usage)</field>
+        <field name="model">stock.average.daily.usage</field>
         <field name="arch" type="xml">
-            <search string="Search Average Daily Sale">
+            <search string="Search Average Daily Usage">
                 <field name="product_id" />
                 <field
                     name="warehouse_id"
@@ -50,9 +52,9 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="stockdaily_sale_tree_view">
-        <field name="name">stock.daily.sale.tree (in stock_average_daily_sale)</field>
-        <field name="model">stock.average.daily.sale</field>
+    <record model="ir.ui.view" id="stockdaily_usage_tree_view">
+        <field name="name">stock.daily.usage.tree (in stock_average_daily_usage)</field>
+        <field name="model">stock.average.daily.usage</field>
         <field name="arch" type="xml">
             <tree create="false" delete="false">
                 <field
@@ -73,9 +75,9 @@
             </tree>
         </field>
     </record>
-    <record model="ir.ui.view" id="stockdaily_sale_form_view">
-        <field name="name">stock.daily.sale.form (in stock_average_daily_sale)</field>
-        <field name="model">stock.average.daily.sale</field>
+    <record model="ir.ui.view" id="stockdaily_usage_form_view">
+        <field name="name">stock.daily.usage.form (in stock_average_daily_usage)</field>
+        <field name="model">stock.average.daily.usage</field>
         <field name="arch" type="xml">
             <form create="false" delete="false">
                 <group>
@@ -105,9 +107,9 @@
             </form>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="stock_average_daily_sale_act_window">
-        <field name="name">Average Daily Sales</field>
-        <field name="res_model">stock.average.daily.sale</field>
+    <record model="ir.actions.act_window" id="stock_average_daily_usage_act_window">
+        <field name="name">Average Daily Usage</field>
+        <field name="res_model">stock.average.daily.usage</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
         <field
@@ -117,14 +119,14 @@
             <p class="o_view_nocontent_smiling_face">
                 No data found.
 
-                You maybe need to launch the cron to refresh the average daily sale data.
+                You maybe need to launch the cron to refresh the average daily usage data.
             </p>
         </field>
     </record>
-    <record model="ir.ui.menu" id="stock_average_daily_sale_menu">
-        <field name="name">Average Daily Sales</field>
+    <record model="ir.ui.menu" id="stock_average_daily_usage_menu">
+        <field name="name">Average Daily Usage</field>
         <field name="parent_id" ref="stock.menu_warehouse_report" />
-        <field name="action" ref="stock_average_daily_sale_act_window" />
+        <field name="action" ref="stock_average_daily_usage_act_window" />
         <field name="sequence" eval="99" />
     </record>
 </odoo>

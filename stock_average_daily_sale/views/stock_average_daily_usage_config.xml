@@ -3,9 +3,9 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
 
-    <record model="ir.ui.view" id="stock_average_daily_sale_config_tree_view">
-        <field name="name">stock.average.daily.sale.config.tree</field>
-        <field name="model">stock.average.daily.sale.config</field>
+    <record model="ir.ui.view" id="stock_average_daily_usage_config_tree_view">
+        <field name="name">stock.average.daily.usage.config.tree</field>
+        <field name="model">stock.average.daily.usage.config</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="warehouse_id" />
@@ -22,11 +22,11 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="stock_average_daily_sale_config_form_view">
-        <field name="name">stock.average.daily.sale.config.form</field>
-        <field name="model">stock.average.daily.sale.config</field>
+    <record model="ir.ui.view" id="stock_average_daily_usage_config_form_view">
+        <field name="name">stock.average.daily.usage.config.form</field>
+        <field name="model">stock.average.daily.usage.config</field>
         <field name="arch" type="xml">
-            <form string="Average daily sales computation parameters">
+            <form string="Average daily usage computation parameters">
                 <sheet>
                     <group>
                         <group>
@@ -98,21 +98,21 @@
 
     <record
         model="ir.actions.act_window"
-        id="stock_average_daily_sale_config_act_window"
+        id="stock_average_daily_usage_config_act_window"
     >
-        <field name="name">Average daily sales computation parameters</field>
+        <field name="name">Average daily usage computation parameters</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">stock.average.daily.sale.config</field>
+        <field name="res_model">stock.average.daily.usage.config</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="stock_average_daily_sale_config_tree_view" />
+        <field name="view_id" ref="stock_average_daily_usage_config_tree_view" />
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
 
-    <record model="ir.ui.menu" id="stock_average_daily_sale_config_menu">
-        <field name="name">Average daily sales computation parameters</field>
+    <record model="ir.ui.menu" id="stock_average_daily_usage_config_menu">
+        <field name="name">Average daily usage computation parameters</field>
         <field name="parent_id" ref="stock.menu_product_in_config_stock" />
-        <field name="action" ref="stock_average_daily_sale_config_act_window" />
+        <field name="action" ref="stock_average_daily_usage_config_act_window" />
         <field name="sequence" eval="99" />
     </record>
 

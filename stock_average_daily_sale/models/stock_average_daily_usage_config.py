@@ -10,9 +10,9 @@ from odoo.addons.stock_storage_type_putaway_abc.models.stock_location import (
 )
 
 
-class StockAverageDailySaleConfig(models.Model):
-    _name = "stock.average.daily.sale.config"
-    _description = "Average daily sales computation parameters"
+class StockAverageDailyUsageConfig(models.Model):
+    _name = "stock.average.daily.usage.config"
+    _description = "Average daily usage computation parameters"
     _check_company_auto = True
 
     _inherit = ["mail.thread"]
@@ -40,7 +40,7 @@ class StockAverageDailySaleConfig(models.Model):
     location_id = fields.Many2one(
         string="Location",
         comodel_name="stock.location",
-        compute="_compute_average_daily_sale_root_location_id",
+        compute="_compute_average_daily_usage_root_location_id",
         store=True,
         required=True,
         readonly=False,
@@ -103,7 +103,7 @@ class StockAverageDailySaleConfig(models.Model):
                 raise UserError(_("There should be at least one strategy selected."))
 
     @api.depends("warehouse_id")
-    def _compute_average_daily_sale_root_location_id(self):
+    def _compute_average_daily_usage_root_location_id(self):
         """
         Set a default root location from warehouse lot stock
         """

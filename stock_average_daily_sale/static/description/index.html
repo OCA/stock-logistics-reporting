@@ -403,13 +403,14 @@ It is up to you to configure the safety factor.</p>
 <li><a class="reference internal" href="#changelog" id="toc-entry-3">Changelog</a><ul>
 <li><a class="reference internal" href="#section-1" id="toc-entry-4">16.0.1.0.0 (2023-01-13)</a></li>
 <li><a class="reference internal" href="#section-2" id="toc-entry-5">16.0.2.0.0 (2025-04-05)</a></li>
+<li><a class="reference internal" href="#section-3" id="toc-entry-6">16.0.4.0.0 (2026-11-04)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-6">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-7">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-8">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-9">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-10">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-7">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-8">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-9">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-10">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-11">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -417,7 +418,7 @@ It is up to you to configure the safety factor.</p>
 <div class="section" id="configuration">
 <h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
 <ul>
-<li><p class="first">To configure data analysis, you should go to Inventory &gt; Configuration &gt; Average daily sales computation parameters</p>
+<li><p class="first">To configure data analysis, you should go to Inventory &gt; Configuration &gt; Average daily usage computation parameters</p>
 </li>
 <li><p class="first">You need to fill in the following informations:</p>
 <ul class="simple">
@@ -428,7 +429,7 @@ It is up to you to configure the safety factor.</p>
 <li>A safety factor</li>
 </ul>
 </li>
-<li><p class="first">Go to Configuration &gt; Technical &gt; Scheduled Actions &gt; Refresh average daily sales materialized view</p>
+<li><p class="first">Go to Configuration &gt; Technical &gt; Scheduled Actions &gt; Refresh average daily usage materialized view</p>
 <p>By default, the scheduled action is set to refresh data each day. Note that
 the current day is not take into consideration in the computations, so you
 better run the scheduled action on the early morning.</p>
@@ -462,9 +463,16 @@ Ensure to set a location that is used by the stock moves or a parent one.</p>
 <li>[16.0][REF] refactor formulas for proper metrics</li>
 </ul>
 </div>
+<div class="section" id="section-3">
+<h3><a class="toc-backref" href="#toc-entry-6">16.0.4.0.0 (2026-11-04)</a></h3>
+<ul class="simple">
+<li>[16.0][REF] make strategies configurable</li>
+<li>[16.0][REF] rename ‘sale’ to ‘usage’</li>
+</ul>
+</div>
 </div>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-6">Bug Tracker</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-7">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-reporting/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -472,16 +480,16 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-7">Credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-8">Credits</a></h2>
 <div class="section" id="authors">
-<h3><a class="toc-backref" href="#toc-entry-8">Authors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-9">Authors</a></h3>
 <ul class="simple">
 <li>ACSONE SA/NV</li>
 <li>BCIM</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h3><a class="toc-backref" href="#toc-entry-9">Contributors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-10">Contributors</a></h3>
 <ul class="simple">
 <li>Laurent Mignon &lt;<a class="reference external" href="mailto:laurent.mignon&#64;acsone.eu">laurent.mignon&#64;acsone.eu</a>&gt;</li>
 <li>Denis Roussel &lt;<a class="reference external" href="mailto:denis.roussel&#64;acsone.eu">denis.roussel&#64;acsone.eu</a>&gt;</li>
@@ -491,7 +499,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h3><a class="toc-backref" href="#toc-entry-10">Maintainers</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-11">Maintainers</a></h3>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
