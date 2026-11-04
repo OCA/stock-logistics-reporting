@@ -1,7 +1,11 @@
 # Copyright 2020 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class StockMoveLine(models.Model):
@@ -56,35 +60,54 @@ class StockMoveLine(models.Model):
         kit_lines = self.filtered("phantom_product_id")
         for sale_line in kit_lines.mapped("sale_line"):
             move_lines = kit_lines.filtered(lambda x: x.sale_line == sale_line)
-            # Deduce the kit quantity from the first component in the picking.
-            # If the the kit is partially delivered, this could lead to an
-            # unacurate value.
+            # Deduce the kit quantity from a component whose BoM tells its
+            # quantity per kit or, if none does, from the first component in
+            # the picking. If the the kit is partially delivered, this could
+            # lead to an unacurate value.
             phantom_line = move_lines[:1]
             if not phantom_line:
                 continue
-            price_unit = (
-                sale_line.price_subtotal / sale_line.product_uom_qty
-                if sale_line.product_uom_qty
-                else sale_line.price_reduce
-            )
+            if sale_line.product_uom_qty:
+                # price_subtotal is tax-excluded: don't extract included taxes
+                # again
+                price_unit = sale_line.price_subtotal / sale_line.product_uom_qty
+                handle_price_include = False
+            else:
+                price_unit = sale_line.price_reduce
+                handle_price_include = True
             # Compute how many kits were delivered from the components and
-            # the original demand. Note that if the qty is edited in the sale
-            # order this could lead to inconsitencies.
-            components_per_kit = phantom_line.move_id._get_components_per_kit()
+            # the components per kit (see _get_components_per_kit).
+            kit_line = next(
+                (
+                    line
+                    for line in move_lines
+                    if line.move_id._get_components_per_kit_from_bom()
+                ),
+                phantom_line,
+            )
+            components_per_kit = kit_line.move_id._get_components_per_kit()
             phantom_line_qty_done = sum(
                 move_lines.filtered(
-                    lambda x: x.product_id == phantom_line.product_id
+                    lambda x: x.product_id == kit_line.product_id
                 ).mapped("qty_done")
             )
-            quantity = (
-                phantom_line_qty_done / components_per_kit if components_per_kit else 0
-            )
+            if components_per_kit:
+                quantity = phantom_line_qty_done / components_per_kit
+            else:
+                quantity = 0.0
+                _logger.warning(
+                    "Kit %s in picking %s: components per kit could not be "
+                    "determined, valued quantity set to 0",
+                    sale_line.product_id.display_name,
+                    phantom_line.picking_id.name,
+                )
             taxes = phantom_line.sale_tax_id.compute_all(
                 price_unit=price_unit,
                 currency=phantom_line.currency_id,
                 quantity=quantity,
                 product=phantom_line.product_id,
                 partner=sale_line.order_id.partner_shipping_id,
+                handle_price_include=handle_price_include,
             )
             if sale_line.company_id.tax_calculation_rounding_method == (
                 "round_globally"
