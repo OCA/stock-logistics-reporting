@@ -3,8 +3,8 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo noupdate="1">
     <record
-        model="stock.average.daily.sale.config"
-        id="stock_average_daily_sale_config_level_a"
+        model="stock.average.daily.usage.config"
+        id="stock_average_daily_usage_config_level_a"
     >
         <field name="abc_classification_level">a</field>
         <field name="period_value">2</field>
@@ -16,8 +16,8 @@
         <field name="company_id" ref="base.main_company" />
     </record>
     <record
-        model="stock.average.daily.sale.config"
-        id="stock_average_daily_sale_config_level_b"
+        model="stock.average.daily.usage.config"
+        id="stock_average_daily_usage_config_level_b"
     >
         <field name="abc_classification_level">b</field>
         <field name="period_value">13</field>
@@ -29,8 +29,8 @@
         <field name="company_id" ref="base.main_company" />
     </record>
     <record
-        model="stock.average.daily.sale.config"
-        id="stock_average_daily_sale_config_level_c"
+        model="stock.average.daily.usage.config"
+        id="stock_average_daily_usage_config_level_c"
     >
         <field name="abc_classification_level">c</field>
         <field name="period_value">26</field>

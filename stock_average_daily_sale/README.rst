@@ -66,7 +66,7 @@ It is up to you to configure the safety factor.
 Configuration
 =============
 
-* To configure data analysis, you should go to Inventory > Configuration > Average daily sales computation parameters
+* To configure data analysis, you should go to Inventory > Configuration > Average daily usage computation parameters
 
 * You need to fill in the following informations:
 
@@ -76,7 +76,7 @@ Configuration
   * The period of time to analyze back (in days/weeks/months/years)
   * A safety factor
 
-* Go to Configuration > Technical > Scheduled Actions > Refresh average daily sales materialized view
+* Go to Configuration > Technical > Scheduled Actions > Refresh average daily usage materialized view
 
   By default, the scheduled action is set to refresh data each day. Note that
   the current day is not take into consideration in the computations, so you
@@ -107,6 +107,12 @@ Changelog
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [16.0][REF] refactor formulas for proper metrics
+
+16.0.4.0.0 (2026-11-04)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [16.0][REF] make strategies configurable
+* [16.0][REF] rename 'sale' to 'usage'
 
 Bug Tracker
 ===========

@@ -8,10 +8,10 @@ from freezegun import freeze_time
 from odoo.exceptions import UserError
 from odoo.fields import Datetime
 
-from .common import CommonAverageSaleTest
+from .common import CommonAverageUsageTest
 
 
-class TestAverageDailySale(CommonAverageSaleTest):
+class TestAverageDailyUsageStrategies(CommonAverageUsageTest):
     """Test materialized view"""
 
     @classmethod
@@ -44,14 +44,14 @@ class TestAverageDailySale(CommonAverageSaleTest):
             }
         )
         self._refresh()
-        ads = self.env["stock.average.daily.sale"].search(
+        adu = self.env["stock.average.daily.usage"].search(
             [
                 ("location_id", "=", self.location_zone.id),
                 ("product_id", "=", self.product.id),
             ]
         )
         self.assertAlmostEqual(
-            ads.recommended_qty, ads._get_strategy_qty_average_daily(), places=2
+            adu.recommended_qty, adu._get_strategy_qty_average_daily(), places=2
         )
 
         self.cfg.write(
@@ -62,15 +62,15 @@ class TestAverageDailySale(CommonAverageSaleTest):
             }
         )
         self._refresh()
-        ads = self.env["stock.average.daily.sale"].search(
+        adu = self.env["stock.average.daily.usage"].search(
             [
                 ("location_id", "=", self.location_zone.id),
                 ("product_id", "=", self.product.id),
             ]
         )
-        ads.invalidate_recordset()
+        adu.invalidate_recordset()
         self.assertAlmostEqual(
-            ads.recommended_qty, ads._get_strategy_qty_average_consumption(), places=2
+            adu.recommended_qty, adu._get_strategy_qty_average_consumption(), places=2
         )
 
         self.cfg.write(
@@ -81,15 +81,15 @@ class TestAverageDailySale(CommonAverageSaleTest):
             }
         )
         self._refresh()
-        ads = self.env["stock.average.daily.sale"].search(
+        adu = self.env["stock.average.daily.usage"].search(
             [
                 ("location_id", "=", self.location_zone.id),
                 ("product_id", "=", self.product.id),
             ]
         )
-        ads.invalidate_recordset()
+        adu.invalidate_recordset()
         self.assertAlmostEqual(
-            ads.recommended_qty, ads._get_strategy_qty_max_consumption(), places=2
+            adu.recommended_qty, adu._get_strategy_qty_max_consumption(), places=2
         )
 
     def test_multiple_strategies_combined(self):
@@ -101,18 +101,18 @@ class TestAverageDailySale(CommonAverageSaleTest):
             }
         )
         self._refresh()
-        ads = self.env["stock.average.daily.sale"].search(
+        adu = self.env["stock.average.daily.usage"].search(
             [
                 ("location_id", "=", self.location_zone.id),
                 ("product_id", "=", self.product.id),
             ]
         )
         self.assertAlmostEqual(
-            ads.recommended_qty,
+            adu.recommended_qty,
             max(
-                ads._get_strategy_qty_average_daily(),
-                ads._get_strategy_qty_average_consumption(),
-                ads._get_strategy_qty_max_consumption(),
+                adu._get_strategy_qty_average_daily(),
+                adu._get_strategy_qty_average_consumption(),
+                adu._get_strategy_qty_max_consumption(),
             ),
             places=2,
         )

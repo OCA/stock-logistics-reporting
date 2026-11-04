@@ -8,7 +8,7 @@ from odoo.fields import Datetime
 from odoo.tests.common import TransactionCase
 
 
-class CommonAverageSaleTest(TransactionCase):
+class CommonAverageUsageTest(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -18,8 +18,8 @@ class CommonAverageSaleTest(TransactionCase):
         cls.location_obj = cls.env["stock.location"]
         cls.move_obj = cls.env["stock.move"]
         cls.warehouse_0 = cls.env.ref("stock.warehouse0")
-        cls.average_sale_obj = cls.env["stock.average.daily.sale"]
-        cls.average_sale_obj._create_materialized_view()
+        cls.average_usage_obj = cls.env["stock.average.daily.usage"]
+        cls.average_usage_obj._create_materialized_view()
         cls.view_cron = cls.env.ref(
             "stock_average_daily_sale.refresh_materialized_view"
         )
@@ -44,7 +44,7 @@ class CommonAverageSaleTest(TransactionCase):
             }
         )
 
-        cls.cfg = cls.env["stock.average.daily.sale.config"].search(
+        cls.cfg = cls.env["stock.average.daily.usage.config"].search(
             [
                 ("warehouse_id", "=", cls.warehouse_0.id),
                 ("location_id", "=", cls.warehouse_0.lot_stock_id.id),
@@ -98,4 +98,4 @@ class CommonAverageSaleTest(TransactionCase):
     def _refresh(cls):
         # Flush to allow materialized view to be correctly populated
         cls.env.flush_all()
-        cls.env["stock.average.daily.sale"].refresh_view()
+        cls.env["stock.average.daily.usage"].refresh_view()
