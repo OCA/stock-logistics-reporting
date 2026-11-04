@@ -24,32 +24,31 @@ class StockAverageDailySale(models.Model):
     _name = "stock.average.daily.sale"
     _auto = False
     _order = "abc_classification_level ASC, product_id ASC"
-    _description = "Average Daily Sale for Products"
+    _description = "Average Daily Consumption for Products"
 
     abc_classification_level = fields.Selection(
         selection=ABC_SELECTION, string="ABC", required=True, readonly=True, index=True
     )
-    average_daily_sales_count = fields.Float(
+    average_daily_consumption_count = fields.Float(
         required=True,
         digits="Product Unit of Measure",
-        help="How much deliveries on average for this product on the period.",
+        help="Average number of consumption operations per day for this product over the period.",
     )
-    average_qty_by_sale = fields.Float(
+    average_qty_by_consumption = fields.Float(
+        string="Average Qty by Consumption",
         required=True,
         digits="Product Unit of Measure",
-        help="The quantity "
-        "delivered on average for one delivery of this product on the period.",
+        help="Quantity delivered on average per consumption operation for this product over the period.",
     )
     average_daily_qty = fields.Float(
         digits="Product Unit of Measure",
         required=True,
-        help="The quantity delivered on average on one day for this product on "
-        "the period.",
+        help="Average quantity consumed per day for this product over the period.",
     )
     max_daily_qty = fields.Float(
         digits="Product Unit of Measure",
         required=True,
-        help="The max quantity delivered on one day for this product on the period.",
+        help="Maximum quantity consumed in a single day for this product over the period.",
     )
     config_id = fields.Many2one(
         string="Stock Average Daily Sale Configuration",
@@ -64,10 +63,10 @@ class StockAverageDailySale(models.Model):
         store=True,
         index=True,
     )
-    nbr_sales = fields.Integer(
-        string="Number of Sales",
+    nbr_consumptions = fields.Integer(
+        string="Number of Consumptions",
         required=True,
-        help="The total amount of deliveries for this product over the complete period",
+        help="Total number of consumption moves for this product over the complete period.",
     )
     product_id = fields.Many2one(
         comodel_name="product.product", string="Product", required=True, index=True
@@ -75,8 +74,8 @@ class StockAverageDailySale(models.Model):
     safety = fields.Float(
         required=True,
         compute="_compute_safety",
-        help="Safety stock to cover the variability of the quantity delivered "
-        "each day. Formula: daily standard deviation * safety factor * sqrt(nbr days in the period)",
+        help="Safety stock to cover the variability of the quantity consumed "
+        "each day. Formula: daily standard deviation * safety factor * sqrt(number of days in the period)",
     )
 
     def _compute_safety(self):
@@ -90,19 +89,46 @@ class StockAverageDailySale(models.Model):
         required=True,
         compute="_compute_recommended_qty",
         digits="Product Unit of Measure",
-        help="Minimal recommended quantity in stock. Formula: average daily qty * number days in stock + safety",
+        help="Minimal recommended quantity in stock. Equal to the max "
+        "recommended quantity across all active strategies.",
     )
 
+    def _get_strategy_qty_average_daily(self):
+        if not self.config_id.use_average_daily_strategy:
+            return 0.0
+        return (
+            self.config_id.number_days_qty_in_stock * self.average_daily_qty
+        ) + self.safety
+
+    def _get_strategy_qty_average_consumption(self):
+        if not self.config_id.use_average_consumption_strategy:
+            return 0.0
+        return (
+            self.config_id.average_consumption_factor * self.average_qty_by_consumption
+        )
+
+    def _get_strategy_qty_max_consumption(self):
+        if not self.config_id.use_max_consumption_strategy:
+            return 0.0
+        return self.max_daily_qty * self.config_id.max_consumption_factor
+
+    @api.model
+    def _get_strategy_methods_names(self):
+        """Collect all strategy calculation method names matching prefix `_get_strategy_qty_`."""
+        return [
+            attr_name
+            for attr_name in dir(self)
+            if attr_name.startswith("_get_strategy_qty_")
+            and callable(getattr(self, attr_name))
+        ]
+
     def _compute_recommended_qty(self):
+        method_names = self._get_strategy_methods_names()
         for rec in self:
-            average_daily = (
-                rec.config_id.number_days_qty_in_stock * rec.average_daily_qty
-                + rec.safety
-            )
-            average_sale = (
-                rec.config_id.number_sales_qty_in_stock * rec.average_qty_by_sale
-            )
-            rec.recommended_qty = max(average_daily, average_sale)
+            strategy_qtys = [
+                getattr(rec, method_name)() for method_name in method_names
+            ]
+            rec.recommended_qty = max(strategy_qtys, default=0.0)
 
     sale_ok = fields.Boolean(
         string="Can be Sold",
@@ -191,7 +217,7 @@ class StockAverageDailySale(models.Model):
             """
             CREATE MATERIALIZED VIEW %(table)s AS (
                 -- Create a consolidated definition of parameters used into the average daily
-                -- sales computation. Parameters are specified by product ABC class
+                -- consumption computation. Parameters are specified by product ABC class
                 WITH cfg AS (
                     SELECT
                         stock_average_daily_sale_config.*,
@@ -217,7 +243,7 @@ class StockAverageDailySale(models.Model):
                     WHERE
                         stock_average_daily_sale_config.active = True
                 ),
-                -- Collect max and min date on all moves to avoid to collect all moves outside the observed scopes
+                -- Collect max and min date on all moves to avoid collecting moves outside observed scopes
                 cfg_bounds AS (
                     SELECT
                         min(date_from) AS min_date,
@@ -247,8 +273,8 @@ class StockAverageDailySale(models.Model):
                         stock_location sl
                         ON sl.parent_path LIKE cfg.location_parent_path || '%%'
                 ),
-                -- Prefilter moves used to compute the consumption in order to avoid to process all moves of the system.
-                -- Only moves with a date between the min and max bounds of the different configs are kept
+                -- Prefilter moves used to compute consumption to avoid processing all moves of the system.
+                -- Only moves with a date between min and max bounds of configs are kept
                 filtered_moves AS (
                     SELECT
                         sm.id,
@@ -269,7 +295,7 @@ class StockAverageDailySale(models.Model):
                         AND sm.date < cb.max_date + interval '1 day'
                         AND EXISTS (SELECT 1 FROM cfg_products cp WHERE cp.product_id = sm.product_id)
                 ),
-                -- Collect moves from the config location to outside that location
+                -- Collect moves from config location hierarchy to outside that hierarchy
                 consumption AS (
                     SELECT
                         fm.product_id,
@@ -313,7 +339,7 @@ class StockAverageDailySale(models.Model):
                         dc.config_id,
                         MAX(dc.qty) AS daily_max_qty,
                         SUM(dc.qty) / cfg.total_days AS daily_average_qty,
-                        SUM(dc.qty) / SUM(dc.count) AS average_qty_by_sale,
+                        SUM(dc.qty) / SUM(dc.count) AS average_qty_by_consumption,
                         SUM(dc.count) AS total_amount,
                         SUM(dc.count) / cfg.total_days AS average_amount,
                         cfg.total_days,
@@ -325,13 +351,11 @@ class StockAverageDailySale(models.Model):
                     LEFT JOIN cfg ON cfg.id = dc.config_id
                     GROUP BY dc.product_id, dc.config_id, cfg.total_days
                 ),
-                -- Add the standard deviation metric
-                average_max_stddev AS(
+                -- Add standard deviation metric
+                average_max_stddev AS (
                     SELECT
                       *,
-                      -- For days without consumption, fill with a daily consumption of 0
-                      -- The number of missing days is the total days in the period minus days where we have a count
-                      -- Combine the array of daily consumption with the 0 and compute standard deviation
+                      -- For days without consumption, fill with daily consumption of 0
                       (SELECT stddev(e) FROM
                          unnest(array_cat(
                             daily_consumption_arr,
@@ -340,7 +364,7 @@ class StockAverageDailySale(models.Model):
                       AS daily_standard_deviation
                     FROM average_max
                 )
-                -- Collect the data for the materialized view
+                -- Collect data for the materialized view
                 SELECT
                     row_number() over (order by cfg.id, metrics.product_id) as id,
                     cfg.id AS config_id,
@@ -350,11 +374,11 @@ class StockAverageDailySale(models.Model):
                     cfg.location_id,
                     cfg.abc_classification_level,
                     metrics.product_id,
-                    metrics.average_qty_by_sale,
-                    metrics.average_amount AS average_daily_sales_count,
+                    metrics.average_qty_by_consumption,
+                    metrics.average_amount AS average_daily_consumption_count,
                     metrics.daily_max_qty AS max_daily_qty,
                     metrics.daily_average_qty AS average_daily_qty,
-                    metrics.total_amount AS nbr_sales,
+                    metrics.total_amount AS nbr_consumptions,
                     pt.sale_ok,
                     pt.is_mto,
                     metrics.daily_standard_deviation
