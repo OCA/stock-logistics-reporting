@@ -45,19 +45,27 @@ class StockInventoryValuationReport(models.TransientModel):
         compute="_compute_results",
     )
 
+    def _get_location_ids(self):
+        """Return location IDs to filter by, respecting context keys
+        set by stock_quantity_history_location.
+        """
+        location_id = self.env.context.get("location")
+        if not location_id:
+            return []
+        location = self.env["stock.location"].browse(location_id)
+        if not location.exists():
+            return []
+        compute_child = self.env.context.get("compute_child", True)
+        if compute_child:
+            return self.env["stock.location"].search(
+                [("id", "child_of", location.id)]
+            ).ids
+        return [location_id]
+
     @api.depends("inventory_datetime")
     def _compute_results(self):
-        """
-        Generate report lines, one per product with stock at the given date.
-
-        For databases migrated from Odoo 12 to 18 where products changed from
-        type='product' to type='consu' + is_storable=True, we need to calculate
-        historical quantities from stock.move.line instead of stock_valuation_layer
-        because SVL.sum(quantity) gives accumulated historical total, not actual stock.
-        """
         self.ensure_one()
 
-        # Build domain for products
         domain = [("is_storable", "=", True)]
         product_id = self.env.context.get("product_id")
         product_tmpl_id = self.env.context.get("product_tmpl_id")
@@ -74,38 +82,69 @@ class StockInventoryValuationReport(models.TransientModel):
             self.results = self.env["stock.inventory.valuation.view"]
             return
 
-        # Flush pending changes to database before SQL query
         self.env.flush_all()
 
-        # Query historical quantities from stock.move.line
-        # This gives accurate results for migrated databases
-        # Note: We use m.date instead of ml.date because tests may modify
-        # move dates after validation
-        query = """
-            SELECT ml.product_id,
-                   COALESCE(
-                       SUM(CASE WHEN loc_dest.usage = 'internal'
-                           THEN ml.quantity ELSE 0 END), 0
-                   ) as qty_in,
-                   COALESCE(
-                       SUM(CASE WHEN loc_src.usage = 'internal'
-                           THEN ml.quantity ELSE 0 END), 0
-                   ) as qty_out
-            FROM stock_move_line ml
-            INNER JOIN stock_location loc_src ON ml.location_id = loc_src.id
-            INNER JOIN stock_location loc_dest
-                ON ml.location_dest_id = loc_dest.id
-            INNER JOIN stock_move m ON ml.move_id = m.id
-            WHERE ml.product_id IN %s
-              AND ml.state = 'done'
-              AND m.date <= %s
-              AND m.company_id = %s
-            GROUP BY ml.product_id
-        """
+        location_ids = self._get_location_ids()
 
-        self.env.cr.execute(
-            query, (tuple(products.ids), self.inventory_datetime, self.env.company.id)
-        )
+        if location_ids:
+            location_tuple = tuple(location_ids)
+            query = """
+                SELECT ml.product_id,
+                       COALESCE(
+                           SUM(CASE WHEN ml.location_dest_id IN %s
+                               THEN ml.quantity ELSE 0 END), 0
+                       ) as qty_in,
+                       COALESCE(
+                           SUM(CASE WHEN ml.location_id IN %s
+                               THEN ml.quantity ELSE 0 END), 0
+                       ) as qty_out
+                FROM stock_move_line ml
+                INNER JOIN stock_move m ON ml.move_id = m.id
+                WHERE ml.product_id IN %s
+                  AND ml.state = 'done'
+                  AND m.date <= %s
+                  AND m.company_id = %s
+                  AND (ml.location_id IN %s OR ml.location_dest_id IN %s)
+                GROUP BY ml.product_id
+            """
+            params = (
+                location_tuple,
+                location_tuple,
+                tuple(products.ids),
+                self.inventory_datetime,
+                self.env.company.id,
+                location_tuple,
+                location_tuple,
+            )
+        else:
+            query = """
+                SELECT ml.product_id,
+                       COALESCE(
+                           SUM(CASE WHEN loc_dest.usage = 'internal'
+                               THEN ml.quantity ELSE 0 END), 0
+                       ) as qty_in,
+                       COALESCE(
+                           SUM(CASE WHEN loc_src.usage = 'internal'
+                               THEN ml.quantity ELSE 0 END), 0
+                       ) as qty_out
+                FROM stock_move_line ml
+                INNER JOIN stock_location loc_src ON ml.location_id = loc_src.id
+                INNER JOIN stock_location loc_dest
+                    ON ml.location_dest_id = loc_dest.id
+                INNER JOIN stock_move m ON ml.move_id = m.id
+                WHERE ml.product_id IN %s
+                  AND ml.state = 'done'
+                  AND m.date <= %s
+                  AND m.company_id = %s
+                GROUP BY ml.product_id
+            """
+            params = (
+                tuple(products.ids),
+                self.inventory_datetime,
+                self.env.company.id,
+            )
+
+        self.env.cr.execute(query, params)
 
         qty_data = {
             row[0]: row[1] - row[2]  # qty_in - qty_out

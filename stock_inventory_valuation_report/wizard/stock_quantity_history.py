@@ -30,8 +30,16 @@ class StockQuantityHistory(models.TransientModel):
                 )
                 new_context = {}
         model = self.env["report.stock.inventory.valuation.report"]
+        if hasattr(self, "location_id") and self.location_id:
+            model = model.with_context(
+                location=self.location_id.id,
+                compute_child=self.include_child_locations,
+            )
         report = model.create(self._prepare_stock_inventory_valuation_report())
         new_context.update(active_id=report.id, active_ids=report.ids)
+        if hasattr(self, "location_id") and self.location_id:
+            new_context["location"] = self.location_id.id
+            new_context["compute_child"] = self.include_child_locations
         vals["context"] = new_context
         return vals
 
@@ -54,5 +62,10 @@ class StockQuantityHistory(models.TransientModel):
 
     def _export(self, report_type):
         model = self.env["report.stock.inventory.valuation.report"]
+        if hasattr(self, "location_id") and self.location_id:
+            model = model.with_context(
+                location=self.location_id.id,
+                compute_child=self.include_child_locations,
+            )
         report = model.create(self._prepare_stock_inventory_valuation_report())
         return report.print_report(report_type)
