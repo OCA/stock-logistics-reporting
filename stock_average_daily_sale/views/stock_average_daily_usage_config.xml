@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_average_daily_usage_config_tree_view">
+        <field name="name">stock.average.daily.usage.config.tree</field>
+        <field name="model">stock.average.daily.usage.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="warehouse_id" />
+                <field name="location_id" />
+                <field name="company_id" />
+                <field name="abc_classification_level" />
+                <field name="exclude_weekends" />
+                <field name="period_value" />
+                <field name="period_name" />
+                <field name="number_days_qty_in_stock" />
+                <field name="safety_factor" />
+                <field name="average_consumption_factor" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_average_daily_usage_config_form_view">
+        <field name="name">stock.average.daily.usage.config.form</field>
+        <field name="model">stock.average.daily.usage.config</field>
+        <field name="arch" type="xml">
+            <form string="Average daily usage computation parameters">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="warehouse_id" />
+                            <field name="location_id" />
+                            <field name="company_id" />
+                            <field name="abc_classification_level" />
+                        </group>
+                        <group>
+                            <field name="period_value" />
+                            <field name="period_name" />
+                            <field name="exclude_weekends" />
+                        </group>
+                    </group>
+                    <group name="strategies" string="Reorder point strategies">
+                        <group
+                            name="average_daily_strategy"
+                            string="Average Daily Usage"
+                        >
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Min = (Average Daily Quantity × Number of Days) + Safety.
+                            </div>
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Safety = Daily Standard Deviation × Safety Factor × sqrt(nbr days in
+                                the analyzed period)
+                            </div>
+                            <field name="use_average_daily_strategy" />
+                            <field
+                                name="number_days_qty_in_stock"
+                                attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
+                            />
+                            <field
+                                name="safety_factor"
+                                attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
+                            />
+                        </group>
+                        <group
+                            name="average_consumption_strategy"
+                            string="Average Consumption"
+                        >
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Min = Average Consumption Quantity × Factor.
+                            </div>
+                            <field name="use_average_consumption_strategy" />
+                            <field
+                                name="average_consumption_factor"
+                                attrs="{'invisible': [('use_average_consumption_strategy', '=', False)]}"
+                            />
+                        </group>
+                        <group name="max_consumption_strategy" string="Max Consumption">
+                            <div colspan="2" class="text-muted fst-italic mb-2">
+                                Min = Max Consumption Quantity × Factor
+                            </div>
+                            <field name="use_max_consumption_strategy" />
+                            <field
+                                name="max_consumption_factor"
+                                attrs="{'invisible': [('use_max_consumption_strategy', '=', False)]}"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.act_window"
+        id="stock_average_daily_usage_config_act_window"
+    >
+        <field name="name">Average daily usage computation parameters</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.average.daily.usage.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="stock_average_daily_usage_config_tree_view" />
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.ui.menu" id="stock_average_daily_usage_config_menu">
+        <field name="name">Average daily usage computation parameters</field>
+        <field name="parent_id" ref="stock.menu_product_in_config_stock" />
+        <field name="action" ref="stock_average_daily_usage_config_act_window" />
+        <field name="sequence" eval="99" />
+    </record>
+
+</odoo>
