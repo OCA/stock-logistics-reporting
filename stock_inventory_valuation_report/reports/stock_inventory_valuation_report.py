@@ -57,9 +57,9 @@ class StockInventoryValuationReport(models.TransientModel):
             return []
         compute_child = self.env.context.get("compute_child", True)
         if compute_child:
-            return self.env["stock.location"].search(
-                [("id", "child_of", location.id)]
-            ).ids
+            return (
+                self.env["stock.location"].search([("id", "child_of", location.id)]).ids
+            )
         return [location_id]
 
     @api.depends("inventory_datetime")
