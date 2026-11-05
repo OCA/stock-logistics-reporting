@@ -23,7 +23,7 @@
         "views/stock_average_daily_usage.xml",
         "data/ir_cron.xml",
     ],
-    "external_dependencies": {"python": ["freezegun"]},
+    "external_dependencies": {"python": ["freezegun", "openupgradelib"]},
     "demo": [
         "demo/stock_average_daily_usage_config.xml",
         "demo/stock_move.xml",
