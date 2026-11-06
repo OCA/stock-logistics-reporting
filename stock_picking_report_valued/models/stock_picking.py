@@ -13,7 +13,6 @@ class StockPicking(models.Model):
     valued = fields.Boolean(related="partner_id.valued_picking")
     currency_id = fields.Many2one(
         comodel_name="res.currency",
-        string="Currency",
         compute="_compute_currency_id",
         compute_sudo=True,  # for avoiding access problems
     )

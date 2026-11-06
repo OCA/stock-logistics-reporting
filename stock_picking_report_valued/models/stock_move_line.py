@@ -5,7 +5,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
-from odoo.tools import float_compare
 
 
 class StockMoveLine(models.Model):
@@ -60,12 +59,10 @@ class StockMoveLine(models.Model):
             if not valued_line:
                 continue
             quantity = line._get_report_valued_quantity()
-            different_uom = valued_line.product_uom_id != line.product_uom_id
+            different_uom = valued_line.product_uom_id != line.uom_id
             # If order line quantity don't match with move line quantity compute values
-            different_qty = float_compare(
-                quantity,
-                line.sale_line.product_uom_qty,
-                precision_rounding=line.product_uom_id.rounding,
+            different_qty = line.uom_id.compare(
+                quantity, line.sale_line.product_uom_qty
             )
             if different_uom or different_qty:
                 # Force read to cache M2M field for get values with _convert_to_write
@@ -73,9 +70,9 @@ class StockMoveLine(models.Model):
                 # Create virtual sale line with stock move line quantity
                 sol_vals = line.sale_line._convert_to_write(line.sale_line._cache)
                 sol_vals["product_uom_qty"] = quantity
-                sol_vals["product_uom_id"] = line.product_uom_id.id
+                sol_vals["product_uom_id"] = line.uom_id.id
                 sol_vals["price_unit"] = valued_line.product_uom_id._compute_price(
-                    valued_line.price_unit, line.product_uom_id
+                    valued_line.price_unit, line.uom_id
                 )
                 sol_vals.pop("price_subtotal", None)
                 valued_line = line.sale_line.new(sol_vals)
@@ -88,7 +85,7 @@ class StockMoveLine(models.Model):
                     "sale_price_tax": valued_line.price_tax,
                     "sale_price_total": valued_line.price_total,
                     "sale_price_unit": line.sale_line.product_uom_id._compute_price(
-                        line.sale_line.price_unit, line.product_uom_id
+                        line.sale_line.price_unit, line.uom_id
                     ),
                 }
             )
