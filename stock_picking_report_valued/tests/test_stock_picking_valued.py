@@ -182,3 +182,37 @@ class TestStockPickingValued(common.TransactionCase):
         finally:
             # Restore original method
             StockPicking._get_report_valued_total_amount = original_method
+
+    def test_08_missing_product_in_cache(self):
+        """
+        Forces the execution of the if not sol_vals.get('product_id') block
+        by clearing the sale line cache before computing.
+        """
+        self.assertTrue(self.partner.valued_picking)
+        self.sale_order.action_confirm()
+
+        picking = self.sale_order.picking_ids[0]
+        picking.action_assign()
+        move_line = picking.move_line_ids[0]
+
+        # Modify the quantity to force 'different_qty' to be True
+        move_line.quantity = 2.0
+
+        # Invalidate the computed fields of move_line to force recalculation
+        move_line.invalidate_recordset(
+            [
+                "sale_price_subtotal",
+                "sale_price_tax",
+                "sale_price_total",
+                "sale_price_unit",
+            ]
+        )
+
+        # Completely invalidate the sale_line cache.
+        # This ensures that line.sale_line._cache does not contain the 'product_id'
+        move_line.sale_line.invalidate_recordset()
+
+        # Accessing a computed field triggers _compute_sale_order_line_fields
+        # Check that the computation was successful using the lines fallback
+        self.assertEqual(move_line.sale_price_unit, 100.0)
+        self.assertEqual(move_line.sale_price_subtotal, 200.0)
