@@ -140,3 +140,18 @@ class TestStockPickingValued(common.TransactionCase):
             self.assertEqual(picking.amount_untaxed, 200.0)
             self.assertEqual(picking.amount_tax, 30.0)
             self.assertEqual(picking.amount_total, 230.0)
+
+    def test_06_report_discount_column(self):
+        self.env.user.group_ids += self.env.ref("sale.group_discount_per_so_line")
+        self.sale_order.order_line.discount = 10
+        self.sale_order.action_confirm()
+        picking = self.sale_order.picking_ids
+        picking.action_assign()
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")
+        html = (
+            self.env["ir.actions.report"]
+            ._render_qweb_html("stock.report_deliveryslip", picking.ids)[0]
+            .decode()
+        )
+        self.assertIn("<strong>Discount</strong>", html)
