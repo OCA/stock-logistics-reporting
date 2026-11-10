@@ -76,19 +76,20 @@ class StockMoveLine(models.Model):
                 price_unit = sale_line.price_reduce
                 handle_price_include = True
             # Compute how many kits were delivered from the components and
-            # the components per kit (see _get_components_per_kit).
-            kit_line = next(
+            # the components per kit (see _get_components_per_kit). Each move
+            # is checked once: its lines (lots, packages) share its ratio.
+            kit_move = next(
                 (
-                    line
-                    for line in move_lines
-                    if line.move_id._get_components_per_kit_from_bom()
+                    move
+                    for move in move_lines.move_id
+                    if move._get_components_per_kit_from_bom()
                 ),
-                phantom_line,
+                phantom_line.move_id,
             )
-            components_per_kit = kit_line.move_id._get_components_per_kit()
+            components_per_kit = kit_move._get_components_per_kit()
             phantom_line_qty_done = sum(
                 move_lines.filtered(
-                    lambda x: x.product_id == kit_line.product_id
+                    lambda x: x.product_id == kit_move.product_id
                 ).mapped("qty_done")
             )
             if components_per_kit:

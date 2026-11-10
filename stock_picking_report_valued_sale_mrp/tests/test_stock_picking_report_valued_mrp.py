@@ -1073,3 +1073,45 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         kit_line = self._kit_line(picking)
         self.assertAlmostEqual(kit_line.phantom_delivered_qty, 2.0)
         self.assertAlmostEqual(kit_line.sale_price_subtotal, 59.8)
+
+    def test_45_bom_ratio_checked_once_per_move(self):
+        """Components split in several move lines (lots, packages): the BoM
+        ratio is checked once per move, not once per line, and the picking is
+        still valued from the whole move."""
+        order = self._create_kit_order(2)
+        picking = order.picking_ids
+        self._set_quantity_done(picking)
+        for move in picking.move_ids:
+            line = move.move_line_ids
+            half = line.qty_done / 2
+            line.qty_done = half
+            line.copy({"move_id": move.id, "qty_done": half})
+        self.assertEqual(len(picking.move_line_ids), 4)
+        with patch.object(
+            StockMove, "_get_components_per_kit_from_bom", return_value=0.0
+        ) as from_bom:
+            kit_line = self._kit_line(picking)
+            self.assertAlmostEqual(kit_line.phantom_delivered_qty, 2.0)
+            self.assertAlmostEqual(kit_line.sale_price_subtotal, 59.8)
+        # Once per move to choose the component, and once more from
+        # _get_components_per_kit on the chosen one.
+        self.assertEqual(from_bom.call_count, len(picking.move_ids) + 1)
+
+    def test_46_bom_line_qty_edited_after_sale(self):
+        """Known limitation: the quantity of a BoM line edited after the sale.
+        The moves still point to the edited line, so its new quantity is used
+        as the components per kit: 4 components delivered with 3 per kit are
+        valued as 1.33 kits instead of 2."""
+        kit = self.product_product.create({"name": "Edited kit", "type": "consu"})
+        bom = self._create_kit_bom(
+            kit, [(self.product_kit_comp_1, 2), (self.product_kit_comp_2, 4)]
+        )
+        order = self._create_kit_order(2, product=kit)
+        bom.bom_line_ids.filtered(
+            lambda line: line.product_id == self.product_kit_comp_1
+        ).product_qty = 3
+        picking = order.picking_ids
+        self._deliver(picking)
+        kit_line = self._kit_line(picking)
+        self.assertAlmostEqual(kit_line.phantom_delivered_qty, 4 / 3)
+        self.assertAlmostEqual(kit_line.sale_price_subtotal, 39.87)
