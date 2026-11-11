@@ -13,7 +13,7 @@
                 <th class="text-end">
                     <strong>Unit Price</strong>
                 </th>
-                <th class="text-end" groups="product.group_discount_per_so_line">
+                <th class="text-end" groups="sale.group_discount_per_so_line">
                     <strong>Discount</strong>
                 </th>
                 <th class="text-end">
@@ -108,7 +108,7 @@
                 <td class="text-end">
                     <span t-field="move_line.sale_price_unit" />
                 </td>
-                <td class="text-end" groups="product.group_discount_per_so_line">
+                <td class="text-end" groups="sale.group_discount_per_so_line">
                     <span t-field="move_line.sale_discount" />
                 </td>
                 <td class="text-end">
