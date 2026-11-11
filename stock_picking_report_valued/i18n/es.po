@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-21 08:13+0000\n"
-"PO-Revision-Date: 2023-11-20 10:35+0000\n"
-"Last-Translator: Gelojr <gelo@moduon.team>\n"
+"PO-Revision-Date: 2026-11-11 12:46+0000\n"
+"Last-Translator: Carlos Dauden <carlos.dauden@tecnativa.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_report_valued
 #: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
@@ -75,7 +75,7 @@ msgstr "Línea de pedido relacionada"
 #. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__currency_id
 msgid "Sale Currency"
-msgstr "Divisa de Venta"
+msgstr "Moneda de Venta"
 
 #. module: stock_picking_report_valued
 #: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
