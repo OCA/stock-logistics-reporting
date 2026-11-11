@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="stock_move_view_list" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock_account.stock_move_view_list" />
+        <field name="arch" type="xml">
+            <!-- Show the signed value next to the value, with its total -->
+            <field name="value" position="after">
+                <field
+                    name="value_signed"
+                    sum="Total Signed Value"
+                    readonly="1"
+                    optional="show"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
