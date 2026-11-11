@@ -100,6 +100,7 @@
                         <field name="daily_standard_deviation" />
                         <field name="safety" />
                         <field name="recommended_qty" />
+                        <field name="recommended_qty_details" />
                     </group>
                 </group>
             </form>
