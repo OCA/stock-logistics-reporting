@@ -1,0 +1,233 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_inventory_valuation_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-01-22 15:46+0000\n"
+"Last-Translator: Yann Papouin <y.papouin@dec-industrie.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_buttons
+msgid "<span class=\"fa fa-download\"/>Export"
+msgstr "<span class=\"fa fa-download\"/>Exporter"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_buttons
+msgid "<span class=\"fa fa-print\"/>Print"
+msgstr "<span class=\"fa fa-print\"/>Imprimer"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__barcode
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Barcode"
+msgstr "Code Barre"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__compute_at_date
+msgid "Compute At Date"
+msgstr "Calculer à la date"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Cost"
+msgstr "Coût"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__cost_currency_id
+msgid "Cost Currency"
+msgstr "Devise de coût"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__cost_method
+msgid "Cost Method"
+msgstr "Méthode de détermination du coût des stocks"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__create_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__create_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__create_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__create_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__date
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Date"
+msgstr "Date"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__display_name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__display_name
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "Export PDF"
+msgstr "Exporter en PDF"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "Export XLSX"
+msgstr "Exporter en XLSX"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__id
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__id
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.client,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_html
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_base
+msgid "Inventory Valuation Report"
+msgstr "Rapport de valorisation d'inventaire"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx____last_update
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report____last_update
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__write_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__write_uid
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx__write_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__write_date
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__name
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Name"
+msgstr "Nom"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__qty_at_date
+msgid "Qty At Date"
+msgstr "Qté à la date"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__reference
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Reference"
+msgstr "Référence"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__results
+msgid "Results"
+msgstr "Résultats"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__standard_price
+msgid "Standard Price"
+msgstr "Prix standard"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_report_stock_inventory_valuation_report
+msgid "Stock Inventory Valuation Report"
+msgstr "Rapport de valorisation d'inventaire de stock"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.report,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_pdf
+msgid "Stock Inventory Valuation Report PDF"
+msgstr "Rapport PDF de valorisation d'inventaire de stock"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.actions.report,name:stock_inventory_valuation_report.action_stock_inventory_valuation_report_xlsx
+msgid "Stock Inventory Valuation Report XLSX"
+msgstr "Rapport XLSX de valorisation d'inventaire de stock"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_stock_inventory_valuation_view
+msgid "Stock Inventory Valuation View"
+msgstr "Vue de la valorisation d'inventaire de stock"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_stock_quantity_history
+msgid "Stock Quantity History"
+msgstr "Historique des quantités en stock"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__stock_value
+msgid "Stock Value"
+msgstr "Valeur du stock"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters
+msgid "Tax ID"
+msgstr "N° TVA"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,field_description:stock_inventory_valuation_report.field_stock_inventory_valuation_view__uom_id
+msgid "Uom"
+msgstr "UdM"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model.fields,help:stock_inventory_valuation_report.field_report_stock_inventory_valuation_report__results
+msgid "Use compute fields, so there is nothing store in database"
+msgstr ""
+"Utilise des champs calculés, il n'y a donc rien de stocké dans la base de "
+"données"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header
+msgid "Value"
+msgstr "Valeur"
+
+#. module: stock_inventory_valuation_report
+#: model_terms:ir.ui.view,arch_db:stock_inventory_valuation_report.view_stock_quantity_history_inherit
+msgid "View report"
+msgstr "Voir le rapport"
+
+#. module: stock_inventory_valuation_report
+#: model:ir.model,name:stock_inventory_valuation_report.model_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx
+msgid "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
+msgstr "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
