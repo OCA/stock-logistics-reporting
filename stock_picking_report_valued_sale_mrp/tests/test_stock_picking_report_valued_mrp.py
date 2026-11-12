@@ -73,3 +73,22 @@ class TestStockPickingValuedMrp(TestStockPickingValued):
         self.env["ir.actions.report"]._render_qweb_html(
             self.env.ref("stock.action_report_delivery"), self.order_out_picking.ids
         )
+
+    def test_line_without_picking(self):
+        """Move lines without transfer, e.g. of an inventory adjustment"""
+        product = self.product_product.create(
+            {"name": "Storable product", "is_storable": True}
+        )
+        self.env["stock.quant"].create(
+            {
+                "product_id": product.id,
+                "location_id": self.env.ref("stock.stock_location_stock").id,
+                "inventory_quantity": 5.0,
+            }
+        ).action_apply_inventory()
+        move_line = self.env["stock.move.line"].search(
+            [("product_id", "=", product.id), ("picking_id", "=", False)]
+        )
+        self.assertTrue(move_line)
+        self.assertFalse(move_line.phantom_line)
+        self.assertEqual(move_line.phantom_delivered_qty, 0.0)

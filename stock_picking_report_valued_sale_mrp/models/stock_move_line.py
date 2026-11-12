@@ -47,7 +47,9 @@ class StockMoveLine(models.Model):
         amounts according to the corresponding delivered kits"""
         res = super()._compute_sale_order_line_fields()
         pickings = self.mapped("picking_id")
-        pickings.move_line_ids.update(
+        # Lines without transfer (e.g. inventory adjustments) are not in any
+        # picking but still need a value
+        (self | pickings.move_line_ids).update(
             {"phantom_line": False, "phantom_delivered_qty": 0.0}
         )
         for picking in pickings:
