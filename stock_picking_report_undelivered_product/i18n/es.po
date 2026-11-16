@@ -1,0 +1,125 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_undelivered_product
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-18 22:21+0000\n"
+"PO-Revision-Date: 2023-10-28 16:00+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Cantidad</strong>"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
+msgid "<strong>Reference</strong>"
+msgstr "<strong>Referencia</strong>"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.undeliverd_product
+msgid "<strong>Remaining products (not delivered yet)</strong>"
+msgstr "<strong>Productos no enviados</strong>"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_product__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_product_template__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_partner__display_undelivered_in_picking
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_users__display_undelivered_in_picking
+msgid "Display Undelivered In Picking"
+msgstr "Visualizar no entregado en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__all
+msgid "Display all undelivered product lines"
+msgstr "Mostrar todas las líneas de productos no enviados en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__completely_undelivered
+msgid "Display only completely undelivered product lines"
+msgstr ""
+"Mostrar solo líneas de productos completamente no enviados en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields.selection,name:stock_picking_report_undelivered_product.selection__res_company__undelivered_product_slip_report_method__partially_undelivered
+msgid "Display only partially undelivered product lines"
+msgstr ""
+"Mostrar solo lineas de productos parcialmente no enviados en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_company__undelivered_product_slip_report_method
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_res_config_settings__undelivered_product_slip_report_method
+msgid "Method to display undelivered product lines in report picking"
+msgstr "Método para mostrar los productos no enviados en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de Producto (Línea de Movimiento de Existencias)"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
+msgid "Report picking undelivered products"
+msgstr "Productos no enviados en el albarán"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
+msgid "Select method to display undelivered product lines"
+msgstr "Seleccione el método para mostrar líneas de productos no enviados"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model.fields,field_description:stock_picking_report_undelivered_product.field_stock_move__splitted_stock_move_orig_id
+msgid "Splitted from"
+msgstr "Dividido desde"
+
+#. module: stock_picking_report_undelivered_product
+#: model:ir.model,name:stock_picking_report_undelivered_product.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de stock"
+
+#. module: stock_picking_report_undelivered_product
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_undelivered_product.res_config_settings_view_form
+msgid "Undelivered product lines in delivery slip report"
+msgstr "Líneas de productos no enviados en el albarán"
+
+#~ msgid "Display undelivered in picking"
+#~ msgstr "Mostrar productos no enviados en el albarán"
+
+#~ msgid "Is splitted"
+#~ msgstr "Es dividido"
