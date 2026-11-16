@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 NICO SOLUTIIONS - ENGERINEERING & IT
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<odoo>
+    <template
+        id="report_delivery_document_inherit"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//table[@name='stock_move_table']" position="before">
+            <t
+                t-set="render_unitprice"
+                t-value="o.partner_id.picking_report_render_unitprice and any(m.sale_line_id and m.sale_line_id.price_unit for m in o.move_ids)"
+            />
+        </xpath>
+        <xpath expr="//th[@name='th_sm_quantity']" position="after">
+            <th t-if="render_unitprice" name="th_sm_unit_price" class="text-end">
+                <strong>Unit Price</strong>
+            </th>
+        </xpath>
+        <xpath
+            expr="//tr[@t-foreach='lines']/td[hasclass('o_td_quantity')][last()]"
+            position="after"
+        >
+            <td class="text-end" t-if="render_unitprice">
+                <span
+                    t-if="move.sale_line_id"
+                    t-esc="move.sale_line_id.price_unit"
+                    t-options='{"widget": "monetary", "display_currency": move.sale_line_id.currency_id}'
+                />
+            </td>
+        </xpath>
+        <xpath expr="//th[@name='th_sml_quantity']" position="after">
+            <th
+                t-if="render_unitprice"
+                name="th_sml_unit_price"
+                class="text-end"
+            >Unit Price</th>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines_inherit"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath expr="//tr[@t-foreach='aggregated_lines']" position="before">
+            <t
+                t-set="render_agg_unitprice"
+                t-value="o.partner_id.picking_report_render_unitprice and any(v.get('unit_price') for v in aggregated_lines.values())"
+            />
+        </xpath>
+        <xpath
+            expr="//tr[@t-foreach='aggregated_lines']/td[@name='move_line_aggregated_quantity']"
+            position="after"
+        >
+            <td
+                class="text-end"
+                name="move_line_unit_price"
+                t-if="render_agg_unitprice"
+            >
+                <span
+                    t-if="aggregated_lines[line].get('unit_price')"
+                    t-out="aggregated_lines[line]['unit_price']"
+                    t-options='{"widget": "monetary", "display_currency": aggregated_lines[line]["currency_id"]}'
+                />
+            </td>
+        </xpath>
+    </template>
+    <template
+        id="stock_report_delivery_has_serial_move_line_inherit"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//td[@name='move_line_lot_quantity']" position="after">
+            <td
+                class="text-end"
+                name="move_line_lot_unit_price"
+                t-if="render_unitprice"
+            >
+                <span
+                    t-if="move_line.move_id.sale_line_id"
+                    t-esc="move_line.move_id.sale_line_id.price_unit"
+                    t-options='{
+                        "widget": "monetary",
+                        "display_currency": move_line.move_id.sale_line_id.currency_id
+                    }'
+                />
+            </td>
+        </xpath>
+    </template>
+</odoo>
