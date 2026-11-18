@@ -46,13 +46,6 @@
                             name="average_daily_strategy"
                             string="Average Daily Usage"
                         >
-                            <div colspan="2" class="text-muted fst-italic mb-2">
-                                Min = (Average Daily Quantity × Number of Days) + Safety.
-                            </div>
-                            <div colspan="2" class="text-muted fst-italic mb-2">
-                                Safety = Daily Standard Deviation × Safety Factor × sqrt(nbr days in
-                                the analyzed period)
-                            </div>
                             <field name="use_average_daily_strategy" />
                             <field
                                 name="number_days_qty_in_stock"
@@ -62,29 +55,79 @@
                                 name="safety_factor"
                                 attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
                             />
+                            <div
+                                colspan="2"
+                                class="alert alert-info"
+                                role="alert"
+                                attrs="{'invisible': [('use_average_daily_strategy', '=', False)]}"
+                            >
+                                <p class="mb-1">
+                                    <i
+                                        class="fa fa-info-circle me-1"
+                                        title="Calculation Formula"
+                                    />
+                                    <strong>Calculation Formula</strong>
+                                </p>
+                                <ul>
+                                    <li
+                                    >Min = (Average Daily Quantity × Number of days of quantities
+                                        in stock) + Safety</li>
+                                    <li
+                                    >Safety = Daily Standard Deviation × Safety Factor × sqrt(nbr
+                                        days in the analyzed period)</li>
+                                </ul>
+                            </div>
                         </group>
                         <group
                             name="average_consumption_strategy"
                             string="Average Consumption"
                         >
-                            <div colspan="2" class="text-muted fst-italic mb-2">
-                                Min = Average Consumption Quantity × Factor.
-                            </div>
                             <field name="use_average_consumption_strategy" />
                             <field
                                 name="average_consumption_factor"
                                 attrs="{'invisible': [('use_average_consumption_strategy', '=', False)]}"
                             />
+                            <div
+                                colspan="2"
+                                class="alert alert-info"
+                                role="alert"
+                                attrs="{'invisible': [('use_average_consumption_strategy', '=', False)]}"
+                            >
+                                <p class="mb-1">
+                                    <i
+                                        class="fa fa-info-circle me-1"
+                                        title="Calculation Formula"
+                                    />
+                                    <strong>Calculation Formula</strong>
+                                </p>
+                                <div>
+                                    Min = Average Qty by Consumption × Average Consumption Factor.
+                                </div>
+                            </div>
                         </group>
                         <group name="max_consumption_strategy" string="Max Consumption">
-                            <div colspan="2" class="text-muted fst-italic mb-2">
-                                Min = Max Consumption Quantity × Factor
-                            </div>
                             <field name="use_max_consumption_strategy" />
                             <field
                                 name="max_consumption_factor"
                                 attrs="{'invisible': [('use_max_consumption_strategy', '=', False)]}"
                             />
+                            <div
+                                colspan="2"
+                                class="alert alert-info"
+                                role="alert"
+                                attrs="{'invisible': [('use_max_consumption_strategy', '=', False)]}"
+                            >
+                                <p class="mb-1">
+                                    <i
+                                        class="fa fa-info-circle me-1"
+                                        title="Calculation Formula"
+                                    />
+                                    <strong>Calculation Formula</strong>
+                                </p>
+                                <div>
+                                    Min = Max Daily Quantity × Max Consumption Factor
+                                </div>
+                            </div>
                         </group>
                     </group>
                 </sheet>
