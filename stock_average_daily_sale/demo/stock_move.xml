@@ -3,5 +3,5 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo noupdate="1">
 
-    <function model="stock.average.daily.sale.demo" name="_action_create_data" />
+    <function model="stock.average.daily.usage.demo" name="_action_create_data" />
 </odoo>

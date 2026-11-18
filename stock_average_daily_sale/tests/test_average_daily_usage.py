@@ -9,10 +9,10 @@ from freezegun import freeze_time
 
 from odoo.fields import Datetime
 
-from .common import CommonAverageSaleTest
+from .common import CommonAverageUsageTest
 
 
-class TestAverageDailySale(CommonAverageSaleTest):
+class TestAverageDailyUsage(CommonAverageUsageTest):
     """Test materialized view"""
 
     @classmethod
@@ -30,7 +30,7 @@ class TestAverageDailySale(CommonAverageSaleTest):
         """Test normal case"""
         self.env.flush_all()
         self._refresh()
-        avg_product = self.env["stock.average.daily.sale"].search(
+        avg_product = self.env["stock.average.daily.usage"].search(
             [
                 ("location_id", "=", self.location_zone.id),
                 ("product_id", "=", self.product.id),
@@ -43,11 +43,11 @@ class TestAverageDailySale(CommonAverageSaleTest):
                     "warehouse_id": self.warehouse_0.id,
                     "location_id": self.location_zone.id,
                     "abc_classification_level": self.product.abc_storage,
-                    "average_qty_by_sale": (10 + 5 + 12) / 3,
-                    "average_daily_sales_count": 3 / 7,
+                    "average_qty_by_consumption": (10 + 5 + 12) / 3,
+                    "average_daily_consumption_count": 3 / 7,
                     "max_daily_qty": 15,
                     "average_daily_qty": (10 + 5 + 12) / 7,
-                    "nbr_sales": 3.0,
+                    "nbr_consumptions": 3.0,
                     "daily_standard_deviation": stdev([15, 12, 0, 0, 0, 0, 0]),
                 }
             ],
@@ -155,9 +155,9 @@ class TestAverageDailySale(CommonAverageSaleTest):
     def test_view_refreshed(self):
         self._refresh()
         with self.assertNoLogs(
-            "odoo.addons.stock_average_daily_sale.models.stock_average_daily_sale",
+            "odoo.addons.stock_average_daily_usage.models.stock_average_daily_usage",
             level="DEBUG",
         ):
-            self.env["stock.average.daily.sale"].search_read(
+            self.env["stock.average.daily.usage"].search_read(
                 [("product_id", "=", self.product.id)]
             )

@@ -2,9 +2,9 @@
 <!-- Copyright 2021 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.model.access" id="stock_average_daily_sale_demo_access_user">
-        <field name="name">stock.average.daily.sale.demo access user</field>
-        <field name="model_id" ref="model_stock_average_daily_sale_demo" />
+    <record model="ir.model.access" id="stock_average_daily_usage_demo_access_user">
+        <field name="name">stock.average.daily.usage.demo access user</field>
+        <field name="model_id" ref="model_stock_average_daily_usage_demo" />
         <field name="group_id" ref="base.group_user" />
         <field name="perm_read" eval="1" />
         <field name="perm_create" eval="0" />
