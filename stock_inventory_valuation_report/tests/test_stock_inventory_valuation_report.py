@@ -476,6 +476,188 @@ class TestStockInventoryValuationReport(common.TransactionCase):
             msg="Report should have line for product with filtered template",
         )
 
+    def test_report_with_location_filter(self):
+        """Test that _compute_results respects the location context key."""
+        loc_a = self.env["stock.location"].create(
+            {
+                "name": "Location A",
+                "usage": "internal",
+                "location_id": self.location_stock_id.id,
+            }
+        )
+        loc_b = self.env["stock.location"].create(
+            {
+                "name": "Location B",
+                "usage": "internal",
+                "location_id": self.location_stock_id.id,
+            }
+        )
+        product = self.env["product.product"].create(
+            {
+                "name": "test location filter",
+                "type": "consu",
+                "is_storable": True,
+                "standard_price": 10.0,
+                "company_id": self.company_id.id,
+                "categ_id": self.product_category_all.id,
+            }
+        )
+        partner = self.env["res.partner"].create({"name": "Test Partner Loc"})
+
+        for loc, qty in [(loc_a, 30), (loc_b, 70)]:
+            receipt = self.env["stock.picking"].create(
+                {
+                    "location_id": self.location_suppliers_id.id,
+                    "location_dest_id": loc.id,
+                    "picking_type_id": self.picking_type_in_id.id,
+                    "partner_id": partner.id,
+                    "company_id": self.company_id.id,
+                    "move_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "Receive product",
+                                "product_id": product.id,
+                                "product_uom": product.uom_id.id,
+                                "product_uom_qty": qty,
+                            },
+                        )
+                    ],
+                }
+            )
+            receipt.action_confirm()
+            for ml in receipt.move_line_ids:
+                ml.quantity = qty
+            receipt.button_validate()
+
+        # Without location filter: total = 100
+        report_all = self.env["report.stock.inventory.valuation.report"].create(
+            {"company_id": self.company_id.id}
+        )
+        row_all = report_all.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(row_all.qty_at_date, 100)
+
+        # With location A filter: qty = 30
+        report_a = (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(location=loc_a.id, compute_child=True)
+            .create({"company_id": self.company_id.id})
+        )
+        row_a = report_a.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(row_a.qty_at_date, 30)
+        self.assertAlmostEqual(row_a.stock_value, 300.0, places=2)
+
+        # With location B filter: qty = 70
+        report_b = (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(location=loc_b.id, compute_child=True)
+            .create({"company_id": self.company_id.id})
+        )
+        row_b = report_b.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(row_b.qty_at_date, 70)
+
+    def test_report_location_filter_with_children(self):
+        """Test that compute_child=True includes child locations."""
+        parent_loc = self.env["stock.location"].create(
+            {
+                "name": "Parent Loc",
+                "usage": "internal",
+                "location_id": self.location_stock_id.id,
+            }
+        )
+        child_loc = self.env["stock.location"].create(
+            {
+                "name": "Child Loc",
+                "usage": "internal",
+                "location_id": parent_loc.id,
+            }
+        )
+        product = self.env["product.product"].create(
+            {
+                "name": "test child location",
+                "type": "consu",
+                "is_storable": True,
+                "standard_price": 5.0,
+                "company_id": self.company_id.id,
+                "categ_id": self.product_category_all.id,
+            }
+        )
+        partner = self.env["res.partner"].create({"name": "Test Partner Child"})
+
+        # Receive 40 into child location
+        receipt = self.env["stock.picking"].create(
+            {
+                "location_id": self.location_suppliers_id.id,
+                "location_dest_id": child_loc.id,
+                "picking_type_id": self.picking_type_in_id.id,
+                "partner_id": partner.id,
+                "company_id": self.company_id.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Receive product",
+                            "product_id": product.id,
+                            "product_uom": product.uom_id.id,
+                            "product_uom_qty": 40,
+                        },
+                    )
+                ],
+            }
+        )
+        receipt.action_confirm()
+        for ml in receipt.move_line_ids:
+            ml.quantity = 40
+        receipt.button_validate()
+
+        # Filter by parent with compute_child=True: should include child
+        report = (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(location=parent_loc.id, compute_child=True)
+            .create({"company_id": self.company_id.id})
+        )
+        row = report.results.filtered(lambda r: r.name == product.name)
+        self.assertEqual(row.qty_at_date, 40)
+
+        # Filter by parent with compute_child=False: should NOT include child
+        report_no_child = (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(location=parent_loc.id, compute_child=False)
+            .create({"company_id": self.company_id.id})
+        )
+        row_no_child = report_no_child.results.filtered(
+            lambda r: r.name == product.name
+        )
+        self.assertFalse(row_no_child)
+
+    def test_get_location_ids_invalid(self):
+        """Test _get_location_ids with non-existing location."""
+        report = (
+            self.env["report.stock.inventory.valuation.report"]
+            .with_context(location=999999999)
+            .create({"company_id": self.company_id.id})
+        )
+        self.assertEqual(report._get_location_ids(), [])
+
+    def test_wizard_passes_location_context(self):
+        """Test that wizard export methods pass location context."""
+        wizard_model = self.env["stock.quantity.history"]
+        if not hasattr(wizard_model, "location_id"):
+            return
+        loc = self.env["stock.location"].create(
+            {
+                "name": "Wizard Test Loc",
+                "usage": "internal",
+                "location_id": self.location_stock_id.id,
+            }
+        )
+        wizard = wizard_model.create({"location_id": loc.id})
+        result = wizard.button_export_html()
+        ctx = result.get("context", {})
+        self.assertEqual(ctx.get("location"), loc.id)
+
     def test_report_with_no_storable_products(self):
         """
         Test report generation when no storable products exist
