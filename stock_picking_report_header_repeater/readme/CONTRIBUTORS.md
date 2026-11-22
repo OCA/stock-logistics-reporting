@@ -1,0 +1,5 @@
+- [Tecnativa](https://www.tecnativa.com)
+  - Sergio Teruel
+  - Carlos Roca
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
