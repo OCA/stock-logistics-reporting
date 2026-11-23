@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-stock-logistics-reporting"
+version = "20.0.20261123.0"
+dependencies = [
+    "odoo-addon-stock_picking_report_custom_description==20.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 20.0",
+]
