@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_valued
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2020-09-29 11:00+0000\n"
+"Last-Translator: erik-bzcl <erik@bizicloud.ro>\n"
+"Language-Team: none\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10\n"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Discount</strong>"
+msgstr "<strong>Discount</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Subtotal</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Taxes</strong>"
+msgstr "<strong>Taxe</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Total</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Preţ unitar</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Untaxed Amount</strong>"
+msgstr "<strong>Valoare fără TVA</strong>"
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_subtotal
+msgid "Price subtotal"
+msgstr "Subtotal preţ"
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Mişcări de produs (Linie mişcare stoc)"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_line
+msgid "Related order line"
+msgstr "Linie de comandă asociată"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__currency_id
+msgid "Sale Currency"
+msgstr "Moneda vânzării"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
+msgid "Sale Price Unit"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_id
+msgid "Sale Tax"
+msgstr "TVA"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_discount
+msgid "Sale discount (%)"
+msgstr "Discount (%)"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_description
+msgid "Tax Description"
+msgstr "Descriere taxă"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_tax
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_tax
+msgid "Taxes"
+msgstr "Taxe"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_total
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_total
+msgid "Total"
+msgstr "Total"
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_untaxed
+msgid "Untaxed Amount"
+msgstr "Valoare fără TVA"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__valued
+msgid "Valued Picking"
+msgstr "Transfer preţuit"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
+msgid "You can select which partners have valued pickings"
+msgstr "Puteţi selecta partenerii cu transferuri preţuite"
+
+#~ msgid "<strong>Qty Reserved</strong>"
+#~ msgstr "<strong>Cant Rezervată</strong>"
+
+#~ msgid "Sale price unit"
+#~ msgstr "Preţ unitar"

@@ -1,0 +1,145 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_valued
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-10-29 08:31+0000\n"
+"Last-Translator: sofien-moalla <s.moalla@cadrinsitu.com>\n"
+"Language-Team: none\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Discount</strong>"
+msgstr "<strong>Remise</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Sous-total</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Taxes</strong>"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Total</strong>"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Prix Unitaire</strong>"
+
+#. module: stock_picking_report_valued
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_valued.valued_report_picking
+msgid "<strong>Untaxed Amount</strong>"
+msgstr "<strong>Montant HT</strong>"
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_subtotal
+msgid "Price subtotal"
+msgstr "Sous-total"
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Mouvements de produits (ligne de mouvements de stock)"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_line
+msgid "Related order line"
+msgstr "Ligne de commande connexe"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__currency_id
+msgid "Sale Currency"
+msgstr "Devise de vente"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_unit
+msgid "Sale Price Unit"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_id
+msgid "Sale Tax"
+msgstr "TVA"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_discount
+msgid "Sale discount (%)"
+msgstr "Remise de vente (%)"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_tax_description
+msgid "Tax Description"
+msgstr "Taxe"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_tax
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_tax
+msgid "Taxes"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_move_line__sale_price_total
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_total
+msgid "Total"
+msgstr ""
+
+#. module: stock_picking_report_valued
+#: model:ir.model,name:stock_picking_report_valued.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__amount_untaxed
+msgid "Untaxed Amount"
+msgstr "Montant HT"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,field_description:stock_picking_report_valued.field_stock_picking__valued
+msgid "Valued Picking"
+msgstr "BL Valorisé"
+
+#. module: stock_picking_report_valued
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_partner__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_res_users__valued_picking
+#: model:ir.model.fields,help:stock_picking_report_valued.field_stock_picking__valued
+msgid "You can select which partners have valued pickings"
+msgstr "Vous pouvez sélectionner quels partenaires ont une valorisation"
+
+#~ msgid "<strong>Qty Reserved</strong>"
+#~ msgstr "<strong>Qté Réservée</strong>"
+
+#~ msgid "Display Name"
+#~ msgstr "Nom affiché"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
+
+#~ msgid "Sale price unit"
+#~ msgstr "Prix unitaire"
