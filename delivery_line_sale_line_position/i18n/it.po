@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_line_sale_line_position
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-07-29 08:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: delivery_line_sale_line_position
+#: model_terms:ir.ui.view,arch_db:delivery_line_sale_line_position.report_delivery_document
+msgid "<strong>Pos</strong>"
+msgstr "<strong>Pos</strong>"
+
+#. module: delivery_line_sale_line_position
+#: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move__position_sale_line
+#: model:ir.model.fields,field_description:delivery_line_sale_line_position.field_stock_move_line__position_sale_line
+msgid "Position"
+msgstr "Posizione"
+
+#. module: delivery_line_sale_line_position
+#: model:ir.model,name:delivery_line_sale_line_position.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: delivery_line_sale_line_position
+#: model:ir.model,name:delivery_line_sale_line_position.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
