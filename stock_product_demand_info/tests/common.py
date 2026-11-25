@@ -4,14 +4,11 @@
 from odoo import fields
 from odoo.tests import TransactionCase
 
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-
 
 class StockProductDemandInfoCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.today = fields.Date.today()
         cls.env["product.demand.period"].search([]).active = False
         cls.period_7d = cls.env.ref("stock_product_demand_info.period_last_7_days")

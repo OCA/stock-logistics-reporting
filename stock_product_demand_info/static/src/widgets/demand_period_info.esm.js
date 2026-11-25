@@ -3,17 +3,19 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
 
-import {Component} from "@odoo/owl";
+import {Component, t, useProps} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {usePopover} from "@web/core/popover/popover_hook";
 
+export const demandPeriodInfoProps = {
+    ...standardFieldProps,
+    uom_field: t.string().optional(),
+};
+
 export class DemandPeriodInfoGrid extends Component {
     static template = "stock_product_demand_info.DemandPeriodInfoGrid";
-    static props = {
-        ...standardFieldProps,
-        uom_field: {type: String, optional: true},
-    };
+    props = useProps(demandPeriodInfoProps);
 
     get uomFieldName() {
         return this.props.uom_field ?? "uom_id";
@@ -37,16 +39,15 @@ export class DemandPeriodInfoGrid extends Component {
 
 export class DemandPeriodInfoPopoverContent extends DemandPeriodInfoGrid {
     static template = "stock_product_demand_info.DemandPeriodInfoPopoverContent";
-    static props = {
-        ...DemandPeriodInfoGrid.props,
-        close: {type: Function, optional: true},
-    };
+    props = useProps({
+        ...demandPeriodInfoProps,
+        close: t.function().optional(),
+    });
 }
 
 export class ListDemandPeriodInfoField extends DemandPeriodInfoGrid {
     static template = "stock_product_demand_info.DemandPeriodInfoPopoverButton";
     static components = {PopoverContent: DemandPeriodInfoPopoverContent};
-    static props = {...DemandPeriodInfoGrid.props};
 
     setup() {
         this.popover = usePopover(this.constructor.components.PopoverContent, {

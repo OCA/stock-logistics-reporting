@@ -18,7 +18,7 @@
                         <div class="mt8">
                             <button
                                 name="%(action_product_demand_period)d"
-                                icon="oi-arrow-right"
+                                icon="east"
                                 type="action"
                                 string="Manage demand periods"
                                 class="btn-link"

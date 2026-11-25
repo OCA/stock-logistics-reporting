@@ -49,7 +49,9 @@ class ProductProduct(models.Model):
                         [
                             Domain("location_dest_id.warehouse_id", "!=", warehouse.id),
                             Domain(
-                                "location_final_id.warehouse_id", "!=", warehouse.id
+                                "forecasted_location_id.warehouse_id",
+                                "!=",
+                                warehouse.id,
                             ),
                         ]
                     ),
@@ -65,7 +67,9 @@ class ProductProduct(models.Model):
                             "location_dest_id.usage", "in", ["customer", "production"]
                         ),
                         Domain(
-                            "location_final_id.usage", "in", ["customer", "production"]
+                            "forecasted_location_id.usage",
+                            "in",
+                            ["customer", "production"],
                         ),
                     ]
                 ),

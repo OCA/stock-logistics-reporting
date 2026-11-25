@@ -25,11 +25,10 @@
         <field name="arch" type="xml">
             <field name="replenishment_uom_id" position="after">
                 <group string="Demand by period" name="demand_period_info_group">
-                    <field name="product_uom" invisible="1" />
                     <field
                         name="demand_period_info"
                         widget="demand_period_info"
-                        options="{'uom_field': 'product_uom'}"
+                        options="{'uom_field': 'product_uom_name'}"
                         nolabel="1"
                     />
                 </group>
