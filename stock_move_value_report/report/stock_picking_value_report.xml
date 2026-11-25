@@ -104,21 +104,11 @@
                     <h4>[<t t-out="picking.location_id.name" /> &#8594; <t
                         t-out="picking.location_dest_id.name"
                     />]</h4>
-                    <t t-call="stock_move_value_report.stock_move_lines_value">
-                        <t t-set="move_lines" t-value="picking.move_line_ids" />
-                        <t
-                            t-set="currency_id"
-                            t-value="picking.company_id.currency_id"
-                        />
-                    </t>
+                    <t t-set="move_lines" t-value="picking.move_line_ids" />
+                    <t t-set="currency_id" t-value="picking.company_id.currency_id" />
+                    <t t-call="stock_move_value_report.stock_move_lines_value" />
                     <br />
-                    <t t-call="stock_move_value_report.stock_move_lines_value_total">
-                        <t t-set="move_lines" t-value="picking.move_line_ids" />
-                        <t
-                            t-set="currency_id"
-                            t-value="picking.company_id.currency_id"
-                        />
-                    </t>
+                    <t t-call="stock_move_value_report.stock_move_lines_value_total" />
                     <p t-out="picking.note" />
                 </div>
             </t>

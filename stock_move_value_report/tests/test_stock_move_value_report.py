@@ -10,6 +10,12 @@ class Test(TestStockValuationCommon):
     Tests for stock_move_value_report.
     """
 
+    _test_user_groups = (
+        "stock.group_stock_manager",
+        "account.group_account_manager",
+        "stock.group_production_lot",
+    )
+
     def _make_move(self):
         return self._make_in_move(
             self.product_standard, 10, unit_cost=15, create_picking=True
@@ -24,9 +30,12 @@ class Test(TestStockValuationCommon):
             "active_ids": records.ids,
             "active_model": "stock.move",
         }
-        self.env["ir.actions.report"].with_context(**context)._render_qweb_pdf(
+        report = self.env["ir.actions.report"].with_context(**context)
+        html = report._render_qweb_html(
             report_name, records.ids, data={"context": context}
-        )
+        )[0]
+        report._render_qweb_pdf(report_name, records.ids, data={"context": context})
+        return html if isinstance(html, str) else html.decode("utf-8")
 
     def test_report_stock_move_line_value(self):
         report_name = "stock_move_value_report.report_stock_move_line_value"
@@ -41,14 +50,28 @@ class Test(TestStockValuationCommon):
     def test_report_stock_picking_value(self):
         report_name = "stock_move_value_report.report_stock_picking_value"
         move = self._make_move()
-        self._render_report(report_name, move.picking_id)
+        html = self._render_report(report_name, move.picking_id)
+        self.assertIn("150.00", html)
+        self.assertIn(move.picking_id.location_id.name, html)
+        self.assertIn(move.picking_id.location_dest_id.name, html)
 
     def test_report_stock_scrap_value(self):
         report_name = "stock_move_value_report.report_stock_scrap_value"
-        scrap = self.env["stock.scrap"].create(
+        self._make_move()
+        scrap = self.env["stock.move"].create(
             {
+                "is_scrap": True,
                 "product_id": self.product_standard.id,
-                "product_uom_id": self.product_standard.uom_id.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.env.company.scrap_location_id.id,
+                "quantity": 1,
+                "company_id": self.env.company.id,
             }
         )
+        scrap.action_scrap()
         self._render_report(report_name, scrap)
+        self._render_report("stock_move_value_report.report_stock_move_value", scrap)
+        self._render_report(
+            "stock_move_value_report.report_stock_move_line_value",
+            scrap.move_line_ids,
+        )
