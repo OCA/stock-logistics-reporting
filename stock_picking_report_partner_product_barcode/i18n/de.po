@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_report_partner_product_barcode
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-06 14:13+0000\n"
+"PO-Revision-Date: 2026-09-06 14:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_report_partner_product_barcode
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_partner_product_barcode.report_delivery_document_inherit
+msgid "<strong>Barcode</strong>"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_barcode
+#: model_terms:ir.ui.view,arch_db:stock_picking_report_partner_product_barcode.report_delivery_document_inherit
+msgid "Barcode"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_barcode
+#: model:ir.model,name:stock_picking_report_partner_product_barcode.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: stock_picking_report_partner_product_barcode
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_res_partner__display_name
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: stock_picking_report_partner_product_barcode
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_res_partner__id
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_stock_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_report_partner_product_barcode
+#: model:ir.model,name:stock_picking_report_partner_product_barcode.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Produktbewegungen (Lagerbuchung)"
+
+#. module: stock_picking_report_partner_product_barcode
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_res_partner__picking_report_render_barcode
+#: model:ir.model.fields,field_description:stock_picking_report_partner_product_barcode.field_res_users__picking_report_render_barcode
+msgid "Render Barcode on Delivery Slip"
+msgstr "Barcode auf Lieferschein ausgeben"
