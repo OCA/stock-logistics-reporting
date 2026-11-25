@@ -3,8 +3,8 @@
 
 {
     "name": "Hidden product names in pickings",
-    "summary": """
-    Allows to hide the product display name in favor of the picking description""",
+    "summary": "Allows to hide the product display name in favor of the picking "
+    "description",
     "version": "19.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
