@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="report_stock_scrap_value_document">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h1 class="mt0 float-left">Scrap <t t-esc="scrap.name" /></h1>
+                    <h1 class="mt0 float-left">Scrap <t t-out="scrap.name" /></h1>
                     <div class="clearfix" />
                     <table class="table table-sm">
                         <thead>
@@ -38,7 +38,7 @@
                                         <span t-field="move.scrap_id.state" />
                                     </td>
                                     <td name="td_sched_date" class="text-center">
-                                        <span t-esc="move.date" />
+                                        <span t-out="move.date" />
                                     </td>
                                 </tr>
                             </t>

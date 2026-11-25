@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="stock_move_lines_value">
         <table class="table table-sm mt4 mb0">
@@ -12,7 +12,7 @@
                     <th name="th_product" class="text-start">
                         <strong>Product</strong>
                     </th>
-                    <th name="th_lot" t-if="has_serial_number" class="text-center">
+                    <th t-if="has_serial_number" class="text-center" name="th_lot">
                         Lot/Serial Number
                     </th>
                     <th name="th_qty" class="text-center">
@@ -64,13 +64,13 @@
                             t-value="sum(move.mapped(lambda m: m.value if m.quantity > 0 else -m.value))"
                         />
                         <span
-                            t-esc="cost"
+                            t-out="cost"
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                         />
                     </td>
                     <td class="text-end">
                         <span
-                            t-esc="cost * move_line.quantity"
+                            t-out="cost * move_line.quantity"
                             t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                         />
                     </td>
@@ -105,7 +105,7 @@
                                     />
                                 </t>
                                 <span
-                                    t-esc="total"
+                                    t-out="total"
                                     t-options="{'widget': 'monetary', 'display_currency': currency_id}"
                                 />
                             </td>
@@ -142,10 +142,10 @@
                                 t-value="ml_from_pickings.filtered(lambda x: x.picking_id == picking)"
                             />
                             <h4><span>[<t
-                                t-esc="picking.date_done"
-                            />]</span> Picking <t t-esc="picking.name" />: <t
-                                t-esc="picking.location_id.name"
-                            /> &#8594; <t t-esc="picking.location_dest_id.name" /></h4>
+                                t-out="picking.date_done"
+                            />]</span> Picking <t t-out="picking.name" />: <t
+                                t-out="picking.location_id.name"
+                            /> &#8594; <t t-out="picking.location_dest_id.name" /></h4>
                             <t t-call="stock_move_value_report.stock_move_lines_value">
                                 <t t-set="move_lines" t-value="picking_move_lines" />
                                 <t
@@ -177,11 +177,11 @@
                                     t-value="scrap_move.move_line_ids"
                                 />
                                 <h4><span>[<t
-                                    t-esc="scrap_move.date"
-                                />]</span> Scrap <t t-esc="scrap.name" />: <t
-                                    t-esc="scrap.location_id.name"
+                                    t-out="scrap_move.date"
+                                />]</span> Scrap <t t-out="scrap.name" />: <t
+                                    t-out="scrap.location_id.name"
                                 /> &#8594; <t
-                                    t-esc="scrap.scrap_location_id.name"
+                                    t-out="scrap.scrap_location_id.name"
                                 /></h4>
                                 <t
                                     t-call="stock_move_value_report.stock_move_lines_value"
@@ -219,7 +219,7 @@
                                     </td>
                                     <td class="text-end">
                                         <strong
-                                            t-esc="sum([x.move_id.price_unit * x.quantity for x in move_lines_ids])"
+                                            t-out="sum([x.move_id.price_unit * x.quantity for x in move_lines_ids])"
                                             t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
                                         />
                                     </td>

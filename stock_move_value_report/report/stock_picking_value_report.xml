@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="report_stock_picking_value_document">
         <t t-call="web.html_container">
@@ -57,7 +57,7 @@
                                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                                 />
                                 <p t-if="picking.sudo().partner_id.vat"><t
-                                    t-esc="picking.company_id.country_id.vat_label or 'TIN'"
+                                    t-out="picking.company_id.country_id.vat_label or 'TIN'"
                                 />: <span t-field="picking.sudo().partner_id.vat" /></p>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th class="text-start" t-if="picking.origin">
+                                <th t-if="picking.origin" class="text-start">
                                     <strong>Order (Origin)</strong>
                                 </th>
                                 <th class="text-center">
@@ -101,8 +101,8 @@
                     </table>
                     <br />
                     <br />
-                    <h4>[<t t-esc="picking.location_id.name" /> &#8594; <t
-                        t-esc="picking.location_dest_id.name"
+                    <h4>[<t t-out="picking.location_id.name" /> &#8594; <t
+                        t-out="picking.location_dest_id.name"
                     />]</h4>
                     <t t-call="stock_move_value_report.stock_move_lines_value">
                         <t t-set="move_lines" t-value="picking.move_line_ids" />
@@ -119,7 +119,7 @@
                             t-value="picking.company_id.currency_id"
                         />
                     </t>
-                    <p t-esc="picking.note" />
+                    <p t-out="picking.note" />
                 </div>
             </t>
         </t>

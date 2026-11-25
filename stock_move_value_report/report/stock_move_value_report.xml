@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="report_stock_move_value">
         <t t-call="stock_move_value_report.report_stock_move_value_document">
