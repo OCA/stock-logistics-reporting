@@ -5,7 +5,7 @@
     "name": "Stock Delivery Note",
     "summary": "This module allows to fill in a delivery note that will be displayed "
     "on delivery report",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-reporting",
