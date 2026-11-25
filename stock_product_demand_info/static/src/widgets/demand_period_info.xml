@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="stock_product_demand_info.DemandPeriodInfoGrid">
-        <div class="o_demand_period_info_grid" t-if="rows.length">
+        <div t-if="rows.length" class="o_demand_period_info_grid">
             <table class="table table-borderless table-sm mb-0">
                 <tbody>
                     <t t-foreach="rows" t-as="row" t-key="row[0]">
@@ -30,8 +30,8 @@
     <t t-name="stock_product_demand_info.DemandPeriodInfoPopoverButton">
         <a
             t-if="rows.length"
-            role="button"
             class="fa fa-bar-chart cursor-pointer"
+            role="button"
             t-att-tabindex="0"
             t-on-click="(ev) => this.showPopover(ev)"
             title="Demand by period"
