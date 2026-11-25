@@ -1,0 +1,4 @@
+- Iván Todorovich <ivan.todorovich@camptocamp.com>
+- Gaëtan Vaujour <gaetan.vaujour@camptocamp.com>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
